@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    >
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+	android:background="@color/White"   
+    >
+<TextView
+    android:id="@+id/title" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:padding="10dp"
+    android:text="选择任务标记"
+    android:textColor="@color/White"
+    android:background="@color/Black_SP"    
+    />
+<LinearLayout 
+    android:id="@+id/line1"
+    android:layout_below="@+id/title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:orientation="horizontal" 
+    android:paddingLeft="20dp"
+    android:background="@drawable/theme_background_transparent"
+    android:gravity="center_vertical"   
+    >
+<View
+    android:id="@+id/color1" 
+    android:layout_width="20dp"
+    android:layout_height="20dp"
+    android:padding="10dp"
+    android:background="@color/Blue_SP"
+    />    
+<TextView
+    android:id="@+id/tag1" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:textSize="16sp"
+    android:textColor="@color/Black_SP"
+    android:text="已标记"    
+    />
+</LinearLayout>
+<View 
+    android:id="@+id/line"
+    android:layout_width="match_parent"
+    android:background="@color/Gainsboro"
+    android:layout_marginTop="1dp"
+    android:layout_marginBottom="1dp"
+    android:layout_below="@+id/line1"
+    android:layout_height="1dp"         
+    />
+<LinearLayout 
+    android:id="@+id/line2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:background="@drawable/theme_background_transparent"
+    android:orientation="horizontal" 
+    android:layout_below="@+id/line"
+    android:paddingLeft="20dp"
+	android:gravity="center_vertical"   
+    >
+<View
+    android:id="@+id/color2" 
+    android:layout_width="20dp"
+    android:layout_height="20dp"
+    android:padding="10dp"
+    android:background="@color/Black_SP"
+    />
+<TextView
+    android:id="@+id/tag2" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:textSize="16sp"
+    android:textColor="@color/Black_SP"
+    android:text="未标记"    
+    />
+</LinearLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_below="@+id/line2"
+    android:background="@color/Gainsboro"
+    />
+</RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@color/White" 
+    >
+<TextView 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White" 
+    android:textSize="20sp"
+    android:padding="10dp"
+    android:text="请选择"
+    android:background="@color/Black_SP"   
+    />
+<ListView
+    android:id="@+id/listview" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:divider="@color/Gainsboro"
+	android:cacheColorHint="#00000000"
+    android:dividerHeight="1dp"      
+    />
+</LinearLayout>

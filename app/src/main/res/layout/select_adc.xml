@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+	android:background="@drawable/dialog_full_holo_dark" 
+    >
+<!--type-->
+<LinearLayout
+    android:id="@+id/type_layout" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp"
+	android:gravity="center_vertical"  
+    >
+<TextView
+    android:id="@+id/hint1" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:padding="7dp"
+    android:textSize="18sp"
+    android:textColor="@color/white"
+    android:layout_margin="5dp"
+    android:text="副官类型"  
+    />
+<Spinner
+    android:id="@+id/type" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_margin="5dp"
+    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:entries="@array/adc_type_txt"        
+    />    
+</LinearLayout>
+<!--sex-->
+<LinearLayout
+    android:id="@+id/sex" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+	android:layout_marginBottom="10dp" 
+    android:orientation="horizontal"
+    android:gravity="center_vertical"    
+    >
+<TextView
+    android:id="@+id/hint2" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:padding="7dp"
+    android:textSize="18sp"
+    android:textColor="@color/white"
+    android:layout_margin="5dp"
+    android:text="性别选择"  
+    />
+<RadioGroup
+    android:id="@+id/sex_group"    
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="2"
+    android:orientation="horizontal"
+    >
+<RadioButton
+    android:id="@+id/sex_box1"
+    android:layout_weight="1" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:checked="true"
+	android:button="@drawable/apptheme_btn_radio_holo_dark"
+	android:textColor="@color/white"
+    android:layout_margin="5dp"
+    android:text="男"  
+    />
+<RadioButton
+    android:id="@+id/sex_box2"
+    android:layout_weight="1" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:textColor="@color/white"
+	android:button="@drawable/apptheme_btn_radio_holo_dark"
+    android:layout_margin="5dp"
+    android:text="女" 
+    />
+</RadioGroup>     
+</LinearLayout>
+<include
+    layout="@layout/select_btn"
+    />
+</LinearLayout>

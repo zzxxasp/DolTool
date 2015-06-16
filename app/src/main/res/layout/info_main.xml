@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+	android:background="@color/GhostWhite"
+    >
+<!--Area 2:data-->
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:orientation="vertical"
+    >
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="10dp"
+    android:background="@drawable/theme_blue_btn_rate" 
+    android:textSize="20sp"
+    android:text="航海万物考"    
+    />
+<HorizontalScrollView 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"       
+    >
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:layout_marginBottom="10dp"  
+    >
+<Button
+    android:id="@+id/mission" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp" 
+    android:background="@drawable/theme_blue_listitem" 
+    android:textSize="20sp"
+    android:text="任务"    
+    />
+<Button
+    android:id="@+id/skill"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp" 
+    android:background="@drawable/theme_blue_listitem" 
+    android:textSize="20sp"
+    android:text="技能"    
+    />
+<Button
+    android:id="@+id/adc"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp" 
+    android:background="@drawable/theme_blue_listitem" 
+    android:textSize="20sp"
+    android:text="副官"    
+    />
+<Button
+    android:id="@+id/job"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp" 
+    android:background="@drawable/theme_blue_listitem" 
+    android:textSize="20sp"
+    android:text="职业"    
+    />
+</LinearLayout>
+</HorizontalScrollView>
+</LinearLayout>
+<!--Area 3:more-->
+<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    >
+<TextView
+    android:id="@+id/wiki_title" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="10dp"
+    android:background="@drawable/theme_blue_btn_rate" 
+    android:textSize="20sp"
+    android:text="航海大百科"    
+    />
+<com.key.doltool.view.flat.FlatButton
+	flatui:fl_theme="@array/sea"
+	flatui:fl_cornerRadius="3dp"
+	flatui:fl_borderWidth="0.5dp"
+	flatui:fl_touchEffect="fl_ripple"
+    flatui:fl_blockButtonEffectHeight="2dp" 
+    android:id="@+id/wiki_btn" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:padding="10dp"
+    android:layout_alignParentRight="true"
+    android:text="更多"      
+    />
+<ListView
+    android:id="@+id/wiki_list" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="10dp"
+    android:layout_below="@+id/wiki_title"
+    android:divider="#00000000"
+    android:dividerHeight="1dp"     
+    />
+</RelativeLayout>
+</LinearLayout>

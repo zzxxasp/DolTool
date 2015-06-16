@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/GhostWhite"
+    >
+<include 
+    layout="@layout/system_actionbar_black"
+    />
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@null"
+	>
+<!--Content-->
+<ScrollView
+    android:id="@+id/content_s" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="@null"
+    >
+<RelativeLayout
+    android:id="@+id/content"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/GhostWhite"
+	android:layout_marginBottom="5dp"
+    >
+    <!--Title-->
+    <RelativeLayout
+		android:id="@+id/title"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/Black_SP"
+		android:layout_centerHorizontal="true"
+		android:layout_margin="5dp"
+		>
+		<ImageView
+		    android:id="@+id/pic" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="5dp"
+			android:src="@drawable/dol_b0s1"
+			android:layout_centerVertical="true"
+			android:contentDescription="@null"
+		    />
+   		<TextView 
+			android:id="@+id/name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@null"
+			android:padding="5dp"
+			android:textColor="@color/White"
+			android:textSize="16sp"
+			android:layout_centerVertical="true"
+			android:layout_toRightOf="@+id/pic"
+			android:text=""		    
+   		/>
+		<TextView 
+			android:id="@+id/type"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="5dp"
+			android:layout_margin="5dp"
+			android:background="@drawable/theme_blue_btn_rate"
+			android:layout_centerVertical="true"
+			android:layout_alignParentRight="true"
+			android:textColor="@color/White"
+			android:textSize="12sp"
+			android:text=""
+   			/>     
+    </RelativeLayout>
+    <!--Details_base-->
+    <LinearLayout
+        android:id="@+id/details_base" 
+		android:layout_width="150dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="5dp"
+		android:orientation="vertical"
+		android:layout_below="@+id/title"
+        >	
+     <TextView
+        android:id="@+id/base" 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textColor="@color/White"
+		android:background="@color/Blue_SP"
+		android:padding="10dp"
+		android:gravity="center_horizontal"
+		android:text="@string/part_base"
+		/>
+    </LinearLayout>   
+	<LinearLayout
+        android:id="@+id/details_get" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="5dp"
+		android:layout_toRightOf="@+id/details_base"
+		android:layout_below="@+id/title"
+        >	
+     <TextView 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textColor="@color/White"
+		android:background="@color/Blue_SP"
+		android:padding="10dp"
+		android:gravity="center_horizontal"
+		android:text="@string/part_get"
+		/>   
+    </LinearLayout> 
+</RelativeLayout>
+</ScrollView>
+</RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/GhostWhite"
+    android:orientation="vertical">
+<include
+    layout="@layout/system_actionbar_black"
+/>
+<RelativeLayout 
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/area_1"
+    android:layout_marginTop="10dp"
+    >  
+<!--区域①-->
+<LinearLayout
+    android:id="@+id/area_2"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+	android:background="@drawable/bg_content_card"
+	android:padding="5dp"
+	android:layout_margin="5dp"
+	>
+<ImageView
+    android:contentDescription="@null"
+    android:id="@+id/img"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:src="@drawable/dol_trove_defalut"
+    />
+<TextView 
+	android:id="@+id/txt"
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:gravity="center"
+    android:lines="2"
+    android:textSize="12sp"
+    android:background="@color/Blue_SP" 
+    android:text=""
+    />
+<RatingBar 
+	android:id="@+id/star"
+	android:layout_width="wrap_content"
+    android:layout_height="15dp"
+    android:layout_gravity="center"
+    android:numStars="5"
+    android:rating="3"
+    android:isIndicator="true"
+    android:clickable="false"
+    android:progressDrawable="@drawable/theme_progress_star"
+    />
+</LinearLayout>
+<!--区域③-->
+<RelativeLayout
+    android:id="@+id/area_4"
+    android:layout_toRightOf="@+id/area_2"
+    android:layout_above="@+id/area_3"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+	android:background="@drawable/bg_content_card"
+	android:padding="0dp"
+	android:layout_margin="5dp"
+	>
+<LinearLayout
+    android:id="@+id/row1" 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    >
+<LinearLayout
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+<TextView
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Blue_SP"
+    android:gravity="center"
+    android:lines="2"
+    android:textSize="14sp"
+    android:text="@string/adventure_t_feats"
+    />
+<TextView 
+	android:id="@+id/feats"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:gravity="center"
+    android:lines="2"
+    android:textSize="14sp"
+    android:text=""
+    />    
+</LinearLayout>
+<LinearLayout
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    >
+<TextView
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Blue_SP"
+    android:gravity="center"
+    android:lines="2"
+    android:textSize="14sp"
+    android:text="@string/adventure_t_card"
+    />
+<TextView 
+	android:id="@+id/card_point"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:gravity="center"
+    android:lines="2"
+    android:textSize="14sp"
+    android:text=""
+    />    
+</LinearLayout> 
+</LinearLayout>
+<LinearLayout
+	android:id="@+id/row2"
+    android:layout_below="@+id/row1"    
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:orientation="vertical"
+    >
+<TextView
+    android:id="@+id/need_txt"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:textColor="@color/Blue_SP"
+    android:gravity="center"
+    android:textSize="14sp"
+    android:text="@string/adventure_t_skill"
+    />
+<TextView 
+	android:id="@+id/need"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:gravity="center"
+    android:singleLine="true"
+    android:textSize="14sp"
+    android:text=""
+    />    
+</LinearLayout>
+<LinearLayout
+	android:id="@+id/row3"
+    android:layout_below="@+id/row2"    
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    >
+<TextView
+	android:id="@+id/misson_txt"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:textColor="@color/Blue_SP"
+    android:gravity="center"
+	android:paddingTop="5dp"
+	android:paddingBottom="5dp"
+    android:textSize="14sp"
+    android:text="@string/adventure_t_misson"
+    />
+<TextView 
+	android:id="@+id/misson"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:gravity="center"
+    android:singleLine="true"
+    android:textSize="14sp"
+    android:text=""
+    />    
+</LinearLayout>
+<ImageView
+    android:id="@+id/over_pic"
+    android:contentDescription="@null" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:src="@drawable/ic_finish"    
+    />
+</RelativeLayout>
+<!--区域②-->
+<LinearLayout
+	android:id="@+id/area_3"
+    android:layout_below="@+id/area_2"
+    android:layout_width="match_parent"
+	android:background="@drawable/bg_content_card"
+	android:padding="10dp"
+	android:layout_margin="5dp"
+    android:layout_height="140dp"
+    >
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/details"
+	android:textSize="14sp"
+	android:textColor="@color/Black_SP"
+	android:text=""/>
+</LinearLayout>
+<com.key.doltool.view.flat.FlatButton
+	flatui:fl_theme="@array/sea"
+	flatui:fl_cornerRadius="3dp"
+	flatui:fl_borderWidth="0.5dp"
+	flatui:fl_touchEffect="fl_ripple"
+	flatui:fl_blockButtonEffectHeight="2dp"
+    android:id="@+id/goto_mission" 
+    android:textColor="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp"
+    android:layout_centerHorizontal="true"
+    android:layout_above="@+id/bottom"
+    android:text="跳转至任务"
+    />
+<View
+    android:id="@+id/bottom"
+    android:background="@color/Beige" 
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+	android:layout_alignParentBottom="true"    
+    android:padding="10dp"    
+    />
+</RelativeLayout>
+</LinearLayout>

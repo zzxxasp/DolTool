@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+	android:background="@drawable/dialog_full_holo_dark" 
+    >
+<!--Name-->
+<EditText
+    android:id="@+id/boat_name" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="请输入想要搜索的发现物名称"
+	android:padding="10dp"
+	android:layout_margin="10dp"
+    android:textColor="@color/White"
+    android:background="@drawable/edittext_login"
+    android:inputType="text"
+    />
+<include
+    layout="@layout/select_btn"
+    />
+</LinearLayout>

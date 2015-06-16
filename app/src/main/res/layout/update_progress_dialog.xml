@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@null"
+    >
+<LinearLayout 
+	android:id="@+id/panel_container"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginLeft="20dp"
+	android:layout_marginRight="20dp"
+	android:background="@drawable/material_card"
+	android:gravity="center_horizontal"
+	android:orientation="vertical"     
+    >
+<!--Title-->
+<LinearLayout 
+    android:id="@+id/title"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@null" 
+    >
+<TextView
+    android:id="@+id/title_txt" 
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:textColor="#DE000000"
+	android:textSize="24sp"
+	android:paddingLeft="24dp"
+	android:paddingTop="24dp"
+	android:paddingRight="24dp"
+	android:text="新版本可用"    
+    />
+</LinearLayout>
+<LinearLayout 
+	android:id="@+id/in_main"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:orientation="horizontal"
+    >
+<include
+	android:id="@+id/layout1"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	layout="@layout/update_dialog" 
+	/>
+<include
+    android:id="@+id/layout2"  
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:visibility="gone"
+    layout="@layout/down_dialog"
+    />    
+</LinearLayout>
+</LinearLayout>
+</LinearLayout>

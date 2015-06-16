@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@null" 
+    android:padding="1dp"
+    >
+<LinearLayout
+    android:id="@+id/item" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:padding="3dp"
+    android:gravity="center"
+	android:background="@drawable/theme_item_frame"  
+    >
+<ImageView
+    android:id="@+id/pic"
+    android:contentDescription="@null" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:src="@drawable/other_j0s"
+	android:paddingTop="5dp"
+	android:paddingBottom="5dp"
+	android:paddingLeft="5dp"
+    />
+<TextView
+    android:id="@+id/txt" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="战术"
+    android:padding="5dp"
+    android:textColor="@color/Black_SP"
+    />
+</LinearLayout>
+</LinearLayout>

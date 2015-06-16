@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--标题栏-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="fill_parent"
+    android:layout_height="43dp"
+    android:orientation="vertical" 
+    android:weightSum="3"
+    android:background="@drawable/theme_dark_blue"
+    >
+<TableRow    
+	    android:weightSum="3"
+	    android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+	    >
+<TextView
+    android:id="@+id/main_item1" 
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:text="@string/main_item1"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+	android:paddingBottom="5dp"
+    android:textSize="16sp"
+    android:textColor="@color/White"
+    />
+<TextView
+    android:id="@+id/main_item2"  
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:text="@string/main_item2"
+    android:textSize="16sp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="5dp"
+    android:textColor="@color/Gainsboro"
+    />
+<TextView
+    android:id="@+id/main_item3"  
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:text="@string/main_item3"
+    android:textSize="16sp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="5dp"
+    android:textColor="@color/Gainsboro"
+    />
+</TableRow>
+<TableRow
+	    android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:weightSum="3"
+	    >
+<ImageView
+    android:contentDescription="@string/main_item1"
+    android:id="@+id/main_chose_line"
+    android:layout_weight="1"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_height="3dp"
+    android:background="@color/White"
+    />
+<ImageView
+    android:contentDescription="@string/main_item1"
+    android:layout_weight="1"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_height="3dp"
+    />
+<ImageView
+    android:contentDescription="@string/main_item1"
+    android:layout_weight="1"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_height="3dp"
+    />
+</TableRow>
+</LinearLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/GhostWhite"
+    >
+<include 
+    layout="@layout/system_actionbar_black"
+    />
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/theme_dark_blue"      
+    >
+<TextView
+    android:id="@+id/name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+	android:textColor="@color/white"
+	android:padding="8dp"
+	android:textSize="18sp"
+	android:text="北美的酒馆料理"        
+    />
+<View
+    android:id="@+id/line"
+    android:layout_width="match_parent"
+    android:layout_height="0.5dp"
+    android:layout_margin="1dp"
+    android:background="@color/white"
+    android:layout_below="@+id/name"     
+    />
+<LinearLayout
+    android:id="@+id/details_layout" 
+	android:layout_below="@+id/line" 
+	android:padding="5dp"
+	android:gravity="center_vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"     
+    >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+	android:textColor="@color/Blue_SP"
+	android:padding="5dp"
+	android:background="@drawable/theme_white_btn_rate"
+	android:text="描述"        
+    />    
+<TextView
+    android:id="@+id/details" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+	android:textColor="@color/white"
+	android:padding="5dp"
+	android:text="北美的酒馆料理,十分好吃哦"        
+    />    
+</LinearLayout>
+<LinearLayout
+	android:padding="5dp"
+	android:gravity="center_vertical"
+	android:layout_below="@+id/details_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"     
+    >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+	android:textColor="@color/Blue_SP"
+	android:padding="5dp"
+	android:background="@drawable/theme_white_btn_rate"
+	android:text="获得方式"        
+    />    
+<TextView
+    android:id="@+id/get_way" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+	android:textColor="@color/white"
+	android:padding="5dp"
+	android:text="南特8000元购买"        
+    />  
+</LinearLayout>
+
+<TextView
+    android:id="@+id/rank" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+	android:textColor="@color/white"
+	android:layout_alignParentRight="true"
+	android:layout_alignParentTop="true"
+	android:padding="5dp"
+	android:text="烹饪:R2-R3"        
+    />    
+</RelativeLayout>
+<ListView
+    android:id="@+id/listview" 
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"    
+    />
+</LinearLayout>

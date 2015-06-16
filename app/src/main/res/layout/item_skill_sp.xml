@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:background="@null"   
+    >
+<RelativeLayout
+    android:id="@+id/sp_layout" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:padding="5dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/theme_item_frame"
+    >
+<TextView
+    android:id="@+id/tag_name"
+    android:layout_centerVertical="true"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:padding="3dp"
+    android:text="炼金术师"    
+    />
+<TextView
+    android:id="@+id/tag_details"
+    android:layout_centerVertical="true"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:layout_toRightOf="@+id/tag_name"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:padding="3dp"
+    android:text="技能:+1"    
+    />
+</RelativeLayout>
+</LinearLayout>

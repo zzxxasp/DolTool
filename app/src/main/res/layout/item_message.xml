@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+<RelativeLayout
+    android:id="@id/main" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_content_card"
+    >
+<TextView
+    android:id="@+id/word" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:textSize="16sp"
+    android:padding="5dp"
+    android:text="艾钱包是艾米移动POS的客户端软件。
+艾米手机POS是专门为小微商户提供收款便利的一款创新性手机POS。
+打通随身端的资金流通渠道，让资金流通不再受环境限制，
+进一步加速资金流转速度，为产业链上下游提供基于移动终端的支付结算与资金归集解决方案！
+支付解决方案，而且也为手机、平板电脑等移动终端用户提供了安全、便捷的支付体验。
+您只需要通过app提交基本信息，自助申请即可使用。"    
+    />
+<TextView
+    android:id="@+id/time"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:textColor="@color/Blue_SP" 
+    android:padding="5dp"
+    android:layout_alignParentRight="true"
+    android:layout_below="@+id/word"
+    android:text="2014.9.26 10:30:00"
+    />
+</RelativeLayout>
+</LinearLayout>

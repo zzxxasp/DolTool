@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:padding="5dp"
+    android:background="@drawable/list"
+    >
+<ImageView
+    android:contentDescription="@null"
+    android:id="@+id/pic"
+    android:padding="1dp" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/dol_b0s1"    
+    />
+<TextView
+    android:id="@+id/name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:layout_centerVertical="true"
+    android:layout_toRightOf="@+id/pic"
+    android:padding="5dp"
+    android:textSize="14sp"
+    android:paddingRight="2dp"
+    android:text="黑色炼金药水"    
+    />
+<ImageView
+    android:id="@+id/ic_price"
+    android:layout_centerVertical="true" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_coins_s"
+	android:layout_toLeftOf="@+id/price"
+    />
+<TextView
+    android:id="@+id/price"
+    android:layout_centerVertical="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+	android:textColor="@color/Black_SP"
+    android:textSize="14sp"
+    android:padding="5dp"
+    android:text="1000(需投资:1,000,000)"    
+    />
+</RelativeLayout>

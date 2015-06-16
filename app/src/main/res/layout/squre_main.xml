@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/GhostWhite"
+    >
+<LinearLayout
+    android:id="@+id/map" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+	android:padding="10dp"
+	android:gravity="center_vertical"
+    android:background="@drawable/theme_blue_listitem_t"    
+    >
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:orientation="vertical"
+    android:gravity="center_horizontal|top"   
+    >
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:textSize="18sp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    android:text="墨卡托" 
+    />
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/GhostWhite"
+    android:text="世界地图" 
+    />
+</LinearLayout>
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:layout_marginLeft="10dp"
+	android:gravity="center_vertical"
+    android:lines="4"
+    android:text="16世纪地图制图学家，出生于荷兰，是地图发展史上划时代人物，开辟了近代地图学发展的广阔道路。" 
+    />
+</LinearLayout>
+<LinearLayout 
+    android:id="@+id/fortune" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+	android:padding="10dp"
+	android:gravity="center_vertical"
+    android:background="@drawable/theme_blue_listitem_t"    
+    >    
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:orientation="vertical"
+    android:gravity="center_horizontal|top"   
+    >
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+	android:textSize="18sp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    android:text="爱丽丝" 
+    />
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/GhostWhite"
+    android:text="航海运势" 
+    />
+</LinearLayout>
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:layout_marginLeft="10dp"
+    android:gravity="center_vertical"
+    android:lines="4"
+    android:text="未知的少女，游弋在世界之海中，引导时间的流向，决定着航海者们的命运。" 
+    />
+</LinearLayout>   
+</LinearLayout>

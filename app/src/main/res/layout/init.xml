@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:gravity="center"
+    android:background="@color/GhostWhite"
+    >
+<com.key.doltool.view.flat.FlatButton
+	android:id="@+id/btn" 
+	flatui:fl_theme="@array/sea"
+	flatui:fl_cornerRadius="3dp"
+	flatui:fl_borderWidth="0.5dp"
+	flatui:fl_touchEffect="fl_ripple"
+	flatui:fl_blockButtonEffectHeight="2dp"
+	android:textColor="@color/white"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="爬取数据"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    />
+<com.key.doltool.view.flat.FlatButton
+    android:id="@+id/btn2" 
+	flatui:fl_theme="@array/candy"
+	flatui:fl_cornerRadius="3dp"
+	flatui:fl_borderWidth="0.5dp"
+	flatui:fl_touchEffect="fl_ripple"
+	flatui:fl_blockButtonEffectHeight="2dp"
+	android:textColor="@color/white"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:text="保存数据"
+    />
+</LinearLayout>

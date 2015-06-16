@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+	android:background="@drawable/dialog_full_holo_dark" 
+    >
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    >
+<!--Name-->
+<Spinner
+    android:id="@+id/type" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+	android:layout_margin="5dp"
+    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:entries="@array/back_type"     
+    />
+<EditText
+    android:id="@+id/boat_name" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="请输入条目的名称"
+	android:padding="10dp"
+    android:textColor="@color/White"
+    android:background="@drawable/edittext_login"
+    android:inputType="text"
+    />
+</LinearLayout>
+<include
+    layout="@layout/select_btn"
+    />
+</LinearLayout>

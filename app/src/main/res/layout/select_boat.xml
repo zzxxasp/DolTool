@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_full_holo_dark" 
+    >
+<!--Name-->
+<EditText
+    android:id="@+id/boat_name" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:textColor="@color/White"
+    android:background="@drawable/edittext_login"
+    android:hint="@string/hint_name"
+    android:inputType="text"
+    />
+<!--Size-->
+<LinearLayout
+    android:id="@+id/size"
+	android:paddingLeft="10dp"
+	android:paddingBottom="10dp"  
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="3"    
+    >
+<CheckBox
+    android:id="@+id/s_box" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+    android:text="@string/select_size_s"  
+    />
+<CheckBox
+    android:id="@+id/m_box"  
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+    android:text="@string/select_size_m"  
+    /> 
+<CheckBox
+    android:id="@+id/l_box" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+    android:text="@string/select_size_l" 
+    />     
+</LinearLayout>
+<include
+    layout="@layout/select_btn"
+    />
+</LinearLayout>

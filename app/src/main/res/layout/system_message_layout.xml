@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+<include
+	layout="@layout/system_actionbar_black" 
+    />
+<!--内容-->
+<EditText
+ 	android:id="@+id/content" 
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:padding="10dp" 
+    android:maxLength="200"
+    android:gravity="top"
+    android:inputType="textImeMultiLine"
+    android:imeOptions="normal"
+    android:textCursorDrawable="@null"
+    android:layout_margin="10dp"
+    android:background="@drawable/edittext_background_rounded"
+    android:textColor="@color/Black"
+    android:hint="请输入内容(最多200字)"   
+    />
+<!--署名-->
+<View
+    android:id="@+id/line2" 
+    android:layout_width="match_parent"
+    android:layout_height="3dp"
+    android:layout_margin="10dp"
+    android:background="@color/Gainsboro"
+/>
+<com.key.doltool.view.AutoResizeTextView
+    android:contentDescription="@null"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:text="如果可以，请留下您的游戏ID或是贴吧ID。"
+    android:textColor="@color/Black_SP"
+    />
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"     
+    >
+<EditText
+    android:id="@+id/name" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:layout_toLeftOf="@+id/btn"
+    android:padding="10dp" 
+    android:layout_margin="10dp"
+    android:singleLine="true"
+    android:imeOptions="flagNoExtractUi"
+    android:layout_centerVertical="true"
+    android:textCursorDrawable="@null"
+    android:textColor="@color/Black" 
+    android:background="@drawable/edittext_background_rounded"
+    android:hint="请输入你的ID"    
+    />
+<com.key.doltool.view.flat.FlatButton
+	flatui:fl_theme="@array/sea"
+	flatui:fl_cornerRadius="3dp"
+	flatui:fl_borderWidth="0.5dp"
+	flatui:fl_touchEffect="fl_ripple"
+    flatui:fl_blockButtonEffectHeight="2dp"
+    android:id="@+id/btn"
+    android:layout_gravity="right"
+    android:layout_margin="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:layout_centerVertical="true"
+    android:layout_alignParentRight="true"
+    android:text="发送"
+    android:textColor="@color/White"
+    />
+</RelativeLayout>
+</LinearLayout>
+

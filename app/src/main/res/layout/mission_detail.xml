@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@null"
+     >
+<!--TitleBar-->
+<include
+    layout="@layout/system_actionbar_black"   
+/>
+<!--Content-->
+<ScrollView
+    android:id="@+id/content_s" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="@null"
+    >
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:background="@color/GhostWhite"    
+    >
+<TextView
+    android:id="@+id/null_txt" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:textColor="@color/Black_SP"
+    android:textSize="14sp"
+ 	android:visibility="gone"
+    android:text="没有查询到相关任务"        
+	/>
+<LinearLayout
+    android:id="@+id/content"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/GhostWhite"
+    android:orientation="vertical"
+	android:layout_marginBottom="5dp"
+    >
+    <!--Title-->
+    <RelativeLayout
+		android:id="@+id/title"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="5dp"
+		android:background="@drawable/bg_content_card"
+		android:layout_margin="5dp"
+		>
+		<TextView 
+			android:id="@+id/type"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:layout_margin="5dp"
+			android:background="@drawable/theme_blue_btn_rate"
+			android:layout_centerVertical="true"
+			android:textColor="@color/White"
+			android:textSize="12sp"
+			android:text=""
+   			/> 
+   		<TextView 
+			android:id="@+id/name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@null"
+			android:padding="5dp"
+			android:textColor="@color/Black_SP"
+			android:textSize="16sp"
+			android:layout_toRightOf="@+id/type"
+			android:layout_centerVertical="true"
+			android:text=""		    
+   		/>    
+    </RelativeLayout>
+    <com.key.doltool.view.LinearLayoutForListView
+        android:id="@+id/details" 
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:padding="5dp"
+		android:layout_margin="5dp"
+		android:background="@drawable/bg_content_card"  
+        />
+</LinearLayout>
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

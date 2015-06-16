@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:f="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/GhostWhite"
+    >
+<!--TitleBar-->
+<include
+    layout="@layout/system_actionbar_black"   
+/>
+<ScrollView 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"        
+    >
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+<!--name-->
+<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:background="@color/Black_SP"
+    >
+<TextView
+    android:id="@+id/name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="3dp"
+    android:textSize="17sp"
+    android:text="一级糕点师"    
+    />
+<TextView
+    android:id="@+id/type" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:textColor="@color/white"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:textSize="17sp"
+    android:padding="3dp"
+    android:text="商业"    
+    />
+</RelativeLayout>
+<!--Details-->
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+	android:padding="5dp"   
+    >
+<View 
+    android:layout_width="10dp"
+    android:layout_height="match_parent"
+    android:background="@color/SpringGreen"    
+    />
+<TextView
+    android:id="@+id/details" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="5dp"
+	android:background="@color/Black_SP"
+    android:text="从事游击任务的专家。"   
+    />
+</LinearLayout>
+<!--Need-->
+<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:background="@color/Black_SP"
+    >
+<TextView
+    android:id="@+id/tag1" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="3dp"
+    android:layout_margin="5dp"
+	android:background="@drawable/theme_blue_btn_rate"
+    android:text="等级需求"    
+    />
+<TextView
+    android:id="@+id/tag2" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="3dp"
+    android:layout_margin="5dp"
+    android:layout_below="@+id/tag1"
+	android:background="@drawable/theme_blue_btn_rate"
+    android:text="学习费用"   
+    />
+<TextView
+    android:id="@+id/tag4" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="3dp"
+    android:layout_margin="5dp"
+    android:layout_below="@+id/tag2"
+	android:background="@drawable/theme_blue_btn_rate"
+    android:text="转职证明"   
+    />
+<TextView
+    android:id="@+id/level" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:layout_toRightOf="@+id/tag1"
+    android:padding="3dp"
+    android:layout_margin="5dp"
+    android:text="38/10/10 合计:80"   
+    />
+<TextView
+    android:id="@+id/money" 
+    android:layout_toRightOf="@+id/tag1"
+    android:layout_below="@+id/tag1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="3dp"
+    android:layout_margin="5dp"
+    android:text="800000"
+    />
+<TextView
+    android:id="@+id/book_mark" 
+    android:layout_toRightOf="@+id/tag1"
+    android:layout_below="@+id/tag2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="3dp"
+    android:layout_margin="5dp"
+    android:text="未开垦地调查委任书"
+    />
+</RelativeLayout>
+<!--SP Skill -->
+<RelativeLayout
+    android:id="@+id/sp_layout" 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:background="@color/Black_SP"
+    >
+<TextView
+    android:id="@+id/tag3"
+    android:layout_centerVertical="true"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="3dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:text="专业技能"    
+    />
+<ImageView
+    android:id="@+id/sp_pic"
+	android:layout_toRightOf="@+id/tag3"
+    android:layout_width="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+	android:src="@drawable/other_j0s"  
+    />
+<TextView
+    android:id="@+id/sp_name"
+    android:layout_toRightOf="@+id/sp_pic"
+    android:layout_centerVertical="true"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:padding="3dp"
+    android:text="会计"    
+    />
+<TextView
+    android:id="@+id/tag_details"
+    android:layout_centerVertical="true"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:layout_alignParentRight="true"
+    android:padding="3dp"
+    android:text="效果:+1"    
+    />
+</RelativeLayout>
+<!--Skill-list-->
+<TextView
+    android:id="@+id/tag5"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:gravity="center"
+    android:background="@color/Blue_SP"
+    android:padding="3dp"
+    android:text="优待技能"    
+    />
+    <com.key.doltool.view.FlowLayout
+        android:id="@+id/skill_array"
+    	f:horizontalSpacing="5dp"
+    	f:verticalSpacing="6dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="5dp"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
+		android:layout_marginBottom="5dp"
+		android:background="@color/Black_SP">  
+	</com.key.doltool.view.FlowLayout>
+	</LinearLayout>
+	</ScrollView>
+</LinearLayout>

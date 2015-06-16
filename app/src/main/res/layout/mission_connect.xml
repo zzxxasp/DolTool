@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/theme_grain"
+    >
+<!--MenuTitle-->
+<TextView
+    android:id="@+id/before_mission_tag" 
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:textColor="@color/White"
+    android:textSize="14sp"
+    android:gravity="center"
+    android:padding="5dp"
+    android:background="@color/SlateGray"
+    android:text="前置任务"    
+    />
+<!--MenuBody-->
+<com.key.doltool.view.LinearLayoutForListView
+	android:id="@+id/before_mission_list" 
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:layout_margin="5dp"
+	/>
+<TextView
+    android:id="@+id/after_mission_tag" 
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:textColor="@color/White"
+    android:textSize="14sp"
+    android:gravity="center"
+    android:padding="5dp"
+    android:background="@color/SlateGray"
+    android:text="后续任务"    
+    />
+<com.key.doltool.view.LinearLayoutForListView
+	android:id="@+id/after_mission_list" 
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:layout_margin="5dp"
+	/>
+</LinearLayout>

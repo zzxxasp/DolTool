@@ -1,0 +1,300 @@
+﻿<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="css/bootstrap.min.css"  rel="stylesheet"/>
+<link href="css/bootstrap-theme.min.css"  rel="stylesheet"/>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script language="javascript">
+    $(function () {            
+		$("a.wiki").click(function (e) { 
+			event.preventDefault();
+			var context=$(this).text(); 
+			window.jump.adc(0,context);  
+		});
+		$("a.type").click(function (e) { 
+			event.preventDefault();
+			var context=$(this).attr("id"); 
+			window.jump.adc(1,context);  
+		});
+		$("a.skill").click(function (e) { 
+			event.preventDefault();
+			var context=$(this).text(); 
+			window.jump.jump(1);  
+		});     
+	});
+</script>
+<div class="wikiContent" style="font-size:15px" style="margin:4px;">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">副官资料</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+          <ul class="nav navbar-nav">
+            <li><a href="#" class="skills">副官技能</a></li>
+			<li class="dropdown">
+      			<a class="dropdown-toggle" data-toggle="dropdown" href="#">副官一览<span class="caret"></span></a>
+      			<ul class="dropdown-menu" role="menu">
+        			<li><a href="#" class="type" id="1">冒险系副官</a></li>
+        			<li><a href="#" class="type" id="2">交易系副官</a></li>
+        			<li><a href="#" class="type" id="3">海事系副官</a></li>
+      			</ul>
+    		</li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+	<br><br><br><br>
+	<div class="panel panel-default" style="margin:4px;">
+		<div class="panel-heading"><h1 class="panel-title">目录</h1></div>
+  	 	<div class="panel-body">
+			<div class="list-group">
+			<ul>
+				<li><a href="#副官僱用" class="menu_list">副官僱用</a></li>
+				<li><a href="#副官职位效果" class="menu_list">副官职位效果</a></li>
+				<li><a href="#副官经验值计算方式" class="menu_list">副官经验值计算方式</a></li>
+				<li><a href="#副官特性值" class="menu_list">副官特性值</a></li>
+				<li><a href="#副官装备" class="menu_list">副官装备</a></li>
+				<li><a href="#副官船长" class="menu_list">副官船长</a></li>
+			</ul>
+			</div>
+  		</div>
+	</div>
+<br><br>
+<a name="副官僱用" style="margin:4px;"></a>
+<div class="panel panel-default" style="margin:4px;">
+  <div class="panel-heading">
+    <h3 class="panel-title">副官僱用</h3>
+  </div>
+  <div class="panel-body">
+  	<div class="list-group">
+  		<div class="list-group-item">
+    		可僱用副官之港口：<a class="wiki" href="#">伦敦</a>、<a class="wiki" href="#">阿姆斯特丹</a>、<a class="wiki" href="#">里斯本</a>、<a class="wiki" href="#">塞维尔</a>、<a class="wiki" href="#">马赛</a>、<a class="wiki" href="#">热那亚</a>、<a class="wiki" href="#">突尼斯</a>、<a class="wiki" href="#">拿坡里</a>、<a class="wiki" href="#">威尼斯</a>、<a class="wiki" href="#">雅典</a>、<a class="wiki" href="#">伊斯坦堡</a>、<a class="wiki" href="#">亚历山大</a>、<a class="wiki" href="#">桑给巴尔</a>、<a class="wiki" href="#">卡利卡特</a>、<a class="wiki" href="#">雅加达</a>、<a class="wiki" href="#">波多贝罗</a>、<a class="wiki" href="#">里约热内卢</a>、<a class="wiki" href="#">利马</a>、<a class="wiki" href="#">杭州</a>、<a class="wiki" href="#">安平</a>、<a class="wiki" href="#">堺市</a>、<a class="wiki" href="#">汉阳</a>。
+  		</div>
+  		<div class="list-group-item">
+<div>
+<font color="red">１副：</font>当玩家<font color="green">任一项等级２０以上</font>时即可。<br><font color="red">２副：</font>须满足─<br>　　　a.玩家的<font color="green">任一项等级４０以上</font><br>　　　b.玩家的<font color="green">１副任一项等级２０以上</font><br><font color="red">３副：</font>须满足─<br>　　　a.玩家已经<font color="green">有２副</font><br>　　　b.玩家<font color="green">有购买高级公寓</font>。<font color="red">【La Frontera Chap.1改版】</font>
+</div>
+			<div>
+			<font color="#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">c.</font><font color="#464646">玩家的</font><font color="green">１副任一项等级２０以上</font></font><br><font color="olive">满足条件时，须先放置一个副官在公寓中，再到酒馆或休息站雇用新副官(此时１人公寓待命２人随船)</font><br><font color="red">４副：</font>须满足─<br>　　　a.玩家已经<font color="green">有３副</font><br>　　　b.玩家的<font color="green">高级公寓升级成Rank3</font>。<font color="red">【La Frontera Chap.3改版】</font>
+			</div>
+			<div>
+			<font color="#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">c.</font><font color="#464646">玩家的</font><font color="green">１副任一项等级２０以上</font></font><br><font color="olive">满足条件时，须先放置二个副官在公寓中，再到酒馆或休息站雇用新副官(此时２人公寓待命２人随船)</font><br><font color="red">５副：</font>须满足─（东亚敕命完成后可雇用）<br>　　　a.玩家已经<font color="green">有４副</font><font color="red">【El Oriente Chap.1改版】</font>
+			</div>
+			<div><font color="#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">b.</font><font color="#464646">玩家的</font><font color="green">１副任一项等级２０以上</font></font></div>
+			<div>
+			<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">c.</font><font color="#464646">玩家的</font><font color="green">高级公寓升级成Rank4</font><font color="#464646">。</font><font color="red">【La Frontera Chap.3改版】</font></font><br><font color="olive">满足条件时，须先放置三个副官在公寓中，再到酒馆或休息站雇用新副官(此时３人公寓待命２人随船)</font><br>
+			</div>
+  		</div>
+	</div>
+  </div>
+  <div class="panel-footer text-danger">
+  	备注:聘请3、4、5副的时候至少有有一名副官的单项等级超过20级，不在队伍内亦可。如果没有的话将无法聘请。
+  </div>
+</div>
+<br><br>
+
+<a name="副官职位效果" style="margin:4px;"></a>
+<div class="panel panel-default" style="margin:4px;">
+  <div class="panel-heading">副官职位效果</div>
+	<div class="table-responsive">
+	<table width="100%" class="table table-striped table-bordered">
+	<thead><tr>
+		<th><div align="center">职位</div></th>
+		<th>效果</th>
+		<tbody>
+		<tr>
+		<td align="center">航海长</td>
+		<td>灾害随机自动回复(海藻)。</td>
+		</tr>
+		<tr>
+		<td align="center">警戒员</td>
+		<td >采集成功率上升。提示沉船位置。</td>
+		</tr>
+		<tr>
+		<td align="center">主计长</td>
+		<td>生产时大成功机率增加。</td>
+		</tr>
+		<tr>
+		<td align="center">仓管</td>
+		<td>灾害随机性自动回复(不卫生、火灾、老鼠)。防止窃盗发生。</td>
+		</tr>
+		<tr>
+		<td align="center">兵长</td>
+		<td>敌军的砲击引起船员混乱的机率下降。</td>
+		</tr>
+		<tr>
+		<td align="center">船医</td>
+		<td>灾害随机自动回复(疾病、营养不良、失眠、叛乱、争吵、不满、不安、思乡)。</td>
+		</tr>
+		</tbody></table>
+	</div>
+</div>
+<br><br>
+<a name="副官经验值计算方式" style="margin:4px;"></a>
+<div class="panel panel-default" style="margin:4px;">
+  <div class="panel-heading">副官经验值计算方式</div>
+	<div class="panel-body">
+	<ol>
+	<li>
+	<font color="olive"><b>方法一</b></font>：<b>随玩家动作取得的经验而得到相同经验(注：玩家等级封顶，副官还有经验的。</b>) </li>
+	<li>
+	<font color="olive"><b>方法二</b></font>：<b>随航海天数增加</b> </li>
+	<li>
+	<b>经验值奖励航海天数</b>：每天领取一次<b>20天</b><b>(<font color="red">台服时间晚上12点</font></b>)，最大可存<b>200天</b> </li>
+	</ol>
+  	</div>
+	<div class="table-responsive">
+	<table width="63%" class="table table-striped table-bordered">
+		<tbody>
+		<tr>
+		<td width="12%" rowspan="2" align="center" valign="middle"  style="line-height:60px;">职位</td>
+		<td align="center" colspan="2">经验值</td>
+		</tr>
+		<tr>
+		<td width="36%" align="center">有奖励</td>
+		<td width="52%" align="center">无奖励</td>
+		</tr>
+		<tr>
+		<td>航海长</td>
+		<td>冒险 (冒LV 1)x30 (上限400)</td>
+		<td>冒险 20</td>
+		</tr>
+		<tr>
+		<td>警戒员</td>
+		<td>冒险 (冒LV 1)x15 (上限200)   战斗 (战LV 1)x15 (上限200)</td>
+		<td>冒险 10   战斗 10</td>
+		</tr>
+		<tr>
+		<td>主计长</td>
+		<td>交易 (交LV 1)x30 (上限400)</td>
+		<td>交易 20</td>
+		</tr>
+		<tr>
+		<td>仓管</td>
+		<td>交易 (交LV 1)x15 (上限200)   冒险 (冒LV 1)x15 (上限200)</td>
+		<td>交易 10   冒险 10</td>
+		</tr>
+		<tr>
+		<td>兵长</td>
+		<td>战斗 (战LV 1)x30 (上限400)</td>
+		<td>战斗 20</td>
+		</tr>
+		<tr>
+		<td>船医</td>
+		<td>战斗 (战LV 1)x15 (上限200)   交易 (交LV 1)x15 (上限200)</td>
+		<td>战斗 10   交易 10</td>
+		</tr>
+	  </tbody></table>
+	</div>
+</div>
+<br><br>
+<a name="副官特性值" style="margin:4px;"></a>
+<div class="panel panel-default" style="margin:4px;">
+  <div class="panel-heading">副官特性值</div>
+	<div class="panel-body">
+		<b><font color="red">副官初期特性值，僱用时会随机决定。</font></b><br>副官各等级(冒/交/战)上昇，会追加特性点数，可用特性点数加大指定的特性值。<br>例如想快速增加船医特性，可在储足特性点数后，选择将特性点数加大船医特性值。<br><b>特性点数计算如下</b><br><font color="blue"><b>。10级以上时(10/12/14)﹐每昇2级﹐加一个特性点数</b></font><br><font color="blue"><b>。20级以上时﹐每昇1级﹐加一个特性点数</b></font><br><font color="blue"><b>。30级以上时﹐每昇到单数等级加一点﹐每昇到双数等级加两点</b></font><br><font color="blue"><b>。40级以上时﹐每昇1级﹐加两个特性点数</b></font><br><font color="red"><b>。特性点数累积上限为100点</b></font><br><b>特性值在副官技能等级表现公式：</b><br><b><font color="blue">(特性值/10) 1 小数点不计</font></b><br><b>以下是特性显示条件(当达到其中一项就会显示该职位的数值</b>)<br>  	</div>
+	<div class="table-responsive">
+	<table width="63%" class="table table-striped table-bordered">
+	<tbody><tr>
+	<td align="center">职位</td>
+	<td align="center">显示条件1</td>
+	<td align="center">显示条件2</td>
+	<td align="center">显示条件3</td>
+	</tr>
+	<tr>
+	<td align="center">航海长</td>
+	<td align="center">冒险LV10以上</td>
+	<td align="center">-</td>
+	<td align="center">-</td>
+	</tr>
+	<tr>
+	<td align="center">警戒员</td>
+	<td align="center">冒险LV12以上</td>
+	<td align="center">战斗LV12以上</td>
+	<td align="center">冒险LV8以上<br>战斗LV8以上</td>
+	</tr>
+	<tr>
+	<td align="center">主计长</td>
+	<td align="center">交易LV10</td>
+	<td align="center">-</td>
+	<td align="center">-</td>
+	</tr>
+	<tr>
+	<td align="center">仓管</td>
+	<td align="center">冒险LV12以上</td>
+	<td align="center">交易LV12以上</td>
+	<td align="center">冒险LV8以上<br>交易LV8以上</td>
+	</tr>
+	<tr>
+	<td align="center">兵长</td>
+	<td align="center">战斗LV10以上</td>
+	<td align="center">-</td>
+	<td align="center">-</td>
+	</tr>
+	<tr>
+	<td align="center">船医</td>
+	<td align="center">交易LV12以上</td>
+	<td align="center">战斗LV12以上</td>
+	<td align="center">交易LV8以上<br>战斗LV8以上</td>
+	</tr>
+	</tbody></table>
+	</div>
+	<div class="panel-footer">
+  	<b><font color="red">副官特性培育：</font></b><br>说法A：<br><b>当副官放置一个职位于海上航行时，其所<font color="blue">累积的天数超过目前的特性值</font>，将有很大机会于等级提升时增加该特性值。</b>，即使是海上换位置亦无差别。<br>Ex.副官主计６０，放主计职位海上航行累积超过６０天(最好多超过５－１０天)。<br>ps.航行天数不一定要连续，如从里斯本到开普累积主计职位40天，之后天数可以继续累积。<br>说法B：<br>基本与说法A一样，但会被计算的天数只有<b>出港跟进港时所担任的职位</b><br>也就是你如果在海上航行时一直帮副官换位置的话，那中间换位置的时间都不会被计算，<br>举例来说：<br>出港前把副官摆在航海长-&gt;出港确定举帆30天-&gt;把副官换至船医后航行20天-&gt;进港<br>这样副官有拿到的天数就是 航海长30天 跟 船医20天<br>但如果是：<br>出港前摆航海长-&gt;航行10天-&gt;换至警戒员航行10天-&gt;换至仓管10天-&gt;换至船医10天-&gt;进港<br>那有被计算到的天数就只有 航海长10天 跟 船医10天<br>其他的就是浪费掉了！<br>说法C：<br>当副官特性为C、D时，副官担任位子放数值一半的天数；特性为b时，副官担任位子放数值天数；特性为S、A时，副官担任位子放数值两倍的天数。<br>例：某副官 航海长28C、主计长50B、兵长60A，则需放航海长14天、主计长50天、兵长120天。<br>尚有其他说法，请玩家自行斟酌。<div><br></div>
+<div>副官料理1个约可抵航行10天的效果</div>
+  	</div>
+</div>
+<br><br />
+<a name="副官装备" style="margin:4px;"></a>
+<div class="panel panel-default" style="margin:4px;">
+  <div class="panel-heading">
+    <h3 class="panel-title">副官装备</h3>
+  </div>
+  <div class="panel-body">
+	<b>纯粹美观用途，可不限职业给予(性别还是要区分)，给予后无法回收，无装备加成效果。</b>
+  </div>
+</div>
+<br><br />
+<a name="副官船长" style="margin:4px;"></a>
+<div class="panel panel-default" style="margin:4px;">
+  <div class="panel-heading">
+    <h3 class="panel-title">副官船长</h3>
+  </div>
+  <div class="panel-body">
+	<!-- Nav tabs -->
+	<ul class="nav nav-pills">
+	  <li class="active"><a href="#概要" data-toggle="tab">概要</a></li>
+	  <li><a href="#任命" data-toggle="tab">任命</a></li>
+	  <li><a href="#副官船长的效果" data-toggle="tab">效果</a></li>
+	  <li><a href="#副官船只的注意事项" data-toggle="tab">注意</a></li>
+	  <li><a href="#解除" data-toggle="tab">解除</a></li>
+	</ul>
+		<br />
+	<div class="tab-content list-group-item">
+	  <div class="tab-pane active" id="概要">
+	  ※副官船长的功用几乎等同于玩家<br>	※让副官担任船长一职的费用是一天5000元(???东方第3章后有改,但是好像是按照等级之类的来计算,所以可能出现1千多~3千多,待验证)<br>※日本wiki百科：1天所需费用 = 副官等级总和 x 50<br></div>
+	  <div class="tab-pane" id="任命">※随行副官的信赖度需超过50 (可随着航行天数的增加或使用特定道具来提升)<br>※任命的方法跟指定副官担任某职务一样，会多出个「担任副官船长」的选项<div>&nbsp;</div>
+<div>注意：<br>1、如果没达到标准，就不会出现「担任副官船长」的选项<br>2、副官船长驾驶的船，可以从多出来的「副官船确认」的选项来确定<br>3、跟玩家相同，如果等级没到达船的相应等级也就无法开那条船<br>4、如玩家身上没有金钱，信赖度会每航行天一减1</div></div>
+	  <div class="tab-pane" id="副官船长的效果">
+<div>※航海中，副官驾驶的船会尾随在玩家后面（有人跟随则不会表示）<br>※海上战时，点选「副官援军」的话，副官船会以援军状态出现<br>※副官船的仓库会与玩家船的仓库相累积（玩家船 副官船＝最大仓）<br>※航海中可以玩家船能和副官船交换驾驶，但没到达船的相应等级就无法实行<br>※<strike>担任副官船长身上持有的技能全部无效</strike><u>(</u>台版有效，副官船长上任后依照担任位置获得经验和使&nbsp;&nbsp;&nbsp;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;用技能)<br>※副官船长驾驶的船，拥有固定的船只配件，但是可以自行加装。</div></div>
+	  <div class="tab-pane" id="副官船只的注意事项">
+	  	<div>１、副官船只也可以承载交易品</div>
+		<div>２、副官船的船员若是不足，将会影响玩家的航行速度</div>
+		<div>３、副官船同样也会消耗物资，并且合玩家船只合并计算</div>
+		<div>４、在追随舰队的情况下，玩家的副官船只将不会显示</div>
+	 </div>
+	 <div class="tab-pane" id="解除">
+	 <div>※解除的方法跟担任副官船长一样，会显示为「副官船长解任」<img src="http://static.hanghaimeng.com/img/1/1e4bd437419be3d736515e9b4292cd19.JPG" class="lazy" border="0" height="23" width="37"> 的选项。</div>
+<div>※解除副官船长将会减少10点信赖度，信赖度减少一定值就无法任命担任副官船长。</div>
+	 </div>
+	</div>
+  </div>
+</div>
+</div>

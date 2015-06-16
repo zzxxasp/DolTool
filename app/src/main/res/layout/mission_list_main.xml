@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--状态栏-->
+<com.key.doltool.view.SlideHolder xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/slideHolder"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<include 
+    layout="@layout/dock_menu"
+    />
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/GhostWhite"
+    >
+<LinearLayout
+    android:id="@+id/function_bar"
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >
+<include
+    android:id="@+id/mission"
+    layout="@layout/select_mission"
+    android:visibility="gone"
+/>
+<include
+    layout="@layout/system_actionbar_black"
+/>
+</LinearLayout>
+<ListView
+    android:id="@+id/listview"
+    android:layout_below="@+id/function_bar"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:divider="#00000000"
+    android:dividerHeight="1dp"
+    >
+</ListView>
+<include
+    layout="@layout/loading_layout"
+    android:layout_height="wrap_content"
+	android:layout_width="wrap_content" 
+    android:layout_centerInParent="true"
+    android:visibility="gone"
+/>
+</RelativeLayout>
+</com.key.doltool.view.SlideHolder>

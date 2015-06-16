@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/GhostWhite"
+    >
+<!--TitleBar-->
+<include
+    layout="@layout/system_actionbar_black"   
+/>
+<!--Title Area-->
+<RelativeLayout
+    android:id="@+id/city_base" 
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_content_card"
+    >
+<TextView
+    android:id="@+id/city_name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:padding="3dp"
+    android:text=""    
+    />
+<ImageView
+    android:contentDescription="@null"
+    android:id="@+id/city_img"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:layout_below="@+id/city_name"
+    android:src="@drawable/dol_trove_defalut"    
+    />
+<TextView
+    android:id="@+id/city_area" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:padding="4dp"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="2dp"
+    android:textSize="12sp"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:layout_toLeftOf="@+id/city_culture"
+    android:text=""    
+    />
+<TextView
+    android:id="@+id/city_culture" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:padding="4dp"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="2dp"
+    android:textSize="12sp"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:layout_alignParentRight="true"
+    android:text=""    
+    />
+<RelativeLayout
+    android:id="@+id/inverst" 
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="3dp"
+	android:layout_toRightOf="@+id/city_img"
+    android:layout_below="@+id/city_culture"
+    >
+<TextView
+    android:id="@+id/inverst_item" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:textSize="13sp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:textColor="@color/Black"  
+    />
+<TextView
+    android:id="@+id/inverst_tag" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="投资"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:padding="2dp"
+    android:textSize="13sp"
+    android:textColor="@color/White"
+    android:background="@color/Blue_SP"
+	android:layout_alignParentRight="true"   
+    />
+<TextView
+    android:id="@+id/inverst_money" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:padding="4dp"
+    android:textSize="13sp"
+    android:layout_below="@+id/inverst_item"
+	android:layout_alignParentRight="true"
+    android:textColor="@color/Black"   
+    />
+<ImageView
+    android:contentDescription="@null"
+    android:id="@+id/img_money"
+    android:paddingTop="4dp" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/inverst_item"
+    android:layout_toLeftOf="@+id/inverst_money"
+	android:src="@drawable/ic_coins_s"
+    />
+</RelativeLayout>
+<TextView
+    android:id="@+id/lang_tag" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="语言"
+    android:padding="2dp"
+	android:layout_margin="5dp"
+    android:textSize="13sp"
+    android:textColor="@color/White"
+    android:background="@color/Blue_SP"
+	android:layout_alignParentRight="true"
+	android:layout_below="@+id/inverst" 
+    />
+<LinearLayout
+    android:background="@null"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/inverst"
+    android:baselineAligned="false"
+    android:layout_toLeftOf="@+id/lang_tag"
+    android:layout_toRightOf="@+id/city_img"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    >
+<LinearLayout
+    android:id="@+id/lang1"
+	android:layout_width="wrap_content"
+	android:background="@null"
+    android:layout_height="wrap_content"    
+    >
+<ImageView
+    android:id="@+id/lang_pic1" 
+    android:contentDescription="@null"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:padding="1dp"
+    android:src="@drawable/other_j0s"    
+    />
+<TextView
+    android:id="@+id/lang_txt1" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="1dp"
+    android:layout_gravity="center"
+    android:textSize="12sp"
+    android:textColor="@color/Black"
+    android:text=""    
+    />
+</LinearLayout>
+<LinearLayout
+	android:id="@+id/lang2" 
+	android:layout_width="wrap_content"
+	android:background="@null"
+	android:layout_marginLeft="4dp"
+    android:layout_height="wrap_content"    
+    >
+<ImageView
+	android:id="@+id/lang_pic2" 
+    android:contentDescription="@null"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:padding="1dp"
+    android:src="@drawable/other_j0s"    
+    />
+<TextView
+    android:id="@+id/lang_txt2"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="1dp"
+    android:layout_gravity="center"
+    android:textSize="12sp"
+    android:textColor="@color/Black"
+    android:text=""    
+    />
+</LinearLayout>
+</LinearLayout> 
+</RelativeLayout>
+<ListView
+    android:id="@+id/listview" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"    
+    />
+</LinearLayout>

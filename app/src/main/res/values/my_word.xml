@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="card_type">
+	    <item >全部</item>
+	    <item >点数增加</item>
+	    <item >强化我方</item>
+	    <item >弱化敌方</item>
+	    <item >弱化双方</item>
+	    <item >强化双方</item>
+	    <item >属性变更</item>
+	    <item >对手现牌</item>
+	</string-array>
+	<string-array name="mission_type">
+	    <item >全部任务</item>
+	    <item >冒险任务</item>
+	    <item >商业任务</item>
+	    <item >海事任务</item>
+	    <item >书库地图</item>
+	    <item >特别类型</item>
+	</string-array>
+	<string-array name="adventure_type">
+		<item >全部</item>
+	    <item >美术</item>
+	    <item >财宝</item>
+		<item >考古</item>
+	    <item >宗教</item>
+	    <item >地理</item>
+	    <item >生物</item>
+	    <item >天文</item>
+	</string-array>  
+	<string-array name="sp_mission_type">
+		<item >敕命任务</item>
+	    <item >钓鱼发现</item>
+	    <item >港口部落</item>
+		<item >沉船发现</item>
+	    <item >执事任务</item>
+	    <item >宠物任务</item>
+	    <item >转职任务</item>
+	    <item >掠夺地图</item>
+	    <item >海上视认</item>
+	</string-array>
+	<string-array name="area">
+	    <item >北欧</item>
+	    <item >西欧</item>
+	    <item >东欧</item>
+	    <item >西非</item>
+	    <item >南非</item>
+	    <item >东非·印度洋</item>
+	    <item >加勒比‧中美</item>
+	    <item >南美</item>
+	    <item >东亚</item>
+	    <item >东南亚</item>
+	    <item >大洋洲</item>
+	</string-array>
+	<string-array name="trade_type">
+	    <item >食品</item>
+	    <item >调味料</item>
+	    <item >家畜</item>
+	    <item >医药品</item>
+	    <item >酒类</item>
+	    <item >嗜好品</item>
+	    <item >香辛料</item>
+	    <item >纤维</item>
+	    <item >纺织品</item>
+	    <item >染料</item>
+	    <item >贵金属</item>
+		<item >矿石</item>
+		<item >香料</item>
+		<item >宝石</item>
+		<item >武器</item>
+		<item >火器</item>
+		<item >美术品</item>
+		<item >工艺品</item>
+		<item >工业制品</item>
+	</string-array>
+	<string-array name="back_type">
+	    <item >历史遗物</item>
+	    <item >宗教遗物</item>
+	    <item >美术品</item>
+	    <item >宝藏</item>
+	    <item >化石</item>
+	    <item >小型生物</item>
+	    <item >中型生物</item>
+	    <item >大型生物</item>
+	    <item >海洋生物</item>
+	    <item >昆虫类</item>
+	    <item >鸟类</item>
+		<item >植物</item>
+		<item >地理</item>
+		<item >港口‧村落</item>
+	</string-array>
+	<string-array name="luck_level_txt">
+	    <item >死兆星现</item>
+	    <item >沉船触礁</item>
+	    <item >祸不单行</item>
+		<item >不如意事</item>
+	    <item >平安自然</item>
+	    <item >小有薄利</item>
+	    <item >一帆风顺</item>
+		<item >战无不胜</item>
+	    <item >天籁福音</item>
+	</string-array>
+	<string-array name="adc_type_txt">
+	    <item >全部</item>
+	    <item >冒险</item>
+	    <item >商业</item>
+	    <item >海事</item>
+	</string-array>
+
+	<string-array name="area_server">
+	    <item >国服</item>
+	    <item >台服</item>
+	    <item >国际服</item>
+	    <item >日服</item>
+	</string-array>
+	
+	<string-array name="server_name">
+	    <item >龙之大地</item>
+	    <item >黄金海岸</item>
+	    <item >北方的狮子</item>
+	    <item >狮鹫之翼</item>
+	</string-array>
+	
+    <integer-array name="pocket_background_colors">
+        <item>@color/pocket_color_1</item>
+        <item>@color/pocket_color_2</item>
+        <item>@color/pocket_color_3</item>
+        <item>@color/pocket_color_4</item>
+    </integer-array>
+
+    <color name="pocket_color_1">#ffffff</color>
+    <color name="pocket_color_2">#ffffff</color>
+    <color name="pocket_color_3">#ffffff</color>
+    <color name="pocket_color_4">#ffffff</color> 
+</resources>

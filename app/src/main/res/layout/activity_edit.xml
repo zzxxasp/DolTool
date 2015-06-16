@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/GhostWhite" 
+    >
+<include 
+	layout="@layout/system_actionbar_black"
+  	/>
+<!--Head img-->
+<RelativeLayout
+    android:id="@+id/area_1" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/theme_background_transparent"   
+    >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:textColor="@color/Black_SP"
+    android:layout_centerVertical="true"
+    android:textSize="16sp"
+    android:layout_marginLeft="10dp" 
+    android:padding="10dp"
+    android:text="更换头像" 
+    />
+<com.key.doltool.view.BootstrapCircleThumbnail
+	android:id="@+id/head_img"
+	android:layout_width="50dp"
+	android:layout_height="50dp"
+	android:padding="1dp"
+	android:layout_centerVertical="true"
+	android:layout_alignParentRight="true"
+	android:src="@drawable/dol_trove_defalut"
+	bootstrap:border_width="2dp"
+    bootstrap:border_color="@color/White"
+	android:layout_marginTop="15dp"
+	android:layout_marginBottom="15dp"
+	android:layout_marginRight="20dp"
+	/>
+</RelativeLayout>
+<View 
+    android:layout_width="match_parent"
+    android:layout_height="0.5dp"
+    android:background="@color/Gainsboro_SP"     
+    />
+<RelativeLayout
+    android:id="@+id/area_2" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"  
+    android:background="@drawable/theme_background_transparent"   
+    >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:textColor="@color/Black_SP"
+    android:layout_centerVertical="true"
+    android:textSize="16sp"
+    android:padding="10dp"
+    android:text="更换昵称" 
+    />
+<TextView
+    android:id="@+id/nick_name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:layout_centerVertical="true"
+	android:layout_alignParentRight="true" 
+    android:textColor="@color/Gainsboro_SP"
+    android:textSize="16sp"
+    android:padding="10dp"
+    android:text="白衣沽酒绮罗生" 
+    />
+</RelativeLayout>
+<View 
+    android:layout_width="match_parent"
+    android:layout_height="0.5dp"
+    android:background="@color/Gainsboro_SP"     
+    />
+<RelativeLayout
+    android:id="@+id/area_3" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp" 
+    android:weightSum="2"
+    android:orientation="horizontal"
+	android:background="@drawable/theme_background_transparent"  
+    >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:textColor="@color/Black_SP"
+    android:layout_centerVertical="true"
+    android:textSize="16sp"
+    android:padding="10dp"
+    android:text="修改区服" 
+    />
+<TextView
+    android:id="@+id/area_server" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:layout_centerVertical="true"
+	android:layout_alignParentRight="true" 
+    android:textColor="@color/Gainsboro_SP"
+    android:textSize="16sp"
+    android:padding="10dp"
+    android:text="国服 龙之大地" 
+    />
+</RelativeLayout>
+<View 
+    android:layout_width="match_parent"
+    android:layout_height="0.5dp"
+    android:background="@color/Gainsboro_SP"     
+    />
+</LinearLayout>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+	android:background="@drawable/bg_mycenter_banner" 
+    >
+<include 
+    layout="@layout/system_actionbar_black"
+    />
+<!--Head-->
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="7dp"  
+    >
+<LinearLayout
+    android:id="@+id/area" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:gravity="center_vertical"   
+    >
+<TextView
+    android:id="@+id/tag1" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:textColor="@color/White"
+    android:background="@drawable/toast_bg"
+    android:padding="5dp"
+    android:text="区域" 
+    />
+<TextView
+    android:id="@+id/tag2" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:textColor="@color/White"
+    android:layout_marginLeft="5dp"
+    android:background="@drawable/toast_bg"
+    android:padding="5dp"
+    android:text="服务器" 
+    />
+</LinearLayout> 
+<com.key.doltool.view.BootstrapCircleThumbnail
+	android:id="@+id/head_img"
+	android:layout_width="60dp"
+	android:layout_height="60dp"
+	android:padding="1dp"
+	android:src="@drawable/dol_trove_defalut"
+	bootstrap:border_width="2dp"
+    bootstrap:border_color="@color/White"
+    android:layout_centerVertical="true"
+	android:layout_marginTop="5dp"
+	android:layout_marginBottom="5dp"
+	android:layout_marginLeft="5dp"
+	/>
+<TextView
+    android:id="@+id/name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:textColor="@color/White"
+    android:layout_marginLeft="10dp"
+    android:textSize="16sp"
+    android:layout_marginBottom="50dp"
+    android:layout_marginTop="50dp"
+    android:layout_centerVertical="true"
+    android:layout_toRightOf="@+id/head_img"
+    android:text="白衣沽酒绮罗生" 
+    />   
+</RelativeLayout>
+<!--本地数据记录-->
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/GhostWhite"
+    >
+<TextView 
+    android:id="@+id/dream_tag" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:textColor="@color/Gary_SP"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+	android:paddingLeft="5dp"  
+    android:textSize="16sp"
+    android:text="冒险"  
+    />
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:weightSum="2"
+    android:paddingBottom="10dp"   
+    >    
+<!--标记任务-->
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal"
+    android:layout_marginTop="1dp"
+    android:paddingLeft="5dp" 
+    android:paddingRight="5dp" 
+    >
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <com.key.doltool.view.HoloCircularProgressBar
+        app:thumb_visible="false"
+		app:progress="0.0"
+		app:stroke_width="3dp"
+		app:progress_color="@color/HighSkyBlue"
+		app:progress_background_color="@color/Gainsboro"
+        app:marker_visible="false" 
+        android:id="@+id/holoCircularProgressBar1"
+        android:layout_width="wrap_content"
+		android:layout_height="@dimen/oval_height"
+		android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true" 
+        />
+	<TextView
+	    android:id="@+id/mission_number" 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:textColor="@color/Gary_SP"
+	    android:layout_centerInParent="true"
+	    android:textSize="@dimen/oval_txt_size"
+	    android:padding="5dp"
+	    android:text="加载中" 
+	    />
+</RelativeLayout>
+	<TextView
+	    android:id="@+id/tag_mission" 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:textColor="@color/Gainsboro_SP"
+	    android:padding="5dp"
+	    android:textSize="16sp"
+	    android:text="任务标记" 
+	    />
+ </LinearLayout>
+ <!--发现物标记-->
+ <LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal"
+    android:layout_margin="1dp"
+    android:paddingLeft="5dp" 
+    android:paddingRight="5dp"   
+    >
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <com.key.doltool.view.HoloCircularProgressBar
+        app:thumb_visible="false"
+		app:progress="0.0"
+		app:stroke_width="3dp"
+		app:marker_visible="false" 
+		app:progress_color="@color/HighSkyBlue"
+		app:progress_background_color="@color/Gainsboro"
+        android:id="@+id/holoCircularProgressBar2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/oval_height"
+		android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true" 
+        />
+	<TextView
+	    android:id="@+id/trove_number" 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:textColor="@color/Gary_SP"
+	    android:textSize="@dimen/oval_txt_size"
+	    android:layout_centerInParent="true"
+	    android:padding="5dp"
+	    android:text="加载中" 
+	    />
+</RelativeLayout>
+	<TextView
+	    android:id="@+id/tag_trove" 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:textColor="@color/Gainsboro_SP"
+	    android:padding="5dp"
+	    android:textSize="16sp"
+	    android:text="发现物" 
+	    />
+ </LinearLayout>
+ </LinearLayout>
+ <View
+    android:layout_width="match_parent"
+    android:layout_height="1px" 
+    android:background="@color/Gainsboro"   
+    />
+ <!--其他功能按钮-->
+<RelativeLayout
+    android:id="@+id/function_1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="15dp"
+    android:background="@drawable/theme_blue_listitem_w"
+    android:clickable="true" 
+    >
+<TextView
+    android:id="@+id/func_1_title" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:textSize="16sp"
+    android:text="数据同步"      
+    />
+</RelativeLayout>
+ <View
+    android:layout_width="match_parent"
+    android:layout_height="1px" 
+    android:background="@color/Gainsboro"   
+    />
+ <RelativeLayout
+    android:id="@+id/function_2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="15dp"
+    android:background="@drawable/theme_blue_listitem_w"
+    android:clickable="true" 
+    >
+<TextView
+    android:id="@+id/func_2_title" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:textSize="16sp"
+    android:text="重置密码"      
+    />
+</RelativeLayout>
+ <View
+    android:layout_width="match_parent"
+    android:layout_height="1px" 
+    android:background="@color/Gainsboro"   
+    />
+  <RelativeLayout
+    android:id="@+id/function_3"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="15dp"
+    android:background="@drawable/theme_blue_listitem_w"
+    android:clickable="true" 
+    >
+<TextView
+    android:id="@+id/func_3_title" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:textSize="16sp"
+    android:text="注销用户"      
+    />
+</RelativeLayout>
+ <View
+    android:layout_width="match_parent"
+    android:layout_height="1px" 
+    android:background="@color/Gainsboro"   
+    />
+</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@color/White" 
+    >
+<TextView 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White" 
+    android:textSize="20sp"
+    android:padding="10dp"
+    android:text="选择方式"
+    android:background="@drawable/ab_solid_dark_holo"   
+    />
+<TextView
+    android:id="@+id/photo_btn" 
+	android:background="@drawable/theme_background_transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:textSize="20sp"
+    android:textColor="@color/Black_SP"
+    android:text="照相"    
+    />
+<View 
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/Gainsboro"    
+    />
+<TextView
+    android:id="@+id/file_btn" 
+	android:background="@drawable/theme_background_transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:textSize="20sp"
+    android:textColor="@color/Black_SP"
+    android:text="相册"    
+    />
+<View 
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/Gainsboro"    
+    />
+</LinearLayout>

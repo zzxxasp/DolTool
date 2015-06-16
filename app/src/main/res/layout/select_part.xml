@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_full_holo_dark" 
+    >
+<!--Name-->
+<EditText
+    android:id="@+id/boat_name" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:padding="10dp"
+	android:layout_margin="5dp"
+    android:textColor="@color/White"
+    android:background="@drawable/edittext_login"
+    android:hint="@string/hint_name"
+    android:inputType="text"
+    />
+<!--Size-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="5dp"
+    android:weightSum="3"    
+    >
+<CheckBox
+    android:id="@+id/t_0" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+    android:text="@string/select_t0"  
+    />
+<CheckBox
+    android:id="@+id/t_1"  
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+    android:text="@string/select_t1" 
+    /> 
+<CheckBox
+    android:id="@+id/t_2" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+    android:text="@string/select_t2" 
+    />     
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="5dp"
+    android:weightSum="3"    
+    >
+<CheckBox
+    android:id="@+id/t_3" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+    android:text="@string/select_t3"  
+    />
+<CheckBox
+    android:id="@+id/t_4"  
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+    android:text="@string/select_t4" 
+    />    
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:orientation="horizontal"
+    android:weightSum="4"    
+    >
+<CheckBox
+    android:id="@+id/t_5" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+  	android:text="@string/select_t5" 
+    />
+<CheckBox
+    android:id="@+id/t_6"  
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+	android:text="@string/select_t6" 
+    />    
+<CheckBox
+    android:id="@+id/t_7" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+	android:text="@string/select_t7" 
+    />
+<CheckBox
+    android:id="@+id/t_8"  
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:button="@drawable/apptheme_btn_check_holo_dark"
+	android:text="@string/select_t8" 
+    />    
+</LinearLayout>
+<include
+    layout="@layout/select_btn"
+    />
+</LinearLayout>

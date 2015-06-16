@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/GhostWhite"
+    >
+<!--TitleBar-->
+<include
+    layout="@layout/system_actionbar_black"   
+/>
+<!--Title Area-->
+<RelativeLayout
+    android:id="@+id/adc_base" 
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_content_card"
+    >
+<LinearLayout
+    android:id="@+id/attr" 
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"    
+    >
+<TextView
+    android:id="@+id/adc_sex" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:padding="3dp"
+    android:layout_margin="3dp"
+    android:background="@drawable/theme_pink_btn_rate"
+    android:text="女"    
+    />
+<TextView
+    android:id="@+id/adc_type" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:padding="3dp"
+    android:layout_margin="3dp"
+    android:text="冒险"    
+    />
+<TextView
+    android:id="@+id/adc_country" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:padding="3dp"
+    android:layout_margin="3dp"
+    android:text="英格兰"    
+    />    
+</LinearLayout>
+<TextView
+    android:id="@+id/adc_city" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:layout_below="@+id/attr"
+    android:layout_alignParentRight="true"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:padding="3dp"
+    android:layout_margin="3dp"
+    android:text="亚历山大 里约热内卢"    
+    /> 
+<RelativeLayout 
+	android:id="@+id/info" 
+	android:layout_width="wrap_content"
+	android:background="@null"
+	android:padding="3dp"
+    android:layout_height="wrap_content" 
+    >
+<ImageView
+    android:contentDescription="@null"
+    android:id="@+id/adc_head" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:src="@drawable/dol_b0s1"  
+    />
+<TextView
+    android:id="@+id/adc_name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"    
+    android:layout_centerHorizontal="true"
+    android:padding="3dp"
+    android:layout_below="@+id/adc_head"
+    android:text="马伍利西奥"    
+    />
+</RelativeLayout>
+</RelativeLayout>
+<ListView
+    android:id="@+id/listview" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    />
+</LinearLayout>

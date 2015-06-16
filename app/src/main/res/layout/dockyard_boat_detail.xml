@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/GhostWhite"
+    >
+<!--TitleBar-->
+<include
+    layout="@layout/system_actionbar_black"   
+/>
+<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@null">
+<!--Content-->
+<ScrollView
+    android:id="@+id/content_s" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="@null"
+    >
+<RelativeLayout
+    android:id="@+id/content"
+    android:layout_width="fill_parent"
+    android:layout_height="550dp"
+    android:background="@color/GhostWhite"
+	android:layout_marginBottom="5dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/base"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/boat_bg"
+        >
+
+        <ImageView
+            android:id="@+id/boat_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+			android:layout_marginTop="20dp"
+			android:layout_marginBottom="20dp"
+			android:layout_marginLeft="20dp"
+            android:src="@drawable/other_j0s" />
+
+        <TextView
+            android:id="@+id/boat_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/boat_pic"
+			android:layout_marginTop="25dp" 
+			android:layout_marginBottom="25dp"
+			android:layout_marginLeft="5dp"  
+            android:textColor="@color/Black_SP"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/boat_need"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+			android:layout_marginTop="3dp"
+			android:layout_marginRight="13dp"  
+            android:padding="5dp"
+            android:textColor="@color/Black_SP" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/equip"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/base"
+        android:paddingLeft="15dp" >
+
+        <TextView
+            android:id="@+id/boat_equip1"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/Black_SP"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/equip_item1"
+            android:textColor="@color/White" />
+
+        <TextView
+            android:id="@+id/boat_equip2"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/boat_equip1"
+            android:background="@color/Black_SP"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/equip_item2"
+            android:textColor="@color/White" />
+
+        <TextView
+            android:id="@+id/boat_equip3"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/boat_equip2"
+            android:layout_margin="5dp"
+            android:background="@color/Black_SP"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/equip_item3"
+            android:textColor="@color/White" />
+
+        <TextView
+            android:id="@+id/boat_equip4"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/boat_equip2"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/boat_equip3"
+            android:background="@color/Black_SP"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/equip_item4"
+            android:textColor="@color/White" />
+
+        <TextView
+            android:id="@+id/boat_equip5"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/boat_equip3"
+            android:layout_margin="5dp"
+            android:background="@color/Black_SP"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/equip_item5"
+            android:textColor="@color/White" />
+
+        <TextView
+            android:id="@+id/boat_equip6"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/boat_equip3"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/boat_equip5"
+            android:background="@color/Black_SP"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/equip_item6"
+            android:textColor="@color/White" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/type"
+        android:layout_width="fill_parent"
+        android:layout_height="115dp"
+        android:layout_below="@+id/base"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/equip"
+        android:background="@color/Blue_SP" >
+
+        <TextView
+            android:id="@+id/type_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textColor="@color/White"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/type_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/type_1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textColor="@color/White"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/type_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/type_2"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textColor="@color/White"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ability"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/equip"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/Black_SP" >
+
+        <TableLayout
+            android:id="@+id/voyage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@null" >
+
+            <TableRow
+                android:id="@+id/voyage_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Blue_SP"
+                android:weightSum="5" >
+
+                <TextView
+                    android:id="@+id/square_sail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item1"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/fore_sail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item2"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/paddle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item3"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/turn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item4"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/def_wave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item5"
+                    android:textColor="@color/White" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/voyage_point"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="5" >
+
+                <TextView
+                    android:id="@+id/square_sail_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/fore_sail_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/paddle_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/turn_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/def_wave_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/battle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/voyage"
+            android:background="@null"
+            android:shrinkColumns="1" >
+
+            <TableRow
+                android:id="@+id/battle_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Blue_SP"
+                android:weightSum="5" >
+
+                <TextView
+                    android:id="@+id/health_boat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item6"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/people_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item7"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/armor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item8"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/crenelle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item9"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/shipping_space"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_item10"
+                    android:textColor="@color/White" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/battle_point"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="5" >
+
+                <TextView
+                    android:id="@+id/health_boat_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/people_number_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/armor_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/crenelle_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+
+                <TextView
+                    android:id="@+id/shipping_space_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/White" />
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/line"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/battle"
+            android:background="@null" >
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+				>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/Blue_SP"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/ability_boat"
+                    android:textColor="@color/White" />
+            </TableRow>
+        </TableLayout>
+		<TableLayout
+            android:id="@+id/line2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:background="@null"
+			android:measureWithLargestChild="true"
+            >
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:weightSum="1" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/Blue_SP"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/get_boat"
+                    android:textColor="@color/White" />
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+</RelativeLayout>
+</ScrollView>
+</RelativeLayout>
+</LinearLayout>

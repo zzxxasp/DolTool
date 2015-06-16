@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/frame_white"
+    >
+<TextView
+    android:id="@+id/name" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/White"
+    android:padding="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+	android:layout_marginRight="5dp"
+    android:background="@color/Blue_SP"
+    android:text="世界的伊甸园"    
+    />
+<TextView
+    android:id="@+id/effect" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Crimson"
+    android:padding="5dp"
+    android:layout_marginLeft="5dp"
+	android:layout_marginRight="5dp"
+    android:text="效果:强化第三张卡"    
+    />
+<View 
+	android:layout_width="match_parent"
+    android:layout_height="1dp"
+	android:layout_marginLeft="5dp"
+	android:layout_marginRight="5dp"
+    android:background="@color/SlateGray" 
+    />
+<LinearLayout
+    android:id="@+id/card_1" 
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:orientation="horizontal"
+    >
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:background="@drawable/theme_blue_btn_rate"
+    android:padding="5dp"
+    android:layout_margin="10dp"
+    android:textColor="@color/White"
+    android:text="1"    
+    />
+<TextView
+    android:id="@+id/card_1_name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:layout_marginTop="10dp"
+	android:layout_marginBottom="10dp"
+    android:text=""    
+    />
+</LinearLayout>
+<LinearLayout
+	android:id="@+id/card_2"  
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:orientation="horizontal"
+    >
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:background="@drawable/theme_blue_btn_rate"
+    android:padding="5dp"
+    android:layout_margin="10dp"
+    android:textColor="@color/White"
+    android:text="2"    
+    />
+<TextView
+    android:id="@+id/card_2_name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:layout_marginTop="10dp"
+	android:layout_marginBottom="10dp"
+    android:text=""    
+    />
+</LinearLayout>
+<LinearLayout
+	android:id="@+id/card_3"  
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:orientation="horizontal"
+    >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+	android:background="@drawable/theme_blue_btn_rate"
+    android:padding="5dp"
+    android:layout_margin="10dp"
+    android:textColor="@color/White"
+    android:text="3"    
+    />
+<TextView
+	android:id="@+id/card_3_name"  
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:layout_marginTop="10dp"
+	android:layout_marginBottom="10dp"
+    android:text=""    
+    />
+</LinearLayout>
+</LinearLayout>

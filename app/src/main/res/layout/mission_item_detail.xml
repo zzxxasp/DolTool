@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    >
+     <TextView
+        android:id="@+id/item_name" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/White"
+		android:padding="5dp"
+		android:background="@drawable/theme_blue_btn_rate"
+		android:gravity="center_horizontal"
+		android:text=""
+		/>
+	<TextView
+	    android:id="@+id/item_content"  
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/Black_SP"
+		android:padding="5dp"
+		android:text=""
+		/>
+</LinearLayout>

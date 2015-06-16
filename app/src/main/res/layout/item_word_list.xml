@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/list"
+    >
+<TextView
+    android:id="@+id/type" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/white"
+    android:layout_centerVertical="true"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:textSize="17sp"
+    android:padding="3dp"
+    android:text="城市"    
+    />
+<TextView
+    android:id="@+id/zh_name" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/type"
+    android:layout_marginLeft="10dp"
+    android:textColor="@color/Black_SP"
+    android:padding="3dp"
+    android:text="国服：奥波多"    
+    />
+<TextView
+    android:id="@+id/tw_name"
+    android:layout_below="@+id/zh_name"
+    android:layout_toRightOf="@+id/type" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:textColor="@color/Black_SP"
+    android:padding="3dp"
+    android:text="台服：波尔图"    
+    />
+</RelativeLayout>

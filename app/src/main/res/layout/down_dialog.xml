@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    xmlns:widget="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@null"
+    >
+<com.key.doltool.view.NumberProgressBar
+	android:id="@+id/upprogress"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:padding="20dp"
+	widget:progress="0"
+	style="@style/NumberProgressBar_Default"
+	/>
+<LinearLayout 
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@null"
+	android:weightSum="1"
+	android:orientation="horizontal"    
+    >
+<com.key.doltool.view.flat.FlatButton
+	flatui:fl_theme="@array/blood"
+	flatui:fl_cornerRadius="3dp"
+	flatui:fl_borderWidth="0.5dp"
+	flatui:fl_touchEffect="fl_ripple"
+    flatui:fl_blockButtonEffectHeight="2dp"
+    android:id="@+id/cancel_btn2"
+    android:layout_weight="1"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+	android:layout_marginLeft="25dp"
+	android:layout_marginRight="25dp"
+    android:padding="5dp"
+    android:textColor="@color/White"
+    android:text="取消" 
+	android:layout_width="0dip"
+	android:layout_height="wrap_content"     
+    />     
+</LinearLayout>  
+</LinearLayout>

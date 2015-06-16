@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/status2" 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/Black_SP"
+    >
+<!-- -->
+<RelativeLayout
+    android:id="@+id/area_title" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/Blue_SP" 
+	android:padding="5dp"   
+    >
+<TextView
+    android:id="@+id/title_txt"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/Blue_SP"
+    android:textColor="@color/White"
+    android:textSize="16sp"
+    android:layout_centerVertical="true"
+    android:text="任务筛选器"    
+    />
+<com.key.doltool.view.flat.FlatButton
+	flatui:fl_theme="@array/flat"
+	flatui:fl_cornerRadius="3dp"
+	flatui:fl_borderWidth="0.5dp"
+	flatui:fl_touchEffect="fl_ripple"
+    flatui:fl_blockButtonEffectHeight="2dp"
+    android:id="@+id/search_btn"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:layout_alignParentRight="true"
+    android:text="搜索"    
+    />
+</RelativeLayout>
+<!--地区搜索-->
+<RelativeLayout
+    android:id="@+id/city_area" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"    
+    >
+<TextView
+    android:id="@+id/city_tag"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:textColor="@color/White"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:textSize="16sp"
+    android:layout_centerVertical="true"
+    android:text="城市选择"    
+    />
+<Spinner
+    android:id="@+id/sp_area" 
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/city_tag"
+    android:layout_centerVertical="true"
+    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:gravity="center"
+    android:entries="@array/area"
+    />
+<Spinner
+    android:id="@+id/sp_city"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/sp_area"
+    android:gravity="center"
+    android:layout_centerVertical="true"
+    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:entries="@array/area"
+    />
+</RelativeLayout>
+<View 
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/White"
+    android:layout_margin="1dp"    
+    />
+<RelativeLayout
+    android:id="@+id/type_area" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"    
+    >
+<TextView
+    android:id="@+id/type_tag"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/theme_blue_btn_rate"
+    android:textColor="@color/White"
+    android:padding="5dp"
+    android:layout_margin="5dp"
+    android:textSize="16sp"
+    android:layout_centerVertical="true"
+    android:text="类型选择"    
+    />
+<Spinner
+    android:id="@+id/sp_type"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_centerVertical="true"
+    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:layout_toRightOf="@+id/type_tag"
+    android:entries="@array/mission_type"
+    />
+<Spinner
+    android:id="@+id/adventure_type"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:layout_toRightOf="@+id/sp_type"
+    android:layout_centerVertical="true"
+    android:gravity="center"
+    android:entries="@array/adventure_type"
+    />
+<Spinner
+    android:id="@+id/sp_mission_type"
+	android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:layout_toRightOf="@+id/adventure_type"
+    android:layout_centerVertical="true"
+    android:gravity="center"
+    android:entries="@array/sp_mission_type"
+    />
+</RelativeLayout>
+<!--类型搜索-->
+</LinearLayout>

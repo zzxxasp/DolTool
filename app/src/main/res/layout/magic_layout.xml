@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/magic_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:scrollbars="none" >
+<!--总体评价-->
+        <LinearLayout
+            android:id="@+id/main_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/SlateGray"
+            android:orientation="vertical"
+            android:padding="15dp" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="今日运势"
+                android:textColor="@color/White"
+                android:textSize="20sp" />            
+            <TextView
+                android:id="@+id/main_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="死兆星现"
+                android:textColor="@color/White"
+                android:textSize="40sp" />
+        </LinearLayout>
+<!--宜-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/frame_white"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="宜"
+                android:textColor="@color/Crimson"
+                android:textSize="30sp" />            
+            <TextView
+                android:id="@+id/good_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:text="远航 交易 出售 蓝海"
+                android:textColor="@color/Black_SP"
+                />
+        </LinearLayout>
+	<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/frame_white"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="15dp" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="忌"
+                android:textColor="@color/SlateGray"
+                android:textSize="30sp" 
+                />            
+            <TextView
+                android:id="@+id/bad_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:text="远航 交易 出售 蓝海"
+				android:textColor="@color/Black_SP" 
+                />
+        </LinearLayout>
+<!--Bottom-->
+<LinearLayout 
+	 android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:gravity="bottom"     
+     >
+	<TextView
+	    android:id="@+id/bottom_txt"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="2014年1月15日 平"
+		android:gravity="right"
+		android:padding="5dp"
+		android:textColor="@color/White"
+		android:textSize="20sp"
+		android:background="@color/Blue_SP"
+        />
+</LinearLayout>
+</LinearLayout>

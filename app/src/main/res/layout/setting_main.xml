@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+<!--Funtion One-->
+<RelativeLayout
+    android:id="@+id/function_1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="25dp"
+    android:orientation="horizontal"
+    >
+<TextView
+    android:id="@+id/func_1_title" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:textSize="16sp"
+    android:text="自动更新"      
+    />
+<TextView
+    android:id="@+id/func_1_txt" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:paddingTop="5dp"
+    android:layout_below="@+id/func_1_title"
+    android:text="更新版本的自动提示选择"      
+    />     
+<CheckBox
+    android:id="@+id/checkbox"
+    android:checked="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_alignParentRight="true"
+    android:button="@drawable/tag_button"
+    />       
+</RelativeLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1px" 
+    android:background="@color/Gainsboro"   
+    />
+<!--Funtion two-->
+<RelativeLayout
+    android:id="@+id/function_2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="25dp"
+    android:background="@drawable/theme_blue_listitem_w"
+    android:clickable="true" 
+    >
+<TextView
+    android:id="@+id/func_2_title" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:textSize="16sp"
+    android:text="检查更新"      
+    />
+<TextView
+    android:id="@+id/func_2_txt" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:paddingTop="5dp"
+    android:layout_below="@+id/func_2_title"
+    android:text="检查当前应用的版本是否为最新版本"      
+    />          
+</RelativeLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1px" 
+    android:background="@color/Gainsboro"   
+    />
+<!--Funtion two-->
+<RelativeLayout
+    android:id="@+id/function_3"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/theme_blue_listitem_w"
+    android:clickable="true"
+    android:padding="25dp"
+    >
+<TextView
+    android:id="@+id/func_3_title" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black"
+    android:textSize="16sp"
+    android:text="退出应用"      
+    />
+<TextView
+    android:id="@+id/func_3_txt" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/Black_SP"
+    android:paddingTop="5dp"
+    android:layout_below="@+id/func_3_title"
+    android:text="关闭应用便捷功能"      
+    />          
+</RelativeLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1px" 
+    android:background="@color/Gainsboro"   
+    />
+</LinearLayout>

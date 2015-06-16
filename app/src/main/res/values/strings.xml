@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--系统用-->
+    <string name="app_name">大航海时代助手</string>
+    <string name="loading_txt">正在加载数据，请稍等</string>
+<!--页面用：MainActivity-->
+<!--标题栏-->
+    <string name="main_back">返回</string>
+    <string name="main_menu">菜单</string>
+<!--选择栏-->
+    <string name="main_item1">船只列表</string>
+    <string name="main_item2">造船模拟</string>
+    <string name="main_item3">船只配件</string>
+<!--页面用：SailBoatActivity-->
+<!--配件-->
+    <string name="equip_item1">辅助帆:</string>
+    <string name="equip_item2">船头炮:</string>
+    <string name="equip_item3">追加装甲:</string>
+    <string name="equip_item4">船身炮:</string>
+    <string name="equip_item5">特殊装备:</string>  
+    <string name="equip_item6">船尾炮:</string>
+<!--能力-->
+	<string name="ability_item1">横帆</string>
+	<string name="ability_item2">纵帆</string>
+	<string name="ability_item3">桨力</string>
+	<string name="ability_item4">转向</string>
+	<string name="ability_item5">抗浪</string>
+	<string name="ability_item6">耐久</string>
+	<string name="ability_item7">水手</string>
+	<string name="ability_item8">装甲</string>
+	<string name="ability_item9">炮门</string>
+	<string name="ability_item10">仓位</string>
+	<string name="boat_bulid">船只性能面板</string>
+	<string name="ability_boat">船只技能</string>
+	<string name="get_boat">获取方式</string>
+<!--Bulid界面-->
+	<string name="sp_hint1">请选择【帆】</string>
+	<string name="sp_hint2">请选择【炮门】</string>
+	<string name="sp_hint3">请选择【兵装①】</string>
+	<string name="sp_hint4">请选择【兵装②】</string>
+<!--搜索页面①-->
+	<string name="select_size_s">小型</string>
+	<string name="select_size_m">中型</string>
+	<string name="select_size_l">大型</string>
+<!--搜索页面②-->
+	<string name="select_t0">辅助帆</string>
+	<string name="select_t1">船炮</string>
+	<string name="select_t2">船首像</string>
+	<string name="select_t3">特殊装备</string>
+	<string name="select_t4">辅助装甲</string>
+	<string name="select_t5">船体</string>	
+	<string name="select_t6">船帆</string>
+	<string name="select_t7">船炮</string>
+	<string name="select_t8">兵装</string>		
+<!--船部件页面-->
+	<string name="part_base">基本性能</string>
+	<string name="part_get">获取方式</string>
+<!--冒险区-->
+	<string name="adventure_t_feats">功绩:</string>
+	<string name="adventure_t_card">卡点:</string>
+	<string name="adventure_t_skill">技能:</string>
+	<string name="adventure_t_misson">任务:</string>
+<!--提示文字-->
+	<string name="hint_name">请输入要搜索船的名称</string>    
+	<string name="hint_name2">请输入要搜索配件的名称</string> 
+	<string name="hint_bulid">请在船只列表中，长按你需要造船的船只</string> 
+	<string name="select_boat_txt">搜索船只</string>
+	
+	
+	
+	<string name="help_title_one">网络连接</string>
+    <string name="help_title_two">使用问题</string>
+    <string name="help_title_three">其他问题</string>
+    <string name="help_1_1">1.应用需要连接网络吗？</string>
+    <string name="help_1_1_instroduce">目前需要网络的部分比重不大，可自由选择是否打开，不影响正常使用。</string>
+    <string name="help_1_2">2.应用开启广告很烦？</string>
+    <string name="help_1_2_instroduce">断开网络吧，它就不会再出现了。</string>
+    <string name="help_2_1">1.总体说明</string>
+    <string name="help_2_1_instroduce">所有界面全部通过左上角导航栏进行操作。</string>
+    <string name="help_2_2">2.任务相关</string>
+    <string name="help_2_2_instroduce">任务侧边栏的后续和前置任务是可点击跳转的。任务列表长按可以进行标记，然后再从标记搜索中查询。</string>
+    <string name="help_3_1">1.出现问题怎么办？</string>
+    <string name="help_3_1_instroduce">通过软件里面存在的方式向我进行反馈</string>
+    <string name="help_3_2">2.会有iphone版本吗？</string>
+    <string name="help_3_2_instroduce">至少现在没有</string>
+    <string name="help_3_3">3.更新周期怎么样？</string>
+    <string name="help_3_3_instroduce">更新周期不定，快则一月，慢则接近长假会有更新</string>
+		
+</resources>
