@@ -155,7 +155,22 @@ public class BitMapUtil {
 		InputStream in =new ByteArrayInputStream(data);
 		return BitmapFactory.decodeStream(in,null,opt);
 	}
-	
+
+	@SuppressWarnings("deprecation")
+	public static Bitmap getBitmapByInputStream(byte[] data,int sampleSize){
+		int inSampleSize=sampleSize;
+		BitmapFactory.Options opt = new BitmapFactory.Options();
+		opt.inJustDecodeBounds = false;
+		opt.inPreferredConfig = Bitmap.Config.RGB_565;
+		if (android.os.Build.VERSION.SDK_INT<android.os.Build.VERSION_CODES.LOLLIPOP){
+			opt.inPurgeable = true;
+			opt.inInputShareable = true;
+		}
+		opt.inSampleSize=inSampleSize;
+		InputStream in =new ByteArrayInputStream(data);
+		return BitmapFactory.decodeStream(in,null,opt);
+	}
+
 	public static Bitmap readBitMap(Context context, int resId){  
 		BitmapFactory.Options opt = new BitmapFactory.Options();  
 		opt.inPreferredConfig = Bitmap.Config.RGB_565;    

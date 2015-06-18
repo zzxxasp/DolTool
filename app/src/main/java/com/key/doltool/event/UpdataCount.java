@@ -54,7 +54,7 @@ public class UpdataCount {
 	    }
 	}
 	public void update_addMode(String type,int now){
-		Trove_Count counts=new Trove_Count();
+		Trove_Count counts;
 	    for(int i=0;i<name_type.length;i++){
 	    	if(type.equals(name_type[i])){
 	    		counts=(Trove_Count)dao.select(Trove_Count.class, false, "type=?",new String[]{""+(i+1)}, null, null, null, null).get(0);
@@ -67,7 +67,7 @@ public class UpdataCount {
 	//保存所有已发现的发现物
 	public List<Integer> saveIdFlag(){
 		List<Trove> list=(List<Trove>)dao.select(Trove.class, false, "flag=?",new String[]{"1"}, null, null, null, null);
-		List<Integer> temp=new ArrayList<Integer>();
+		List<Integer> temp=new ArrayList<>();
 		for(int i=0;i<list.size();i++){
 			temp.add(list.get(i).getId());
 		}
@@ -77,7 +77,7 @@ public class UpdataCount {
 	public List<Integer> saveMission(int tagert){
 		if(tagert>6){
 			List<Mission> list=(List<Mission>)dao.select(Mission.class, false, "tag=?",new String[]{"1"}, null, null, null, null);
-			List<Integer> temp=new ArrayList<Integer>();
+			List<Integer> temp=new ArrayList<>();
 			for(int i=0;i<list.size();i++){
 				temp.add(list.get(i).getId());
 			}
@@ -88,7 +88,7 @@ public class UpdataCount {
 	}
 	//还原任务记录
 	public void backSaveMission(List<Integer> list){
-		List<Mission> temp=new ArrayList<Mission>();
+		List<Mission> temp=new ArrayList<>();
 		for(int i=0;i<list.size();i++){
 			Mission mission=new Mission();
 			mission.setTag(1);
@@ -100,7 +100,7 @@ public class UpdataCount {
 	}
 	//还原所有发现物的状态
 	public void backSave(List<Integer> list){
-		List<Trove> temp=new ArrayList<Trove>();
+		List<Trove> temp=new ArrayList<>();
 		for(int i=0;i<list.size();i++){
 			Trove trove=new Trove();
 			trove.setFind_flag(1);
@@ -112,8 +112,8 @@ public class UpdataCount {
 		init_adventure();
 	}
 	public void backSync(List<String> list){
-		List<Integer> mList=new ArrayList<Integer>();
-		List<Integer> tList=new ArrayList<Integer>();
+		List<Integer> mList=new ArrayList<>();
+		List<Integer> tList=new ArrayList<>();
 		for(int i=0;i<list.size();i++){
 			String temp[]=list.get(i).split("\\+");
 			if(temp[0].equals("m")){

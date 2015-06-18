@@ -44,7 +44,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	private GridView listview;
 	//数据temp变量
 	private DefaultDAO dao;
-	private List<TradeItem> list=new ArrayList<TradeItem>();
+	private List<TradeItem> list=new ArrayList<>();
 	private TradeListAdapter adapter;
 	private int add=-60;
 	private Thread mThread;	// 线程

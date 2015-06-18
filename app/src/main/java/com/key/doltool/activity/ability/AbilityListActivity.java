@@ -41,7 +41,7 @@ public class AbilityListActivity extends BaseActivity{
 
 		//数据temp变量
 		private DefaultDAO dao;
-		private List<Skill> list=new ArrayList<Skill>();
+		private List<Skill> list=new ArrayList<>();
 		private SkillAdapter adapter;
 		private int add=0;
 		private Thread mThread;	// 线程
@@ -140,11 +140,11 @@ public class AbilityListActivity extends BaseActivity{
 			if(size_after<SkillAdapter.SIZE){
 				//表示，小于
 				end_flag=false;
-				srollListener.changeFlag(end_flag);
+				srollListener.changeFlag(false);
 			}
 	    	if(size_after==size_before&&size_after!=0){
 	    		end_flag=false;
-	    		srollListener.changeFlag(end_flag);
+	    		srollListener.changeFlag(false);
 	    		Toast.makeText(this,"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
 	    	}else if(size_after==0){
 	    		Toast.makeText(this,"没有查到您想要的结果", Toast.LENGTH_LONG).show();
@@ -207,7 +207,7 @@ public class AbilityListActivity extends BaseActivity{
 		//重置最末尾标记
 		public void begin(){
 			end_flag=true;
-			srollListener.changeFlag(end_flag);
+			srollListener.changeFlag(true);
 		}
 		
 	/**
@@ -245,7 +245,7 @@ public class AbilityListActivity extends BaseActivity{
 					//条件不是初始状态就重置
 					if(!select_if.equals("id>?")){
 						end_flag=true;
-						srollListener.changeFlag(end_flag);
+						srollListener.changeFlag(true);
 						change_if("id>?","0");
 						Toast.makeText(this,"重置搜索条件", Toast.LENGTH_SHORT).show();
 					}

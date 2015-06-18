@@ -72,25 +72,14 @@ public class VersionUpdate {
         this.context = (Activity) context;
     }
 
-    /**
-     * 
-     * @Title: updateVersion
-     * @Description: 展现版本更新界面
-     * @param version
-     * @date 2011-8-24 上午11:59:23
-     */
+
     public void updateVersion(String appname, String oldversioncode, Version version) {
         this.version = version;
         this.appname = appname;
         context.runOnUiThread(new UpdateDialogRunnable());
     }
 
-    /**
-     * 
-     * @Title: showUpdateUI
-     * @Description: 初始化版本更新对话框
-     * @date 2011-8-23 下午04:14:03
-     */
+
     private void showUpdateUI() {
         LayoutInflater layoutinflater = context.getLayoutInflater();
         View view = layoutinflater.inflate(R.layout.update_progress_dialog, null);
@@ -140,11 +129,7 @@ public class VersionUpdate {
         updateDialog.show();
     }
 
-    /**
-     * @Title: sureBtClicked
-     * @Description: 点击确定按钮后隐藏确定按钮，展现现在进度�?
-     * @date 2011-8-23 下午06:08:11
-     */
+
     private void sureBtClicked() {
         downloadProgressBar.setVisibility(ProgressBar.VISIBLE);
         layout1.setVisibility(View.GONE);
@@ -153,19 +138,7 @@ public class VersionUpdate {
         downloadThread.start();
     }
 
-    /**
-     * @Title: showCannelOrQuitBt
-     * @Description: 根据条件展现�?��或取消按钮，并为其添加事�?
-     * @param cannelBt
-     * @param quitBt
-     * @date 2011-8-23 下午05:53:19
-     */
 
-    /**
-     * @Title: cancelDownload
-     * @Description: 该方法实现了停止下载线程和取消更新对话框的功�?
-     * @date 2011-8-24 上午11:49:46
-     */
     private void cancelDownload() {
         if (downloadThread != null) {
             downloadThread.stopThread(true);
@@ -178,12 +151,7 @@ public class VersionUpdate {
         }
     }
 
-    /**
-     * 
-     * @Title: install
-     * @Description: 安装apk
-     * @date 2011-8-23 下午04:54:09
-     */
+
     private void installApk() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -197,15 +165,7 @@ public class VersionUpdate {
 
     }
 
-    /**
-     * 
-     * @ClassName DownloadThread
-     * @Description 实现了apk包的下载功能
-     * @author Administrator
-     * @email Administrator@broadengate.com
-     * @date 2011-8-24 上午11:53:03
-     * @version 1.0
-     */
+
     private class DownloadThread extends Thread {
 
         private boolean isStop = false;
@@ -322,23 +282,12 @@ public class VersionUpdate {
             }
         };
 
-        /**
-         * 
-         * @Title: stopThread
-         * @Description:实现停止下载线程
-         * @param isStop
-         * @date 2011-8-24 上午11:54:40
-         */
+
         public void stopThread(boolean isStop) {
             this.isStop = isStop;
         }
 
-        /**
-         * @Title: checkInstall
-         * @Description: �?��apk是否可以被安装或者删�?
-         * @param apkFile
-         * @date 2011-8-24 上午11:18:31
-         */
+
         private void checkInstall(File apkFile) {
             if (isStop) {
                 apkFile.delete();
@@ -347,12 +296,7 @@ public class VersionUpdate {
             }
         }
 
-        /**
-         * @Title: updateProgress
-         * @Description: 更新进度条当前进�?
-         * @param alreadyReadCount
-         * @date 2011-8-24 上午10:59:14
-         */
+
         private void updateProgress(final int alreadyReadCount) {
             context.runOnUiThread(new Runnable() {
                 @Override
@@ -362,12 +306,7 @@ public class VersionUpdate {
             });
         }
 
-        /**
-         * @Title: setMaxProgress
-         * @Description: 设置进度条最大进�?
-         * @param contentLength
-         * @date 2011-8-24 上午10:54:19
-         */
+
         private void setMaxProgress(final long contentLength) {
             context.runOnUiThread(new Runnable() {
                 @Override
@@ -378,15 +317,6 @@ public class VersionUpdate {
         }
     }
 
-    /**
-     * 
-     * @ClassName UpdateDialogRunnable
-     * @Description 展现更新对话框的线程
-     * @author Administrator
-     * @email Administrator@broadengate.com
-     * @date 2011-8-24 下午03:09:08
-     * @version 1.0
-     */
     private class UpdateDialogRunnable implements Runnable {
         @Override
         public void run() {

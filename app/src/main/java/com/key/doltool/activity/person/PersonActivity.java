@@ -86,8 +86,8 @@ public class PersonActivity extends BaseActivity{
 		setContentView(R.layout.activity_user);
 		event=new DialogEvent();
 		dialog=event.itemDialog(this,"请稍候...");
-		dao=SRPUtil.getDAO(this);
-		srp=SRPUtil.getInstance(this);
+		dao=SRPUtil.getDAO(getApplication());
+		srp=SRPUtil.getInstance(getApplication());
 		findView();
 		setListener();
 	}
@@ -258,7 +258,7 @@ public class PersonActivity extends BaseActivity{
 		v=DataSelectUtil.UpdateTime(dao);
 		//1.根据时间判断是需要下载还是更新数据
 		//2.如果本地的时间过早则进行下载，并提示，其他一律进行数据的同步
-		List<String> temp=new ArrayList<String>();
+		List<String> temp=new ArrayList<>();
 		for(int i=0;i<a.size();i++){
 			Mission misson=(Mission)a.get(i);
 			temp.add("m+"+misson.getId());
@@ -391,7 +391,7 @@ public class PersonActivity extends BaseActivity{
 				headImg.getDataInBackground(new GetDataCallback() {
 					public void done(byte[] data, ParseException e) {
 						if (e == null) {
-							bitmap=BitMapUtil.getBitmapByInputStream(data);
+							bitmap=BitMapUtil.getBitmapByInputStream(data,3);
 							head_img.setImageBitmap(bitmap);
 						} else {
 							bg = getResources().getDrawable(R.drawable.dol_trove_defalut); 

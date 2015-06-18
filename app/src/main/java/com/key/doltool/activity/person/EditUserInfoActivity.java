@@ -183,7 +183,7 @@ public class EditUserInfoActivity extends BaseActivity{
 				headImg.getDataInBackground(new GetDataCallback() {
 					public void done(byte[] data, ParseException e) {
 						if (e == null) {
-							head.setImageBitmap(BitMapUtil.getBitmapByInputStream(data));
+							head.setImageBitmap(BitMapUtil.getBitmapByInputStream(data,3));
 						} else {
 							head.setImageResource(R.drawable.dol_trove_defalut);
 						}

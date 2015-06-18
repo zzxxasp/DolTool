@@ -106,20 +106,20 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	private FlatButton btn;
 	//数据temp变量
 	private DefaultDAO dao;
-	private List<SailBoat> list=new ArrayList<SailBoat>();
-	private List<Part> list2=new ArrayList<Part>();
+	private List<SailBoat> list=new ArrayList<>();
+	private List<Part> list2=new ArrayList<>();
 	private SailBoatListAdapter adapter;
 	private PartListAdapter adapter2;
 	private int add=-20,add2=-20;
 	private int twice=0;
-	private List<Part> s_list=new ArrayList<Part>();
-	private List<Part> c_list=new ArrayList<Part>();
-	private List<Part> eq_list1=new ArrayList<Part>();
-	private List<Part> eq_list2=new ArrayList<Part>();
-	private HashMap<String,Integer> s_map=new HashMap<String,Integer>();
-	private HashMap<String,Integer> c_map=new HashMap<String,Integer>();
-	private HashMap<String,Integer> eq_map=new HashMap<String,Integer>();
-	private HashMap<String,Integer> eq2_map=new HashMap<String,Integer>();
+	private List<Part> s_list=new ArrayList<>();
+	private List<Part> c_list=new ArrayList<>();
+	private List<Part> eq_list1=new ArrayList<>();
+	private List<Part> eq_list2=new ArrayList<>();
+	private HashMap<String,Integer> s_map=new HashMap<>();
+	private HashMap<String,Integer> c_map=new HashMap<>();
+	private HashMap<String,Integer> eq_map=new HashMap<>();
+	private HashMap<String,Integer> eq2_map=new HashMap<>();
 	private Part part_s,part_c,part_eq,part_eq2;
 	private int vo_s_add=0,vo_f_add=0,vo_de_add=0,vo_tu_add=0,vo_p_add=0;
 	private int bt_h_add=0,bt_a_add=0,bt_s_add=0,bt_c_add=0;
@@ -234,7 +234,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	}
 	private void initPage(){
 		//初始化layout相关
-		main_list = new ArrayList<View>();
+		main_list = new ArrayList<>();
 		mInflater = getActivity().getLayoutInflater();
 		//添加布局文件
 		layout1 = mInflater.inflate(R.layout.dockyard_main_item_layout1, null);
@@ -402,7 +402,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 			return;
 		}
 		//数据前后记录
-		int size_before=0,size_after=0;
+		int size_before,size_after;
 		if(page==1){
 			size_before=list.size();
 			list.addAll(((List<SailBoat>) dao.select(SailBoat.class, false,select_if, select_if_x, 
@@ -442,7 +442,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	//初始化边缘菜单栏
 	private void initMenu(){
 		menu_list=(ListView)getActivity().findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<MenuItem>();
+		List<MenuItem> list=new ArrayList<>();
 		ViewUtil.setList(list,1);
 		menu_list.setAdapter(new DockYardMenuAdapter(list,getActivity()));
 		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -459,7 +459,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	//条件查询船只
 	private void findObject(){
 		//弹出对话框
-		View xc=null;
+		View xc;
 		if(main_ViewPage.getCurrentItem()==0){
 			xc=mInflater.inflate(R.layout.select_boat, null);
 		}else{
@@ -705,7 +705,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 			}
 		}
 		 return true;
-	 };
+	 }
 	//滚动监听① - useless
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {

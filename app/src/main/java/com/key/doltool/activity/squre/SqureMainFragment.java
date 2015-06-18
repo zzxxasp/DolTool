@@ -49,7 +49,7 @@ public class SqureMainFragment extends BaseFragment{
 		});
 	}
 	private void jump(int index){
-		Class<?> c = null;
+		Class<?> c ;
 		switch(index){
 			case 1:c=MapActivity.class;break;
 			case 2:c=FortuneActivity.class;break;

@@ -33,7 +33,7 @@ public class InfoMainFragment extends BaseFragment{
 	private Button mission,skill,adc,job,wiki;
 	private ListView listview;
 	private DefaultDAO dao;
-	private List<WikiInfo> list=new ArrayList<WikiInfo>();
+	private List<WikiInfo> list=new ArrayList<>();
     private View main;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		 View view =  inflater.inflate(R.layout.info_main, container,false);

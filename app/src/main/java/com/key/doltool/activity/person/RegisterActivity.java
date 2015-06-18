@@ -114,10 +114,10 @@ public class RegisterActivity extends BaseActivity{
 					//登录失败
 					switch(e.getCode()){
 						case 101:
-							Toast.makeText(context,"账号不存在或密码错误",Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(),"账号不存在或密码错误",Toast.LENGTH_SHORT).show();
 							break;
 						default:
-							Toast.makeText(context,"服务器异常:"+e.getCode(),Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(),"服务器异常:"+e.getCode(),Toast.LENGTH_SHORT).show();
 							break;
 					}
 					dialog.dismiss();

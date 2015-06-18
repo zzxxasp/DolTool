@@ -96,7 +96,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	}
 	private void initMenu(){
 		menu_list=(ListView)findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<MenuItem>();
+		List<MenuItem> list=new ArrayList<>();
 		ViewUtil.setList(list,3);
 		menu_list.setAdapter(new DockYardMenuAdapter(list,this));
 		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -230,8 +230,8 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 				}
 			}
 		}
-		 return true;
-	 };
+		return true;
+	}
 	@SuppressWarnings("unchecked")
 	private Runnable mTasks =new Runnable(){
 		public void run() {
@@ -347,8 +347,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
         @Override
         public void onItemCheckedStateChanged(ActionMode mode,
                 int position, long id, boolean checked) {
-            
-        	int checkedCount = 0;
+        	int checkedCount;
             if(allCheckMode){
             	//ListView.MultiChoiceModeListener默认没有全选菜单，所以要做自定义的特殊处理
             	if (checked) {

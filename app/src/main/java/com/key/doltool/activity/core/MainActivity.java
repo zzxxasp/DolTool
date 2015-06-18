@@ -100,7 +100,7 @@ public class MainActivity extends BaseFragmentActivity{
 				headImg.getDataInBackground(new GetDataCallback() {
 					public void done(byte[] data, ParseException e) {
 						if (e == null) {
-							headPic.setImageBitmap(BitMapUtil.getBitmapByInputStream(data));
+							headPic.setImageBitmap(BitMapUtil.getBitmapByInputStream(data,3));
 						} else {
 							headPic.setImageResource(R.drawable.dol_trove_defalut);
 						}
@@ -199,7 +199,7 @@ public class MainActivity extends BaseFragmentActivity{
 
     /**
      * 切换模块的内容
-     * @param fragment
+     * @param index 模块索引
      */
     public void switchContent(int index){
     	if(this.index==index){
@@ -233,7 +233,6 @@ public class MainActivity extends BaseFragmentActivity{
 		item.title=list.get(index).text;
     	transaction.replace(R.id.content_frame, mContent);
 		fragment_list.add(item);
-//    	transaction.addToBackStack(null);
 		transaction.commit();
     }
     //保存销毁的数据
@@ -252,7 +251,7 @@ public class MainActivity extends BaseFragmentActivity{
 				}
 				UIHandler.sendEmptyMessage(id);
 			}
-    	}).start();
+		    	}).start();
     }
     
     @Override

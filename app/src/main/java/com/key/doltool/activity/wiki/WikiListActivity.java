@@ -44,7 +44,7 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		
 		//数据temp变量
 		private DefaultDAO dao;
-		private List<WikiInfo> list=new ArrayList<WikiInfo>();
+		private List<WikiInfo> list=new ArrayList<>();
 		private WikiAdapter adapter;
 		private int add=0;
 		private Thread mThread;	// 线程
@@ -109,7 +109,7 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		}
 		protected void onResume() {
 			super.onResume();
-		};
+		}
 		@SuppressWarnings("unchecked")
 		//有限数据查询
 		private void selectshow(String limit){
@@ -144,7 +144,7 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		//初始化边缘菜单栏
 		private void initMenu(){
 			menu_list=(ListView)findViewById(R.id.menu_list);
-			List<MenuItem> list=new ArrayList<MenuItem>();
+			List<MenuItem> list=new ArrayList<>();
 			ViewUtil.setList(list,6);
 			menu_list.setAdapter(new DockYardMenuAdapter(list,this));
 			menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -239,7 +239,7 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 				}
 			}
 			 return true;
-		 };
+		}
 		//滚动监听① - useless
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
@@ -247,7 +247,7 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		//滚动监听②
 		public void onScrollStateChanged(final AbsListView view, int scrollState) {
 	        //当不滚动时
-			boolean flag=true;
+			boolean flag;
 			flag=end_flag;
 	        if(scrollState == SCROLL_STATE_IDLE){  
 	                System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());

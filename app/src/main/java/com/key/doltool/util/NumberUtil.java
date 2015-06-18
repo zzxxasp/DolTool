@@ -85,28 +85,24 @@ public class NumberUtil {
 	/**处理add信息**/
 	public static HashMap<String,Integer> excute_add_info(String base){
 		String[] cute=base.split(",");
-		HashMap<String,Integer> map=new HashMap<String,Integer>();
-		for(int i=0;i<cute.length;i++){
-			String[] number_temp=cute[i].split(":");
-			String[] number=number_temp[1].split("~");
-			int min=Integer.parseInt(number[0]);
-			int max=Integer.parseInt(number[1]);
-			int random=getRandom(min,max);
+		HashMap<String,Integer> map=new HashMap<>();
+		for (String aCute : cute) {
+			String[] number_temp = aCute.split(":");
+			String[] number = number_temp[1].split("~");
+			int min = Integer.parseInt(number[0]);
+			int max = Integer.parseInt(number[1]);
+			int random = getRandom(min, max);
 			map.put(number_temp[0], random);
 		}
 		return map;
 	}
 	public static int getRandom(int min,int max){
 		Random ran=new Random();
-		int random=min+(int)((ran.nextDouble())*(max-min));
-		return random;
+		return min+(int)((ran.nextDouble())*(max-min));
 	}
 	public static boolean getRandomByPercent(double percent){
 		Random ran=new Random();
 		double max=ran.nextDouble()*100;
-		if(max<=percent){
-			return true;
-		}
-		return false;
+		return max <= percent;
 	}
 }

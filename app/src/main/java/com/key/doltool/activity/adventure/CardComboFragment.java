@@ -128,7 +128,7 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 			return;
 		}
 		//数据前后记录
-		int size_before=0,size_after=0;
+		int size_before,size_after;
 			size_before=list.size();
 			list.addAll(((List<CardCombo>) dao.select(CardCombo.class, false,select_if, select_if_x, 
 				null, null,null,limit)));
@@ -151,7 +151,7 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 	//初始化边缘菜单栏
 	private void initMenu(){
 		menu_list=(ListView)getActivity().findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<MenuItem>();
+		List<MenuItem> list=new ArrayList<>();
 		ViewUtil.setList(list,5);
 		menu_list.setAdapter(new DockYardMenuAdapter(list,getActivity()));
 		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -247,7 +247,7 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 			}
 		}
 		 return true;
-	 };
+	 }
 	 
 	//滚动监听① - useless
 	public void onScroll(AbsListView view, int firstVisibleItem,
@@ -256,7 +256,7 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 	//滚动监听②
 	public void onScrollStateChanged(final AbsListView view, int scrollState) {
         //当不滚动时
-		boolean flag=true;
+		boolean flag;
 		flag=end_flag;
         if(scrollState == SCROLL_STATE_IDLE){  
                 System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());

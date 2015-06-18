@@ -33,7 +33,7 @@ public class AdventureMainFragment extends BaseFragment{
 		 return view; 
 	}
 	private void init(View view){
-		list_count=new ArrayList<Trove_Count>();
+		list_count=new ArrayList<>();
 		main=view;
 		dao=SRPUtil.getDAO(getActivity());
 	}

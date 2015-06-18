@@ -150,7 +150,7 @@ public class ADCListActivity extends BaseActivity{
 		//初始化边缘菜单栏
 		private void initMenu(){
 			menu_list=(ListView)findViewById(R.id.menu_list);
-			List<MenuItem> list=new ArrayList<MenuItem>();
+			List<MenuItem> list=new ArrayList<>();
 			ViewUtil.setList(list,6);
 			menu_list.setAdapter(new DockYardMenuAdapter(list,this));
 			menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

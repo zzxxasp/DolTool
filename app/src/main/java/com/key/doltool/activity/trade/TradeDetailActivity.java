@@ -57,7 +57,7 @@ public class TradeDetailActivity extends BaseActivity{
 		
 	}
 	private void init(){
-		TradeItem item=new TradeItem();
+		TradeItem item;
 		if(StringUtil.isNull(name_txt)){
 			item=(TradeItem)dao.select(TradeItem.class, false, "id=?", new String[]{""+id}, null, null, null, null).get(0);
 		}else{

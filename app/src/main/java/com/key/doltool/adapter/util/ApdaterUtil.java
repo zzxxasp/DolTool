@@ -11,7 +11,10 @@ import com.key.doltool.R;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.db.DataSelectUtil;
 import com.the9tcat.hadi.DefaultDAO;
-
+/**
+ * 列表图片关联缓存类<br>
+ * 用处：缓存列表中存在的关联图片id，以便加速载入
+ * **/
 public class ApdaterUtil {
 	private static HashMap<String,String> name_list=new HashMap<>();
 	private Context context;
@@ -61,6 +64,5 @@ public class ApdaterUtil {
 		}else{
 			name_list=new HashMap<>();
 		}
-
 	}
 }

@@ -63,7 +63,7 @@ public class AdventureListActivity extends BaseAdventureActivity{
 		type=getIntent().getStringExtra("type");
 		dao=SRPUtil.getDAO(this);
 		count=new UpdataCount(this);
-		list=new ArrayList<Trove>();
+		list=new ArrayList<>();
 		findView();
 		setListener();
 		initMenu();
@@ -80,7 +80,7 @@ public class AdventureListActivity extends BaseAdventureActivity{
 	}
 	private void initMenu(){
 		menu_list=(ListView)findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<MenuItem>();
+		List<MenuItem> list=new ArrayList<>();
 		ViewUtil.setList(list,2);
 		menu_list.setAdapter(new DockYardMenuAdapter(list,this));
 		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

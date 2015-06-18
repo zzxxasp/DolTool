@@ -201,9 +201,9 @@ public class ViewUtil {
 			positive.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					String str=name.getText().toString();
-					String if_str="";
-					List<String> if_list=new ArrayList<String>();
-					String if_args="";
+					String if_str;
+					List<String> if_list=new ArrayList<>();
+					String if_args;
 					//不为空才修改条件
 					if(!str.equals("")){
 						if_str="name like ?";
@@ -256,9 +256,9 @@ public class ViewUtil {
 			positive.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					String str=name.getText().toString();
-					String if_str="";
-					List<String> if_list=new ArrayList<String>();
-					String if_args="";
+					String if_str;
+					List<String> if_list=new ArrayList<>();
+					String if_args;
 					//不为空才修改条件
 					if(!str.equals("")){
 						if_str="name like ?";
@@ -347,8 +347,8 @@ public class ViewUtil {
 		positive.setText("搜索");
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String select_if="";
-				List<String> select_args=new ArrayList<String>();
+				String select_if;
+				List<String> select_args=new ArrayList<>();
 				if(!name.getText().toString().trim().equals("")){
 					select_if="name like ? ";
 					select_args.add("%"+name.getText().toString().trim()+"%");
@@ -410,8 +410,8 @@ public class ViewUtil {
 		positive.setText("搜索");
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String select_if="";
-				List<String> select_args=new ArrayList<String>();
+				String select_if;
+				List<String> select_args=new ArrayList<>();
 				if(!name.getText().toString().trim().equals("")){
 					select_if="name like ? ";
 					select_args.add("%"+name.getText().toString().trim()+"%");
@@ -463,8 +463,8 @@ public class ViewUtil {
 		positive.setText("搜索");
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String select_if="";
-				List<String> select_args=new ArrayList<String>();
+				String select_if;
+				List<String> select_args=new ArrayList<>();
 				if(!name.getText().toString().trim().equals("")){
 					select_if="name like ? ";
 					select_args.add("%"+name.getText().toString().trim()+"%");
@@ -515,8 +515,8 @@ public class ViewUtil {
 		positive.setText("搜索");
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String select_if="";
-				List<String> select_args=new ArrayList<String>();
+				String select_if;
+				List<String> select_args=new ArrayList<>();
 				if(!name.getText().toString().trim().equals("")){
 					select_if="name like ? ";
 					select_args.add("%"+name.getText().toString().trim()+"%");
@@ -564,7 +564,7 @@ public class ViewUtil {
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				String select_if="";
-				List<String> select_args=new ArrayList<String>();
+				List<String> select_args=new ArrayList<>();
 				if(box_m.isChecked()){
 					select_if="sex = ? ";
 					select_args.add(box_m.getText().toString());
@@ -617,8 +617,8 @@ public class ViewUtil {
 		positive.setText("搜索");
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String select_if="";
-				List<String> select_args=new ArrayList<String>();
+				String select_if;
+				List<String> select_args=new ArrayList<>();
 				if(!name.getText().toString().trim().equals("")){
 					select_if="name like ? ";
 					select_args.add("%"+name.getText().toString().trim()+"%");
@@ -664,21 +664,17 @@ public class ViewUtil {
 					spinner.setClickable(flag);
 					spinner.setEnabled(flag);
 				} else if (v instanceof ListView) {
-					((ListView) v).setClickable(flag);
-					((ListView) v).setEnabled(flag);
+					v.setClickable(flag);
+					v.setEnabled(flag);
 				} else {
 					disableSubControls((ViewGroup) v,flag);
 				}
 			}else if (v instanceof EditText) {
-				((EditText) v).setEnabled(flag);
-				((EditText) v).setClickable(flag);
+				v.setEnabled(flag);
+				v.setClickable(flag);
 			}else if (v instanceof Button) {
-				((Button) v).setEnabled(flag);
-			}else if (v instanceof FlatButton) {
-				((FlatButton) v).setEnabled(flag);
-			}else if (v instanceof ViewPager) {
-				((ViewPager) v).setEnabled(flag);
-			}else{
+				v.setEnabled(flag);
+			}else {
 				v.setEnabled(flag);
 			}
 		}

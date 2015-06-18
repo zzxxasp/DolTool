@@ -232,7 +232,7 @@ public class AreaEvent {
 			public void onClick(View v) {
 				String temp=(String)sp_city.getSelectedItem();
 				if(!temp.equals("全部")){
-					context.change_if("city like ?","%"+(String)sp_city.getSelectedItem()+"%");
+					context.change_if("city like ?","%"+sp_city.getSelectedItem()+"%");
 				}else{
 					context.change_if("id>?","0");
 				}

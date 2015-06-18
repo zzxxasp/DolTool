@@ -24,20 +24,20 @@ import com.key.doltool.util.jsoup.JsoupForTX;
  * 0.5-基本调整,界面适配度80%<br>
  */
 public class CardInternetActivity extends BaseActivity{
-	private WebView web_content;
-	private LinearLayout layout_alert;
-	private String content="";
-	private int width=480;
-	private String head="";
-	public void onCreate(Bundle savedInstanceState) {
+	 private WebView web_content;
+	 private LinearLayout layout_alert;
+	 private String content="";
+	 private int width=480;
+	 private String head="";
+	 public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news_detail);
 		findView();
 		new Thread(mTask).start();
-	}
-	//获取数据，填充显示
-	@SuppressLint("SetJavaScriptEnabled")
-	private void init(){
+	 }
+	 //获取数据，填充显示
+	 @SuppressLint("SetJavaScriptEnabled")
+	 private void init(){
 		float screenDensity = getResources().getDisplayMetrics().density ; 
 		WebSettings.ZoomDensity zoomDensity;
 		if(screenDensity==0.75f){
@@ -63,14 +63,14 @@ public class CardInternetActivity extends BaseActivity{
 		}else{
 			web_content.loadData(head+content,"text/html; charset=UTF-8",null);
 		}
-	}
-	//初始化控件
-	private void findView(){
+	 }
+	 //初始化控件
+	 private void findView(){
 		web_content=(WebView)findViewById(R.id.content);
 		layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
-	}
-	@Override
-	protected void onResume() {
+	 }
+	 @Override
+	 protected void onResume() {
 		super.onResume();
 	}
 	 private Handler mHandler=new Handler(){
@@ -107,7 +107,7 @@ public class CardInternetActivity extends BaseActivity{
 		 web_content.clearCache(false);
 	 }
 	 @Override
-	public void onConfigurationChanged(Configuration newConfig) {
+	 public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-	}
+	 }
 }

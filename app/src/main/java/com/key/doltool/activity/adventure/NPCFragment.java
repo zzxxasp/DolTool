@@ -127,7 +127,7 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
 			return;
 		}
 		//数据前后记录
-		int size_before=0,size_after=0;
+		int size_before,size_after;
 			size_before=list.size();
 			list.addAll(((List<NPCInfo>) dao.select(NPCInfo.class, false,select_if, select_if_x, 
 				null, null,null,limit)));
@@ -154,7 +154,7 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
 	//初始化边缘菜单栏
 	private void initMenu(){
 		menu_list=(ListView)getActivity().findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<MenuItem>();
+		List<MenuItem> list=new ArrayList<>();
 		ViewUtil.setList(list,6);
 		menu_list.setAdapter(new DockYardMenuAdapter(list,getActivity()));
 		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

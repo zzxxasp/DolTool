@@ -107,10 +107,10 @@ public class LoginActivity extends BaseActivity{
                 new RequestPasswordResetCallback() {
 			public void done(ParseException e) {
 				if (e == null) {
-					Toast.makeText(LoginActivity.this,"请查收注册的邮箱进行重置密码",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"请查收注册的邮箱进行重置密码",Toast.LENGTH_SHORT).show();
 				} else {
 					e.printStackTrace();
-					Toast.makeText(LoginActivity.this,"错误4",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"错误4",Toast.LENGTH_SHORT).show();
 				}
 				dialog.dismiss();
 			}
@@ -118,12 +118,12 @@ public class LoginActivity extends BaseActivity{
 	}
 	private boolean judge(){
 		if(account.getText().toString().equals("")){
-			Toast.makeText(LoginActivity.this,"用户名不能为空",Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_LONG).show();
 			return false;
 		}
 		
 		if(password.getText().toString().equals("")){
-			Toast.makeText(LoginActivity.this,"密码不能为空",Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_LONG).show();
 			return false;
 		}
 		return true;
@@ -150,7 +150,7 @@ public class LoginActivity extends BaseActivity{
 				if (user != null) {
 					//登录
 					dialog.dismiss();
-					Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),"登录成功",Toast.LENGTH_LONG).show();
 					Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 					setResult(RESULT_OK, intent);
 					finish();
@@ -158,10 +158,10 @@ public class LoginActivity extends BaseActivity{
 					//登录失败
 					switch(e.getCode()){
 						case 101:
-							Toast.makeText(LoginActivity.this,"账号不存在或密码错误",Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(),"账号不存在或密码错误",Toast.LENGTH_SHORT).show();
 							break;
 						default:
-							Toast.makeText(LoginActivity.this,"服务器异常:"+e.getCode(),Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(),"服务器异常:"+e.getCode(),Toast.LENGTH_SHORT).show();
 							break;
 					}
 					dialog.dismiss();
