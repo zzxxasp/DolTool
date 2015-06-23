@@ -133,9 +133,9 @@ public class WordListAcitivity extends BaseActivity{
 		word.saveInBackground(new SaveCallback(){
 			public void done(ParseException e) {
 				if(e==null){
-					Toast.makeText(context,"感谢您对单词表的维护，下次更新即可看到您录入的单词",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"感谢您对单词表的维护，下次更新即可看到您录入的单词",Toast.LENGTH_SHORT).show();
 				}else{
-					Toast.makeText(context,"网络异常",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"网络异常",Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

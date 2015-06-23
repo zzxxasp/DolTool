@@ -77,15 +77,15 @@ public class RegisterActivity extends BaseActivity{
 	//判断
 	private boolean judge(){
 		if(password_register.getText().toString().equals("")){
-			Toast.makeText(this,"密码不能为空",Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if(!password_repeat.getText().toString().equals(password_register.getText().toString())){
-			Toast.makeText(this,"两次输入的密码不一致",Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),"两次输入的密码不一致",Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if(email.getText().toString().equals("")){
-			Toast.makeText(this,"邮箱不能为空",Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),"邮箱不能为空",Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		return true;
@@ -106,7 +106,7 @@ public class RegisterActivity extends BaseActivity{
 			public void done(ParseException e) {
 				if (e == null) {
 					dialog.dismiss();
-					Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_LONG).show();
 					Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
 					setResult(RESULT_OK, intent);
 					finish();

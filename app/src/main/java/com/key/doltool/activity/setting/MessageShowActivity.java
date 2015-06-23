@@ -45,7 +45,7 @@ public class MessageShowActivity extends BaseActivity{
 		         if (e == null) {
 		        	 show(objects);
 		         } else {
-		             Toast.makeText(MessageShowActivity.this,"连接失败", Toast.LENGTH_LONG).show();
+		             Toast.makeText(getApplicationContext(),"连接失败", Toast.LENGTH_LONG).show();
 		         }
 		     }
 		 });

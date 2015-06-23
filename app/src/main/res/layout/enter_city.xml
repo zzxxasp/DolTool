@@ -5,39 +5,26 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="@color/Black_SP"
+    android:background="@drawable/abc_popup_background_mtrl_mult"
     >
 <!-- -->
 <RelativeLayout
     android:id="@+id/area_title" 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/Blue_SP"
-	android:padding="5dp"    
+	android:padding="10dp"
     >
 <TextView
     android:id="@+id/title_txt"
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/Blue_SP"
-    android:textColor="@color/White"
-    android:textSize="16sp"
+    android:textColor="@color/black"
+    android:textSize="20sp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="10dp"
     android:layout_centerVertical="true"
-    android:text="选择城市并进入浏览"
-    />
-<com.key.doltool.view.flat.FlatButton
-	flatui:fl_theme="@array/flat"
-	flatui:fl_cornerRadius="3dp"
-	flatui:fl_borderWidth="0.5dp"
-	flatui:fl_touchEffect="fl_ripple"
-    flatui:fl_blockButtonEffectHeight="2dp"
-    android:id="@+id/enter_btn"
-    android:layout_margin="3dp"
-	android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="@color/Black_SP"
-    android:layout_alignParentRight="true"
-    android:text="进入"    
+    android:text="请选择"
     />
 </RelativeLayout>
 <!--地区搜索-->
@@ -47,24 +34,23 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:background="@null"
-	android:padding="5dp"    
+	android:padding="10dp"
     >
 <TextView
     android:id="@+id/area_tag"
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/theme_blue_btn_rate"
-    android:textColor="@color/White"
-    android:padding="5dp"
+    android:textColor="@color/Blue_SP"
+    android:padding="10dp"
     android:text="地区选择"    
     />
 <Spinner
     android:id="@+id/sp_area" 
 	android:layout_width="200dp"
-	android:layout_margin="5dp"
+	android:layout_margin="10dp"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:background="@drawable/abc_spinner_ab_holo_light"
     android:entries="@array/area"
     />
 </LinearLayout>
@@ -73,27 +59,67 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:padding="5dp"
+    android:padding="10dp"
     android:background="@null"    
     >
 <TextView
     android:id="@+id/city_tag"
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/theme_blue_btn_rate"
-    android:textColor="@color/White"
-    android:padding="5dp"
+    android:textColor="@color/Blue_SP"
+    android:padding="10dp"
     android:text="城市选择"    
     />
 <Spinner
     android:id="@+id/sp_city"
 	android:layout_width="200dp"
-	android:layout_margin="5dp"
+	android:layout_margin="10dp"
 	android:layout_gravity="center"
     android:layout_height="wrap_content"
-    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:background="@drawable/abc_spinner_ab_holo_light"
     android:gravity="center"
     android:entries="@array/area"
     />
 </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:weightSum="2"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        >
+        <com.key.doltool.view.flat.FlatButton
+            flatui:fl_theme="@array/sea"
+            flatui:fl_cornerRadius="3dp"
+            flatui:fl_borderWidth="0.5dp"
+            flatui:fl_touchEffect="fl_ripple"
+            flatui:fl_blockButtonEffectHeight="2dp"
+            android:id="@+id/enter_btn"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="进入"
+            android:gravity="center"
+            android:textColor="@color/White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <com.key.doltool.view.flat.FlatButton
+            flatui:fl_theme="@array/flat"
+            flatui:fl_cornerRadius="3dp"
+            flatui:fl_borderWidth="0.5dp"
+            flatui:fl_touchEffect="fl_ripple"
+            flatui:fl_blockButtonEffectHeight="2dp"
+            android:id="@+id/cancel_btn"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:gravity="center"
+            android:textColor="@color/Black_SP"
+            android:text="取消"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
 </LinearLayout>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-	android:background="@drawable/dialog_full_holo_dark" 
+	android:background="@drawable/abc_popup_background_mtrl_mult"
     >
 <!--Name-->
 <LinearLayout
@@ -21,7 +21,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 	android:layout_margin="5dp"
-    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:background="@drawable/abc_spinner_ab_holo_light"
     android:gravity="center"     
     />
 <Spinner
@@ -30,7 +30,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 	android:layout_margin="5dp"
-    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:background="@drawable/abc_spinner_ab_holo_light"
     android:gravity="center"      
     />
 </LinearLayout>

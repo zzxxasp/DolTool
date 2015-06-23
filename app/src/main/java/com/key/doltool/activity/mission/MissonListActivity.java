@@ -67,8 +67,8 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private AreaEvent event;
 	
 	private String select_if;
-	private List<Mission> list_mission=new ArrayList<Mission>();
-	private List<String> if_args=new ArrayList<String>();
+	private List<Mission> list_mission=new ArrayList<>();
+	private List<String> if_args=new ArrayList<>();
 	
 	private ArrayAdapter<String> city_adapter;
 	private DefaultDAO dao;
@@ -159,7 +159,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 			return;
 		}
 		//数据前后记录
-		int size_before=0,size_after=0;
+		int size_before,size_after;
 			size_before=list_mission.size();
 			list_mission.addAll(((List<Mission>) dao.select(Mission.class, false,select_if, StringUtil.listToArray(if_args), 
 				null, null,"level asc,skill_need asc",limit)));
@@ -167,9 +167,9 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		//数据返回判断
     	if(size_after==size_before&&size_after!=0){
     		end_flag=false;
-    		Toast.makeText(this,"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+    		Toast.makeText(getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
     	}else if(size_after==0){
-    		Toast.makeText(this,"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+    		Toast.makeText(getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
     	}
 	}
 	//数据添加
@@ -182,7 +182,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	//初始化边缘菜单栏
 	private void initMenu(){
 		menu_list=(ListView)findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<MenuItem>();
+		List<MenuItem> list=new ArrayList<>();
 		ViewUtil.setList(list,7);
 		menu_list.setAdapter(new DockYardMenuAdapter(list,this));
 		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -233,8 +233,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 				layout_alert.setVisibility(View.GONE);
 				ViewUtil.disableSubControls(mSlideHolder, true);
 		 }
-	 };
-
+    };
 	//系统按键监听覆写
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		 //菜单键覆写，调用边缘栏菜单
@@ -268,7 +267,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 					selectshow("0,"+MissionItemAdapter.SIZE);
 					adapter=new MissionItemAdapter(list_mission,MissonListActivity.this);
 					listview.setAdapter(adapter);
-					Toast.makeText(this,"重置搜索条件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
@@ -445,13 +444,13 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 				if(arg2==4){
 					temp=event.LIB_CITY;
 					area.setSelection(0);
-					city_adapter=new ArrayAdapter<String>(MissonListActivity.this,android.R.layout.simple_spinner_item,temp[0]);
+					city_adapter=new ArrayAdapter<>(MissonListActivity.this,android.R.layout.simple_spinner_item,temp[0]);
 					city.setAdapter(city_adapter);
 				}
 				if(temp_click==4){
 					temp=event.ADVENTURE_CITY;
 					area.setSelection(0);
-					city_adapter=new ArrayAdapter<String>(MissonListActivity.this,android.R.layout.simple_spinner_item,temp[0]);
+					city_adapter=new ArrayAdapter<>(MissonListActivity.this,android.R.layout.simple_spinner_item,temp[0]);
 					city.setAdapter(city_adapter);
 				}
 				temp_click=arg2;

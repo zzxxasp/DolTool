@@ -159,7 +159,7 @@ public class MainBroadFragment extends BaseFragment{
 		public void run() {
 			Looper.prepare(); 
 			while(JsoupForTX.list3.size()==0&&HttpUtil.STATE==0){
-				JsoupForTX.getUrl(getActivity());
+				JsoupForTX.getUrl();
 				mHandler.sendMessage(mHandler.obtainMessage());
 			}
 		    if(HttpUtil.STATE==1&&layout_alert.getVisibility()==View.VISIBLE){

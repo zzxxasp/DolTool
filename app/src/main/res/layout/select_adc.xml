@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_vertical"
-	android:background="@drawable/dialog_full_holo_dark" 
+	android:background="@drawable/abc_popup_background_mtrl_mult"
     >
 <!--type-->
 <LinearLayout
@@ -32,7 +32,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_margin="5dp"
-    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:background="@drawable/abc_spinner_ab_holo_light"
     android:entries="@array/adc_type_txt"        
     />    
 </LinearLayout>
@@ -71,7 +71,7 @@
     android:layout_height="wrap_content"
 	android:checked="true"
 	android:button="@drawable/apptheme_btn_radio_holo_dark"
-	android:textColor="@color/white"
+	android:textColor="@color/Black_SP"
     android:layout_margin="5dp"
     android:text="男"  
     />
@@ -80,7 +80,7 @@
     android:layout_weight="1" 
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-	android:textColor="@color/white"
+	android:textColor="@color/Black_SP"
 	android:button="@drawable/apptheme_btn_radio_holo_dark"
     android:layout_margin="5dp"
     android:text="女" 

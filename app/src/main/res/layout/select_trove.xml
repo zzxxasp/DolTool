@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-	android:background="@drawable/dialog_full_holo_dark" 
+	android:background="@drawable/abc_popup_background_mtrl_mult"
     >
 <!--Name-->
 <EditText
@@ -13,7 +13,8 @@
     android:hint="请输入想要搜索的发现物名称"
 	android:padding="10dp"
 	android:layout_margin="10dp"
-    android:textColor="@color/White"
+    android:textColor="@color/Black_SP"
+    android:textCursorDrawable="@null"
     android:background="@drawable/edittext_login"
     android:inputType="text"
     />

@@ -92,7 +92,7 @@ public class CardInternetActivity extends BaseActivity{
 		public void run() {
 			Looper.prepare(); 
 			while(content.equals("")&&HttpUtil.STATE==0){
-				content=JsoupForTX.getCard(CardInternetActivity.this);
+				content=JsoupForTX.getCard();
 				mHandler.sendMessage(mHandler.obtainMessage());
 			}
 		    if(HttpUtil.STATE==1&&layout_alert.getVisibility()==View.VISIBLE){

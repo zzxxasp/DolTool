@@ -6,13 +6,10 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
-import android.content.Context;
 import android.util.Log;
 
 import com.key.doltool.data.NewsItem;
 import com.key.doltool.util.HttpUtil;
-import com.key.doltool.view.Toast;
 public class JsoupForTX {
 	/**BAHA源**/
 	public static String TX_BASE_URL="http://www.dahanghaiol.com/index.shtml";
@@ -22,7 +19,7 @@ public class JsoupForTX {
 	public static List<NewsItem> list2=new ArrayList<>();
 	public static List<NewsItem> list3=new ArrayList<>();
 	/**获得·News**/
-	public static void getUrl(Context context){
+	public static void getUrl(){
 		Document doc;
 		try {
 			doc = Jsoup.connect(TX_BASE_URL).timeout(30*1000).get();
@@ -47,11 +44,10 @@ public class JsoupForTX {
 
 		} catch (IOException e) {
 			HttpUtil.STATE=1;
-			Toast.makeText(context,"网络异常", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
 	}
-	public static String getCard(Context context){
+	public static String getCard(){
 		Document doc ;
 		String content="";
 		try {
@@ -61,12 +57,11 @@ public class JsoupForTX {
 			content=table.html();
 		} catch (IOException e) {
 			HttpUtil.STATE=1;
-			Toast.makeText(context,"网络异常", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
 		return content;
 	}
-	public static String getNews(String str,Context context){
+	public static String getNews(String str){
 		Document doc ;
 		String result="";
 		if(!str.endsWith("shtml")||str.startsWith("http://news")){
@@ -82,7 +77,6 @@ public class JsoupForTX {
 			result=table.html();
 		} catch (IOException e) {
 			HttpUtil.STATE=1;
-			Toast.makeText(context,"网络异常", Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
 		return result;

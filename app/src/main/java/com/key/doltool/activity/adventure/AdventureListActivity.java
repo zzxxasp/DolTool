@@ -179,7 +179,7 @@ public class AdventureListActivity extends BaseAdventureActivity{
 			 select_txt="";
 			 txt.setVisibility(View.GONE);
 			 gridview.setAdapter(new TroveAdapter(list, this,false));
-			 Toast.makeText(AdventureListActivity.this, "重置搜索条件", Toast.LENGTH_LONG).show();
+			 Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_LONG).show();
 		 }else{
 			//按键返回
 			if(keyCode==KeyEvent.KEYCODE_BACK)

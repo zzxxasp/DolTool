@@ -117,7 +117,7 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 				return;
 			}
 			//数据前后记录
-			int size_before=0,size_after=0;
+			int size_before,size_after;
 				size_before=list.size();
 				list.addAll(((List<WikiInfo>) dao.select(WikiInfo.class, false,select_if, select_if_x, 
 					null, null,null,limit)));
@@ -129,9 +129,9 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 			}
 	    	if(size_after==size_before&&size_after!=0){
 	    		end_flag=false;
-	    		Toast.makeText(this,"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
 	    	}else if(size_after==0){
-	    		Toast.makeText(this,"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
 	    	}
 		}
 		//数据添加
@@ -234,7 +234,7 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 					if(!select_if.equals("id>?")){
 						end_flag=true;
 						change_if("id>?","0");
-						Toast.makeText(this,"重置搜索条件", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 					}
 				}
 			}

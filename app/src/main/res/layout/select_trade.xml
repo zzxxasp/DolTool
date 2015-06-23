@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_vertical"
-	android:background="@drawable/dialog_full_holo_dark" 
+	android:background="@drawable/abc_popup_background_mtrl_mult"
     >
 <LinearLayout 
     android:layout_width="match_parent"
@@ -19,7 +19,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 	android:layout_margin="5dp"
-    android:background="@drawable/abc_spinner_ab_holo_dark"
+    android:background="@drawable/abc_spinner_ab_holo_light"
     android:gravity="center"
     android:entries="@array/trade_type"        
     />
@@ -29,7 +29,8 @@
     android:layout_height="wrap_content"
     android:hint="请输入交易品名称"
 	android:padding="10dp"
-    android:textColor="@color/White"
+    android:textColor="@color/Black_SP"
+    android:textCursorDrawable="@null"
     android:background="@drawable/edittext_login"
     android:inputType="text"
     />

@@ -42,7 +42,7 @@ public class ADCListActivity extends BaseActivity{
 		
 		//数据temp变量
 		private DefaultDAO dao;
-		private List<ADCInfo> list=new ArrayList<ADCInfo>();
+		private List<ADCInfo> list=new ArrayList<>();
 		private ADCListAdapter adapter;
 		private int add=0;
 		private Thread mThread;	// 线程
@@ -136,9 +136,9 @@ public class ADCListActivity extends BaseActivity{
 	    	if(size_after==size_before&&size_after!=0){
 	    		end_flag=false;
 	    		scrollListener.changeFlag(end_flag);
-	    		Toast.makeText(this,"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
 	    	}else if(size_after==0){
-	    		Toast.makeText(this,"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
 	    	}
 		}
 		//数据添加
@@ -242,7 +242,7 @@ public class ADCListActivity extends BaseActivity{
 						end_flag=true;
 						scrollListener.changeFlag(end_flag);
 						change_if("id>?","0");
-						Toast.makeText(this,"重置搜索条件", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 					}
 				}
 			}

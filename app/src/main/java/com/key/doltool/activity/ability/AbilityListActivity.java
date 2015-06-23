@@ -145,9 +145,9 @@ public class AbilityListActivity extends BaseActivity{
 	    	if(size_after==size_before&&size_after!=0){
 	    		end_flag=false;
 	    		srollListener.changeFlag(false);
-	    		Toast.makeText(this,"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
 	    	}else if(size_after==0){
-	    		Toast.makeText(this,"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
 	    	}
 		}
 		//数据添加
@@ -247,7 +247,7 @@ public class AbilityListActivity extends BaseActivity{
 						end_flag=true;
 						srollListener.changeFlag(true);
 						change_if("id>?","0");
-						Toast.makeText(this,"重置搜索条件", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 					}
 				}
 			}

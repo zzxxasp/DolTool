@@ -43,7 +43,7 @@ public class MessagePostActivity extends BaseActivity{
 	private boolean check(){
 		if(content.getText().toString().trim().equals("")){
 			//信息不为空
-			Toast.makeText(this, "信息不能为空", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "信息不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		return true;

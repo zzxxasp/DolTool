@@ -181,7 +181,7 @@ public class PersonActivity extends BaseActivity{
 			if(!StringUtil.isNull(back_temp)){
 				dialog.dismiss();
 				back_temp="";
-				Toast.makeText(PersonActivity.this,"数据已同步",Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),"数据已同步",Toast.LENGTH_SHORT).show();
 			}
             mission_number.setText(""+a_size);
             trove_number.setText(""+b_size);
@@ -372,10 +372,10 @@ public class PersonActivity extends BaseActivity{
                 new RequestPasswordResetCallback() {
 			public void done(ParseException e) {
 				if (e == null) {
-					Toast.makeText(PersonActivity.this,"请查收注册的邮箱进行重置密码",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"请查收注册的邮箱进行重置密码",Toast.LENGTH_SHORT).show();
 				} else {
 					e.printStackTrace();
-					Toast.makeText(PersonActivity.this,"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
 				}
 				dialog.dismiss();
 			}

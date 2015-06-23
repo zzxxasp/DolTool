@@ -43,7 +43,7 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 	
 	//数据temp变量
 	private DefaultDAO dao;
-	private List<CardCombo> list=new ArrayList<CardCombo>();
+	private List<CardCombo> list=new ArrayList<>();
 	private CardComboAdapter adapter;
 	private int add=-20;
 	private Thread mThread;	// 线程

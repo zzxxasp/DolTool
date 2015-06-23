@@ -43,7 +43,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		private ListView listview;
 		
 		private DefaultDAO dao;
-		private List<Book> list=new ArrayList<Book>();
+		private List<Book> list=new ArrayList<>();
 		private BookAdapter adapter;
 		private int add=0;
 		private Thread mThread;	// 线程
@@ -138,9 +138,9 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 			}
 	    	if(size_after==size_before&&size_after!=0){
 	    		end_flag=false;
-	    		Toast.makeText(this,"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
 	    	}else if(size_after==0){
-	    		Toast.makeText(this,"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
 	    	}
 		}
 		//数据添加
@@ -238,7 +238,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 					if(!select_if.equals("type=?")){
 						end_flag=true;
 						change_if("type=?",type_id+"");
-						Toast.makeText(this,"重置搜索条件", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 					}
 				}
 			}

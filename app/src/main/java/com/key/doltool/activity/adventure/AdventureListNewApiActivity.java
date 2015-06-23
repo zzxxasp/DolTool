@@ -41,7 +41,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	private GridView gridview;
 	private LinearLayout alert;
 	private List<Trove> list;
-	private List<Trove> temp_list=new ArrayList<Trove>();
+	private List<Trove> temp_list=new ArrayList<>();
 	private DefaultDAO dao;
 	private SRPUtil srp;
 	private String type;
@@ -78,7 +78,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		dao=SRPUtil.getDAO(this);
 		srp=SRPUtil.getInstance(this);
 		count=new UpdataCount(this);
-		list=new ArrayList<Trove>();
+		list=new ArrayList<>();
 		findView();
 		setListener();
 		initMenu();
@@ -91,7 +91,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		main_menu=(ImageView)findViewById(R.id.main_menu);
 		main_menu.setVisibility(View.VISIBLE);
 		txt=(TextView)findViewById(R.id.null_txt);
-		title=(ViewGroup)findViewById(R.id.top);
+		title=(ViewGroup)findViewById(R.id.status);
 		alert.setVisibility(View.VISIBLE);
 	}
 	private void initMenu(){
@@ -112,6 +112,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 			}
 		});
 	}
+	/**批量标记**/
 	private void mutilMode(){
 		startActionMode(mCallback);		
 		gridview.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
@@ -216,7 +217,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 			 select_txt="";
 			 mGridAdapter=new TroveAdapter(list, this,true);
 			 gridview.setAdapter(mGridAdapter);
-			 Toast.makeText(AdventureListNewApiActivity.this, "重置搜索条件", Toast.LENGTH_LONG).show();
+			 Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_LONG).show();
 		 }else{
 			//按键返回
 			if(keyCode==KeyEvent.KEYCODE_BACK)

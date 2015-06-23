@@ -143,7 +143,7 @@ public class EditUserInfoActivity extends BaseActivity{
 	private void changeNickName(String name){
         if (!StringUtil.isNull(name)) {
         	if(name.length()<3&&name.length()<=12){
-        		Toast.makeText(this,"昵称在3~12个字符之间",Toast.LENGTH_SHORT).show();
+        		Toast.makeText(getApplicationContext(),"昵称在3~12个字符之间",Toast.LENGTH_SHORT).show();
         		return;
         	}
         	ParseUser currentUser = ParseUser.getCurrentUser();
@@ -157,7 +157,7 @@ public class EditUserInfoActivity extends BaseActivity{
 				}
         	});
         }else{
-        	Toast.makeText(this,"昵称不能为空",Toast.LENGTH_SHORT).show();
+        	Toast.makeText(getApplicationContext(),"昵称不能为空",Toast.LENGTH_SHORT).show();
         }
 	}
 	private void changeArea(Spinner area,Spinner server){

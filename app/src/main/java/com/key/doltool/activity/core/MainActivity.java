@@ -69,7 +69,7 @@ public class MainActivity extends BaseFragmentActivity{
 	
 	//内容
 	private Fragment mContent;
-	private List<FragmentItem> fragment_list=new ArrayList<FragmentItem>();
+	private List<FragmentItem> fragment_list=new ArrayList<>();
 	private int index=0;
 	private SimpleActionBar actionBar;
 	public void onCreate(Bundle savedInstanceState) {
@@ -180,7 +180,7 @@ public class MainActivity extends BaseFragmentActivity{
 		toggle=new DrawToggle(ico,menu);
 		mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
 		mDrawerLayout.setDrawerListener(toggle);
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.LEFT);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
 		init();
 	}
 	private void init(){
@@ -246,12 +246,12 @@ public class MainActivity extends BaseFragmentActivity{
     	mDrawerLayout.closeDrawers();
     	new Thread(new Runnable(){
 			public void run() {
-				while(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
-
+				while(mDrawerLayout.isDrawerOpen(Gravity.START)){
+					//Dlow
 				}
 				UIHandler.sendEmptyMessage(id);
 			}
-		    	}).start();
+		}).start();
     }
     
     @Override
@@ -333,7 +333,7 @@ public class MainActivity extends BaseFragmentActivity{
 			if(!s.onKeyDown(keyCode, event)){
 				if(keyCode==KeyEvent.KEYCODE_BACK){
 					if(!SpotManager.getInstance(this).disMiss(true)){
-						if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+						if(mDrawerLayout.isDrawerOpen(Gravity.START)){
 							mDrawerLayout.closeDrawers();
 							return true;
 						}else{
@@ -364,7 +364,7 @@ public class MainActivity extends BaseFragmentActivity{
 			}
 		}
 		return super.onKeyDown(keyCode, event);
-	}; 
+	}
 	
 	 
 	@Override
@@ -401,10 +401,10 @@ public class MainActivity extends BaseFragmentActivity{
 		if(flag){
 			title.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+					if(mDrawerLayout.isDrawerOpen(Gravity.START)){
 						mDrawerLayout.closeDrawers();
 					}else{
-						mDrawerLayout.openDrawer(Gravity.LEFT);
+						mDrawerLayout.openDrawer(Gravity.START);
 					}
 				}
 			});

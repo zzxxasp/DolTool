@@ -166,7 +166,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	//初始化边缘菜单栏
 	private void initMenu(){
 		menu_list=(ListView)getActivity().findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<MenuItem>();
+		List<MenuItem> list=new ArrayList<>();
 		ViewUtil.setList(list,6);
 		menu_list.setAdapter(new DockYardMenuAdapter(list,getActivity()));
 		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
