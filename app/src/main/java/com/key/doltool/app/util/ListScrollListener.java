@@ -6,9 +6,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.LinearLayout;
-
-import com.key.doltool.util.ViewUtil;
-import com.key.doltool.view.SlideHolder;
 /**
  * 通用滚动方法
  * **/
@@ -16,13 +13,11 @@ public class ListScrollListener implements OnScrollListener{
 	private boolean end_flag;
 	private Thread mThread;
 	private LinearLayout layout_alert;
-	private SlideHolder mSlideHolder;
 	private Handler handler;
 	public ListScrollListener(boolean end_flag,Thread mThread,LinearLayout layout_alert
-			,SlideHolder mSlideHolder,Handler handler){
+			,Handler handler){
 		this.end_flag=end_flag;
 		this.handler=handler;
-		this.mSlideHolder=mSlideHolder;
 		this.mThread=mThread;
 		this.layout_alert=layout_alert;
 	}
@@ -46,7 +41,6 @@ public class ListScrollListener implements OnScrollListener{
                     if ((mThread == null || !mThread.isAlive())&&flag) {
                     	//显示进度条，区域操作控制
                     	layout_alert.setVisibility(View.VISIBLE);
-                    	ViewUtil.disableSubControls(mSlideHolder, false);
                         mThread = new Thread() {
                             public void run() {
                                 try {

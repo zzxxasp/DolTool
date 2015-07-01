@@ -8,15 +8,13 @@ import com.key.doltool.activity.core.BaseFragmentActivity;
  * @version 0.3
  */
 public abstract class BaseActivity extends BaseFragmentActivity{
-	private boolean start=true;
 	public Activity context=BaseActivity.this;
+	public boolean flag=true;
 	@Override
 	protected void onResume() {
-		super.onResume();
-		//每次不销毁只执行一次
-		if(start){
-			start=false;
-			getSimpleActionBar(true).setBackIcon();
+		if(flag){
+			initToolBar(null);
 		}
+		super.onResume();
 	}
 }

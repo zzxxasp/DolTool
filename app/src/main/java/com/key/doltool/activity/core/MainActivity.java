@@ -12,12 +12,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,7 +44,6 @@ import com.key.doltool.event.app.VersionManager;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.view.BootstrapCircleThumbnail;
-import com.key.doltool.view.DrawToggle;
 import com.key.doltool.view.stick.StickyListHeadersListView;
 import com.parse.GetDataCallback;
 import com.parse.ParseAnalytics;
@@ -52,12 +51,8 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 public class MainActivity extends BaseFragmentActivity{
-	private boolean flag=true;
 	private DrawerLayout mDrawerLayout = null;
-	private DrawToggle toggle;
-	private LinearLayout title;
-	private ImageView ico;
-	private ImageView menu;
+	private ActionBarDrawerToggle mDrawerToggle;
 	//侧边栏
 	private StickyListHeadersListView menu_list;
 	private List<MenuItem> list;
@@ -71,15 +66,14 @@ public class MainActivity extends BaseFragmentActivity{
 	private Fragment mContent;
 	private List<FragmentItem> fragment_list=new ArrayList<>();
 	private int index=0;
-	private SimpleActionBar actionBar;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		if(savedInstanceState!=null){
 			index=savedInstanceState.getInt("index");
 		}
+		initToolBar(null);
 		findView();
-		actionBar=getSimpleActionBar();
 		initUser();
 		initFragment(savedInstanceState);
 		ParseAnalytics.trackAppOpenedInBackground(getIntent());
@@ -140,8 +134,8 @@ public class MainActivity extends BaseFragmentActivity{
 		//判断savedInstanceState不为空的时候，获取当前的mContent
 		if(savedInstanceState!=null){
 			index=savedInstanceState.getInt("index");
-			Log.i("index", index+"");
-			actionBar.initActionBar(list.get(index).text,R.drawable.ic_more_vert_white);
+			Log.i("index", index + "");
+			toolbar.setTitle(list.get(index).text);
 			mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
 			FragmentItem item=new FragmentItem();
 			item.fragment=mContent;
@@ -156,8 +150,8 @@ public class MainActivity extends BaseFragmentActivity{
 		        ((VersionManager)VersionManager.getInstance()).setActivity(this);
 		        ((VersionManager)VersionManager.getInstance()).checkVersion(false);
 			}
-			Log.i("mContent", mContent+"");
-			actionBar.initActionBar("发现物概览",R.drawable.ic_more_vert_white);
+			Log.i("mContent", mContent + "");
+			toolbar.setTitle("发现物概览");
 			mContent = new AdventureMainFragment();
 			FragmentItem item=new FragmentItem();
 			item.fragment=mContent;
@@ -173,13 +167,20 @@ public class MainActivity extends BaseFragmentActivity{
 	}
 	
 	private void findView(){
-		ico=(ImageView)findViewById(R.id.main_back);
-		menu=(ImageView)findViewById(R.id.main_menu);
-		title=(LinearLayout)findViewById(R.id.main_logo);
 		list=new MenuEvent().initMenuList();
-		toggle=new DrawToggle(ico,menu);
 		mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-		mDrawerLayout.setDrawerListener(toggle);
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,toolbar,R.string.app_name,R.string.app_name) {
+			@Override
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+			}
+			@Override
+			public void onDrawerClosed(View drawerView) {
+				super.onDrawerClosed(drawerView);
+			}
+		};
+		mDrawerToggle.syncState();
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
 		init();
 	}
@@ -322,7 +323,7 @@ public class MainActivity extends BaseFragmentActivity{
     		index=msg.what;
     		adapter.setIndex(msg.what);
     		adapter.notifyDataSetChanged();
-    		actionBar.setTitle(list.get(msg.what).text);   
+			toolbar.setTitle(list.get(msg.what).text);
     	}
     };
     
@@ -341,7 +342,7 @@ public class MainActivity extends BaseFragmentActivity{
 								fragment_list.remove(fragment_list.size()-1);
 								index=fragment_list.get(fragment_list.size()-1).index;
 								mContent=fragment_list.get(fragment_list.size()-1).fragment;
-								actionBar.setTitle(fragment_list.get(fragment_list.size()-1).title);
+								toolbar.setTitle(fragment_list.get(fragment_list.size()-1).title);
 								FragmentManager fm = getSupportFragmentManager();
 								FragmentTransaction transaction = fm.beginTransaction();
 								transaction.setCustomAnimations(R.anim.activity_transition_slide_in_new, R.anim.activity_transition_slide_out_new);
@@ -393,21 +394,5 @@ public class MainActivity extends BaseFragmentActivity{
 			Log.i("re","onResume");
 		}
 		super.onRestart();
-	}
-	 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if(flag){
-			title.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					if(mDrawerLayout.isDrawerOpen(Gravity.START)){
-						mDrawerLayout.closeDrawers();
-					}else{
-						mDrawerLayout.openDrawer(Gravity.START);
-					}
-				}
-			});
-		}
 	}
 }

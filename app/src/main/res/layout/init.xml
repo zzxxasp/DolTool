@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" 
     android:gravity="center"
-    android:background="@color/GhostWhite"
+    android:background="@color/background_material_light"
     >
 <com.key.doltool.view.flat.FlatButton
 	android:id="@+id/btn" 

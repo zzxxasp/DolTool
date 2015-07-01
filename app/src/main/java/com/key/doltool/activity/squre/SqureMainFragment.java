@@ -15,7 +15,6 @@ import com.key.doltool.view.Toast;
  * 广场的人们
  * **/
 public class SqureMainFragment extends BaseFragment{
-	private ImageView main_menu;
 	private LinearLayout map,fortune;
     private View main;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -32,9 +31,6 @@ public class SqureMainFragment extends BaseFragment{
 	private void findView(){
 		map=(LinearLayout)main.findViewById(R.id.map);
 		fortune=(LinearLayout)main.findViewById(R.id.fortune);
-		
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
-		main_menu.setVisibility(View.GONE);
 	}
 	private void setListener(){
 		map.setOnClickListener(new View.OnClickListener() {

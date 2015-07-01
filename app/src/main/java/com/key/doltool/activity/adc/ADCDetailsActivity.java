@@ -33,6 +33,7 @@ public class ADCDetailsActivity extends BaseActivity{
 	private List<ADCSkill> list=new ArrayList<>();
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initToolBar(null);
 		setContentView(R.layout.adc_details);
 		dao=SRPUtil.getDAO(this);
 		id=getIntent().getStringExtra("id");

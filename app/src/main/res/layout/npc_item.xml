@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp"
-    android:background="@drawable/frame_white"
+    android:layout_margin="5dp"
+    android:background="@drawable/material_card"
     >
 <RelativeLayout
     android:id="@+id/name_bar" 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-	android:background="@color/Blue_SP"
 	android:padding="5dp" 
     >
 <TextView
     android:id="@+id/name" 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textColor="@color/White"
+    android:textColor="@color/Blue_SP"
+    android:paddingBottom="10dp"
     android:text="里斯拉当骑士团团长"    
     />
 <TextView
@@ -64,7 +71,7 @@
     android:layout_width="match_parent"
     android:layout_height="1dp"
     android:layout_margin="1dp"
-    android:background="@color/DimGray"    
+    android:background="@color/Gainsboro"
     />
 <LinearLayout
     android:baselineAligned="false"
@@ -147,6 +154,7 @@
 	android:textSize="12sp"
     android:text="贵金属买卖"     
     />    
+</LinearLayout>
 </LinearLayout>
 </LinearLayout>
 </LinearLayout>

@@ -42,7 +42,9 @@ public class WordListAcitivity extends BaseActivity{
 		dao=SRPUtil.getDAO(this);
 		findView();
 		setListener();
-		getSimpleActionBar().setActionBar("航海单词表",0,true);
+		flag=false;
+		initToolBar(null);
+		toolbar.setTitle("航海单词表");
 	}
 	@SuppressWarnings("unchecked")
 	private void findView(){

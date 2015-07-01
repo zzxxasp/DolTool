@@ -22,7 +22,6 @@ import com.the9tcat.hadi.DefaultDAO;
 public class AdventureMainFragment extends BaseFragment{
 	private DefaultDAO dao;
 	private ListView main_list;
-	private ImageView main_menu;
 	private List<Trove_Count> list_count;
 	private View main;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -40,9 +39,6 @@ public class AdventureMainFragment extends BaseFragment{
 
 	private void findView(){
 		main_list=(ListView)main.findViewById(R.id.main_list);
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
-		main_menu.clearAnimation();
-		main_menu.setVisibility(View.GONE);
 		init();
 		main_list.setAdapter(new AdventureAdapter(list_count,getActivity()));
 	}
@@ -64,15 +60,9 @@ public class AdventureMainFragment extends BaseFragment{
 		});
 	}
 	private void jump(int index){
-		if(android.os.Build.VERSION.SDK_INT>=11){
-			Intent it=new Intent(getActivity(),AdventureListNewApiActivity.class);
-			it.putExtra("type", UpdataCount.name_type[index-1]);
-			startActivity(it);
-		}else{
-			Intent it=new Intent(getActivity(),AdventureListActivity.class);
-			it.putExtra("type", UpdataCount.name_type[index-1]);
-			startActivity(it);
-		}
+		Intent it=new Intent(getActivity(),AdventureListNewApiActivity.class);
+		it.putExtra("type", UpdataCount.name_type[index-1]);
+		startActivity(it);
 	}
 	@SuppressWarnings("unchecked")
 	private void init(){

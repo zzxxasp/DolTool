@@ -24,6 +24,7 @@ public class RecipeForBookDetailsActivity extends BaseActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recipe_list);
+		initToolBar(null);
 		dao=SRPUtil.getDAO(this);
 		id=getIntent().getStringExtra("id");
 		findViewById();

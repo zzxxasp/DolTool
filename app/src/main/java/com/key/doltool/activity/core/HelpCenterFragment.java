@@ -17,7 +17,6 @@ import com.key.doltool.activity.setting.MessageShowActivity;
  * 一些hint
  * **/
 public class HelpCenterFragment extends BaseFragment {
-	private ImageView main_menu;
 	private RelativeLayout fun1,fun2,fun3,fun4;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		View view =  inflater.inflate(R.layout.help_main,container,false);
@@ -25,9 +24,6 @@ public class HelpCenterFragment extends BaseFragment {
 		return view;
 	}
 	private void init(View view){
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
-		main_menu.clearAnimation();
-		main_menu.setVisibility(View.GONE);
 		fun1=(RelativeLayout)view.findViewById(R.id.function_1);
 		fun2=(RelativeLayout)view.findViewById(R.id.function_2);
 		fun3=(RelativeLayout)view.findViewById(R.id.function_3);

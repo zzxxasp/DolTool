@@ -4,7 +4,9 @@
     xmlns:flatui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/GhostWhite"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/background_material_light"
     android:orientation="vertical">
 <include
     layout="@layout/system_actionbar_black"
@@ -21,7 +23,7 @@
     android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-	android:background="@drawable/bg_content_card"
+	android:background="@drawable/material_card"
 	android:padding="5dp"
 	android:layout_margin="5dp"
 	>
@@ -64,7 +66,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-	android:background="@drawable/bg_content_card"
+	android:background="@drawable/material_card"
 	android:padding="0dp"
 	android:layout_margin="5dp"
 	>
@@ -201,7 +203,7 @@
 	android:id="@+id/area_3"
     android:layout_below="@+id/area_2"
     android:layout_width="match_parent"
-	android:background="@drawable/bg_content_card"
+	android:background="@drawable/material_card"
 	android:padding="10dp"
 	android:layout_margin="5dp"
     android:layout_height="140dp"

@@ -12,7 +12,9 @@
 <LinearLayout 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/GhostWhite"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/background_material_light"
     android:orientation="vertical"    
     >
 	<include
@@ -22,7 +24,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/GhostWhite"
+    android:background="@color/background_material_light"
     >
 <ListView
     android:id="@+id/listview"

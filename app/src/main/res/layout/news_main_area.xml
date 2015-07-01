@@ -9,13 +9,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-	android:background="@color/GhostWhite"
+	android:background="@color/background_material_light"
     >
 <!--分页区-->
-<include
-    android:id="@+id/layout2"
-    layout="@layout/system_chosebar_black"
-/>
+<com.key.doltool.view.SlidingTabLayout
+    android:id="@+id/sliding_tabs"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    />
 <android.support.v4.view.ViewPager
  		android:id="@+id/main_viewpagers"
 		android:layout_height="fill_parent"

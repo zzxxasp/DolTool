@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@null"
+	android:fitsSystemWindows="true"
+	android:clipToPadding="true"
      >
 <!--TitleBar-->
 <include
@@ -21,7 +23,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
 	android:orientation="horizontal"
-	android:background="@color/GhostWhite"    
+	android:background="@color/background_material_light"
     >
 <TextView
     android:id="@+id/null_txt" 
@@ -37,7 +39,7 @@
     android:id="@+id/content"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/GhostWhite"
+    android:background="@color/background_material_light"
     android:orientation="vertical"
 	android:layout_marginBottom="5dp"
     >

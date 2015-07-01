@@ -31,7 +31,6 @@ public class MissionDetailsActivity extends BaseActivity{
 	private int index=0;
 	private List<Mission> list;
 	private TextView txt;
-	private ImageView main_menu;
 	private LinearLayoutForListView before_list,after_list;
 	private TextView tag1,tag2;
 	private SlideHolder mSlideHolder;
@@ -59,8 +58,6 @@ public class MissionDetailsActivity extends BaseActivity{
 		name=(TextView)findViewById(R.id.name);
 		detail_list=(LinearLayoutForListView)findViewById(R.id.details);
 		txt=(TextView)findViewById(R.id.null_txt);
-		main_menu=(ImageView)findViewById(R.id.main_menu);
-		main_menu.setVisibility(View.VISIBLE);
 		before_list=(LinearLayoutForListView)findViewById(R.id.before_mission_list);
 		tag1=(TextView)findViewById(R.id.before_mission_tag);
 		
@@ -70,11 +67,7 @@ public class MissionDetailsActivity extends BaseActivity{
 		mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
 	}
 	private void setListener(){
-		main_menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				mSlideHolder.toggle();
-			}
-		});
+
 	}
 	
 	@Override
@@ -105,7 +98,7 @@ public class MissionDetailsActivity extends BaseActivity{
 				total++;
 			}
 			if(total==2){
-				main_menu.setVisibility(View.GONE);
+
 			}
 		}
 	}
@@ -145,7 +138,7 @@ public class MissionDetailsActivity extends BaseActivity{
 			}
 		}else{
 			txt.setVisibility(View.VISIBLE);
-			main_menu.setVisibility(View.GONE);
+
 		}
 	}
 }

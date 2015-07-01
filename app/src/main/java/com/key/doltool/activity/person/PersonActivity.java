@@ -60,8 +60,6 @@ import com.the9tcat.hadi.DefaultDAO;
  * 个人信息界面
  * **/
 public class PersonActivity extends BaseActivity{
-	private TextView main_title;
-	private ImageView main_menu;
 	private TextView name,tag1,tag2;
 	private BootstrapCircleThumbnail head_img;
 	private RelativeLayout function_3,function_2,function_1;
@@ -111,16 +109,14 @@ public class PersonActivity extends BaseActivity{
 	}
 	
 	private void findView(){
-		main_title=(TextView)findViewById(R.id.main_title);
-		main_title.setText("个人信息");
-		main_menu=(ImageView)findViewById(R.id.main_menu);
-		main_menu.setVisibility(View.VISIBLE);
-		main_menu.setImageResource(R.drawable.ic_edit);
-		main_menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				startActivity(new Intent(PersonActivity.this,EditUserInfoActivity.class));
-			}
-		});
+		flag=false;
+		initToolBar(null);
+		toolbar.setTitle("个人信息");
+//		main_menu.setOnClickListener(new View.OnClickListener() {
+//			public void onClick(View v) {
+//				startActivity(new Intent(PersonActivity.this,EditUserInfoActivity.class));
+//			}
+//		});
 		
 		head_img=(BootstrapCircleThumbnail)findViewById(R.id.head_img);
 		name=(TextView)findViewById(R.id.name);

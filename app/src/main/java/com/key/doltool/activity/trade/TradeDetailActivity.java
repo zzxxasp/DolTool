@@ -33,6 +33,7 @@ public class TradeDetailActivity extends BaseActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trade_detail);
+		initToolBar(null);
 		dao=SRPUtil.getDAO(context);
 		id=getIntent().getIntExtra("id",0);
 		name_txt=getIntent().getStringExtra("name");

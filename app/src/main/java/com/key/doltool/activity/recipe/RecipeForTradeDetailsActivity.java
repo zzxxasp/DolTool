@@ -19,6 +19,7 @@ public class RecipeForTradeDetailsActivity extends BaseActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recipe_list);
+		initToolBar(null);
 		list=(LinearLayoutForListView)findViewById(R.id.listview);
 		need=getIntent().getStringExtra("");
 		dao=SRPUtil.getDAO(this);

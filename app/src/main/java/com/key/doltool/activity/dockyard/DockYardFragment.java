@@ -8,14 +8,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -23,11 +25,10 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
-import com.key.doltool.adapter.DockYardMenuAdapter;
+import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.PartListAdapter;
 import com.key.doltool.adapter.SailBoatListAdapter;
 import com.key.doltool.anime.MyAnimations;
-import com.key.doltool.data.MenuItem;
 import com.key.doltool.data.Part;
 import com.key.doltool.data.SailBoat;
 import com.key.doltool.event.MakeEvent;
@@ -36,11 +37,10 @@ import com.key.doltool.util.NumberUtil;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
-import com.key.doltool.view.SlideHolder;
+import com.key.doltool.view.SlidingTabLayout;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 import com.key.doltool.viewpage.MyPagerAdapter;
-import com.key.doltool.viewpage.PageEvent;
 import com.the9tcat.hadi.DefaultDAO;
 /**
  * 造船厂主界面(更大的意义,可以作为其他页面暂时的参考，提高20%编写效率)
@@ -63,10 +63,7 @@ import com.the9tcat.hadi.DefaultDAO;
 public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	//定义部分
 	private LinearLayout layout_alert;
-	private ImageView main_menu;
-	//侧边栏
-	private SlideHolder mSlideHolder;
-	private ListView menu_list;
+
 	//查询条件
 	private String select_if="id>?";
     private String[] select_if_x={"0"};
@@ -76,14 +73,11 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
     
     private String order="name desc";
 	//ViewPager定义部分
-	private ImageView line;
 	private ViewPager main_ViewPage;
 	private MyPagerAdapter main_adapter;
 	private View layout1,layout2,layout3;
 	private List<View> main_list;
-	private TextView[] main_item=new TextView[3];
 	private LayoutInflater mInflater;
-	private PageEvent pageEvent;
 	//船只列表页面
 	private ListView listview;
 	//船件列表页面
@@ -127,6 +121,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	private boolean end_flag=true; //是否为最末标记
 	private boolean end_flag2=true; //是否为最末标记
     private View main;
+	private SlidingTabLayout mSlidingTabLayout;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		 View view =  inflater.inflate(R.layout.dockyard_main, container,false);
 		 init(view);
@@ -139,9 +134,16 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 		 }
 		 return view; 
 	}
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
 	private void init(View view){
 		main=view;
 		dao=SRPUtil.getDAO(getActivity());
+		BaseFragmentActivity a=(BaseFragmentActivity)getActivity();
+		a.toolbar.setOnMenuItemClickListener(onMenuItemClick);
 	}
 	
 	private Runnable mTasks =new Runnable(){
@@ -165,32 +167,11 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	//通用findView
 	private void findView() {
 		initPage();
-		mSlideHolder = (SlideHolder)getActivity().findViewById(R.id.slideHolder);
-		main_item[0]=(TextView)main.findViewById(R.id.main_item1);
-		main_item[1]=(TextView)main.findViewById(R.id.main_item2);
-		main_item[2]=(TextView)main.findViewById(R.id.main_item3);
 		layout_alert=(LinearLayout)main.findViewById(R.id.layout_alert);
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
-		main_menu.setImageResource(R.drawable.ic_more_vert_white);
-		main_menu.setVisibility(View.VISIBLE);
 	}
 	//通用Listener
 	private void setListener() {
-		main_menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				mSlideHolder.toggle();
-			}
-		});
-		main_ViewPage.setOnPageChangeListener(pageEvent);
-		for(int i=0;i<main_item.length;i++)
-		{
-			final int position=i;
-			main_item[i].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					main_ViewPage.setCurrentItem(position);
-				}
-			});
-		}
+
 	}
 	//造船界面FindView
 	private void findView_A(){
@@ -243,20 +224,18 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 		main_list.add(layout1);
 		main_list.add(layout2);
 		main_list.add(layout3);
-		//初始化移动白线
-		line=(ImageView)main.findViewById(R.id.main_chose_line);
 		//初始化ViewPager相关
-		main_adapter = new MyPagerAdapter(main_list);
+		main_adapter = new MyPagerAdapter(main_list,new String[]{"船只列表","造船模拟","船只配件"});
 		main_ViewPage = (ViewPager)main.findViewById(R.id.main_viewpagers);
 		main_ViewPage.setAdapter(main_adapter);
 		main_ViewPage.setCurrentItem(0);
-		//初始化边缘栏
-		initMenu();
 		//初始化PageItem
 		initPageItem();
 		//初始化PageEvent相关
-		pageEvent=new PageEvent(main_item, line, 3, getActivity());
-		pageEvent.initImageView();
+		mSlidingTabLayout=(SlidingTabLayout)main.findViewById(R.id.sliding_tabs);
+		mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.blue_dark));
+		mSlidingTabLayout.setBackgroundResource(R.drawable.theme_dark_blue);
+		mSlidingTabLayout.setViewPager(main_ViewPage);
 	}
 	private void initPageItem(){
 		//初始化第一页(船只列表)
@@ -298,9 +277,9 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 		listview2.setAdapter(adapter2);
 		listview2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
-				Intent intent=new Intent(getActivity(),PartActivity.class);
-				intent.putExtra("id",list2.get(position).getId());
+									long arg3) {
+				Intent intent = new Intent(getActivity(), PartActivity.class);
+				intent.putExtra("id", list2.get(position).getId());
 				DockYardFragment.this.startActivity(intent);
 			}
 		});
@@ -388,11 +367,6 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	}
 	public void onDestroy() {
 		dao=null;
-		if(mSlideHolder.mCachedBitmap!=null){
-			mSlideHolder.mCachedBitmap.recycle();
-			mSlideHolder.mCachedBitmap=null;
-			System.gc();
-		}
 		super.onDestroy();
 	}
 	@SuppressWarnings("unchecked")
@@ -438,23 +412,6 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 			selectshow(add2+","+	PartListAdapter.SIZE,i);
 			adapter2.notifyDataSetChanged();
 		}
-	}
-	//初始化边缘菜单栏
-	private void initMenu(){
-		menu_list=(ListView)getActivity().findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<>();
-		ViewUtil.setList(list,1);
-		menu_list.setAdapter(new DockYardMenuAdapter(list,getActivity()));
-		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
-				mSlideHolder.toggle();
-				switch(position){
-				case 0:findObject();break;
-				case 1:DBUtil.copyDB_SD(getActivity());break;
-				}		
-			}
-		});
 	}
 	//条件查询船只
 	private void findObject(){
@@ -659,12 +616,10 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 			if(msg.what!=0){	
 				change(msg.what);
 				layout_alert.setVisibility(View.GONE);
-				ViewUtil.disableSubControls(mSlideHolder, true);
 			}else if(msg.what==100){
 				change(1);
 				change(2);
 				layout_alert.setVisibility(View.GONE);
-				ViewUtil.disableSubControls(mSlideHolder, true);
 			}
 		 }
 	 };
@@ -673,24 +628,19 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		 //菜单键覆写，调用边缘栏菜单
 		 if(keyCode==KeyEvent.KEYCODE_MENU){
-			 mSlideHolder.toggle();
 			 return true;
 		 }
 		 //条件:当菜单未关闭且搜索条件为初始态，允许退出
-		if(select_if.equals("id>?")&&main_ViewPage.getCurrentItem()==0&&!mSlideHolder.isOpened()){
+		if(select_if.equals("id>?")&&main_ViewPage.getCurrentItem()==0){
 			return false;
-		}else if(select_if2.equals("id>?")&&main_ViewPage.getCurrentItem()==2&&!mSlideHolder.isOpened()){
+		}else if(select_if2.equals("id>?")&&main_ViewPage.getCurrentItem()==2){
 			return false;
-		}else if(main_ViewPage.getCurrentItem()==1&&!mSlideHolder.isOpened()){
+		}else if(main_ViewPage.getCurrentItem()==1){
 			return false;
 		}else{
 			//按键返回
 			if(keyCode==KeyEvent.KEYCODE_BACK)
 			{
-				//开启就关闭
-				if(mSlideHolder.isOpened()){
-					mSlideHolder.toggle();
-				}
 				//条件不是初始状态就重置
 				if(!select_if.equals("id>?")&&main_ViewPage.getCurrentItem()==0){
 					end_flag=true;
@@ -728,7 +678,6 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
                     if (mThread == null || !mThread.isAlive()&&flag) {
                     	//显示进度条，区域操作控制
                     	layout_alert.setVisibility(View.VISIBLE);
-                    	ViewUtil.disableSubControls(mSlideHolder, false);
                         mThread = new Thread() {
                             public void run() {
                                 try {
@@ -752,5 +701,21 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
                     }
                 }
         	}
+	}
+	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+		@Override
+		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
+			switch (menuItem.getItemId()) {
+				case R.id.city_search:findObject();break;
+				case R.id.type_search:DBUtil.copyDB_SD(getActivity());break;
+
+			}
+			return true;
+		}
+	};
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.adc_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 }

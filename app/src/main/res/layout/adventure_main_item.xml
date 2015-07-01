@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    android:background="@drawable/frame_white"
+    android:layout_margin="5dp"
+    android:background="@drawable/material_card"
     android:orientation="vertical"
     >
 <ImageView
@@ -64,3 +71,4 @@
     />
 </LinearLayout>
 </RelativeLayout>
+</LinearLayout>

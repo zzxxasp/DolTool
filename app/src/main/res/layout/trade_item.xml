@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout 
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/frame_white"
+    android:background="@null"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/material_card"
+    android:layout_margin="10dp"
     android:padding="10dp"
     >
 <ImageView
@@ -28,3 +34,4 @@
     android:text="中国书籍"    
     />
 </RelativeLayout>
+</LinearLayout>

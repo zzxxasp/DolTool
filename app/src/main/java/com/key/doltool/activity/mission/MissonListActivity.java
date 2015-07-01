@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -44,14 +46,7 @@ import com.the9tcat.hadi.DefaultDAO;
 public class MissonListActivity extends BaseActivity implements OnScrollListener{
 	//定义部分
 	private LinearLayout layout_alert;
-	
 	private ViewGroup mission;
-	
-	private ImageView main_menu;
-	private TextView main_title;
-	//侧边栏
-	private SlideHolder mSlideHolder;
-	private ListView menu_list;
 	//船只列表页面
 	private ListView listview;
 	private MissionItemAdapter adapter;
@@ -89,24 +84,16 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private void findView() {
 		initPage();
 		mission=(ViewGroup)findViewById(R.id.mission);
-		main_title=(TextView)findViewById(R.id.main_title);
-		main_title.setText("任务委托所");
-		mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
+		flag=false;
+		initToolBar(onMenuItemClick);
+		toolbar.setTitle("任务委托所");
 		layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
-		main_menu=(ImageView)findViewById(R.id.main_menu);
-		main_menu.setVisibility(View.VISIBLE);
 	}
 	//通用Listener
 	private void setListener() {
-		main_menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				mSlideHolder.toggle();
-			}
-		});
+
 	}
 	private void initPage(){
-		//初始化边缘栏
-		initMenu();
 		initPageItem();
 	}
 	private void initPageItem(){
@@ -143,11 +130,6 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	}
 	protected void onDestroy() {
 		dao=null;
-		if(mSlideHolder.mCachedBitmap!=null){
-			mSlideHolder.mCachedBitmap.recycle();
-			mSlideHolder.mCachedBitmap=null;
-			System.gc();
-		}
 		super.onDestroy();
 	}
 
@@ -175,26 +157,9 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	//数据添加
 	private void change(){
 		add+=MissionItemAdapter.SIZE;
-		selectshow(add+","+	MissionItemAdapter.SIZE);
+		selectshow(add + "," + MissionItemAdapter.SIZE);
 		//更新adapter
 		adapter.notifyDataSetChanged();
-	}
-	//初始化边缘菜单栏
-	private void initMenu(){
-		menu_list=(ListView)findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<>();
-		ViewUtil.setList(list,7);
-		menu_list.setAdapter(new DockYardMenuAdapter(list,this));
-		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
-				mSlideHolder.toggle();
-				switch(position){
-					case 0:changeMode();break;
-					case 1:showDialog();break;
-				}		
-			}
-		});
 	}
 	private void showDialog(){
 		new DialogEvent(select_if,if_args).itemDialog(this);
@@ -229,20 +194,13 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	//Handler——线程结束后更新界面
 	private Handler handler = new Handler() {
 		 public void handleMessage(Message msg) {
-				change();
-				layout_alert.setVisibility(View.GONE);
-				ViewUtil.disableSubControls(mSlideHolder, true);
+			 change();
 		 }
     };
 	//系统按键监听覆写
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		 //菜单键覆写，调用边缘栏菜单
-		 if(keyCode==KeyEvent.KEYCODE_MENU){
-			 mSlideHolder.toggle();
-			 return true;
-		 }
 		 //条件:当菜单未关闭且搜索条件为初始态，允许退出
-		if(select_if.equals("id>?")&&!mSlideHolder.isOpened()&&mode==0){
+		if(select_if.equals("id>?")&&mode==0){
 			super.onKeyDown(keyCode, event);
 		}
 		//其他
@@ -250,10 +208,6 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 			//按键返回
 			if(keyCode==KeyEvent.KEYCODE_BACK)
 			{
-				//开启就关闭
-				if(mSlideHolder.isOpened()){
-					mSlideHolder.toggle();
-				}
 				//取消搜索模式
 				if(mode==1){
 					changeMode();
@@ -289,7 +243,6 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
                     if (mThread == null || !mThread.isAlive()&&flag) {
                     	//显示进度条，区域操作控制
                     	layout_alert.setVisibility(View.VISIBLE);
-                    	ViewUtil.disableSubControls(mSlideHolder, false);
                         mThread = new Thread() {
                             public void run() {
                                 try {
@@ -377,17 +330,18 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		//地区-城市联动事件
 		area.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				if(arg2==0){
+									   int arg2, long arg3) {
+				if (arg2 == 0) {
 					city.setVisibility(View.GONE);
-				}else{
+				} else {
 					city.setVisibility(View.VISIBLE);
-					city_adapter=new SpinnerArrayAdapter(MissonListActivity.this,temp[arg2]);
+					city_adapter = new SpinnerArrayAdapter(MissonListActivity.this, temp[arg2]);
 					city.setAdapter(city_adapter);
 				}
 			}
+
 			public void onNothingSelected(AdapterView<?> arg0) {
-			
+
 			}
 		});
 	}
@@ -458,5 +412,21 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
+	}
+	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+		@Override
+		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
+			switch (menuItem.getItemId()) {
+				case R.id.city_search:changeMode();break;
+				case R.id.type_search:showDialog();break;
+
+			}
+			return true;
+		}
+	};
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.adc_menu, menu);
+		return true;
 	}
 }

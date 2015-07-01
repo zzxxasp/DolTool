@@ -19,7 +19,6 @@ public class RecipeMainFragment extends BaseFragment{
 	private GridView gridview;
 	private BookEvent event;
 	private View main;
-	private ImageView main_menu;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		 View view =  inflater.inflate(R.layout.recipe_main, container,false);
 		 init(view);
@@ -33,8 +32,6 @@ public class RecipeMainFragment extends BaseFragment{
 	private void findView(){
 		event=new BookEvent();
 		gridview=(GridView)main.findViewById(R.id.gridView);
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
-		main_menu.setVisibility(View.GONE);
 	}
 	private void setListener(){
 		gridview.setAdapter(new RecipeMainAdapter(event.TYPE_BASE2,event.TYPE_BASE_PIC,getActivity()));

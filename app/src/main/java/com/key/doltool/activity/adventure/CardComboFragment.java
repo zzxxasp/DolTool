@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -20,6 +23,7 @@ import android.widget.ListView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
+import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.CardComboAdapter;
 import com.key.doltool.adapter.DockYardMenuAdapter;
 import com.key.doltool.adapter.SailBoatListAdapter;
@@ -34,13 +38,8 @@ import com.the9tcat.hadi.DefaultDAO;
 public class CardComboFragment extends BaseFragment implements OnScrollListener{
 	//定义部分
 	private LinearLayout layout_alert;
-	private ImageView main_menu;
-	//侧边栏
-	private SlideHolder mSlideHolder;
-	private ListView menu_list;
 	//船只列表页面
 	private ListView listview;
-	
 	//数据temp变量
 	private DefaultDAO dao;
 	private List<CardCombo> list=new ArrayList<>();
@@ -66,6 +65,12 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 		 return view; 
 	}
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
 	private Runnable mTasks =new Runnable(){
 		public void run() {
 			try {
@@ -82,28 +87,21 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 	private void init(View view){
 		main=view;
 		dao=SRPUtil.getDAO(getActivity());
+		BaseFragmentActivity a=(BaseFragmentActivity)getActivity();
+		a.toolbar.setOnMenuItemClickListener(onMenuItemClick);
 	}
 
 	//通用findView
 	private void findView() {
 		initPage();
-		mSlideHolder = (SlideHolder)getActivity().findViewById(R.id.slideHolder);
 		layout_alert=(LinearLayout)main.findViewById(R.id.layout_alert);
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
-		main_menu.setImageResource(R.drawable.ic_more_vert_white);
-		main_menu.setVisibility(View.VISIBLE);
 	}
 	//通用Listener
 	private void setListener() {
-		main_menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				mSlideHolder.toggle();
-			}
-		});
+
 	}
 	private void initPage(){
 		//初始化边缘栏
-		initMenu();
 		initPageItem();
 	}
 	private void initPageItem(){
@@ -114,11 +112,6 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 	}
 	public void onDestroy() {
 		dao=null;
-		if(mSlideHolder.mCachedBitmap!=null){
-			mSlideHolder.mCachedBitmap.recycle();
-			mSlideHolder.mCachedBitmap=null;
-			System.gc();
-		}
 		super.onDestroy();
 	}
 	@SuppressWarnings("unchecked")
@@ -145,25 +138,8 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 	private void change(){
 		//1.为船只信息，2.为配件信息
 		add+=SailBoatListAdapter.SIZE;
-		selectshow(add+","+	SailBoatListAdapter.SIZE);
+		selectshow(add + "," + SailBoatListAdapter.SIZE);
 		adapter.notifyDataSetChanged();
-	}
-	//初始化边缘菜单栏
-	private void initMenu(){
-		menu_list=(ListView)getActivity().findViewById(R.id.menu_list);
-		List<MenuItem> list=new ArrayList<>();
-		ViewUtil.setList(list,5);
-		menu_list.setAdapter(new DockYardMenuAdapter(list,getActivity()));
-		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
-				mSlideHolder.toggle();
-				switch(position){
-					case 0:findObject();break;
-					case 1:jump();break;
-				}		
-			}
-		});
 	}
 	private void jump(){
 		Intent intent=new Intent(getActivity(),CardInternetActivity.class);
@@ -171,7 +147,7 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 	}
 	private void findObject(){
 		View xc=getActivity().getLayoutInflater().inflate(R.layout.select_cardcombo, null);
-		ViewUtil.popCardDialog(this,xc);
+		ViewUtil.popCardDialog(this, xc);
 	}
 	//修改查询条件
 	public void change_if(String if_s,String if_args){
@@ -214,19 +190,13 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 		 public void handleMessage(Message msg) {
 			 change();
 			 layout_alert.setVisibility(View.GONE);
-			 ViewUtil.disableSubControls(mSlideHolder, true);
 		 }
 	 };
 
 	//系统按键监听覆写
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		 //菜单键覆写，调用边缘栏菜单
-		 if(keyCode==KeyEvent.KEYCODE_MENU){
-			 mSlideHolder.toggle();
-			 return true;
-		 }
 		 //条件:当菜单未关闭且搜索条件为初始态，允许退出
-		if(select_if.equals("id>?")&&!mSlideHolder.isOpened()){
+		if(select_if.equals("id>?")){
 			return false;
 		}
 		//其他
@@ -234,10 +204,6 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 			//按键返回
 			if(keyCode==KeyEvent.KEYCODE_BACK)
 			{
-				//开启就关闭
-				if(mSlideHolder.isOpened()){
-					mSlideHolder.toggle();
-				}
 				//条件不是初始状态就重置
 				if(!select_if.equals("id>?")){
 					end_flag=true;
@@ -266,7 +232,6 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
                     if (mThread == null || !mThread.isAlive()&&flag) {
                     	//显示进度条，区域操作控制
                     	layout_alert.setVisibility(View.VISIBLE);
-                    	ViewUtil.disableSubControls(mSlideHolder, false);
                         mThread = new Thread() {
                             public void run() {
                                 try {
@@ -283,5 +248,21 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
                     }
                 }
         	}
+	}
+	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+		@Override
+		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
+			switch (menuItem.getItemId()) {
+				case R.id.city_search:findObject();break;
+				case R.id.type_search:jump();break;
+
+			}
+			return true;
+		}
+	};
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.common_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 }

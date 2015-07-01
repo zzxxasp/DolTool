@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/frame_white"
+    android:background="@drawable/material_card"
+    android:layout_margin="5dp"
+    android:padding="5dp"
     >
 <TextView
     android:id="@+id/name" 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="@color/White"
+    android:textColor="@color/Blue_SP"
     android:padding="5dp"
     android:layout_marginTop="5dp"
     android:layout_marginLeft="5dp"
 	android:layout_marginRight="5dp"
-    android:background="@color/Blue_SP"
-    android:text="世界的伊甸园"    
+    android:text="世界的伊甸园"
     />
 <TextView
     android:id="@+id/effect" 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="@color/Crimson"
+    android:textColor="@color/Black_SP"
     android:padding="5dp"
     android:layout_marginLeft="5dp"
 	android:layout_marginRight="5dp"
@@ -32,7 +38,7 @@
     android:layout_height="1dp"
 	android:layout_marginLeft="5dp"
 	android:layout_marginRight="5dp"
-    android:background="@color/SlateGray" 
+    android:background="@color/Gainsboro"
     />
 <LinearLayout
     android:id="@+id/card_1" 
@@ -108,5 +114,6 @@
 	android:layout_marginBottom="10dp"
     android:text=""    
     />
+</LinearLayout>
 </LinearLayout>
 </LinearLayout>

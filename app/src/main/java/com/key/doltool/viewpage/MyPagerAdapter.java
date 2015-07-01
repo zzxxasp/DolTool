@@ -1,10 +1,11 @@
 package com.key.doltool.viewpage;
-import java.util.List;
+
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 /**
  * ViewPager-Adapter数据准备
@@ -13,7 +14,9 @@ import android.view.ViewGroup;
  */
 public class MyPagerAdapter extends PagerAdapter{
 	private List<View> mListViews;
-	public MyPagerAdapter(List<View> list){
+	private String[] title;
+	public MyPagerAdapter(List<View> list,String[] title){
+		this.title=title;
 		mListViews=list;
 	}
 	//除去页面中的View
@@ -42,5 +45,10 @@ public class MyPagerAdapter extends PagerAdapter{
 		return null;
 	}
 	public void startUpdate(ViewGroup arg0) {
+	}
+
+	@Override
+	public CharSequence getPageTitle(int position) {
+		return title[position];
 	}
 }

@@ -13,17 +13,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/GhostWhite"
+    android:background="@color/background_material_light"
     >
 <GridView
     android:id="@+id/listview"
-    android:layout_margin="5dp"
     android:numColumns="3"
-    android:horizontalSpacing="3dp" 
+    android:horizontalSpacing="5dp"
+    android:verticalSpacing="5dp"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:divider="#00000000"
-    android:dividerHeight="1dp"
     >
 </GridView>
 <include

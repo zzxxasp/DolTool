@@ -48,7 +48,6 @@ public class SearchFragment extends BaseFragment{
 	private PopupWindow pop;
 	private DialogEvent dialogEvent;
     private View main;
-    private ImageView main_menu;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		 View view =  inflater.inflate(R.layout.search_main, container,false);
 		 init(view);
@@ -66,8 +65,6 @@ public class SearchFragment extends BaseFragment{
 		search_txt=(EditText)main.findViewById(R.id.search);
 		content_list=(ListView)main.findViewById(R.id.content_list);
 		type=(TextView)main.findViewById(R.id.type);
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
-		main_menu.setVisibility(View.GONE);
 	}
 
 	

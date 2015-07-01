@@ -72,10 +72,7 @@
 		<activity android:name="com.key.doltool.activity.dockyard.PartActivity"
                     android:screenOrientation="portrait"
         android:configChanges="keyboardHidden|orientation"/>
-		<activity android:name="com.key.doltool.activity.adventure.AdventureListActivity"
-                    android:screenOrientation="portrait"
-        android:configChanges="keyboardHidden|orientation"/>
-		<activity android:name="com.key.doltool.activity.adventure.AdventureListNewApiActivity"
+        <activity android:name="com.key.doltool.activity.adventure.AdventureListNewApiActivity"
                     android:screenOrientation="portrait"
         android:configChanges="keyboardHidden|orientation"/>
 		<activity android:name="com.key.doltool.activity.adventure.AdventureDetailActivity"

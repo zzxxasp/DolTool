@@ -31,13 +31,13 @@ import com.key.doltool.util.jsoup.JsoupForTX;
 public class NewsDetailActivity extends BaseActivity{
 	private WebView web_content;
 	private LinearLayout layout_alert;
-	private ImageView menu;
 	private String url="";
 	private String content="";
 	private int width=480;
 	private String head="";
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initToolBar(null);
 		setContentView(R.layout.news_detail);
 		findView();
 		setListener();
@@ -83,7 +83,6 @@ public class NewsDetailActivity extends BaseActivity{
 	private void findView(){
 		web_content=(WebView)findViewById(R.id.content);
 		layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
-		menu=(ImageView)findViewById(R.id.main_menu);
 		// 实例化广告条
 		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
 		// 获取要嵌入广告条的布局
@@ -93,13 +92,6 @@ public class NewsDetailActivity extends BaseActivity{
 	}
 	//事件监听
 	private void setListener(){
-		menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				//截图保存
-				Bitmap map=BitMapUtil.webView2Bitmap(web_content);
-				BitMapUtil.savepic(map,101);
-			}
-		});
 	}
 	@Override
 	protected void onResume() {

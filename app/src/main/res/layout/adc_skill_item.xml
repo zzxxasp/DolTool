@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    >
+<RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
 	android:padding="5dp"
-    android:background="@drawable/frame_white"
+    android:layout_margin="5dp"
+    android:background="@drawable/material_card"
     >
 <ImageView
     android:contentDescription="@null"
@@ -41,3 +48,4 @@
     android:text="冒险"    
     />
 </RelativeLayout>
+</LinearLayout>

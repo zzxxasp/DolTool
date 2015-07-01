@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -33,10 +35,6 @@ import com.the9tcat.hadi.DefaultDAO;
 public class ADCListActivity extends BaseActivity{
 		//定义部分
 		private LinearLayout layout_alert;
-		private ImageView main_menu;
-		//侧边栏
-		private SlideHolder mSlideHolder;
-		private ListView menu_list;
 		//列表
 		private ListView listview;
 		
@@ -56,7 +54,8 @@ public class ADCListActivity extends BaseActivity{
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.card_combo_main);
 	        dao=SRPUtil.getDAO(this);
-			getSimpleActionBar().setActionBar("副官集会所",R.drawable.ic_more_vert_white,true);
+			initToolBar(onMenuItemClick);
+			toolbar.setTitle("副官集会所");
 			getExtra();//外部搜索链接参数处理
 			selectshow("0,"+ADCListAdapter.SIZE);
 	        findView();
@@ -70,46 +69,33 @@ public class ADCListActivity extends BaseActivity{
 		}
 		//通用findView
 		private void findView() {
-			mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
 			layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
-			main_menu=(ImageView)findViewById(R.id.main_menu);
 			initPage();
 		}
 		//通用Listener
 		private void setListener() {
-			main_menu.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					mSlideHolder.toggle();
-				}
-			});
-			listview.setOnItemClickListener(new OnItemClickListener(){
+			listview.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int arg2, long arg3) {
-					Intent it=new Intent(ADCListActivity.this,ADCDetailsActivity.class);
-					it.putExtra("id",list.get(arg2).getId()+"");
+										int arg2, long arg3) {
+					Intent it = new Intent(ADCListActivity.this, ADCDetailsActivity.class);
+					it.putExtra("id", list.get(arg2).getId() + "");
 					startActivity(it);
 				}
 			});
 		}
 		private void initPage(){
 			//初始化边缘栏
-			initMenu();
 			initPageItem();
 		}
 		private void initPageItem(){
 			listview=(ListView)findViewById(R.id.listview);
 			adapter=new ADCListAdapter(list,this);
-			scrollListener=new ListScrollListener(end_flag, mThread, layout_alert, mSlideHolder, handler);
+			scrollListener=new ListScrollListener(end_flag, mThread, layout_alert,handler);
 			listview.setOnScrollListener(scrollListener);
 			listview.setAdapter(adapter);
 		}
 		protected void onDestroy() {
 			dao=null;
-			if(mSlideHolder.mCachedBitmap!=null){
-				mSlideHolder.mCachedBitmap.recycle();
-				mSlideHolder.mCachedBitmap=null;
-				System.gc();
-			}
 			super.onDestroy();
 		}
 		protected void onResume() {
@@ -147,29 +133,13 @@ public class ADCListActivity extends BaseActivity{
 			selectshow(add+","+	ADCListAdapter.SIZE);
 			adapter.notifyDataSetChanged();
 		}
-		//初始化边缘菜单栏
-		private void initMenu(){
-			menu_list=(ListView)findViewById(R.id.menu_list);
-			List<MenuItem> list=new ArrayList<>();
-			ViewUtil.setList(list,6);
-			menu_list.setAdapter(new DockYardMenuAdapter(list,this));
-			menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-						long arg3) {
-					mSlideHolder.toggle();
-					switch(position){
-						case 0:findObject();break;
-						case 1:jump();break;
-					}		
-				}
-			});
-		}
+
 		private void jump(){
 			View xc=getLayoutInflater().inflate(R.layout.select_adc, null);
-			ViewUtil.popADCDialog(this,xc);
+			ViewUtil.popADCDialog(this, xc);
 		}
 		private void findObject(){
-			new AreaEvent().showCityDialog(this,dao);
+			new AreaEvent().showCityDialog(this, dao);
 		}
 		//修改查询条件
 		public void change_if(String if_s,String if_args){
@@ -210,42 +180,40 @@ public class ADCListActivity extends BaseActivity{
 	 */
 		//Handler——线程结束后更新界面
 		 private Handler handler = new Handler() {
-			 public void handleMessage(Message msg) {
+		public void handleMessage(Message msg) {
 					change();
 					layout_alert.setVisibility(View.GONE);
-					ViewUtil.disableSubControls(mSlideHolder, true);
 			 }
 		 };
 
 		//系统按键监听覆写
 		public boolean onKeyDown(int keyCode, KeyEvent event) {
-			 //菜单键覆写，调用边缘栏菜单
-			 if(keyCode==KeyEvent.KEYCODE_MENU){
-				 mSlideHolder.toggle();
-				 return true;
-			 }
-			 //条件:当菜单未关闭且搜索条件为初始态，允许退出
-			if(select_if.equals("id>?")&&!mSlideHolder.isOpened()){
-				super.onKeyDown(keyCode, event);
-			}
-			//其他
-			else{
-				//按键返回
-				if(keyCode==KeyEvent.KEYCODE_BACK)
-				{
-					//开启就关闭
-					if(mSlideHolder.isOpened()){
-						mSlideHolder.toggle();
-					}
-					//条件不是初始状态就重置
-					if(!select_if.equals("id>?")){
-						end_flag=true;
-						scrollListener.changeFlag(end_flag);
-						change_if("id>?","0");
-						Toast.makeText(getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
-					}
+			//按键返回
+			if(keyCode==KeyEvent.KEYCODE_BACK) {
+				//条件不是初始状态就重置
+				if(!select_if.equals("id>?")){
+					end_flag=true;
+					scrollListener.changeFlag(end_flag);
+					change_if("id>?","0");
+					Toast.makeText(getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 				}
 			}
-			 return true;
-		 };
+			return true;
+		 }
+	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+		@Override
+		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
+			switch (menuItem.getItemId()) {
+				case R.id.city_search:findObject();break;
+				case R.id.type_search:jump();break;
+
+			}
+			return true;
+		}
+	};
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.adc_menu, menu);
+		return true;
+	}
 }

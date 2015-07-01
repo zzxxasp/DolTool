@@ -39,12 +39,11 @@ public class SailBoatActivity extends BaseActivity{
 	private TextView bt_h,bt_p,bt_a,bt_c,bt_s;
 	//控件显示(区域三:GetWay-获得途径)
 	private TableLayout line;
-	private ImageView menu;
 	//布局显示
 	private RelativeLayout equip;
-	private ScrollView content_s;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initToolBar(null);
 		setContentView(R.layout.dockyard_boat_detail);
 		dao=SRPUtil.getDAO(this);
 		findView();
@@ -99,20 +98,11 @@ public class SailBoatActivity extends BaseActivity{
 		line=(TableLayout)findViewById(R.id.line);
 		need=(TextView)findViewById(R.id.boat_need);
 		equip=(RelativeLayout)findViewById(R.id.equip);
-		content_s=(ScrollView)findViewById(R.id.content_s);
 		
 		type1=(TextView)findViewById(R.id.type_1);
 		type2=(TextView)findViewById(R.id.type_2);
 		type3=(TextView)findViewById(R.id.type_3);
-		menu=(ImageView)findViewById(R.id.main_menu);
-		menu.setVisibility(View.VISIBLE);
-		menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent intent=new Intent(context,BuildBoatActivity.class);
-				intent.putExtra("id",getIntent().getIntExtra("id",0));
-				startActivity(intent);
-			}
-		});
+
 		findView_A();
 	}
 	private void findView_A(){
@@ -142,13 +132,7 @@ public class SailBoatActivity extends BaseActivity{
 	}
 	//事件监听
 	private void setListener(){
-		menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				//截图保存
-				Bitmap map=BitMapUtil.scrollView2Bitmap(content_s);
-				BitMapUtil.savepic(map,getIntent().getIntExtra("id",0));
-			}
-		});
+
 	}
 	
 	@Override

@@ -36,6 +36,7 @@ public class JobDetailsActivity extends BaseActivity{
 	private FlowLayout skill_array;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initToolBar(null);
 		setContentView(R.layout.job_details);
 		dao=SRPUtil.getDAO(this);
 		id=getIntent().getStringExtra("id");

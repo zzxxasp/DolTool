@@ -35,10 +35,6 @@ import com.the9tcat.hadi.DefaultDAO;
 public class RecipeBookListActivity extends BaseActivity implements OnScrollListener{
 		//定义部分
 		private LinearLayout layout_alert;
-		private ImageView main_menu;
-		//侧边栏
-		private SlideHolder mSlideHolder;
-		private ListView menu_list;
 		//列表
 		private ListView listview;
 		
@@ -57,6 +53,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.card_combo_main);
+			initToolBar(null);
 	        dao=SRPUtil.getDAO(this);
 			getExtra();//外部搜索链接参数处理
 			type_id=getIntent().getIntExtra("types",0)+"";
@@ -74,19 +71,11 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		//通用findView
 		private void findView() {
 			initPage();
-			getSimpleActionBar(true).initActionBar(new BookEvent().TITLE[getIntent().getIntExtra("type",0)],0);
-			mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
+			toolbar.setTitle(new BookEvent().TITLE[getIntent().getIntExtra("type",0)]);
 			layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
-			main_menu=(ImageView)findViewById(R.id.main_menu);
 		}
 		//通用Listener
 		private void setListener() {
-			main_menu.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					mSlideHolder.toggle();
-				}
-			});
-			main_menu.setVisibility(View.GONE);
 			listview.setOnItemClickListener(new OnItemClickListener(){
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
@@ -97,8 +86,6 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 			});
 		}
 		private void initPage(){
-			//初始化边缘栏
-			initMenu();
 			initPageItem();
 		}
 		private void initPageItem(){
@@ -109,11 +96,6 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		}
 		protected void onDestroy() {
 			dao=null;
-			if(mSlideHolder.mCachedBitmap!=null){
-				mSlideHolder.mCachedBitmap.recycle();
-				mSlideHolder.mCachedBitmap=null;
-				System.gc();
-			}
 			super.onDestroy();
 		}
 		protected void onResume() {
@@ -126,7 +108,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 				return;
 			}
 			//数据前后记录
-			int size_before=0,size_after=0;
+			int size_before,size_after;
 				size_before=list.size();
 				list.addAll(((List<Book>) dao.select(Book.class, false,select_if, select_if_x, 
 					null, null,order,limit)));
@@ -148,26 +130,6 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 			add+=SkillAdapter.SIZE;
 			selectshow(add+","+	SkillAdapter.SIZE);
 			adapter.notifyDataSetChanged();
-		}
-		//初始化边缘菜单栏
-		private void initMenu(){
-			menu_list=(ListView)findViewById(R.id.menu_list);
-			List<MenuItem> list=new ArrayList<MenuItem>();
-			ViewUtil.setList(list,2);
-			menu_list.setAdapter(new DockYardMenuAdapter(list,this));
-			menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-						long arg3) {
-					mSlideHolder.toggle();
-					switch(position){
-						case 0:jump();break;
-					}		
-				}
-			});
-		}
-		private void jump(){
-//			View xc=getLayoutInflater().inflate(R.layout.select_job, null);
-//			ViewUtil.popJobDialog(this,xc);
 		}
 		//修改查询条件
 		public void change_if(String if_s,String if_args){
@@ -208,21 +170,15 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		//Handler——线程结束后更新界面
 		 private Handler handler = new Handler() {
 			 public void handleMessage(Message msg) {
-					change();
-					layout_alert.setVisibility(View.GONE);
-					ViewUtil.disableSubControls(mSlideHolder, true);
+				 change();
+				 layout_alert.setVisibility(View.GONE);
 			 }
 		 };
 
 		//系统按键监听覆写
 		public boolean onKeyDown(int keyCode, KeyEvent event) {
-			 //菜单键覆写，调用边缘栏菜单
-			 if(keyCode==KeyEvent.KEYCODE_MENU){
-				 mSlideHolder.toggle();
-				 return true;
-			 }
 			 //条件:当菜单未关闭且搜索条件为初始态，允许退出
-			if(select_if.equals("type=?")&&!mSlideHolder.isOpened()){
+			if(select_if.equals("type=?")){
 				super.onKeyDown(keyCode, event);
 			}
 			//其他
@@ -230,10 +186,6 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 				//按键返回
 				if(keyCode==KeyEvent.KEYCODE_BACK)
 				{
-					//开启就关闭
-					if(mSlideHolder.isOpened()){
-						mSlideHolder.toggle();
-					}
 					//条件不是初始状态就重置
 					if(!select_if.equals("type=?")){
 						end_flag=true;
@@ -261,7 +213,6 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 	                    if ((mThread == null || !mThread.isAlive())&&flag) {
 	                    	//显示进度条，区域操作控制
 	                    	layout_alert.setVisibility(View.VISIBLE);
-	                    	ViewUtil.disableSubControls(mSlideHolder, false);
 	                        mThread = new Thread() {
 	                            public void run() {
 	                                try {

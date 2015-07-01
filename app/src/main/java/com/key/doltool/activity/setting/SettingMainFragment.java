@@ -22,7 +22,6 @@ public class SettingMainFragment extends BaseFragment{
 	private RelativeLayout layout2,layout3;
 	private CheckBox check_box;
     private View main;
-    private ImageView main_menu;
     private TextView func_2_txt;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		 View view =  inflater.inflate(R.layout.setting_main, container,false);
@@ -39,9 +38,7 @@ public class SettingMainFragment extends BaseFragment{
 		layout2=(RelativeLayout)main.findViewById(R.id.function_2);
 		layout3=(RelativeLayout)main.findViewById(R.id.function_3);
 		check_box=(CheckBox)main.findViewById(R.id.checkbox);
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
 		func_2_txt=(TextView)main.findViewById(R.id.func_2_txt);
-		main_menu.setVisibility(View.GONE);
 		func_2_txt.setText("当前应用的版本:"+CommonUtil.getAppVersionName(getActivity()));
 	}
 	private void setListener(){

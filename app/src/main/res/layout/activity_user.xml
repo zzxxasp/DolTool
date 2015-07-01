@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
 	android:background="@drawable/bg_mycenter_banner" 
     >
 <include 
@@ -78,7 +80,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@color/GhostWhite"
+    android:background="@color/background_material_light"
     >
 <TextView 
     android:id="@+id/dream_tag" 

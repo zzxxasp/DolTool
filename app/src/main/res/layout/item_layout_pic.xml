@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@null" 
+    android:background="@null"
+    android:descendantFocusability="beforeDescendants"
     android:padding="1dp"
     >
 <LinearLayout
@@ -13,8 +14,9 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" 
     android:padding="3dp"
+    android:layout_margin="3dp"
     android:gravity="center"
-	android:background="@drawable/theme_item_frame"  
+	android:background="@drawable/material_card"
     >
 <ImageView
     android:id="@+id/pic"

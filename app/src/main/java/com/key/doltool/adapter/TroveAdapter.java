@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.key.doltool.R;
@@ -25,6 +26,7 @@ public class TroveAdapter extends BaseAdapter{
 		public TextView name;
 		public ImageView pic;
 		public RatingBar rate;
+		public RelativeLayout main;
 	} 
 	private List<Trove> list=new ArrayList<>();
 	private int[] itemState;
@@ -72,6 +74,7 @@ public class TroveAdapter extends BaseAdapter{
 			holder.name=(TextView)convertView.findViewById(R.id.txt);
 			holder.pic=(ImageView)convertView.findViewById(R.id.img);
 			holder.rate=(RatingBar)convertView.findViewById(R.id.star);
+			holder.main=(RelativeLayout)convertView.findViewById(R.id.main);
 			// 为view设置标签 
 			convertView.setTag(holder);
 		} 
@@ -86,7 +89,7 @@ public class TroveAdapter extends BaseAdapter{
 			holder.name.setBackgroundColor(0xffC0C0C0);
 		}
 		holder.name.setText(list.get(position).getName());
-		updateBackground(position,convertView);	
+		updateBackground(position,holder.main);
 		fb.display(holder.pic,"assets://"+FileManager.TROVE+list.get(position).getPic_id()+".jpg",bm,bm);
 			//holder.pic.setImageBitmap(BitMapUtil.getBitmapByInputStream(context.getAssets().open(FileManager.TROVE+list.get(position).getPic_id()+".jpg")));
 		holder.rate.setRating(list.get(position).getRate());

@@ -95,11 +95,19 @@ public class AreaEvent {
 	public void showCityDialog(final Activity context,final DefaultDAO dao){
         LayoutInflater layoutinflater = context.getLayoutInflater();
         View view = layoutinflater.inflate(R.layout.enter_city, null);
-        
+		final Dialog updateDialog = new Dialog(context, R.style.updateDialog);
+		updateDialog.setCancelable(true);
+		updateDialog.setCanceledOnTouchOutside(true);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
+				LayoutParams.WRAP_CONTENT);
+		params.gravity = Gravity.CENTER_HORIZONTAL;
+		params.setMargins(10,10,10,10);
+		updateDialog.setContentView(view,params);
+		updateDialog.show();
         final Spinner sp_area=(Spinner)view.findViewById(R.id.sp_area);
         final Spinner sp_city=(Spinner)view.findViewById(R.id.sp_city);
         FlatButton enter=(FlatButton)view.findViewById(R.id.enter_btn);
-        
+		FlatButton cancel=(FlatButton)view.findViewById(R.id.cancel_btn);
         List<?> list=dao.select(City.class,false,"id>?",new String[]{"0"},"area",null, null, null);
         List<String> list_area=new ArrayList<String>();
         for(int i=0;i<list.size();i++){
@@ -112,37 +120,34 @@ public class AreaEvent {
 		//地区-城市联动事件
         sp_area.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-		        List<?> list=dao.select(City.class,false,"area=?",new String[]{(String)sp_area.getSelectedItem()},null,null, null, null);
-		        List<String> list_area=new ArrayList<String>();
-		        for(int i=0;i<list.size();i++){
-		        	City city=(City)list.get(i);
-		        	list_area.add(city.getName());
-		        }
-		        ArrayAdapter<String> adapter=new SpinnerArrayAdapter
-				(context,StringUtil.listToArray(list_area));				
-					sp_city.setAdapter(adapter);
+									   int arg2, long arg3) {
+				List<?> list = dao.select(City.class, false, "area=?", new String[]{(String) sp_area.getSelectedItem()}, null, null, null, null);
+				List<String> list_area = new ArrayList<String>();
+				for (int i = 0; i < list.size(); i++) {
+					City city = (City) list.get(i);
+					list_area.add(city.getName());
 				}
+				ArrayAdapter<String> adapter = new SpinnerArrayAdapter
+						(context, StringUtil.listToArray(list_area));
+				sp_city.setAdapter(adapter);
+			}
+
 			public void onNothingSelected(AdapterView<?> arg0) {
-			
+
 			}
 		});
         enter.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent it=new Intent(context,TradeCityDetailActivity.class);
-				it.putExtra("city_name",(String)sp_city.getSelectedItem());
+				Intent it = new Intent(context, TradeCityDetailActivity.class);
+				it.putExtra("city_name", (String) sp_city.getSelectedItem());
 				context.startActivity(it);
 			}
 		});
-        Dialog updateDialog = new Dialog(context, R.style.updateDialog);
-        updateDialog.setCancelable(true);
-        updateDialog.setCanceledOnTouchOutside(true);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
-                LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        params.setMargins(10,10,10,10);
-        updateDialog.setContentView(view,params);
-        updateDialog.show();
+		cancel.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				updateDialog.dismiss();
+			}
+		});
 	}
 	public void showCityDialog(final NPCFragment context,final DefaultDAO dao){
         LayoutInflater layoutinflater = context.getActivity().getLayoutInflater();
@@ -159,6 +164,7 @@ public class AreaEvent {
         final Spinner sp_area=(Spinner)view.findViewById(R.id.sp_area);
         final Spinner sp_city=(Spinner)view.findViewById(R.id.sp_city);
         FlatButton enter=(FlatButton)view.findViewById(R.id.enter_btn);
+		FlatButton cancel=(FlatButton)view.findViewById(R.id.cancel_btn);
         TextView title=(TextView)view.findViewById(R.id.title_txt);
         title.setText("回报地点搜索");
         enter.setText("搜索");
@@ -181,13 +187,18 @@ public class AreaEvent {
 		});
         enter.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String temp=(String)sp_city.getSelectedItem();
-				if(!temp.equals("全部")){
-					context.change_if("city=?",(String)sp_city.getSelectedItem());
-				}else{
-					context.change_if("id>?","0");
+				String temp = (String) sp_city.getSelectedItem();
+				if (!temp.equals("全部")) {
+					context.change_if("city=?", (String) sp_city.getSelectedItem());
+				} else {
+					context.change_if("id>?", "0");
 				}
 				context.begin();
+				updateDialog.dismiss();
+			}
+		});
+		cancel.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				updateDialog.dismiss();
 			}
 		});
@@ -208,6 +219,7 @@ public class AreaEvent {
         final Spinner sp_area=(Spinner)view.findViewById(R.id.sp_area);
         final Spinner sp_city=(Spinner)view.findViewById(R.id.sp_city);
         FlatButton enter=(FlatButton)view.findViewById(R.id.enter_btn);
+		FlatButton cancel=(FlatButton)view.findViewById(R.id.cancel_btn);
         TextView title=(TextView)view.findViewById(R.id.title_txt);
         title.setText("副官城市搜索");
         enter.setText("搜索");
@@ -230,13 +242,18 @@ public class AreaEvent {
 		});
         enter.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String temp=(String)sp_city.getSelectedItem();
-				if(!temp.equals("全部")){
-					context.change_if("city like ?","%"+sp_city.getSelectedItem()+"%");
-				}else{
-					context.change_if("id>?","0");
+				String temp = (String) sp_city.getSelectedItem();
+				if (!temp.equals("全部")) {
+					context.change_if("city like ?", "%" + sp_city.getSelectedItem() + "%");
+				} else {
+					context.change_if("id>?", "0");
 				}
 				context.begin();
+				updateDialog.dismiss();
+			}
+		});
+		cancel.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				updateDialog.dismiss();
 			}
 		});

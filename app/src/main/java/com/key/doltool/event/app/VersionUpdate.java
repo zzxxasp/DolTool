@@ -46,7 +46,6 @@ import com.key.doltool.view.flat.FlatButton;
  * @ClassName VersionUpdate
  * @Description 用于版本更新
  * @author Administrator
- * @email Administrator@broadengate.com
  * @date 2011-8-23 下午03:54:16
  * @version 1.0
  */

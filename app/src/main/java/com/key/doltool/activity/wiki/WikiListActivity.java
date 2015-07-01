@@ -34,11 +34,6 @@ import com.the9tcat.hadi.DefaultDAO;
 public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		//定义部分
 		private LinearLayout layout_alert;
-		private ImageView main_menu;
-		private TextView main_title;
-		//侧边栏
-		private SlideHolder mSlideHolder;
-		private ListView menu_list;
 		//船只列表页面
 		private ListView listview;
 		
@@ -56,6 +51,7 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.card_combo_main);
+			initToolBar(null);
 	        dao=SRPUtil.getDAO(context);
 			selectshow("0,"+WikiAdapter.SIZE);
 	        findView();
@@ -64,20 +60,13 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		//通用findView
 		private void findView() {
 			initPage();
-			main_title=(TextView)findViewById(R.id.main_title);
-			main_title.setText("大航海百科");
-			mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
+			flag=false;
+			initToolBar(null);
+			toolbar.setTitle("大航海百科");
 			layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
-			main_menu=(ImageView)findViewById(R.id.main_menu);
 		}
 		//通用Listener
 		private void setListener() {
-			main_menu.setVisibility(View.GONE);
-			main_menu.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					mSlideHolder.toggle();
-				}
-			});
 			listview.setOnItemClickListener(new OnItemClickListener(){
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
@@ -88,8 +77,6 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 			});
 		}
 		private void initPage(){
-			//初始化边缘栏
-			initMenu();
 			initPageItem();
 		}
 		private void initPageItem(){
@@ -100,11 +87,6 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		}
 		protected void onDestroy() {
 			dao=null;
-			if(mSlideHolder.mCachedBitmap!=null){
-				mSlideHolder.mCachedBitmap.recycle();
-				mSlideHolder.mCachedBitmap=null;
-				System.gc();
-			}
 			super.onDestroy();
 		}
 		protected void onResume() {
@@ -140,30 +122,6 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 			add+=WikiAdapter.SIZE;
 			selectshow(add+","+	WikiAdapter.SIZE);
 			adapter.notifyDataSetChanged();
-		}
-		//初始化边缘菜单栏
-		private void initMenu(){
-			menu_list=(ListView)findViewById(R.id.menu_list);
-			List<MenuItem> list=new ArrayList<>();
-			ViewUtil.setList(list,6);
-			menu_list.setAdapter(new DockYardMenuAdapter(list,this));
-			menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-						long arg3) {
-					mSlideHolder.toggle();
-					switch(position){
-						case 0:findObject();break;
-						case 1:jump();break;
-					}		
-				}
-			});
-		}
-		private void jump(){
-			View xc=getLayoutInflater().inflate(R.layout.select_npc, null);
-			ViewUtil.popWikiDialog(this,xc);
-		}
-		private void findObject(){
-			new AreaEvent().showCityDialog(this,dao);
 		}
 		//修改查询条件
 		public void change_if(String if_s,String if_args){
@@ -204,21 +162,15 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		//Handler——线程结束后更新界面
 		 private Handler handler = new Handler() {
 			 public void handleMessage(Message msg) {
-					change();
-					layout_alert.setVisibility(View.GONE);
-					ViewUtil.disableSubControls(mSlideHolder, true);
+				 change();
+				 layout_alert.setVisibility(View.GONE);
 			 }
 		 };
 
 		//系统按键监听覆写
 		public boolean onKeyDown(int keyCode, KeyEvent event) {
-			 //菜单键覆写，调用边缘栏菜单
-			 if(keyCode==KeyEvent.KEYCODE_MENU){
-				 mSlideHolder.toggle();
-				 return true;
-			 }
 			 //条件:当菜单未关闭且搜索条件为初始态，允许退出
-			if(select_if.equals("id>?")&&!mSlideHolder.isOpened()){
+			if(select_if.equals("id>?")){
 				super.onKeyDown(keyCode, event);
 			}
 			//其他
@@ -226,10 +178,6 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 				//按键返回
 				if(keyCode==KeyEvent.KEYCODE_BACK)
 				{
-					//开启就关闭
-					if(mSlideHolder.isOpened()){
-						mSlideHolder.toggle();
-					}
 					//条件不是初始状态就重置
 					if(!select_if.equals("id>?")){
 						end_flag=true;
@@ -257,7 +205,6 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 	                    if ((mThread == null || !mThread.isAlive())&&flag) {
 	                    	//显示进度条，区域操作控制
 	                    	layout_alert.setVisibility(View.VISIBLE);
-	                    	ViewUtil.disableSubControls(mSlideHolder, false);
 	                        mThread = new Thread() {
 	                            public void run() {
 	                                try {

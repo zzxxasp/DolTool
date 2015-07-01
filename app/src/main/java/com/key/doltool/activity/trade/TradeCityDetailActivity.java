@@ -47,6 +47,7 @@ public class TradeCityDetailActivity extends BaseActivity{
 	private String id;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initToolBar(null);
 		setContentView(R.layout.trade_city_list);
 		dao=SRPUtil.getDAO(context);
 		gson=new Gson();

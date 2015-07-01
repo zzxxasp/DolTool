@@ -19,6 +19,7 @@ public class MessagePostActivity extends BaseActivity{
 	private boolean over=false;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initToolBar(null);
 		setContentView(R.layout.system_message_layout);
 		findViewById();
 		setListener();

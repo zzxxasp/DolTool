@@ -1,11 +1,7 @@
 <resources>
 
-	<style name="AppTheme" parent="AppTheme.Base"/>
-    <style name="AppTheme.Base" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/Blue_SP</item>
-        <item name="colorPrimaryDark">@color/Blue_SP</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+	<style name="AppTheme" parent="AppTheme.Base">
+
     </style>
 	<style name="updateDialog" parent="@android:style/Theme.Holo.Dialog">
         <item name="android:windowFrame">@null</item>

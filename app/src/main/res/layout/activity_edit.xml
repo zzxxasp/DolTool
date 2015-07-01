@@ -2,11 +2,12 @@
 <LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/GhostWhite" 
+    android:background="@color/White"
     >
 <include 
 	layout="@layout/system_actionbar_black"
@@ -62,7 +63,7 @@
     android:layout_centerVertical="true"
     android:textSize="16sp"
     android:padding="10dp"
-    android:text="更换昵称" 
+    android:text="更换昵称"
     />
 <TextView
     android:id="@+id/nick_name" 
@@ -82,36 +83,36 @@
     android:background="@color/Gainsboro_SP"     
     />
 <RelativeLayout
-    android:id="@+id/area_3" 
+    android:id="@+id/area_3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp" 
+    android:padding="10dp"
     android:weightSum="2"
     android:orientation="horizontal"
-	android:background="@drawable/theme_background_transparent"  
+	android:background="@drawable/theme_background_transparent"
     >
 <TextView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" 
+    android:layout_height="wrap_content"
     android:textColor="@color/Black_SP"
     android:layout_centerVertical="true"
     android:textSize="16sp"
     android:padding="10dp"
-    android:text="修改区服" 
+    android:text="修改区服"
     />
 <TextView
-    android:id="@+id/area_server" 
+    android:id="@+id/area_server"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 	android:layout_centerVertical="true"
-	android:layout_alignParentRight="true" 
+	android:layout_alignParentRight="true"
     android:textColor="@color/Gainsboro_SP"
     android:textSize="16sp"
     android:padding="10dp"
-    android:text="国服 龙之大地" 
+    android:text="国服 龙之大地"
     />
 </RelativeLayout>
-<View 
+<View
     android:layout_width="match_parent"
     android:layout_height="0.5dp"
     android:background="@color/Gainsboro_SP"     

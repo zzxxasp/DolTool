@@ -31,12 +31,12 @@ public class AdventureDetailActivity extends BaseActivity{
 	private Trove item;
 	//附加
 	private TextView need_txt,misson_txt;
-	private ImageView main_menu;
 	private UpdataCount count;
 	private int flag=5;
 	private FlatButton goto_mission;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initToolBar(null);
 		setContentView(R.layout.adventure_details);
 		dao=SRPUtil.getDAO(this);
 		count=new UpdataCount(this);
@@ -58,15 +58,9 @@ public class AdventureDetailActivity extends BaseActivity{
 		
 		need_txt=(TextView)findViewById(R.id.misson_txt);
 		misson_txt=(TextView)findViewById(R.id.need_txt);
-		main_menu=(ImageView)findViewById(R.id.main_menu);
 		goto_mission=(FlatButton)findViewById(R.id.goto_mission);
 	}
 	private void setListener(){
-		main_menu.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setFlag();
-			}
-		});
 		goto_mission.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent=new Intent(AdventureDetailActivity.this,MissionDetailsActivity.class);

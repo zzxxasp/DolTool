@@ -26,7 +26,9 @@ public class MessageShowActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message_show);
 		findView();
-		getSimpleActionBar().setActionBar("本月作者留言",0,true);
+		flag=false;
+		initToolBar(null);
+		toolbar.setTitle("本月作者留言");
 		postMessage();
 	}
 	private void findView(){

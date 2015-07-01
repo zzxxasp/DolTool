@@ -58,7 +58,9 @@ public class EditUserInfoActivity extends BaseActivity{
 		findView();
 		setListener();
 		init();
-		getSimpleActionBar(true).initActionBar("修改信息",0);
+		flag=false;
+		initToolBar(null);
+		toolbar.setTitle("修改信息");
 	}
 	private void findView(){
 		area_1=(RelativeLayout)findViewById(R.id.area_1);

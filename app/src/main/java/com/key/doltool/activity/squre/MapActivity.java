@@ -31,7 +31,9 @@ public class MapActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dol_map);
 		dao=SRPUtil.getDAO(this);
-		getSimpleActionBar(true).initActionBar("世界地图",R.drawable.ic_more_vert_white);
+		flag=false;
+		initToolBar(null);
+		toolbar.setTitle("世界地图");
 		initViews();
 	}
 	private void initViews() {

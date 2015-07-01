@@ -28,7 +28,6 @@ import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
 public class InfoMainFragment extends BaseFragment{
-	private ImageView main_menu;
 	private String order="id desc";
 	private Button mission,skill,adc,job,wiki;
 	private ListView listview;
@@ -55,9 +54,6 @@ public class InfoMainFragment extends BaseFragment{
 		job=(Button)main.findViewById(R.id.job);
 		wiki=(Button)main.findViewById(R.id.wiki_btn);
 		listview=(ListView)main.findViewById(R.id.wiki_list);
-		
-		main_menu=(ImageView)getActivity().findViewById(R.id.main_menu);
-		main_menu.setVisibility(View.GONE);
 	}
 	private void setListener(){
 		listview.setAdapter(new WikiAdapter(list, getActivity()));

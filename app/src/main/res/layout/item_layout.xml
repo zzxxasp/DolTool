@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >
+<LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
+    android:orientation="vertical"
+    android:focusable="true"
+    android:clickable="true"
     android:padding="5dp"
-    android:background="@drawable/theme_item_frame"  
+    android:layout_margin="5dp"
+    android:background="@drawable/material_card"
     >
 <TextView
     android:id="@+id/txt" 
@@ -14,4 +22,5 @@
     android:padding="5dp"
     android:textColor="@color/Black_SP"
     />
+</LinearLayout>
 </LinearLayout>
