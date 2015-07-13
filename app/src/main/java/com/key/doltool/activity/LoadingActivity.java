@@ -24,16 +24,12 @@ import com.the9tcat.hadi.DefaultDAO;
 
 import java.lang.ref.WeakReference;
 
-@SuppressLint("NewApi")
+
 public class LoadingActivity extends BaseActivity{
 	private DefaultDAO dao;
-	private ImageView load;
 	private MyAnimations my;
 	private Thread mThread;
-	private RelativeLayout main;
-	private Drawable bg;
 	private MyHandler updateUI;
-	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loading);
@@ -45,14 +41,7 @@ public class LoadingActivity extends BaseActivity{
 	    .setAutoCloseSpot(true);
 		SpotManager.getInstance(this)
 	    .setCloseTime(5000);
-		load=(ImageView)findViewById(R.id.load);
-		main=(RelativeLayout)findViewById(R.id.main);
-		bg = getResources().getDrawable(R.drawable.blue_wallpaper); 
-		if(Build.VERSION.SDK_INT >=16){
-			main.setBackground(bg);
-		}else{
-			main.setBackgroundDrawable(bg);
-		}
+		ImageView load = (ImageView) findViewById(R.id.load);
 		my=new MyAnimations();
 		my.roate(this,load,2000);
 		mThread=new Thread(mTask);
@@ -103,6 +92,5 @@ public class LoadingActivity extends BaseActivity{
 		dao=null;
 		my=null;
 		mThread=null;
-		bg.setCallback(null);
 	}
 }

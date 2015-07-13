@@ -17,11 +17,9 @@ public class MissionConnectAdapter extends BaseAdapter{
 	}
 	private String[] item_txt;
 	private Context context;
-	private SlideHolder mSlideHolder;
 	private int type;
 	private String name;
-	public MissionConnectAdapter(SlideHolder mSlideHolder,String[] item_txt,Context context,int type,String name){
-		this.mSlideHolder=mSlideHolder;
+	public MissionConnectAdapter(String[] item_txt,Context context,int type,String name){
 		this.item_txt=item_txt;
 		this.context=context;
 		this.type=type;
@@ -49,14 +47,14 @@ public class MissionConnectAdapter extends BaseAdapter{
 			holder = new ViewHolder();
             // 导入布局并赋值给convertView
 			LayoutInflater mInflater = LayoutInflater.from(context);
-			convertView = mInflater.inflate(R.layout.mission_item_detail, null);
+			convertView = mInflater.inflate(R.layout.mission_item_detail_flow, null);
 			holder.item_name=(TextView)convertView.findViewById(R.id.item_name);
 			// 为view设置标签 
 			convertView.setTag(holder);
 		} 
-		else { 
-				// 取出holder 
-				holder = (ViewHolder) convertView.getTag();
+		else {
+			// 取出holder
+			holder = (ViewHolder) convertView.getTag();
 		}
 		//设置
 		holder.item_name.setText(item_txt[position]);
@@ -70,7 +68,6 @@ public class MissionConnectAdapter extends BaseAdapter{
 				it.putExtra("type","about");
 				it.putExtra("index",index);
 				context.startActivity(it);
-				mSlideHolder.close();
 			}
 		});
 		return convertView;

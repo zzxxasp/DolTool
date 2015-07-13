@@ -88,7 +88,7 @@ public class MainBroadFragment extends BaseFragment{
 			initPageItem();
 			//初始化PageEvent相关
 			mSlidingTabLayout=(SlidingTabLayout)main_view.findViewById(R.id.sliding_tabs);
-			mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.blue_dark));
+			mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.White));
 			mSlidingTabLayout.setBackgroundResource(R.drawable.theme_dark_blue);
 			mSlidingTabLayout.setViewPager(main_ViewPage);
 		}

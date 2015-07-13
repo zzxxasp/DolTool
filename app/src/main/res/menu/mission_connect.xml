@@ -2,11 +2,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
     <item
-        android:id="@+id/search"
+        android:id="@+id/city_search"
         android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_search_white_24dp"
-        android:title="搜索"/>
+        android:icon="@drawable/ic_dashboard_white_24dp"
+        app:showAsAction="ifRoom"
+        android:title="关联任务"/>
 </menu>

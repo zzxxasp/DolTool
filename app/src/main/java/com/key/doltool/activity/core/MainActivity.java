@@ -26,6 +26,7 @@ import com.key.doltool.activity.InfoMainFragment;
 import com.key.doltool.activity.adventure.AdventureMainFragment;
 import com.key.doltool.activity.adventure.CardComboFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
+import com.key.doltool.activity.dockyard.DataBaseInsertFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.activity.infobroad.MainBroadFragment;
 import com.key.doltool.activity.person.LoginActivity;
@@ -221,7 +222,8 @@ public class MainActivity extends BaseFragmentActivity{
     		case 9:mContent=new SqureMainFragment();break;
     		case 10:mContent=new SettingMainFragment();break;
     		case 11:mContent=new HelpCenterFragment();break;
-    		case 12:mContent=new DevFragment();break;
+//    		case 12:mContent=new DevFragment();break;
+			case 12:mContent=new DataBaseInsertFragment();break;
     		default:
     			mContent=new AdventureMainFragment();
     			break;

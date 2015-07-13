@@ -2,10 +2,15 @@ package com.key.doltool.activity.mission;
 
 import java.util.List;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.key.doltool.R;
@@ -13,10 +18,12 @@ import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.MissionConnectAdapter;
 import com.key.doltool.adapter.MissionDetailsAdapter;
 import com.key.doltool.data.Mission;
+import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
+import com.key.doltool.view.FlowLayout;
 import com.key.doltool.view.LinearLayoutForListView;
-import com.key.doltool.view.SlideHolder;
+import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
 public class MissionDetailsActivity extends BaseActivity{
@@ -31,9 +38,7 @@ public class MissionDetailsActivity extends BaseActivity{
 	private int index=0;
 	private List<Mission> list;
 	private TextView txt;
-	private LinearLayoutForListView before_list,after_list;
-	private TextView tag1,tag2;
-	private SlideHolder mSlideHolder;
+	private int temp=0;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mission_detail_main);
@@ -43,28 +48,19 @@ public class MissionDetailsActivity extends BaseActivity{
 		souce_type=getIntent().getIntExtra("souce_type", 0);
 		index=getIntent().getIntExtra("index", 0);
 		souce=getIntent().getStringExtra("souce_name");
-		Log.i("find_item",""+find_item);
-		Log.i("find_item",""+souce_type);
-		Log.i("find_item",""+souce);
-		Log.i("find_item",""+index);
+
 		dao=SRPUtil.getDAO(this);
 		findView();
 		setListener();
 		init();
-		initMenu();
 	}
 	private void findView(){
 		type=(TextView)findViewById(R.id.type);
 		name=(TextView)findViewById(R.id.name);
 		detail_list=(LinearLayoutForListView)findViewById(R.id.details);
 		txt=(TextView)findViewById(R.id.null_txt);
-		before_list=(LinearLayoutForListView)findViewById(R.id.before_mission_list);
-		tag1=(TextView)findViewById(R.id.before_mission_tag);
-		
-		after_list=(LinearLayoutForListView)findViewById(R.id.after_mission_list);
-		tag2=(TextView)findViewById(R.id.after_mission_tag);
-		
-		mSlideHolder = (SlideHolder) findViewById(R.id.slideHolder);
+		flag=false;
+		initToolBar(onMenuItemClick);
 	}
 	private void setListener(){
 
@@ -72,33 +68,48 @@ public class MissionDetailsActivity extends BaseActivity{
 	
 	@Override
 	protected void onDestroy() {
-		if(mSlideHolder.mCachedBitmap!=null){
-			mSlideHolder.mCachedBitmap.recycle();
-			mSlideHolder.mCachedBitmap=null;
-			System.gc();
-		}
 		super.onDestroy();
 	}
 	
 	private void initMenu(){
+		LayoutInflater layoutinflater = context.getLayoutInflater();
+		View view = layoutinflater.inflate(R.layout.mission_connect, null);
+		final Dialog updateDialog = new Dialog(context, R.style.updateDialog);
+		updateDialog.setCancelable(true);
+		updateDialog.setCanceledOnTouchOutside(true);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		params.gravity = Gravity.CENTER_HORIZONTAL;
+		params.setMargins(10, 10, 10, 10);
+		updateDialog.setContentView(view, params);
+		FlowLayout before_list=(FlowLayout)view.findViewById(R.id.before_mission_list);
+		TextView tag1=(TextView)view.findViewById(R.id.before_mission_tag);
+		FlowLayout after_list=(FlowLayout)view.findViewById(R.id.after_mission_list);
+		TextView tag2=(TextView)view.findViewById(R.id.after_mission_tag);
 		if(list.size()>0){
 			int total=0;
 			if(!list.get(0).getBefore().equals("")){
-				String[]	temp=list.get(0).getBefore().split(",");
-				before_list.setAdapter(new MissionConnectAdapter(mSlideHolder,temp, this,1,name.getText().toString()));
+				String[] temp=list.get(0).getBefore().split(",");
+				before_list.setAdapter(new MissionConnectAdapter(temp,this,1,name.getText().toString()));
 			}else{
 				tag1.setVisibility(View.GONE);
+				before_list.setVisibility(View.GONE);
 				total++;
 			}
 			if(!list.get(0).getAfter().equals("")){
-				String[]	temp=list.get(0).getAfter().split(",");
-				after_list.setAdapter(new MissionConnectAdapter(mSlideHolder,temp, this,2,name.getText().toString()));
+				String[] temp=list.get(0).getAfter().split(",");
+				after_list.setAdapter(new MissionConnectAdapter(temp,this,2,name.getText().toString()));
 			}else{
 				tag2.setVisibility(View.GONE);
+				after_list.setVisibility(View.GONE);
 				total++;
 			}
 			if(total==2){
-
+				temp=total;
+				Toast.makeText(getApplicationContext(),"无关联任务",Toast.LENGTH_SHORT).show();
+			}else{
+				temp=total;
+				updateDialog.show();
 			}
 		}
 	}
@@ -138,7 +149,20 @@ public class MissionDetailsActivity extends BaseActivity{
 			}
 		}else{
 			txt.setVisibility(View.VISIBLE);
-
 		}
+	}
+	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+		@Override
+		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
+			switch (menuItem.getItemId()) {
+				case R.id.city_search:initMenu();break;
+			}
+			return true;
+		}
+	};
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.mission_connect, menu);
+		return true;
 	}
 }

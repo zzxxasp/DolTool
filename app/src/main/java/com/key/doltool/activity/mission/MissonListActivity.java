@@ -195,6 +195,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private Handler handler = new Handler() {
 		 public void handleMessage(Message msg) {
 			 change();
+			 layout_alert.setVisibility(View.GONE);
 		 }
     };
 	//系统按键监听覆写

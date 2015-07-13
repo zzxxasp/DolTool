@@ -11,6 +11,7 @@ import com.key.doltool.data.MapItem;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.MutilTouchImageView;
+import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.flat.FlatButton;
 import com.the9tcat.hadi.DefaultDAO;
 /**
@@ -34,7 +35,11 @@ public class MapActivity extends BaseActivity {
 		flag=false;
 		initToolBar(null);
 		toolbar.setTitle("世界地图");
+		toolbar.setBackgroundColor(getResources().getColor(R.color.Black_SP));
 		initViews();
+		SystemBarTintManager tintManager = new SystemBarTintManager(this);
+		tintManager.setStatusBarTintEnabled(true);
+		tintManager.setStatusBarTintResource(R.color.Black_SP);
 	}
 	private void initViews() {
 		

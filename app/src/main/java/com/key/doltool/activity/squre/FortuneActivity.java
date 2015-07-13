@@ -15,6 +15,8 @@ import com.key.doltool.data.LuckyInfo;
 import com.key.doltool.event.FortuneEvent;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
+import com.key.doltool.view.SystemBarTintManager;
+
 /**
  * 航海运势
  * @author key
@@ -38,6 +40,9 @@ public class FortuneActivity extends BaseActivity{
 		setContentView(R.layout.magic_layout);
 		findViewById();
 		setListener();
+		flag=false;
+		initToolBar(null);
+		toolbar.setTitle("今日运势");
 		initData();
 	}
 	private void findViewById(){
@@ -52,13 +57,14 @@ public class FortuneActivity extends BaseActivity{
 		
 	}
 	private void initData(){
+		SystemBarTintManager tintManager = new SystemBarTintManager(this);
+		tintManager.setStatusBarTintEnabled(true);
 		//step1:执行获取数据方法,填充List
 		new FortuneEvent(this).getRandomChance();
 		LuckyInfo info=new LuckyInfo(this);
 		Gson g=new Gson();
 		String date=StringUtil.TransDateFormatterToChines(info.getToday());
 		total_list=g.fromJson(info.getData(), new TypeToken<List<String>>(){}.getType());
-		
 		for(int i=0;i<total_list.size();i++){
 			String temp[]=total_list.get(i).split("-");
 			if(temp[0].equals("1")){
@@ -74,14 +80,20 @@ public class FortuneActivity extends BaseActivity{
 		//填充主区域文字及背景颜色
 		main_txt.setText(txt);
 		if(good_list.size()-bad_list.size()>0){
+			tintManager.setStatusBarTintResource(R.color.Crimson);
+			toolbar.setBackgroundColor(ResourcesUtil.getColorId(R.color.Crimson, this));
 			main_area.setBackgroundColor(ResourcesUtil.getColorId(R.color.Crimson, this));
 			bottom_txt.setBackgroundColor(ResourcesUtil.getColorId(R.color.Crimson, this));
 			bottom_txt.setText(date+" 吉");
 		}else if(good_list.size()-bad_list.size()==0){
+			tintManager.setStatusBarTintResource(R.color.Blue_SP);
+			toolbar.setBackgroundColor(ResourcesUtil.getColorId(R.color.Blue_SP, this));
 			main_area.setBackgroundColor(ResourcesUtil.getColorId(R.color.Blue_SP, this));
 			bottom_txt.setBackgroundColor(ResourcesUtil.getColorId(R.color.Blue_SP, this));
 			bottom_txt.setText(date+" 平");
 		}else if(good_list.size()-bad_list.size()<0){
+			tintManager.setStatusBarTintResource(R.color.SlateGray);
+			toolbar.setBackgroundColor(ResourcesUtil.getColorId(R.color.SlateGray, this));
 			main_area.setBackgroundColor(ResourcesUtil.getColorId(R.color.SlateGray, this));
 			bottom_txt.setBackgroundColor(ResourcesUtil.getColorId(R.color.SlateGray, this));
 			bottom_txt.setText(date+" 凶");

@@ -8,8 +8,10 @@
         <item name="colorControlHighlight">@color/blue_dark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Activity.Translucent.Style</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
         <item name="actionBarItemBackground">@drawable/theme_blue_btn</item>
-        <item name="android:windowBackground">@color/White</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
         <item name="actionModeCloseDrawable">@drawable/ic_check_white_24dp</item>
@@ -17,6 +19,9 @@
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowStyle</item>
         <item name="actionModeBackground">@color/Blue_SP</item>
         <item name="toolbarNavigationButtonStyle">@style/AppTheme.Toolbar.Navigation</item>
+    </style>
+    <style name="AppTheme.Base.FullScreen" parent="AppTheme.Base">
+        <item name="android:windowFullscreen">true</item>
     </style>
     <style name="CircularProgressBar">
         <item name="android:layout_height">wrap_content</item>
@@ -81,5 +86,9 @@
     </style>
     <style name="AppTheme.DrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/white</item>
+    </style>
+    <style name="Animation.Activity.Translucent.Style" parent="@android:style/Animation.Translucent">
+        <item name="android:windowEnterAnimation">@anim/activity_transition_slide_in_new</item>
+        <item name="android:windowExitAnimation">@anim/activity_transition_slide_out_new</item>
     </style>
 </resources>

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:f="http://schemas.android.com/apk/res-auto"
     android:id="@+id/menu_main_top"
-    android:layout_width="200dp"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/theme_grain"
-    >
+    android:background="@drawable/abc_popup_background_mtrl_mult">
 <!--MenuTitle-->
 <TextView
     android:id="@+id/before_mission_tag" 
@@ -16,16 +15,18 @@
     android:textSize="14sp"
     android:gravity="center"
     android:padding="5dp"
-    android:background="@color/SlateGray"
+    android:background="@color/Blue_SP"
     android:text="前置任务"    
     />
 <!--MenuBody-->
-<com.key.doltool.view.LinearLayoutForListView
-	android:id="@+id/before_mission_list" 
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:layout_margin="5dp"
+<com.key.doltool.view.FlowLayout
+	android:id="@+id/before_mission_list"
+    f:horizontalSpacing="3dip"
+    f:verticalSpacing="6dip"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
 	/>
 <TextView
     android:id="@+id/after_mission_tag" 
@@ -35,14 +36,16 @@
     android:textSize="14sp"
     android:gravity="center"
     android:padding="5dp"
-    android:background="@color/SlateGray"
+    android:background="@color/Blue_SP"
     android:text="后续任务"    
     />
-<com.key.doltool.view.LinearLayoutForListView
-	android:id="@+id/after_mission_list" 
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:layout_margin="5dp"
+<com.key.doltool.view.FlowLayout
+	android:id="@+id/after_mission_list"
+    f:horizontalSpacing="3dip"
+    f:verticalSpacing="6dip"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
 	/>
 </LinearLayout>

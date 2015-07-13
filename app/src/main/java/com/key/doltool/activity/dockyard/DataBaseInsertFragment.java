@@ -133,10 +133,26 @@ public class DataBaseInsertFragment extends BaseFragment {
 //			jsoup.getADC(1, dao);
 //			jsoup.getADC(2, dao);
 //			jsoup.getADC(3, dao);
-//			for(int i=4454;i<4460;i++){
+//			for(int i=4460;i<4665;i++){
 //				jsoupG.getMission(i,dao);
 //			}
-			jsoupG.do_TIANWEN(dao);
+//			jsoupG.do_TIANWEN(dao,1);
+//			jsoupG.do_TIANWEN(dao,2);
+//			jsoupG.do_TIANWEN(dao,3);
+//			jsoupG.do_TIANWEN(dao,4);
+//			jsoupG.do_TIANWEN(dao,5);
+//			jsoupG.do_TIANWEN(dao,6);
+//			jsoupG.do_TIANWEN(dao,7);
+//			jsoupG.do_TIANWEN(dao,8);
+//			jsoupG.do_TIANWEN(dao,9);
+//			jsoupG.do_TIANWEN(dao,10);
+//			jsoupG.do_TIANWEN(dao,11);
+//			jsoupG.do_TIANWEN(dao,12);
+//			jsoupG.do_TIANWEN(dao,13);
+//			jsoupG.do_TIANWEN(dao,14);
+//			jsoupG.do_TIANWEN(dao,15);
+//			jsoupG.do_TIANWEN(dao,16);
+			jsoupG.do_TIANWEN(dao,17);
 //			jsoup.getSkill(1,dao);
 //			jsoup.getSkill(2,dao);
 //			jsoup.getSkill(3,dao);

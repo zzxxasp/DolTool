@@ -12,13 +12,14 @@ import android.util.Log;
 import com.key.doltool.data.CardCombo;
 import com.key.doltool.data.Mission;
 import com.key.doltool.data.Trove;
+import com.key.doltool.event.UpdataCount;
 import com.key.doltool.util.StringUtil;
 import com.the9tcat.hadi.DefaultDAO;
 public class JsoupForGVO {
 	/**GVO源**/
 	public static String GVO_BASE_URL="http://gvo.cbo.com.tw/adv_missionDetail.aspx?MID=";
 	public static String GVO_CARD="http://gvo.cbo.com.tw/CardCombo.aspx";
-	public static String GVO_TW="http://gvo.cbo.com.tw/Adv_Discover.aspx?Type=17";
+	public static String GVO_TW="http://gvo.cbo.com.tw/Adv_Discover.aspx?Type=";
 	public static int index=1;
 	/**获得一级url**/
 	public void getMission(int id,DefaultDAO dao){
@@ -287,11 +288,11 @@ public class JsoupForGVO {
 		        }
 		   }
 	}
-	public void do_TIANWEN(DefaultDAO dao){
-		Document doc = null;
-		List<String> a_list=new ArrayList<String>();
+	public void do_TIANWEN(DefaultDAO dao,int type){
+		Document doc;
+		List<String> a_list=new ArrayList<>();
 		try {
-			doc = Jsoup.connect(GVO_TW).timeout(30*1000).get();
+			doc = Jsoup.connect(GVO_TW+type).timeout(30*1000).get();
 			Elements table=doc.select("table#ctl00_CP1_GridView發現物");
 			Elements a=table.select("tr");
 			Log.i("a",a.size()+"");

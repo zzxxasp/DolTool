@@ -13,7 +13,8 @@
     android:layout_height="wrap_content" 
     android:scrollbars="none"
     android:layout_above="@+id/line"
-    android:divider="@null"
+    android:divider="#00000000"
+    android:cacheColorHint="#00000000"
     />
 <View
     android:id="@+id/line"
