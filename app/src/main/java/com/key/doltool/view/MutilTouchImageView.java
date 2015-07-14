@@ -41,7 +41,7 @@ public class MutilTouchImageView extends ImageView {
 
 	@Override
 	protected void onLayout(boolean changed, int left, int top, int right,
-			int bottom) {
+							int bottom) {
 		super.onLayout(changed, left, top, right, bottom);
 		mThisWidth = right - left;
 		mThisHeight = bottom - top;
@@ -72,27 +72,27 @@ public class MutilTouchImageView extends ImageView {
 		float X = event.getX(1) - event.getX(0);
 		float Y = event.getY(1) - event.getY(0);
 		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			mBeforeLenght = (float) Math.sqrt((X * X) + (Y * Y));
-			break;
-		case MotionEvent.ACTION_MOVE:
-			mAfterLenght = (float) Math.sqrt((X * X) + (Y * Y));
-			float gapLenght = mAfterLenght - mBeforeLenght;
-			if (gapLenght == 0) {
+			case MotionEvent.ACTION_DOWN:
+				mBeforeLenght = (float) Math.sqrt((X * X) + (Y * Y));
 				break;
-			}
-			if (mBeforeLenght != -1) {
-				float rate = getScale() + gapLenght * SCALE_RATE / getWidth();
-				if (!zoomTo(rate < SCALE_MIN_RATE ? SCALE_MIN_RATE : rate)
-						&& System.currentTimeMillis() > mLastDialogTime
-								+ DIALOG_SHOW_INTERVAL) {
-					mLastDialogTime = System.currentTimeMillis();
-					Toast.makeText(getContext(), "已经不能放大了",
-							Toast.LENGTH_SHORT).show();
+			case MotionEvent.ACTION_MOVE:
+				mAfterLenght = (float) Math.sqrt((X * X) + (Y * Y));
+				float gapLenght = mAfterLenght - mBeforeLenght;
+				if (gapLenght == 0) {
+					break;
 				}
-			}
-			mBeforeLenght = mAfterLenght;
-			break;
+				if (mBeforeLenght != -1) {
+					float rate = getScale() + gapLenght * SCALE_RATE / getWidth();
+					if (!zoomTo(rate < SCALE_MIN_RATE ? SCALE_MIN_RATE : rate)
+							&& System.currentTimeMillis() > mLastDialogTime
+							+ DIALOG_SHOW_INTERVAL) {
+						mLastDialogTime = System.currentTimeMillis();
+						Toast.makeText(getContext(), "已经不能放大了",
+								Toast.LENGTH_SHORT).show();
+					}
+				}
+				mBeforeLenght = mAfterLenght;
+				break;
 		}
 	}
 
@@ -116,12 +116,12 @@ public class MutilTouchImageView extends ImageView {
 	// This function changes bitmap, reset base matrix according to the size
 	// of the bitmap, and optionally reset the supplementary matrix.
 	public void setImageBitmapResetBase(final Bitmap bitmap,
-			final boolean resetSupp) {
+										final boolean resetSupp) {
 		setImageRotateBitmapResetBase(bitmap, resetSupp, false);
 	}
 
 	public void setImageRotateBitmapResetBase(final Bitmap bitmap,
-			final boolean resetSupp, final boolean canScale) {
+											  final boolean resetSupp, final boolean canScale) {
 		final int viewWidth = getWidth();
 		mIsCanScale = canScale;
 		if (viewWidth <= 0) {
@@ -198,7 +198,7 @@ public class MutilTouchImageView extends ImageView {
 			float width = getWidth() - m_x;
 			if ((m_x == 0 && distanceX <= 0)
 					|| (width == mBitmapDisplayed.getWidth()
-							* getValue(mDisplayMatrix, Matrix.MSCALE_X) && distanceX >= 0)) {
+					* getValue(mDisplayMatrix, Matrix.MSCALE_X) && distanceX >= 0)) {
 				return true;
 			}
 		}
@@ -246,8 +246,8 @@ public class MutilTouchImageView extends ImageView {
 
 		// We limit up-scaling to 3x otherwise the result may look bad if it's
 		// a small icon.
-		float widthScale = 1.0f;
-		float heightScale = 1.0f;
+		float widthScale = Math.min(viewWidth / w, 3.0f);
+		float heightScale = Math.min(viewHeight / h, 3.0f);
 		float scale = Math.min(widthScale, heightScale);
 
 		matrix.postScale(scale, scale);
@@ -297,7 +297,7 @@ public class MutilTouchImageView extends ImageView {
 	}
 
 	protected void zoomTo(final float scale, final float centerX,
-			final float centerY, final float durationMs) {
+						  final float centerY, final float durationMs) {
 		final float incrementPerMs = (scale - getScale()) / durationMs;
 		final float oldScale = getScale();
 		final long startTime = System.currentTimeMillis();
@@ -329,7 +329,7 @@ public class MutilTouchImageView extends ImageView {
 		if(mIsCanScale){
 			float cx = getWidth() / 2F;
 			float cy = getHeight() / 2F;
-			
+
 			panBy(cx - pointX, cy - pointY);
 			zoomTo(scale, cx, cy);
 		}
@@ -349,36 +349,7 @@ public class MutilTouchImageView extends ImageView {
 		mSuppMatrix.postScale(rate, rate, cx, cy);
 		setImageMatrix(getImageViewMatrix());
 	}
-	/**
-	 * 指向图片的实际坐标位置居中x,y
-	 * **/
-	public void zoomToPoint(float pointX, float pointY) {
-		if(mIsCanScale){
-			float cx = getWidth() / 2F;
-			float cy = getHeight() / 2F;
-			float m_x = getValue(mDisplayMatrix, Matrix.MTRANS_X);
-			float m_y = getValue(mDisplayMatrix, Matrix.MTRANS_Y);
-			float m_sx = getValue(mDisplayMatrix, Matrix.MSCALE_X);
-			float m_sy = getValue(mDisplayMatrix, Matrix.MSCALE_Y);
-			pointX=pointX*m_sx+m_x;
-			pointY=pointY*m_sy+m_y;
-			panBy(cx - pointX, cy - pointY);
-			zoomTo(m_sy, cx, cy);
-		}
-	}
-	/**
-	 * x指定，y不变
-	 * **/
-	private void getRealY(float pointX){
-		if(mIsCanScale){
-			float cx = getWidth() / 2F;
-			float m_x = getValue(mDisplayMatrix, Matrix.MTRANS_X);
-			float m_sx = getValue(mDisplayMatrix, Matrix.MSCALE_X);
-			pointX=pointX*m_sx+m_x;
-			panBy(cx-pointX,0);
-		}
-	}
-	
+
 	protected void zoomOut(float rate) {
 		if (mBitmapDisplayed == null) {
 			return;
@@ -415,7 +386,7 @@ public class MutilTouchImageView extends ImageView {
 
 		@Override
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-				float velocityY) {
+							   float velocityY) {
 			return true;
 		}
 
@@ -426,22 +397,20 @@ public class MutilTouchImageView extends ImageView {
 
 		@Override
 		public boolean onScroll(MotionEvent e1, MotionEvent e2,
-				float distanceX, float distanceY) {
+								float distanceX, float distanceY) {
 			if (e2.getPointerCount() == 2) {
 				scaleWithFinger(e2);
 				return true;
 			} else if (e2.getPointerCount() == 1) {
-				if (getScale() >= 1F && !isScrollOver(distanceX)) {
+				if (getScale() > 1F && !isScrollOver(distanceX)) {
 					postTranslateCenter(-distanceX, -distanceY);
 				} else if (Math.abs(distanceX) - mScrollLength >= MIN_DISTANCE) {
 					mScrollLength = Math.abs(distanceX);
-				}else if(getScale() >= 1F&&isScrollOver(distanceX)){
-					if(distanceX>0){
-						getRealY(0);
-					}
-					else if(distanceX<0){
-						getRealY(4000);
-					}
+				}else if(getScale() > 1F&&isScrollOver(distanceX)){
+					if(distanceX>0)
+						postTranslateCenter(getWidth()*getScale()-distanceX,0);
+					else if(distanceX<0)
+						postTranslateCenter(-getWidth()*getScale()-distanceX,0);
 				}
 				return true;
 			}

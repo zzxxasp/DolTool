@@ -1,4 +1,5 @@
 package com.key.doltool.activity.squre;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.MutilTouchImageView;
 import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.flat.FlatButton;
+import com.key.doltool.view.img.ImageSource;
+import com.key.doltool.view.img.PinView;
+import com.key.doltool.view.img.SubsamplingScaleImageView;
 import com.the9tcat.hadi.DefaultDAO;
 /**
  * 大航海时代ol世界地图
@@ -21,7 +25,7 @@ import com.the9tcat.hadi.DefaultDAO;
  * 
  **/
 public class MapActivity extends BaseActivity {
-	private MutilTouchImageView img;
+	private SubsamplingScaleImageView img;
 	private Button btn;
 	private ViewGroup detail;
 	private DefaultDAO dao;
@@ -40,6 +44,7 @@ public class MapActivity extends BaseActivity {
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		tintManager.setStatusBarTintEnabled(true);
 		tintManager.setStatusBarTintResource(R.color.Black_SP);
+		img.setImage(ImageSource.resource(R.raw.map));
 	}
 	private void initViews() {
 		
@@ -51,14 +56,16 @@ public class MapActivity extends BaseActivity {
 		
 		item=(MapItem)dao.select(MapItem.class,false,"id>?", 
 				new String[]{"0"}, null, null, null, null).get(0);
-		img=(MutilTouchImageView)findViewById(R.id.map);
+		img=(SubsamplingScaleImageView)findViewById(R.id.map);
 		detail=(ViewGroup)findViewById(R.id.detail);
 		btn=(Button)findViewById(R.id.btn);
-		img.setImageRotateBitmapResetBase(BitMapUtil.readBitMap(this,R.raw.map),true ,true);
 		btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				String [] seal=item.co_map.split(",");
-				img.zoomToPoint(Integer.parseInt(seal[0]),Integer.parseInt(seal[1]));
+//				img.setScaleAndCenter(1,new PointF(Integer.parseInt(seal[0]),Integer.parseInt(seal[1])));
+				img.setPanEnabled(true);
+//				img.setPin(new PointF(Integer.parseInt(seal[0]),Integer.parseInt(seal[1])));
+				img.animateScaleAndCenter(1,new PointF(Integer.parseInt(seal[0]),Integer.parseInt(seal[1]))).start();
 				showDialog();
 			}
 		});
@@ -84,6 +91,6 @@ public class MapActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		img.clear();
+		img.recycle();
 	}
 }

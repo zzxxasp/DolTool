@@ -170,10 +170,10 @@ public class BitMapUtil {
 		InputStream in =new ByteArrayInputStream(data);
 		return BitmapFactory.decodeStream(in,null,opt);
 	}
-
+	@SuppressWarnings("deprecation")
 	public static Bitmap readBitMap(Context context, int resId){  
 		BitmapFactory.Options opt = new BitmapFactory.Options();  
-		opt.inPreferredConfig = Bitmap.Config.RGB_565;    
+		opt.inPreferredConfig = Bitmap.Config.RGB_565;
 		//获取资源图片  
 		InputStream is = context.getResources().openRawResource(resId);
 		return BitmapFactory.decodeStream(is,null,opt);  

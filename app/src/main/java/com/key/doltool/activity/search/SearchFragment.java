@@ -84,7 +84,7 @@ public class SearchFragment extends BaseFragment{
 	}
 	
 	private void jump(int index,int id){
-		Class<?> c=null;
+		Class<?> c;
 		Intent it=null;
 		switch(index){
 			case 0:
@@ -118,7 +118,7 @@ public class SearchFragment extends BaseFragment{
 	}
 	
 	private List<SearchItem> getListBySelect(){
-		List<SearchItem> result=new ArrayList<SearchItem>();
+		List<SearchItem> result=new ArrayList<>();
 		Class<?> souces = null;
 		switch(index){
 			case 0:souces=Mission.class;break;
@@ -127,7 +127,6 @@ public class SearchFragment extends BaseFragment{
 			case 3:souces=Book.class;break;
 			case 4:souces=City.class;break;
 		}
-		
 		List<?> temp=dao.select(souces,false,"name like ?",new String[]{"%"+search_txt.getText().toString().trim()+"%"}, null, null, null, null);
 		for(int i=0;i<temp.size();i++){
 			result.add(getNameByType(temp.get(i),index));

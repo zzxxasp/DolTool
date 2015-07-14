@@ -14,10 +14,10 @@
 		android:layout_width="match_parent"
     	android:layout_height="match_parent"
 	    >
-   <com.key.doltool.view.MutilTouchImageView
+   <com.key.doltool.view.img.SubsamplingScaleImageView
        android:id="@+id/map"
        android:contentDescription="@null"
-       android:src="@raw/map"
+	   android:background="@color/Black"
        android:layout_width="fill_parent"
        android:layout_height="fill_parent"
 	   />
@@ -31,11 +31,12 @@
     	android:layout_height="wrap_content"		 
 		layout="@layout/pop_map_detail"	   
 		/>
+	<Button
+		android:id="@+id/btn"
+		android:text="测试"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		/>
    </RelativeLayout>
-   <Button
-	android:id="@+id/btn"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_alignParentBottom="true"
-	/>
 </LinearLayout>
