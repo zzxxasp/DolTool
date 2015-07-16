@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,7 +35,7 @@ import com.the9tcat.hadi.DefaultDAO;
 public class WordListAcitivity extends BaseActivity{
 	private List<WordItem> list=new ArrayList<>();
 	private ListView listView;
-	private ImageButton action;
+	private FloatingActionButton action;
 	private DefaultDAO dao;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class WordListAcitivity extends BaseActivity{
 	@SuppressWarnings("unchecked")
 	private void findView(){
 		listView=(ListView)findViewById(R.id.listView);
-		action=(ImageButton)findViewById(R.id.action);
+		action=(FloatingActionButton)findViewById(R.id.action);
 		list=(List<WordItem>)dao.select(WordItem.class,false,"id>?",new String[]{"0"},null,null,null,null);
 		listView.setAdapter(new WordAdapter(list, context));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

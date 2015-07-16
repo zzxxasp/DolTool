@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
-    android:background="@color/background_material_light"
-    >
+    android:background="@color/background_material_light">
 <include
 	layout="@layout/system_actionbar_black"
   	/>
@@ -25,18 +24,17 @@
 	android:layout_height="match_parent"
 	/>
 <!--添加按钮-->
-<ImageButton
+<android.support.design.widget.FloatingActionButton
     android:contentDescription="@null"
     android:id="@+id/action"
 	android:layout_width="70dp"
-    android:layout_height="70dp" 
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:padding="9dp"
-	android:scaleType="centerCrop"
     android:layout_alignParentRight="true"
     android:layout_alignParentBottom="true"
-    android:src="@drawable/ic_add_list"
-    android:background="@drawable/material_btn_oval"
+    android:src="@drawable/ic_add_white_24dp"
+    app:backgroundTint="@color/Blue_SP"
+    app:rippleColor="@color/blue_dark"
     />
 </RelativeLayout>
 </LinearLayout>
