@@ -22,7 +22,7 @@ public class CardComboAdapter extends BaseAdapter{
 		public LinearLayout card_1,card_2,card_3;
 		public TextView card_1_name,card_2_name,card_3_name;
 	} 
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private List<CardCombo> list=new ArrayList<>();
 	private Context context;
 	public CardComboAdapter(List<CardCombo> list,Context context){

@@ -1,6 +1,7 @@
 package com.key.doltool.activity.setting;
 
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import com.key.doltool.util.CommonUtil;
 
 public class SettingMainFragment extends BaseFragment{
 	private RelativeLayout layout2,layout3;
-	private CheckBox check_box;
+	private SwitchCompat check_box;
     private View main;
     private TextView func_2_txt;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class SettingMainFragment extends BaseFragment{
 	private void findView(){
 		layout2=(RelativeLayout)main.findViewById(R.id.function_2);
 		layout3=(RelativeLayout)main.findViewById(R.id.function_3);
-		check_box=(CheckBox)main.findViewById(R.id.checkbox);
+		check_box=(SwitchCompat)main.findViewById(R.id.checkbox);
 		func_2_txt=(TextView)main.findViewById(R.id.func_2_txt);
 		func_2_txt.setText("当前应用的版本:"+CommonUtil.getAppVersionName(getActivity()));
 	}

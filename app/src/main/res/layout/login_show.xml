@@ -6,7 +6,7 @@
     android:layout_height="wrap_content" 
     android:orientation="vertical"
     android:layout_margin="10dp"
-    android:background="@drawable/bg_content_card"   
+
     >
 <TextView
     android:layout_width="wrap_content"
@@ -23,42 +23,60 @@
     android:layout_height="1px" 
     android:background="@color/Gainsboro"
     />
-<com.key.doltool.view.EmailAutoCompleteTextView
-    android:id="@+id/account" 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
-    android:padding="10dp"
-    android:layout_margin="10dp"
-    android:maxLength="12"
-    android:textCursorDrawable="@null"
-    android:singleLine="true"
-    android:background="@drawable/edittext_login"
-    android:textColorHint="@color/Gainsboro_SP"
-    android:textColor="@color/Black_SP"
-    android:hint="请输入账号"   
-    />
-<EditText
-    android:id="@+id/password"  
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
-    android:padding="10dp"
-    android:singleLine="true"
-    android:textCursorDrawable="@null"
-    android:layout_margin="10dp"
-    android:maxLength="12"
-    android:background="@drawable/edittext_login"
-    android:textColorHint="@color/Gainsboro_SP"
-    android:textColor="@color/Black_SP"
-    android:inputType="textPassword"
-    android:hint="请输入密码"      
-    />
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/usernameWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:maxLength="28"
+            android:textCursorDrawable="@null"
+            android:singleLine="true"
+            android:textColorHint="@color/Gainsboro_SP"
+            android:textColor="@color/Black_SP"
+            android:hint="请输入账号"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/passwordWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textCursorDrawable="@null"
+            android:layout_margin="10dp"
+            android:maxLength="12"
+            android:textColorHint="@color/Gainsboro_SP"
+            android:textColor="@color/Black_SP"
+            android:inputType="textPassword"
+            android:hint="请输入密码"
+            />
+    </android.support.design.widget.TextInputLayout>
+
 <LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
     android:orientation="horizontal" 
     android:weightSum="2" 
     >
-<TextView
+<com.key.doltool.view.flat.FlatButton
+    flatui:fl_theme="@array/trans"
+    flatui:fl_cornerRadius="3dp"
+    flatui:fl_borderWidth="0.5dp"
+    flatui:fl_touchEffect="fl_ripple"
+    flatui:fl_blockButtonEffectHeight="2dp"
     android:id="@+id/forget_password"
     android:layout_width="0dp"
     android:layout_weight="1"
@@ -66,11 +84,16 @@
     android:layout_height="wrap_content" 
     android:text="忘记密码?" 
     android:textSize="16sp"
-    android:padding="10dp"
+    android:padding="5dp"
     android:textColor="@color/Blue_SP"
     android:layout_margin="10dp"  
     />
-<TextView
+<com.key.doltool.view.flat.FlatButton
+    flatui:fl_theme="@array/trans"
+    flatui:fl_cornerRadius="3dp"
+    flatui:fl_borderWidth="0.5dp"
+    flatui:fl_touchEffect="fl_ripple"
+    flatui:fl_blockButtonEffectHeight="2dp"
     android:id="@+id/register"
     android:layout_width="0dp"
     android:layout_weight="1"
@@ -79,7 +102,7 @@
     android:text="注册" 
     android:textColor="@color/Blue_SP"
     android:textSize="16sp"
-    android:padding="10dp"
+    android:padding="5dp"
     android:layout_margin="10dp"
     />
 </LinearLayout>

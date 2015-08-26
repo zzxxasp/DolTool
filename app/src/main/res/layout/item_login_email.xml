@@ -8,8 +8,8 @@
 <TextView 
 	android:id="@+id/tv"
 	android:padding="8dp"
-	android:background="@drawable/theme_blue_listitem"
-	android:textColor="@color/White"
+	android:background="@drawable/theme_background_transparent"
+	android:textColor="@color/Black_SP"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -1,8 +1,5 @@
 package com.key.doltool.util.db;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,6 +13,9 @@ import com.the9tcat.hadi.ColumnAttribute;
 import com.the9tcat.hadi.DatabaseManager;
 import com.the9tcat.hadi.DefaultDAO;
 import com.the9tcat.hadi.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 用于优化现有数据库ORM[对象关系映射]工具的速度的特别类
  * @version 0.1
@@ -76,7 +76,7 @@ public class SRPUtil {
 			try {				
 				db.beginTransaction();			
 				for(Mission obj:models){
-					tmp_id =update(db,obj,new String[]{"tag"},"id=?",new String[]{""+obj.getId()});
+					tmp_id =update(db, obj, new String[]{"tag"}, "id=?", new String[]{"" + obj.getId()});
 					if(tmp_id>0){
 						result ++;			
 					}
@@ -100,7 +100,7 @@ public class SRPUtil {
 			try {				
 				db.beginTransaction();			
 				for(Object obj:models){
-					tmp_id =update_by_primary(db,obj);
+					tmp_id =update_by_primary(db, obj);
 					if(tmp_id>0){
 						result ++;			
 					}
@@ -124,7 +124,7 @@ public class SRPUtil {
 		}
 		return result;
 	}
-	private long count(SQLiteDatabase db,boolean flag,int type){
+	public long countCard(SQLiteDatabase db,boolean flag,int type){
 		String table="mission ";
 		String where="where tag=?";
 		String[] temp={"0"};
@@ -136,6 +136,28 @@ public class SRPUtil {
 			temp[0]="1";
 		}
 		Cursor cursor = db.rawQuery("select count(id)from "+table+where,temp);
+		cursor.moveToFirst();
+		Long count = cursor.getLong(0);
+		cursor.close();
+		return count;
+	}
+	private long count(SQLiteDatabase db,boolean flag,int type){
+		String table="mission ";
+		String where="where tag=?";
+		String[] temp={"0"};
+		String groupBy="";
+		if(type==1){
+			table="trove ";
+			where="where flag=?";
+		}else if(type==2){
+			table="Card ";
+			where="where id>?";
+			groupBy="group by type";
+		}
+		if(flag){
+			temp[0]="1";
+		}
+		Cursor cursor = db.rawQuery("select count(id)from "+table+where+groupBy,temp);
 		cursor.moveToFirst();
 		Long count = cursor.getLong(0);
 		cursor.close();

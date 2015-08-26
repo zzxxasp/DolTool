@@ -1,7 +1,11 @@
 package com.key.doltool.data;
 
+import com.key.doltool.util.StringUtil;
 import com.the9tcat.hadi.annotation.Column;
 import com.the9tcat.hadi.annotation.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name="CardCombo")
 public class CardCombo {
@@ -23,6 +27,8 @@ public class CardCombo {
 	//第三张卡
 	@Column(name="card_3")
 	private String card_3;
+	@Column(name="value")
+	public int value;
 	public int getId() {
 		return id;
 	}
@@ -59,6 +65,35 @@ public class CardCombo {
 	public void setCard_3(String card_3) {
 		this.card_3 = card_3;
 	}
-	
-	
+
+	public List<Card> getCard(){
+		List<Card> list=new ArrayList<>();
+		Card card1=new Card();
+		String temp1[]=card_1.split("-");
+		card1.type=temp1[0];
+		String temp2[]=temp1[1].split("\\(");
+		card1.name=temp2[0];
+		String temp3[]=temp2[1].split("\\)");
+		card1.point=Integer.parseInt(temp3[0]);
+		list.add(card1);
+		Card card2=new Card();
+		String temp11[]=card_2.split("-");
+		card2.type=temp11[0];
+		String temp22[]=temp11[1].split("\\(");
+		card2.name=temp22[0];
+		String temp33[]=temp22[1].split("\\)");
+		card2.point=Integer.parseInt(temp33[0]);
+		list.add(card2);
+		if(!StringUtil.isNull(card_3)){
+			Card card3=new Card();
+			String temp13[]=card_3.split("-");
+			card3.type=temp13[0];
+			String temp23[]=temp13[1].split("\\(");
+			card3.name=temp23[0];
+			String temp3_3[]=temp23[1].split("\\)");
+			card3.point=Integer.parseInt(temp3_3[0]);
+			list.add(card3);
+		}
+		return list;
+	}
 }

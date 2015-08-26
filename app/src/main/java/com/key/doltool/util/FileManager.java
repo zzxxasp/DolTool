@@ -11,6 +11,7 @@ public class FileManager {
 	public static String TROVE="dol_trove/";
 	public static String TRADE="dol_trade/";
 	public static String SKILL="dol_skill/";
+	public static String VOYAGE="dol_voyage/";
 	public static String ADC="dol_adc/";
 	public static String WIKI="file:///android_asset/wiki_html/";
 	public static String DOWNLOAD="apk/";

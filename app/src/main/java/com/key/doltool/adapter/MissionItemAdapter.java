@@ -22,7 +22,7 @@ public class MissionItemAdapter extends BaseAdapter{
 		public TextView rank,skill_need;
 		public View line;
 	} 
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private List<Mission> list=new ArrayList<>();
 	private Context context;
 	public MissionItemAdapter(List<Mission> list,Context context){

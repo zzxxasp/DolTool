@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/toast_bg"
+    android:background="@drawable/abc_popup_background_mtrl_mult"
     android:padding="20dp"
     >
     <TextView
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:textColor="@color/White"
+		android:textColor="@color/Black_SP"
 		android:text="@string/loading_txt"
 		android:padding="10dp"
         />
@@ -25,7 +25,6 @@
 	    android:minWidth="50dp"
 	    android:minHeight="50dp"
 	    android:indeterminate="true"
-	    app:cpb_color="#FFee44"
 	    app:cpb_colors="@array/pocket_background_colors"
 	    app:cpb_rotation_speed="1.0"
 	    app:cpb_sweep_speed="1.0"

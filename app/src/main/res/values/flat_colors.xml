@@ -101,7 +101,7 @@
     <color name="dark_darker">#050505</color>
     <color name="dark_dark">#202020</color>
     <color name="dark_primary">#454545</color>
-    <color name="dark_light">#a3a3a3</color>
+    <color name="dark_light">#ffcfcfcf</color>
     <integer-array name="dark">
         <item>@color/dark_darker</item>
         <item>@color/dark_dark</item>
@@ -119,6 +119,15 @@
         <item>@color/snow_dark</item>
         <item>@color/snow_primary</item>
         <item>@color/snow_light</item>
+    </integer-array>
+
+    <!-- trans -->
+    <color name="trans_light">#00cfcfcf</color>
+    <integer-array name="trans">
+        <item>@color/dark_light</item>
+        <item>@color/trans_light</item>
+        <item>@color/trans_light</item>
+        <item>@color/trans_light</item>
     </integer-array>
 
     <!-- sea -->

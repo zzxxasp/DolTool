@@ -1,8 +1,5 @@
 package com.key.doltool.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.key.doltool.R;
@@ -26,6 +22,9 @@ import com.key.doltool.adapter.WikiAdapter;
 import com.key.doltool.data.WikiInfo;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfoMainFragment extends BaseFragment{
 	private String order="id desc";

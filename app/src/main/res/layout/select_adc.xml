@@ -31,10 +31,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:entries="@array/adc_type_txt"
+    android:textColor="@color/Black_SP"
     android:layout_margin="5dp"
-    android:background="@drawable/abc_spinner_ab_holo_light"
-    android:entries="@array/adc_type_txt"        
-    />    
+    />
 </LinearLayout>
 <!--sex-->
 <LinearLayout
@@ -65,23 +65,23 @@
     android:orientation="horizontal"
     >
 <RadioButton
+    style="@style/Base.Theme.AppCompat.Light"
     android:id="@+id/sex_box1"
     android:layout_weight="1" 
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 	android:checked="true"
-	android:button="@drawable/apptheme_btn_radio_holo_dark"
 	android:textColor="@color/Black_SP"
     android:layout_margin="5dp"
     android:text="男"  
     />
 <RadioButton
+    style="@style/Theme.AppCompat.Light"
     android:id="@+id/sex_box2"
     android:layout_weight="1" 
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 	android:textColor="@color/Black_SP"
-	android:button="@drawable/apptheme_btn_radio_holo_dark"
     android:layout_margin="5dp"
     android:text="女" 
     />

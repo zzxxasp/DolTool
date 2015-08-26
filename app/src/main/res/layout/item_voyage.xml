@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:layout_margin="5dp"
+    android:background="@drawable/material_card"
+    >
+<TextView
+    android:id="@+id/name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:textSize="15sp"
+    android:textColor="@color/Black_SP"
+    android:text="交易品"
+    />
+<ImageView
+    android:id="@+id/pic"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_marginTop="10dp"
+    android:gravity="center_vertical"
+    android:src="@drawable/ic_tradeitem"
+    />
+</LinearLayout>

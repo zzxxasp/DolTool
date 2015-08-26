@@ -20,7 +20,7 @@ public class BookAdapter extends BaseAdapter{
 		public TextView name;
 		public TextView type;
 	} 
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private List<Book> list=new ArrayList<>();
 	private Context context;
 	public BookAdapter(List<Book> list,Context context){

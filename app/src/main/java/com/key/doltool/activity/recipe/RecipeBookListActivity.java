@@ -1,8 +1,5 @@
 package com.key.doltool.activity.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,24 +10,22 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.BookAdapter;
-import com.key.doltool.adapter.DockYardMenuAdapter;
 import com.key.doltool.adapter.SkillAdapter;
 import com.key.doltool.data.Book;
-import com.key.doltool.data.MenuItem;
 import com.key.doltool.event.BookEvent;
 import com.key.doltool.util.StringUtil;
-import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
-import com.key.doltool.view.SlideHolder;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeBookListActivity extends BaseActivity implements OnScrollListener{
 		//定义部分

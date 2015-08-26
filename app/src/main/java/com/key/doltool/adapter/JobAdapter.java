@@ -17,7 +17,7 @@ public class JobAdapter extends BaseAdapter{
 		public TextView name;
 		public TextView type;
 	} 
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private List<Job> list=new ArrayList<>();
 	private Context context;
 	public JobAdapter(List<Job> list,Context context){

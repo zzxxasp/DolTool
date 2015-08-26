@@ -1,8 +1,5 @@
 package com.key.doltool.activity.mission;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,30 +15,27 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
-import com.key.doltool.adapter.DockYardMenuAdapter;
 import com.key.doltool.adapter.MissionItemAdapter;
 import com.key.doltool.adapter.SailBoatListAdapter;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
-import com.key.doltool.data.MenuItem;
 import com.key.doltool.data.Mission;
 import com.key.doltool.event.AreaEvent;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
-import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
-import com.key.doltool.view.SlideHolder;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MissonListActivity extends BaseActivity implements OnScrollListener{
 	//定义部分
@@ -55,16 +49,16 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private int add=0;
 	private Thread mThread;	// 线程
 	private boolean end_flag=true; //是否为最末标记
-	
+
 	private Spinner area,city;
 	private Spinner type,adventure_type,sp_type;
 	private FlatButton search;
 	private AreaEvent event;
-	
+
 	private String select_if;
 	private List<Mission> list_mission=new ArrayList<>();
 	private List<String> if_args=new ArrayList<>();
-	
+
 	private ArrayAdapter<String> city_adapter;
 	private DefaultDAO dao;
 	private String[][] temp;
@@ -76,7 +70,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		dao=SRPUtil.getDAO(this);
 		selectInit();
 		findView();
-		setListener();		
+		setListener();
 		initSelectForCity();
 		initSelectForType();
 	}
@@ -104,13 +98,13 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
+									long arg3) {
 				jump(position);
 			}
 		});
 		listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+										   int position, long id) {
 				if(list_mission.get(position).getTag()==0){
 					Mission mission=new Mission();
 					mission.setTag(1);
@@ -133,7 +127,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		super.onDestroy();
 	}
 
-	
+
 	@SuppressWarnings("unchecked")
 	//有限数据查询
 	private void selectshow(String limit){
@@ -142,17 +136,17 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		}
 		//数据前后记录
 		int size_before,size_after;
-			size_before=list_mission.size();
-			list_mission.addAll(((List<Mission>) dao.select(Mission.class, false,select_if, StringUtil.listToArray(if_args), 
+		size_before=list_mission.size();
+		list_mission.addAll(((List<Mission>) dao.select(Mission.class, false,select_if, StringUtil.listToArray(if_args),
 				null, null,"level asc,skill_need asc",limit)));
-			size_after=list_mission.size();
+		size_after=list_mission.size();
 		//数据返回判断
-    	if(size_after==size_before&&size_after!=0){
-    		end_flag=false;
-    		Toast.makeText(getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
-    	}else if(size_after==0){
-    		Toast.makeText(getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
-    	}
+		if(size_after==size_before&&size_after!=0){
+			end_flag=false;
+			Toast.makeText(getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+		}else if(size_after==0){
+			Toast.makeText(getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+		}
 	}
 	//数据添加
 	private void change(){
@@ -164,7 +158,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private void showDialog(){
 		new DialogEvent(select_if,if_args).itemDialog(this);
 	}
-	
+
 	private void jump(int position){
 		Intent intent=new Intent(this,MissionDetailsActivity.class);
 		intent.putExtra("find_item", list_mission.get(position).getId()+"");
@@ -180,7 +174,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		}
 		//显示搜索域
 		searchShow(mode);
-	}	
+	}
 	private void searchShow(int i){
 		if(mode==1){
 			mission.setVisibility(View.VISIBLE);
@@ -188,19 +182,19 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 			mission.setVisibility(View.GONE);
 		}
 	}
-/**
- * 华丽的分割线——以下是Handler,线程,系统按键等处理 
- */
+	/**
+	 * 华丽的分割线——以下是Handler,线程,系统按键等处理
+	 */
 	//Handler——线程结束后更新界面
 	private Handler handler = new Handler() {
-		 public void handleMessage(Message msg) {
-			 change();
-			 layout_alert.setVisibility(View.GONE);
-		 }
-    };
+		public void handleMessage(Message msg) {
+			change();
+			layout_alert.setVisibility(View.GONE);
+		}
+	};
 	//系统按键监听覆写
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		 //条件:当菜单未关闭且搜索条件为初始态，允许退出
+		//条件:当菜单未关闭且搜索条件为初始态，允许退出
 		if(select_if.equals("id>?")&&mode==0){
 			super.onKeyDown(keyCode, event);
 		}
@@ -226,40 +220,40 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 				}
 			}
 		}
-		 return true;
-	 };
+		return true;
+	};
 	//滚动监听① - useless
 	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
+						 int visibleItemCount, int totalItemCount) {
 	}
 	//滚动监听②
 	public void onScrollStateChanged(final AbsListView view, int scrollState) {
-        //当不滚动时
+		//当不滚动时
 		boolean flag=end_flag;
-        if(scrollState == SCROLL_STATE_IDLE){  
-                System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());
-                //判断滚动到底部   
-                if(view.getLastVisiblePosition()==(view.getCount()-1)){
-                	//没有线程且不为最末时
-                    if (mThread == null || !mThread.isAlive()&&flag) {
-                    	//显示进度条，区域操作控制
-                    	layout_alert.setVisibility(View.VISIBLE);
-                        mThread = new Thread() {
-                            public void run() {
-                                try {
-                                    Thread.sleep(2500);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                Message message = new Message();
-                                message.what = 1;
-                                handler.sendMessage(message);
-                            }  
-                        };
-                        mThread.start();                
-                    }
-                }
-        	}
+		if(scrollState == SCROLL_STATE_IDLE){
+			System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());
+			//判断滚动到底部
+			if(view.getLastVisiblePosition()==(view.getCount()-1)){
+				//没有线程且不为最末时
+				if (mThread == null || !mThread.isAlive()&&flag) {
+					//显示进度条，区域操作控制
+					layout_alert.setVisibility(View.VISIBLE);
+					mThread = new Thread() {
+						public void run() {
+							try {
+								Thread.sleep(2500);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Message message = new Message();
+							message.what = 1;
+							handler.sendMessage(message);
+						}
+					};
+					mThread.start();
+				}
+			}
+		}
 	}
 	//获取条件下的搜索串
 	private void setSelectArgs(){
@@ -299,7 +293,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 			if_args.add("%"+temp+"%");
 		}
 	}
-	
+
 	//修改查询条件
 	public void change_if(String if_s,List<String> if_args){
 		//初始化所有数据
@@ -315,7 +309,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	public void begin(){
 		end_flag=true;
 	}
-	
+
 	private void selectInit(){
 		select_if="id>?";
 		if_args.clear();
@@ -326,7 +320,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		area=(Spinner)findViewById(R.id.sp_area);
 		city=(Spinner)findViewById(R.id.sp_city);
 		ArrayAdapter<String> adapter=new SpinnerArrayAdapter
-		(this,event.ADVENTURE_AREA);
+				(this,event.ADVENTURE_AREA);
 		area.setAdapter(adapter);
 		//地区-城市联动事件
 		area.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -350,7 +344,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private void initSelectForType(){
 		type=(Spinner)findViewById(R.id.sp_type);
 		ArrayAdapter<String> adapter3=new SpinnerArrayAdapter
-		(this,ResourcesUtil.getArray(this,R.array.mission_type));
+				(this,ResourcesUtil.getArray(this,R.array.mission_type));
 		type.setAdapter(adapter3);
 		search=(FlatButton)findViewById(R.id.search_btn);
 		search.setOnClickListener(new View.OnClickListener() {
@@ -368,16 +362,16 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		});
 		adventure_type=(Spinner)findViewById(R.id.adventure_type);
 		ArrayAdapter<String> adapter=new SpinnerArrayAdapter
-		(this,ResourcesUtil.getArray(this,R.array.adventure_type));
+				(this,ResourcesUtil.getArray(this,R.array.adventure_type));
 		adventure_type.setAdapter(adapter);
 		sp_type=(Spinner)findViewById(R.id.sp_mission_type);
 		ArrayAdapter<String> adapter2=new SpinnerArrayAdapter
-		(this,ResourcesUtil.getArray(this,R.array.sp_mission_type));
+				(this,ResourcesUtil.getArray(this,R.array.sp_mission_type));
 		sp_type.setAdapter(adapter2);
 		//地区-城市联动事件
 		type.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
+									   int arg2, long arg3) {
 				if(arg2==1||arg2==4){
 					area.setEnabled(true);
 					city.setEnabled(true);

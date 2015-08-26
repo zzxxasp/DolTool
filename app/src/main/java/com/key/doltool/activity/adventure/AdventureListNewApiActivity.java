@@ -1,12 +1,12 @@
 package com.key.doltool.activity.adventure;
-import java.util.ArrayList;
-import java.util.List;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,23 +17,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.support.v7.view.ActionMode;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
 import com.key.doltool.adapter.TroveAdapter;
 import com.key.doltool.data.Trove;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataCount;
 import com.key.doltool.event.UpdataList;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	private GridView gridview;
-	private LinearLayout alert;
+	private Dialog alert;
 	private List<Trove> list;
 	private List<Trove> temp_list=new ArrayList<>();
 	private DefaultDAO dao;
@@ -53,7 +55,9 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			//更新页面
-			alert.setVisibility(View.GONE);
+			if(!isFinishing()){
+				alert.dismiss();
+			}
 			state=gridview.onSaveInstanceState();
 			mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this,true);
 			gridview.setAdapter(mGridAdapter);
@@ -62,7 +66,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	 };
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.adventure_list_main);
+		setContentView(R.layout.adventure_table);
 		type=getIntent().getStringExtra("type");
 		dao=SRPUtil.getDAO(this);
 		srp=SRPUtil.getInstance(this);
@@ -73,12 +77,14 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		new Thread(mTasks).start();
 	}
 	private void findView(){
-		alert=(LinearLayout)findViewById(R.id.layout_alert);
+		alert=new DialogEvent().showLoading(this);
 		flag=false;
 		initToolBar(onMenuItemClick);
 		toolbar.setTitle(type);
 		txt=(TextView)findViewById(R.id.null_txt);
-		alert.setVisibility(View.VISIBLE);
+		if(!isFinishing()){
+			alert.show();
+		}
 	}
 	/**批量标记**/
 	private void mutilMode() {
@@ -138,7 +144,9 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 						dao.update(trove, new String[]{"flag"}, "id=? and type=?", new String[]{"" + mGridAdapter.getItem(position).getId(), type});
 						count.update_addMode(type, -1);
 					}
-					alert.setVisibility(View.VISIBLE);
+					if(!isFinishing()){
+						alert.show();
+					}
 					new Thread(mTasks).start();
 					return true;
 				}
@@ -154,7 +162,9 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	@Override
 	protected void onResume() {
 		if(UpdataList.FLAG_CHANGE==1){
-			alert.setVisibility(View.VISIBLE);
+			if(!isFinishing()){
+				alert.show();
+			}
 			new Thread(mTasks).start();
 			UpdataList.FLAG_CHANGE=0;
 		}
@@ -278,8 +288,10 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
         }
 
     }
-	private void updataForMutil(){
-		alert.setVisibility(View.VISIBLE);
+	private void updataForMutil() {
+		if(!isFinishing()){
+			alert.show();
+		}
 		new Thread(mTask_Muti).start();
 	}
 	

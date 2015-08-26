@@ -50,7 +50,6 @@
 	android:layout_margin="10dp"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="@drawable/abc_spinner_ab_holo_light"
     android:entries="@array/area"
     />
 </LinearLayout>
@@ -76,7 +75,6 @@
 	android:layout_margin="10dp"
 	android:layout_gravity="center"
     android:layout_height="wrap_content"
-    android:background="@drawable/abc_spinner_ab_holo_light"
     android:gravity="center"
     android:entries="@array/area"
     />

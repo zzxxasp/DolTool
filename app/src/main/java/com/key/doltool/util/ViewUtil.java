@@ -1,23 +1,19 @@
 package com.key.doltool.util;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -32,14 +28,15 @@ import com.key.doltool.activity.adventure.CardComboFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.activity.job.JobListActivity;
-import com.key.doltool.activity.person.RegisterActivity;
 import com.key.doltool.activity.trade.TradeItemFragment;
 import com.key.doltool.activity.wiki.WikiListActivity;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
 import com.key.doltool.data.MenuItem;
-import com.key.doltool.event.UserEvent;
 import com.key.doltool.view.Toast;
-import com.key.doltool.view.flat.FlatButton;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 界面辅助处理工具
  * @author key
@@ -555,9 +552,6 @@ public class ViewUtil {
 		final RadioButton box_m=(RadioButton)layout.findViewById(R.id.sex_box1);
 		final RadioButton box_w=(RadioButton)layout.findViewById(R.id.sex_box2);
 		final Spinner type=(Spinner)layout.findViewById(R.id.type);
-        ArrayAdapter<String> adapter=new SpinnerArrayAdapter(activity
-        		,ResourcesUtil.getArray(activity,R.array.adc_type_txt));
-        type.setAdapter(adapter);
 		final Button positive=(Button)layout.findViewById(R.id.btn_confirm);
 		final Button negative=(Button)layout.findViewById(R.id.btn_cancel);
 		positive.setText("搜索");
@@ -573,13 +567,13 @@ public class ViewUtil {
 					select_if="sex = ? ";
 					select_args.add(box_w.getText().toString());
 				}
-				if(type.getSelectedItemPosition()!=1000&&type.getSelectedItemPosition()!=0){
+				if(type.getSelectedItemId()!=1000&&type.getSelectedItemId()!=0){
 					if(select_if.equals("")){
 						select_if+="type = ?";
 					}else{
 						select_if+="and type = ?";
 					}
-					String if_s=type.getSelectedItemPosition()+"";
+					String if_s=type.getSelectedItemId()+"";
 					Log.i("s",if_s+"");
 					select_args.add(if_s);
 				}

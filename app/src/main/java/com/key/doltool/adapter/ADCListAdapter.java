@@ -16,7 +16,7 @@ import com.key.doltool.data.ADCInfo;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 public class ADCListAdapter extends BaseAdapter{
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private static class ViewHolder{
 		public TextView name;
 		public ImageView pic;

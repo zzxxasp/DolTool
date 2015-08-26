@@ -41,14 +41,13 @@ public class MissionDetailsActivity extends BaseActivity{
 	private int temp=0;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mission_detail_main);
+		setContentView(R.layout.mission_detail);
 		find_item=getIntent().getStringExtra("find_item");
 		tw_name=getIntent().getStringExtra("tw_name");
 		type_txt=getIntent().getStringExtra("type");
 		souce_type=getIntent().getIntExtra("souce_type", 0);
 		index=getIntent().getIntExtra("index", 0);
 		souce=getIntent().getStringExtra("souce_name");
-
 		dao=SRPUtil.getDAO(this);
 		findView();
 		setListener();

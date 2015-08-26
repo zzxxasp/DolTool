@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--状态栏-->
-<com.key.doltool.view.SlideHolder
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/slideHolder"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<include 
-    layout="@layout/dock_menu"
-    />
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -31,4 +23,3 @@
     android:layout_centerInParent="true"
 />
 </RelativeLayout>
-</com.key.doltool.view.SlideHolder>

@@ -5,12 +5,7 @@
     <string name="loading_txt">正在加载数据，请稍等</string>
 <!--页面用：MainActivity-->
 <!--标题栏-->
-    <string name="main_back">返回</string>
     <string name="main_menu">菜单</string>
-<!--选择栏-->
-    <string name="main_item1">船只列表</string>
-    <string name="main_item2">造船模拟</string>
-    <string name="main_item3">船只配件</string>
 <!--页面用：SailBoatActivity-->
 <!--配件-->
     <string name="equip_item1">辅助帆:</string>

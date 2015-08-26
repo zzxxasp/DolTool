@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.MainActivity;
 import com.key.doltool.anime.MyAnimations;
+import com.key.doltool.event.app.VoyageEvent;
 import com.key.doltool.util.DBUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
@@ -46,6 +47,7 @@ public class LoadingActivity extends BaseActivity{
 		my.roate(this,load,2000);
 		mThread=new Thread(mTask);
 		mThread.start();
+		new VoyageEvent(this).getRandomChance();
 	}
 	private Runnable mTask=new Runnable(){
 		public void run() {

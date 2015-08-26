@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -36,6 +37,7 @@ import com.key.doltool.activity.search.SearchFragment;
 import com.key.doltool.activity.setting.SettingMainFragment;
 import com.key.doltool.activity.squre.SqureMainFragment;
 import com.key.doltool.activity.trade.TradeItemFragment;
+import com.key.doltool.activity.voyage.VoyageMainFragment;
 import com.key.doltool.data.MenuItem;
 import com.key.doltool.data.SystemInfo;
 import com.key.doltool.event.DialogEvent;
@@ -69,7 +71,7 @@ public class MainActivity extends BaseFragmentActivity{
 	private int index=0;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.activity_main_area);
 		if(savedInstanceState!=null){
 			index=savedInstanceState.getInt("index");
 		}
@@ -152,12 +154,12 @@ public class MainActivity extends BaseFragmentActivity{
 		        ((VersionManager)VersionManager.getInstance()).checkVersion(false);
 			}
 			Log.i("mContent", mContent + "");
-			toolbar.setTitle("发现物概览");
-			mContent = new AdventureMainFragment();
+			toolbar.setTitle("发现之旅");
+			mContent = new VoyageMainFragment();
 			FragmentItem item=new FragmentItem();
 			item.fragment=mContent;
 			item.index=0;
-			item.title="发现物概览";
+			item.title="发现之旅";
 			fragment_list.add(item);
 		}
 		//添加content的fragment
@@ -182,7 +184,7 @@ public class MainActivity extends BaseFragmentActivity{
 		};
 		mDrawerToggle.syncState();
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		init();
 	}
 	private void init(){
@@ -210,25 +212,26 @@ public class MainActivity extends BaseFragmentActivity{
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction transaction = fm.beginTransaction();
     	switch(index){
-    		case 0:mContent=new AdventureMainFragment();break;
-    		case 1:mContent=new NPCFragment();break;
-    		case 2:mContent=new CardComboFragment();break;
-    		case 3:mContent=new TradeItemFragment();break;
-    		case 4:mContent=new RecipeMainFragment();break;
-    		case 5:mContent=new DockYardFragment();break;
-    		case 6:mContent=new InfoMainFragment();break;
-    		case 7:mContent=new SearchFragment();break;
-    		case 8:mContent=new MainBroadFragment();break;
-    		case 9:mContent=new SqureMainFragment();break;
-    		case 10:mContent=new SettingMainFragment();break;
-    		case 11:mContent=new HelpCenterFragment();break;
-//    		case 12:mContent=new DevFragment();break;
-			case 12:mContent=new DataBaseInsertFragment();break;
+			case 0:mContent=new VoyageMainFragment();break;
+    		case 1:mContent=new AdventureMainFragment();break;
+    		case 2:mContent=new NPCFragment();break;
+    		case 3:mContent=new CardComboFragment();break;
+    		case 4:mContent=new TradeItemFragment();break;
+    		case 5:mContent=new RecipeMainFragment();break;
+    		case 6:mContent=new DockYardFragment();break;
+    		case 7:mContent=new InfoMainFragment();break;
+    		case 8:mContent=new SearchFragment();break;
+    		case 9:mContent=new MainBroadFragment();break;
+    		case 10:mContent=new SqureMainFragment();break;
+    		case 11:mContent=new SettingMainFragment();break;
+    		case 12:mContent=new HelpCenterFragment();break;
+//    		case 13:mContent=new DevFragment();break;
+			case 13:mContent=new DataBaseInsertFragment();break;
     		default:
     			mContent=new AdventureMainFragment();
     			break;
     	}
-    	Log.i("tag",mContent.getClass()+"");
+    	Log.i("tag", mContent.getClass() + "");
     	transaction.setCustomAnimations(R.anim.activity_transition_slide_in_new, R.anim.activity_transition_slide_out_new);
 		FragmentItem item=new FragmentItem();
 		item.fragment=mContent;
@@ -249,7 +252,7 @@ public class MainActivity extends BaseFragmentActivity{
     	mDrawerLayout.closeDrawers();
     	new Thread(new Runnable(){
 			public void run() {
-				while(mDrawerLayout.isDrawerOpen(Gravity.START)){
+				while(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
 					//Dlow
 				}
 				UIHandler.sendEmptyMessage(id);
@@ -336,7 +339,7 @@ public class MainActivity extends BaseFragmentActivity{
 			if(!s.onKeyDown(keyCode, event)){
 				if(keyCode==KeyEvent.KEYCODE_BACK){
 					if(!SpotManager.getInstance(this).disMiss(true)){
-						if(mDrawerLayout.isDrawerOpen(Gravity.START)){
+						if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
 							mDrawerLayout.closeDrawers();
 							return true;
 						}else{
@@ -393,7 +396,6 @@ public class MainActivity extends BaseFragmentActivity{
 	protected void onRestart() {
 		if(UpdataList.PIC_CHANGE==1){
 			init();
-			Log.i("re","onResume");
 		}
 		super.onRestart();
 	}

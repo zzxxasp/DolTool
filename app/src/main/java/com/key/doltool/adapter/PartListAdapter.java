@@ -20,7 +20,7 @@ public class PartListAdapter extends BaseAdapter{
 		public TextView name,type;
 		public ImageView pic;
 	} 
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private List<Part> list=new ArrayList<>();
 	private Context context;
 	public PartListAdapter(List<Part> list,Context context){

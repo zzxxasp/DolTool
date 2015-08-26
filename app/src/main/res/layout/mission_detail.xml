@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@null"
-	android:fitsSystemWindows="true"
-	android:clipToPadding="true"
      >
 <!--TitleBar-->
 <include

@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
     android:background="@color/white"
     >
 <include 
@@ -27,64 +25,89 @@
     android:layout_height="wrap_content" 
     android:orientation="vertical"
     >
-	<com.key.doltool.view.EmailAutoCompleteTextView
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/emailWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+	<AutoCompleteTextView
 		android:id="@+id/email"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:hint="请输入邮箱"
+        android:maxLength="28"
 		android:textCursorDrawable="@null"
 		android:padding="10dp"
 		android:layout_margin="10dp"
 		android:textColor="@color/Black_SP"
 		android:textColorHint="@color/Gainsboro_SP"
-		android:background="@drawable/edittext_login"
 		android:singleLine="true"
 		android:inputType="textEmailAddress"
 		android:imeOptions="actionNext"
 		android:nextFocusDown="@+id/password" 
 		/>
-<EditText
-    android:id="@+id/password"  
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
-    android:padding="10dp"
-    android:layout_margin="10dp"
-    android:maxLength="12"
-    android:textCursorDrawable="@null"
-    android:textColorHint="@color/Gainsboro_SP"
-    android:background="@drawable/edittext_login"
-    android:textColor="@color/Black_SP"
-    android:inputType="textPassword"
-    android:hint="请输入密码"      
-    />
-<EditText
-    android:id="@+id/password_repeat"  
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
-    android:padding="10dp"
-    android:layout_margin="10dp"
-    android:maxLength="12"
-    android:textCursorDrawable="@null"
-    android:textColorHint="@color/Gainsboro_SP"
-    android:background="@drawable/edittext_login"
-    android:textColor="@color/Black_SP"
-    android:inputType="textPassword"
-    android:hint="请再次输入密码"      
-    />
-<EditText
-    android:id="@+id/nick" 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
-    android:padding="10dp"
-    android:layout_margin="10dp"
-    android:maxLength="12"
-    android:textCursorDrawable="@null"
-    android:textColorHint="@color/Gainsboro_SP"
-    android:background="@drawable/edittext_login"
-    android:textColor="@color/Black_SP"
-    android:inputType="text"
-    android:hint="请输入昵称（非必填）" 
-    />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/passwordWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:maxLength="12"
+            android:textCursorDrawable="@null"
+            android:textColorHint="@color/Gainsboro_SP"
+            android:textColor="@color/Black_SP"
+            android:inputType="textPassword"
+            android:hint="请输入密码"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/password_repeatWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+        <EditText
+            android:id="@+id/password_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:maxLength="12"
+            android:textCursorDrawable="@null"
+            android:textColorHint="@color/Gainsboro_SP"
+            android:textColor="@color/Black_SP"
+            android:inputType="textPassword"
+            android:hint="请再次输入密码"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/nickWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+        <EditText
+            android:id="@+id/nick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:maxLength="12"
+            android:textCursorDrawable="@null"
+            android:textColorHint="@color/Gainsboro_SP"
+            android:textColor="@color/Black_SP"
+            android:inputType="text"
+            android:hint="请输入昵称（非必填）"
+            />
+    </android.support.design.widget.TextInputLayout>
 <LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
@@ -100,7 +123,6 @@
 	android:padding="10dp"
 	android:gravity="center"
     android:layout_margin="10dp"
-    android:background="@drawable/abc_spinner_ab_holo_light"     
     />
 <Spinner
     android:id="@+id/server" 
@@ -110,7 +132,6 @@
 	android:textColor="@color/Black_SP"
     android:layout_margin="10dp"
     android:gravity="center"
-	android:background="@drawable/abc_spinner_ab_holo_light"     
     android:layout_height="wrap_content"     
     />
 </LinearLayout>

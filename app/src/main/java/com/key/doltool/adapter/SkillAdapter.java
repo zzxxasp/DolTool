@@ -22,7 +22,7 @@ public class SkillAdapter extends BaseAdapter{
 		public TextView name;
 		public TextView type;
 	} 
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private List<Skill> list=new ArrayList<>();
 	private Context context;
 	public SkillAdapter(List<Skill> list,Context context){

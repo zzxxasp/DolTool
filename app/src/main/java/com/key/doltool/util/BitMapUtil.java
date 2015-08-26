@@ -131,6 +131,13 @@ public class BitMapUtil {
 		bitmap.setDensity(android.util.DisplayMetrics.DENSITY_HIGH);
 		return bitmap;
 	}
+
+	public static Bitmap getBitmapByInputStream(InputStream in,int density){
+		Bitmap bitmap=BitmapFactory.decodeStream(in);
+		bitmap.setDensity(density);
+		return bitmap;
+	}
+
 	public static Bitmap getBitmapByInputStream(InputStream in,boolean bool){
 		return BitmapFactory.decodeStream(in);
 	}

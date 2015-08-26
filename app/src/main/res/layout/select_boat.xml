@@ -33,7 +33,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
     android:text="@string/select_size_s"  
     />
 <CheckBox
@@ -41,7 +40,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
     android:text="@string/select_size_m"  
     /> 
 <CheckBox
@@ -49,7 +47,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
     android:text="@string/select_size_l" 
     />     
 </LinearLayout>

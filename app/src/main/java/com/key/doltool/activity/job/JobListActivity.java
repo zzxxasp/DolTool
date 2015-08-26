@@ -1,8 +1,5 @@
 package com.key.doltool.activity.job;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,24 +10,22 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
-import com.key.doltool.adapter.DockYardMenuAdapter;
 import com.key.doltool.adapter.JobAdapter;
 import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.data.Job;
-import com.key.doltool.data.MenuItem;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
-import com.key.doltool.view.SlideHolder;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JobListActivity extends BaseActivity{
 		//定义部分
@@ -39,7 +34,7 @@ public class JobListActivity extends BaseActivity{
 		private ListView listview;
 		//数据temp变量
 		private DefaultDAO dao;
-		private List<Job> list=new ArrayList<Job>();
+		private List<Job> list=new ArrayList<>();
 		private JobAdapter adapter;
 		private int add=0;
 		private Thread mThread;	// 线程

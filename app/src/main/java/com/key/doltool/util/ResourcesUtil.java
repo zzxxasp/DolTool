@@ -35,7 +35,7 @@ public class ResourcesUtil {
 						"com.key.doltool .");
 			Drawable image;
 			if (id <= 0) { 
-				image = context.getResources().getDrawable(R.drawable.ic_drawer);
+				image = context.getResources().getDrawable(R.drawable.ic_add_white_24dp);
 			} else { 
 				image = context.getResources().getDrawable(id); 
 			} 

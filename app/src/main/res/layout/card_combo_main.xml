@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--状态栏-->
-<com.key.doltool.view.SlideHolder xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/slideHolder"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-<include 
-    layout="@layout/dock_menu"
-    />
-<LinearLayout 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
     android:background="@color/background_material_light"
     android:orientation="vertical"    
     >
@@ -43,4 +33,3 @@
 />
 </RelativeLayout>
 </LinearLayout>
-</com.key.doltool.view.SlideHolder>

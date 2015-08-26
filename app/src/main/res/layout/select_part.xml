@@ -32,7 +32,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
     android:text="@string/select_t0"  
     />
 <CheckBox
@@ -40,7 +39,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
     android:text="@string/select_t1" 
     /> 
 <CheckBox
@@ -48,7 +46,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
     android:text="@string/select_t2" 
     />     
 </LinearLayout>
@@ -64,7 +61,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
     android:text="@string/select_t3"  
     />
 <CheckBox
@@ -72,7 +68,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
     android:text="@string/select_t4" 
     />    
 </LinearLayout>
@@ -88,7 +83,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
   	android:text="@string/select_t5" 
     />
 <CheckBox
@@ -96,7 +90,6 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
 	android:text="@string/select_t6" 
     />    
 <CheckBox
@@ -104,15 +97,13 @@
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
 	android:text="@string/select_t7" 
     />
 <CheckBox
-    android:id="@+id/t_8"  
+    android:id="@+id/t_8"
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:button="@drawable/apptheme_btn_check_holo_dark"
 	android:text="@string/select_t8" 
     />    
 </LinearLayout>

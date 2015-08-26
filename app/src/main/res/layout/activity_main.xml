@@ -9,7 +9,6 @@
         android:layout_height="match_parent" >
 
         <!-- The main content view -->
-
         <LinearLayout
 			android:id="@+id/content_frame"
 			android:layout_width="match_parent"

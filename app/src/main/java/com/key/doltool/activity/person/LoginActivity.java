@@ -4,20 +4,23 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.core.MainActivity;
+import com.key.doltool.adapter.AutoTextViewAdapter;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.CommonUtil;
-import com.key.doltool.view.EmailAutoCompleteTextView;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 import com.parse.LogInCallback;
@@ -27,23 +30,37 @@ import com.parse.RequestPasswordResetCallback;
 
 public class LoginActivity extends BaseActivity{
 	//登录
+	private static final String[] AUTO_EMAILS = {"@163.com", "@sina.com", "@qq.com", "@126.com", "@gmail.com", "@apple.com"};
+	private TextInputLayout usernameWrapper,passwordWrapper;
 	private EditText password;
-	private EmailAutoCompleteTextView account;
-	private TextView register,forgetpassword;
+	private AutoCompleteTextView account;
+	private FlatButton register,forgetpassword;
 	private FlatButton login;
 	private Dialog dialog;
+	private AutoTextViewAdapter adapter;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_main);
 		findView();
 	}
 	private void findView(){
+
+		usernameWrapper = (TextInputLayout) findViewById(R.id.usernameWrapper);
+		passwordWrapper = (TextInputLayout) findViewById(R.id.passwordWrapper);
+		usernameWrapper.setHint("登录邮箱");
+		passwordWrapper.setHint("登录密码");
 		dialog=new DialogEvent().itemDialog(this,"请等待");
 		
-		register=(TextView)findViewById(R.id.register);
-		forgetpassword=(TextView)findViewById(R.id.forget_password);
-		
-		account=(EmailAutoCompleteTextView)findViewById(R.id.account);
+		register=(FlatButton)findViewById(R.id.register);
+		forgetpassword=(FlatButton)findViewById(R.id.forget_password);
+
+		account=(AutoCompleteTextView)findViewById(R.id.account);
+
+		adapter = new AutoTextViewAdapter(this);
+		account.setAdapter(adapter);
+		account.setThreshold(1);//输入1个字符时就开始检测，默认为2个
+		account.addTextChangedListener(watahcer);//监听autoview的变化
+
 		password=(EditText)findViewById(R.id.password);
 		
 		login=(FlatButton)findViewById(R.id.login);
@@ -87,7 +104,9 @@ public class LoginActivity extends BaseActivity{
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if(layout==R.layout.select_trove){
-					resetPassword(name.getText().toString().trim());
+					if (name != null) {
+						resetPassword(name.getText().toString().trim());
+					}
 				}
 				updateDialog.dismiss();
 			}
@@ -99,7 +118,48 @@ public class LoginActivity extends BaseActivity{
 			}
 		});
 	}
-	
+
+	private TextWatcher watahcer=new TextWatcher() {
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			String input = s.toString();
+			adapter.mList.clear();
+			autoAddEmails(input);
+			adapter.notifyDataSetChanged();
+			account.showDropDown();
+		}
+	};
+
+
+	private void autoAddEmails(String input) {
+		String autoEmail;
+		if (input.length() > 0) {
+			for (String AUTO_EMAIL : AUTO_EMAILS) {
+				if (input.contains("@")) {//包含“@”则开始过滤
+					String filter = input.substring(input.indexOf("@") + 1, input.length());//获取过滤器，即根据输入“@”之后的内容过滤出符合条件的邮箱
+					System.out.println("filter-->" + filter);
+					if (AUTO_EMAIL.contains(filter)) {//符合过滤条件
+						autoEmail = input.substring(0, input.indexOf("@")) + AUTO_EMAIL;//用户输入“@”之前的内容加上自动填充的内容即为最后的结果
+						adapter.mList.add(autoEmail);
+					}
+				} else {
+					autoEmail = input + AUTO_EMAIL;
+					adapter.mList.add(autoEmail);
+				}
+			}
+		}
+	}
+
 	//重置密码（未登录版本）
 	private void resetPassword(String emali){
 		dialog.show();

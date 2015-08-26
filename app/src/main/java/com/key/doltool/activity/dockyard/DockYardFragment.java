@@ -123,7 +123,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
     private View main;
 	private SlidingTabLayout mSlidingTabLayout;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.dockyard_main, container,false);
+		 View view =  inflater.inflate(R.layout.dockyard_main_area, container,false);
 		 init(view);
 		 findView();
 		 setListener();

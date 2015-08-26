@@ -5,13 +5,14 @@
     android:layout_height="wrap_content"
     android:background="@null"
     >
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp"
     android:layout_margin="5dp"
-    android:background="@drawable/material_card"
+    android:background="@drawable/material_card_enable"
     >
 <RelativeLayout
     android:id="@+id/name_bar" 
@@ -32,7 +33,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
-	android:textColor="@color/White"
+	android:textColor="@color/Black_SP"
     android:text="布宜诺斯艾利斯"     
     />    
 </RelativeLayout>    

@@ -32,10 +32,10 @@ public class NPCAdapter extends BaseAdapter{
 		public ImageView skill_img1,skill_img2,skill_img3;
 		public TextView skill_txt1,skill_txt2,skill_txt3;
 	} 
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private DefaultDAO dao;
 	private ApdaterUtil util;
-	private List<NPCInfo> list=new ArrayList<NPCInfo>();
+	private List<NPCInfo> list=new ArrayList<>();
 	private Activity context;
 	public NPCAdapter(List<NPCInfo> list,Activity context){
 		this.list=list;
@@ -68,7 +68,7 @@ public class NPCAdapter extends BaseAdapter{
 			convertView = mInflater.inflate(R.layout.npc_item, null);
 			holder.name=(TextView)convertView.findViewById(R.id.name);
 			holder.area=(TextView)convertView.findViewById(R.id.area);
-			holder.line=(View)convertView.findViewById(R.id.line);
+			holder.line=convertView.findViewById(R.id.line);
 			holder.love_type=(TextView)convertView.findViewById(R.id.love_type);
 			holder.other=(TextView)convertView.findViewById(R.id.other);
 			

@@ -18,7 +18,7 @@ public class SailBoatListAdapter extends BaseAdapter{
 		public TextView name;
 		public ImageView pic;
 	} 
-	public static int SIZE=20;
+	public static int SIZE=30;
 	private List<SailBoat> list=new ArrayList<>();
 	private Context context;
 	public SailBoatListAdapter(List<SailBoat> list,Context context){

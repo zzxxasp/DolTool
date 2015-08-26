@@ -4,6 +4,10 @@ android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
+    compileOptions {
+        encoding "UTF-8"
+    }
+
     defaultConfig {
         applicationId "com.key.doltool"
         minSdkVersion 8
@@ -20,6 +24,7 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:percent:22.2.0'
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:design:22.2.0'
     compile 'com.google.code.gson:gson:2.3'

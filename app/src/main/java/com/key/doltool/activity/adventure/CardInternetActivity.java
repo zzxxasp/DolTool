@@ -1,113 +1,97 @@
 package com.key.doltool.activity.adventure;
-import android.annotation.SuppressLint;
-import android.content.res.Configuration;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
-import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
-import com.key.doltool.util.CommonUtil;
-import com.key.doltool.util.HttpUtil;
-import com.key.doltool.util.jsoup.JsoupForTX;
+import com.key.doltool.data.Card;
+import com.key.doltool.data.CardCombo;
+import com.key.doltool.data.Trove;
+import com.key.doltool.util.NumberUtil;
+import com.key.doltool.util.db.SRPUtil;
+import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * 新闻详情
- * @author key
- * @version 0.5
- * @date 2015-6-15
- * 0.5-基本调整,界面适配度80%<br>
+ * 卡组一览，战力评估
  */
 public class CardInternetActivity extends BaseActivity{
-	 private WebView web_content;
-	 private LinearLayout layout_alert;
-	 private String content="";
-	 private int width=480;
-	 private String head="";
-	 public void onCreate(Bundle savedInstanceState) {
+	/**comboList**/
+	private List<CardCombo> comboList=new ArrayList<>();
+	/**自己牌组的Combo总数**/
+	private List<CardCombo> selfCombo=new ArrayList<>();
+	/**自己牌组的卡片数:小于30张则显示添加，等于三十张则可以进行战力评估**/
+	private List<Card> list=new ArrayList<>();
+	private int total;
+	private int poiont_total;
+	private DefaultDAO dao;
+	private SRPUtil srp;
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.news_detail);
+		setContentView(R.layout.item_card);
+		srp=SRPUtil.getInstance(getApplicationContext());
+		dao=SRPUtil.getDAO(getApplicationContext());
 		findView();
-		new Thread(mTask).start();
-	 }
-	 //获取数据，填充显示
-	 @SuppressLint("SetJavaScriptEnabled")
-	 private void init(){
-		float screenDensity = getResources().getDisplayMetrics().density ; 
-		WebSettings.ZoomDensity zoomDensity;
-		if(screenDensity==0.75f){
-			zoomDensity = WebSettings.ZoomDensity.CLOSE;
-		}
-		else if(screenDensity==1.0f){
-			zoomDensity = WebSettings.ZoomDensity.MEDIUM;
-		}
-		else{
-			zoomDensity = WebSettings.ZoomDensity.FAR;
-		}
-		Log.i("",zoomDensity.name());
-		web_content.getSettings().setJavaScriptEnabled(true);
-		web_content.getSettings().setUseWideViewPort(true);
-		web_content.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-		width=(int)(CommonUtil.getScreenWidth(this)/screenDensity)-10;
-		Log.i("x",""+width);
-		head="<style type='text/css'>*{max-width:"+width+"px!important;height:auto!important;}" +
-				"table{width:100%!important;}"
-					+"</style>";
-		if(HttpUtil.STATE==3){
-			web_content.loadUrl(content);
-		}else{
-			web_content.loadData(head+content,"text/html; charset=UTF-8",null);
-		}
-	 }
-	 //初始化控件
-	 private void findView(){
-		web_content=(WebView)findViewById(R.id.content);
-		layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
-	 }
-	 @Override
-	 protected void onResume() {
-		super.onResume();
+//		getCombo();
+//		genCard();
 	}
-	 private Handler mHandler=new Handler(){
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			//更新页面
-			if(HttpUtil.STATE==0||HttpUtil.STATE==3){
-				init();
-				if(!content.equals(""))
-					layout_alert.setVisibility(View.GONE);
-			}
-			else{
-				layout_alert.setVisibility(View.GONE);
+	//初始化控件
+	private void findView(){
+		Card card=new Card();
+		card.name="亚速尔";
+		card.type="12";
+		card.point=1;
+		list.add(card);
+		Card card2=new Card();
+		card2.type="12";
+		card2.point=1;
+		card2.name="亚速尔群岛";
+		list.add(card2);
+		comboList=(List<CardCombo>)dao.select(CardCombo.class,true,"id>?",new String[]{"0"},null,null,null,null);
+	}
+	//根据卡组内容获得所有Combo数量
+	private void getCombo(){
+		for(int i=0;i<comboList.size();i++){
+			List<Card> temp=comboList.get(i).getCard();
+			if(list.containsAll(temp)) {
+				selfCombo.add(comboList.get(i));
 			}
 		}
-	 };
-	 //获得数据
-	 private Runnable mTask=new Runnable(){
-		public void run() {
-			Looper.prepare(); 
-			while(content.equals("")&&HttpUtil.STATE==0){
-				content=JsoupForTX.getCard();
-				mHandler.sendMessage(mHandler.obtainMessage());
-			}
-		    if(HttpUtil.STATE==1&&layout_alert.getVisibility()==View.VISIBLE){
-				mHandler.sendMessage(mHandler.obtainMessage());
-			}
-           Looper.loop(); 
+	}
+	private void randomCardCombo(){
+
+	}
+	//初始化评估战力(原则)
+	private void initPoint(){
+		//基本点数叠加
+		for(int i=0;i<list.size();i++){
+			poiont_total+=list.get(i).point;
 		}
-	 };
-	 //缓存清空
-	 protected void onDestroy() {
-		 super.onDestroy();
-		 web_content.clearCache(false);
-	 }
-	 @Override
-	 public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-	 }
+		total+=poiont_total;
+		//种类加成（2种类型为0 1种-5 每多一种Plus 5）
+		total+=((int)srp.countByType(false,2)-2)*2;
+		//combo加成(根据Combo的点数，除以所需卡片数，功能性combo均为10)
+		for(int i=0;i<selfCombo.size();i++){
+			total+=selfCombo.get(i).value;
+			Log.i("alist",""+selfCombo.get(i).getName()+selfCombo.get(i).getEffect());
+		}
+		//随机点数加成[1~20]
+		total+=NumberUtil.getRandom(1,20);
+	}
+
+	private void genCard(){
+		List<Trove>list=(List<Trove>)dao.select(Trove.class,true,"id>?",new String[]{"0"},null,null,null,null);
+		for(int i=0;i<list.size();i++){
+			Card c=new Card();
+			c.name=list.get(i).getName();
+			c.point=list.get(i).getCard_point();
+			c.type=list.get(i).getType();
+			c.pic_id=list.get(i).getPic_id();
+			c.flag=0;
+			dao.insert(c);
+		}
+	}
 }

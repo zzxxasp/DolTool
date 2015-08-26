@@ -122,14 +122,9 @@
 	</string-array>
 	
     <integer-array name="pocket_background_colors">
-        <item>@color/pocket_color_1</item>
-        <item>@color/pocket_color_2</item>
-        <item>@color/pocket_color_3</item>
-        <item>@color/pocket_color_4</item>
+        <item>@color/Blue_SP</item>
+        <item>@color/Blue_SP</item>
+        <item>@color/Blue_SP</item>
+        <item>@color/Blue_SP</item>
     </integer-array>
-
-    <color name="pocket_color_1">#ffffff</color>
-    <color name="pocket_color_2">#ffffff</color>
-    <color name="pocket_color_3">#ffffff</color>
-    <color name="pocket_color_4">#ffffff</color> 
 </resources>

@@ -20,7 +20,6 @@
     android:layout_height="wrap_content"
     android:gravity="center"
 	android:layout_margin="5dp"
-    android:background="@drawable/abc_spinner_ab_holo_light"
     android:entries="@array/back_type"      
     />
 <EditText

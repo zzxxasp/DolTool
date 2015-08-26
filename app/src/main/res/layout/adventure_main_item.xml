@@ -32,10 +32,18 @@
     android:id="@+id/name" 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text=""
-    android:padding="5dp"
-    android:background="@color/Blue_SP"
-    android:textColor="@color/White"    
+    android:text="财宝"
+    android:textSize="16sp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="2dp"
+    android:textColor="@color/Blue_SP"
+    />
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1px"
+    android:layout_margin="5dp"
+    android:background="@color/Gainsboro"
     />
 </LinearLayout>
 <LinearLayout 
@@ -55,8 +63,8 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     android:textSize="20sp"
-    android:textColor="@color/SpringGreen"  
-    android:text=""        
+    android:textColor="@color/Black_SP"
+    android:text="1"
     />
 <TextView
     android:id="@+id/size" 
@@ -67,7 +75,7 @@
 	android:textSize="20sp"
     android:gravity="center"
     android:textColor="@color/Blue_SP"  
-    android:text=""        
+    android:text="222"
     />
 </LinearLayout>
 </RelativeLayout>

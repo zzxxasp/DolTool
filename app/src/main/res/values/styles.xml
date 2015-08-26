@@ -4,13 +4,13 @@
         <item name="colorAccent">@color/Blue_SP</item>
         <item name="colorPrimary">@color/Blue_SP</item>
         <item name="colorPrimaryDark">@color/blue_dark</item>
-        <item name="colorControlNormal">@color/White</item>
+        <item name="colorControlNormal">@color/Black_SP</item>
         <item name="colorControlHighlight">@color/blue_dark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/Animation.Activity.Translucent.Style</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowIsTranslucent">false</item>
         <item name="actionBarItemBackground">@drawable/theme_blue_btn</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
@@ -19,9 +19,14 @@
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowStyle</item>
         <item name="actionModeBackground">@color/Blue_SP</item>
         <item name="toolbarNavigationButtonStyle">@style/AppTheme.Toolbar.Navigation</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <!--<item name="android:clipToPadding">true</item>-->
     </style>
     <style name="AppTheme.Base.FullScreen" parent="AppTheme.Base">
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/blue_wallpaper</item>
     </style>
     <style name="CircularProgressBar">
         <item name="android:layout_height">wrap_content</item>

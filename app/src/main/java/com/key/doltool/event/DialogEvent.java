@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -111,7 +112,6 @@ public class DialogEvent {
 	
 	/**
 	 * 选择对话框
-	 * @param txt 要显示的TextView
 	 * @param context 所在界面的上下文
 	 * **/
 	public void itemDialog(final MissonListActivity context){
@@ -161,8 +161,8 @@ public class DialogEvent {
         updateDialog.setCanceledOnTouchOutside(false);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
                 LayoutParams.MATCH_PARENT);
-        params.setMargins(10,10,10,10);
-        updateDialog.setContentView(view,params);
+        params.setMargins(10, 10, 10, 10);
+        updateDialog.setContentView(view, params);
         TextView loading_txt=(TextView)view.findViewById(R.id.loaing_txt);
         if(!StringUtil.isNull(txt)){
             loading_txt.setText(txt);
@@ -185,8 +185,8 @@ public class DialogEvent {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
                 LayoutParams.MATCH_PARENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        params.setMargins(10,10,10,10);
-        updateDialog.setContentView(view,params);
+        params.setMargins(10, 10, 10, 10);
+        updateDialog.setContentView(view, params);
         updateDialog.show();
         ListView listview=(ListView)view.findViewById(R.id.listview);
         listview.setAdapter(new ListWordAdapter(word,context));
@@ -214,11 +214,11 @@ public class DialogEvent {
         updateDialog.setCanceledOnTouchOutside(true);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT);
-        params.setMargins(10,10,10,10);
+        params.setMargins(10, 10, 10, 10);
         if(anime!=0){
             updateDialog.getWindow().setWindowAnimations(anime);
         }
-        updateDialog.setContentView(view,params);
+        updateDialog.setContentView(view, params);
         updateDialog.show();
         TextView title_view=(TextView)view.findViewById(R.id.title);
         TextView content=(TextView)view.findViewById(R.id.message);
@@ -231,17 +231,17 @@ public class DialogEvent {
 				updateDialog.dismiss();
 			}
 		});
-        confrim.setOnClickListener(new View.OnClickListener(){
+        confrim.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if(context instanceof MainActivity){
+				if (context instanceof MainActivity) {
 					ExitApplication.getInstance().exit();
 				}
-				if(context instanceof PersonActivity){
-					judge(num,(PersonActivity)context);
+				if (context instanceof PersonActivity) {
+					judge(num, (PersonActivity) context);
 				}
 				updateDialog.dismiss();
 			}
-        });
+		});
 	}
 	
 	/**
@@ -258,8 +258,8 @@ public class DialogEvent {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
                 LayoutParams.MATCH_PARENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        params.setMargins(10,10,10,10);
-        updateDialog.setContentView(view,params);
+        params.setMargins(10, 10, 10, 10);
+        updateDialog.setContentView(view, params);
         if(!context.isFinishing()){
             updateDialog.show();
         }
@@ -267,24 +267,24 @@ public class DialogEvent {
         TextView file_btn=(TextView)view.findViewById(R.id.file_btn);
         photo_btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if(CommonUtil.hasSDCard()){
-		            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		            intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(temp_url))); 
-		            context.startActivityForResult(intent, 1);
-		            updateDialog.dismiss();
-				}else{
-					Toast.makeText(context,"没有检测到SD卡，无法进行拍照",Toast.LENGTH_LONG).show();
+				if (CommonUtil.hasSDCard()) {
+					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(temp_url)));
+					context.startActivityForResult(intent, 1);
+					updateDialog.dismiss();
+				} else {
+					Toast.makeText(context, "没有检测到SD卡，无法进行拍照", Toast.LENGTH_LONG).show();
 					updateDialog.dismiss();
 				}
 			}
 		});
         file_btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-	            Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-	            galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
-	            galleryIntent.setType("image/*");
-	            context.startActivityForResult(galleryIntent,3);
-	            updateDialog.dismiss();
+				Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+				galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+				galleryIntent.setType("image/*");
+				context.startActivityForResult(galleryIntent, 3);
+				updateDialog.dismiss();
 			}
 		});
 	}
@@ -308,5 +308,33 @@ public class DialogEvent {
 				context.finish();
 				break;
 		}
+	}
+
+	public Dialog showLoading(Activity context){
+		LayoutInflater layoutinflater = context.getLayoutInflater();
+		View view = layoutinflater.inflate(R.layout.loading_layout, null);
+		final Dialog updateDialog = new Dialog(context,R.style.updateDialog);
+		updateDialog.setCancelable(false);
+		updateDialog.setCanceledOnTouchOutside(false);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		params.setMargins(10, 10, 10, 10);
+		updateDialog.setContentView(view, params);
+		return updateDialog;
+	}
+
+	public Dialog showLoading(Activity context,String title){
+		LayoutInflater layoutinflater = context.getLayoutInflater();
+		View view = layoutinflater.inflate(R.layout.loading_layout, null);
+		final Dialog updateDialog = new Dialog(context,R.style.updateDialog);
+		updateDialog.setCancelable(false);
+		updateDialog.setCanceledOnTouchOutside(false);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		params.setMargins(10, 10, 10, 10);
+		updateDialog.setContentView(view, params);
+		TextView txt=(TextView)view.findViewById(R.id.loaing_txt);
+		txt.setText(title);
+		return updateDialog;
 	}
 }

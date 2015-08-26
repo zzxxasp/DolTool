@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.mission.MissionDetailsActivity;
-import com.key.doltool.view.SlideHolder;
 public class MissionConnectAdapter extends BaseAdapter{
 	private static class ViewHolder{
 		public TextView item_name;
