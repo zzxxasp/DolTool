@@ -140,6 +140,9 @@
 		<activity android:name="com.key.doltool.activity.ability.AbilityForBoatDetailActivity"
                     android:screenOrientation="portrait"
 					/>
+        <activity android:name="com.key.doltool.activity.trade.TradeItemActivity"
+                    android:screenOrientation="portrait"
+                    />
 		<activity android:name="com.key.doltool.activity.setting.MessageShowActivity"
                     android:screenOrientation="portrait"
 					/>

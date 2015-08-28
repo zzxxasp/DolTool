@@ -1,7 +1,4 @@
 package com.key.doltool.activity.dockyard;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +29,6 @@ import com.key.doltool.anime.MyAnimations;
 import com.key.doltool.data.Part;
 import com.key.doltool.data.SailBoat;
 import com.key.doltool.event.MakeEvent;
-import com.key.doltool.util.DBUtil;
 import com.key.doltool.util.NumberUtil;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.ViewUtil;
@@ -42,6 +38,10 @@ import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 import com.key.doltool.viewpage.MyPagerAdapter;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 /**
  * 造船厂主界面(更大的意义,可以作为其他页面暂时的参考，提高20%编写效率)
  * @author key
@@ -706,16 +706,14 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 		@Override
 		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
 			switch (menuItem.getItemId()) {
-				case R.id.city_search:findObject();break;
-				case R.id.type_search:DBUtil.copyDB_SD(getActivity());break;
-
+				case R.id.search:findObject();break;
 			}
 			return true;
 		}
 	};
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.adc_menu, menu);
+		inflater.inflate(R.menu.main, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 }

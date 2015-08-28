@@ -12,7 +12,7 @@ import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.adapter.VoyageAdapter;
 import com.key.doltool.data.VoyageInfo;
 import com.key.doltool.data.VoyageItem;
-import com.key.doltool.event.app.VoyageEvent;
+import com.key.doltool.event.VoyageEvent;
 
 import java.util.List;
 
@@ -41,11 +41,8 @@ public class VoyageMainFragment extends BaseFragment{
 		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 									long arg3) {
-				jump(list.get(arg2).type);
+				VoyageEvent.jumpForVoyage(getActivity(),list.get(arg2));
 			}
 		});
-	}
-	private void jump(int index){
-
 	}
 }

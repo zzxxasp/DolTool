@@ -34,7 +34,7 @@
 		android:id="@+id/title"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/Black_SP"
+		android:background="@drawable/material_card_enable"
 		android:layout_centerHorizontal="true"
 		android:layout_margin="5dp"
 		>
@@ -53,7 +53,7 @@
 			android:layout_height="wrap_content"
 			android:background="@null"
 			android:padding="5dp"
-			android:textColor="@color/White"
+			android:textColor="@color/Black_SP"
 			android:textSize="16sp"
 			android:layout_centerVertical="true"
 			android:layout_toRightOf="@+id/pic"

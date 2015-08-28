@@ -28,6 +28,7 @@ import com.key.doltool.activity.adventure.CardComboFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.activity.job.JobListActivity;
+import com.key.doltool.activity.trade.TradeItemActivity;
 import com.key.doltool.activity.trade.TradeItemFragment;
 import com.key.doltool.activity.wiki.WikiListActivity;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
@@ -433,6 +434,61 @@ public class ViewUtil {
 			}
 		});
 	}
+
+	public static void popTradeDialog(final TradeItemActivity activity,View layout){
+		final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
+		updateDialog.setCancelable(true);
+		updateDialog.setCanceledOnTouchOutside(true);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity)-30,
+				LayoutParams.MATCH_PARENT);
+		params.setMargins(10,10,10,10);
+		updateDialog.setContentView(layout,params);
+		updateDialog.show();
+
+		final EditText name=(EditText)layout.findViewById(R.id.boat_name);
+		final Spinner type=(Spinner)layout.findViewById(R.id.type);
+		ArrayAdapter<String> adapter=new SpinnerArrayAdapter(activity
+				,ResourcesUtil.getArray(activity,R.array.trade_type));
+		type.setAdapter(adapter);
+		final Button positive=(Button)layout.findViewById(R.id.btn_confirm);
+		final Button negative=(Button)layout.findViewById(R.id.btn_cancel);
+		negative.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				updateDialog.dismiss();
+			}
+		});
+		positive.setText("搜索");
+		positive.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				String select_if;
+				List<String> select_args=new ArrayList<>();
+				if(!name.getText().toString().trim().equals("")){
+					select_if="name like ? ";
+					select_args.add("%"+name.getText().toString().trim()+"%");
+				}
+				else{
+					select_if="id>?";
+					select_args.add("0");
+				}
+				if(type.getSelectedItemPosition()!=1000){
+					if(select_if.equals("")){
+						select_if+="type like ?";
+					}else{
+						select_if+="and type like ?";
+					}
+					String if_s="%"+type.getSelectedItem().toString()+"%";
+					Log.i("s",if_s+"");
+					select_args.add(if_s);
+				}
+				activity.change_if(select_if,select_args);
+				activity.begin();
+				updateDialog.dismiss();
+			}
+		});
+	}
+
+
 	
 	public static void popWikiDialog(final WikiListActivity activity,View layout){
 		final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);

@@ -9,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Trove_Count;
 import com.key.doltool.data.VoyageItem;
-import com.key.doltool.event.UpdataCount;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 

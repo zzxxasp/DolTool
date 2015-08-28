@@ -60,13 +60,13 @@ public class PartActivity extends BaseActivity{
 		MyAnimations.fadein(base, 1000);
 	}
 	private void createByAdd(String[] map){
-		for(int i=0;i<map.length;i++){
-			LayoutInflater mInflater =this.getLayoutInflater();
-			View v=mInflater.inflate(R.layout.part_base_item,null);
-			TextView txt=(TextView)v;
-			txt.setText(map[i]);
-			LayoutParams lp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-			lp.setMargins(0,5,0,5);
+		for (String aMap : map) {
+			LayoutInflater mInflater = this.getLayoutInflater();
+			View v = mInflater.inflate(R.layout.part_base_item, null);
+			TextView txt = (TextView) v;
+			txt.setText(aMap);
+			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			lp.setMargins(0, 5, 0, 5);
 			txt.setLayoutParams(lp);
 			base.addView(txt);
 		}

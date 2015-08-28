@@ -2,22 +2,17 @@ package com.key.doltool.activity;
 
 import net.youmi.android.AdManager;
 import net.youmi.android.spot.SpotManager;
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.MainActivity;
 import com.key.doltool.anime.MyAnimations;
-import com.key.doltool.event.app.VoyageEvent;
+import com.key.doltool.event.VoyageEvent;
 import com.key.doltool.util.DBUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;

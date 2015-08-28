@@ -1,13 +1,16 @@
-package com.key.doltool.event.app;
+package com.key.doltool.event;
 
 import android.content.Context;
+import android.content.Intent;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.key.doltool.activity.squre.MapActivity;
+import com.key.doltool.activity.trade.TradeItemActivity;
 import com.key.doltool.data.VoyageInfo;
 import com.key.doltool.data.VoyageItem;
 import com.key.doltool.util.NumberUtil;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,23 +24,35 @@ public class VoyageEvent {
     private static final int WEEK=1000*60*60*24*6;
     public static String[] name={
         "世界地图","交易品","纺织品",
-        "世界地图","交易品","纺织品",
-        "世界地图","交易品","纺织品",
-        "世界地图","交易品","纺织品",
+        "钓鱼","画廊","魔法之物",
+        "阀门","牛之章","猪之章",
+        "禽之章","委托任务","航海学校",
     };
     public static String[] pic_id={
         "ic_map","ic_tradeitem","ic_roll",
-        "ic_map","ic_tradeitem","ic_roll",
-        "ic_map","ic_tradeitem","ic_roll",
-        "ic_map","ic_tradeitem","ic_roll",
+        "ic_fishing","ic_gallery","ic_wizard",
+        "ic_steam","ic_cow","ic_pig",
+        "ic_duck","ic_diploma","ic_graduation",
     };
+    /**
+     * 1：核心跳转
+     * 2：核心内容限定查询显示
+     * 3：单一内容详情显示
+     * 4：单独说明web页面
+     * 5：独立原生界面
+     * **/
     public static int[] type={
-         1,1,1,
+         1,1,2,
          1,1,1,
          1,1,1,
          1,1,1,
     };
-
+    public static String[] value={
+            "","","",
+            "","","",
+            "","","",
+            "","","",
+    };
 
     public VoyageEvent(Context context){
         this.context=context;
@@ -80,7 +95,8 @@ public class VoyageEvent {
     public static List<VoyageItem> getItemByString(String str){
         List<VoyageItem> list=new ArrayList<>();
         Gson gson = new Gson();
-        List<Integer> set=gson.fromJson(str,new TypeToken<List<Integer>>(){}.getType());
+        List<Integer> set=gson.fromJson(str, new TypeToken<List<Integer>>() {
+        }.getType());
         if(set!=null){
             for(int i=0;i<set.size();i++){
                 VoyageItem item=new VoyageItem();
@@ -91,5 +107,22 @@ public class VoyageEvent {
             }
         }
         return list;
+    }
+    public static void jumpForVoyage(Context context,VoyageItem item){
+        Class<?> c;
+        Intent it=null;
+        switch(item.name){
+            case "世界地图":
+                c=MapActivity.class;
+                it=new Intent(context,c);
+                break;
+            case "交易品":
+                c=TradeItemActivity.class;
+                it=new Intent(context,c);
+                break;
+        }
+        if(it!=null){
+            context.startActivity(it);
+        }
     }
 }

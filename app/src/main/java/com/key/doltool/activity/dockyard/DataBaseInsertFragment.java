@@ -1,6 +1,4 @@
 package com.key.doltool.activity.dockyard;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +15,9 @@ import com.key.doltool.util.jsoup.JsoupForGVO;
 import com.key.doltool.util.jsoup.JsoupUtil;
 import com.key.doltool.view.flat.FlatButton;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 public class DataBaseInsertFragment extends BaseFragment {
 	private DefaultDAO dao;
 	private JsoupUtil jsoup;
@@ -133,9 +134,9 @@ public class DataBaseInsertFragment extends BaseFragment {
 //			jsoup.getADC(1, dao);
 //			jsoup.getADC(2, dao);
 //			jsoup.getADC(3, dao);
-//			for(int i=4460;i<4665;i++){
-//				jsoupG.getMission(i,dao);
-//			}
+			for(int i=4664;i<4695;i++){
+				jsoupG.getMission(i, dao);
+			}
 //			jsoupG.do_TIANWEN(dao,1);
 //			jsoupG.do_TIANWEN(dao,2);
 //			jsoupG.do_TIANWEN(dao,3);
@@ -152,7 +153,7 @@ public class DataBaseInsertFragment extends BaseFragment {
 //			jsoupG.do_TIANWEN(dao,14);
 //			jsoupG.do_TIANWEN(dao,15);
 //			jsoupG.do_TIANWEN(dao,16);
-			jsoupG.do_TIANWEN(dao,17);
+//			jsoupG.do_TIANWEN(dao,17);
 //			jsoup.getSkill(1,dao);
 //			jsoup.getSkill(2,dao);
 //			jsoup.getSkill(3,dao);
