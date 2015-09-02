@@ -33,8 +33,7 @@ public class TroveAdapter extends BaseAdapter{
 	private Context context;
 	private FinalBitmap fb;
 	private Bitmap bm;
-	private boolean actionModeStarted;
-	public TroveAdapter(List<Trove> list,Context context,boolean mutilMode){
+	public TroveAdapter(List<Trove> list,Context context){
 		itemState=new int[list.size()];
 		for(int i=0;i<list.size();i++){
 			itemState[i]=0;
@@ -91,7 +90,6 @@ public class TroveAdapter extends BaseAdapter{
 		holder.name.setText(list.get(position).getName());
 		updateBackground(position,holder.main);
 		fb.display(holder.pic,"assets://"+FileManager.TROVE+list.get(position).getPic_id()+".jpg",bm,bm);
-			//holder.pic.setImageBitmap(BitMapUtil.getBitmapByInputStream(context.getAssets().open(FileManager.TROVE+list.get(position).getPic_id()+".jpg")));
 		holder.rate.setRating(list.get(position).getRate());
 		return convertView;
 	}
@@ -133,12 +131,4 @@ public class TroveAdapter extends BaseAdapter{
 		}
 		return count;
 	}
-	public void setActionModeState(boolean flag){
-		actionModeStarted = flag;
-	}
-	
-	public boolean isActionModeStart(){
-		return actionModeStarted;
-	}
-
 }

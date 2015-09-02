@@ -59,7 +59,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 				alert.dismiss();
 			}
 			state=gridview.onSaveInstanceState();
-			mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this,true);
+			mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this);
 			gridview.setAdapter(mGridAdapter);
 			gridview.onRestoreInstanceState(state);
 		}
@@ -104,13 +104,13 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		}else{
 			txt.setVisibility(View.GONE);
 		}
-		mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this,true);
+		mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this);
 		gridview.setAdapter(mGridAdapter);
 	}
 	private void setListener(){
 		mCallback = new ModeCallback();
 		gridview=(GridView)findViewById(R.id.gridview);
-		mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this,true);
+		mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this);
 		gridview.setAdapter(mGridAdapter);
 		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -178,7 +178,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(!select_txt.equals("")){
 			select_txt="";
-			mGridAdapter=new TroveAdapter(list, this,true);
+			mGridAdapter=new TroveAdapter(list,this);
 			gridview.setAdapter(mGridAdapter);
 			Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_LONG).show();
 			return true;

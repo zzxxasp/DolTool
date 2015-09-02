@@ -141,7 +141,7 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 		adapter.notifyDataSetChanged();
 	}
 	private void jump(){
-		Intent intent=new Intent(getActivity(),CardInternetActivity.class);
+		Intent intent=new Intent(getActivity(),CardListActivity.class);
 		startActivity(intent);
 	}
 	private void findObject(){

@@ -35,7 +35,6 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
 	private Dialog layout_alert;
 	//船只列表页面
 	private ListView listview;
-	
 	//数据temp变量
 	private DefaultDAO dao;
 	private List<NPCInfo> list=new ArrayList<>();

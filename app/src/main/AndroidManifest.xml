@@ -81,7 +81,7 @@
         android:configChanges="keyboardHidden|orientation"/>
         <activity android:name="com.key.doltool.activity.infobroad.NewsDetailActivity"
                     android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.adventure.CardInternetActivity"
+		<activity android:name="com.key.doltool.activity.adventure.CardListActivity"
                     android:configChanges="orientation|screenSize"/>
 		<activity android:name="com.key.doltool.activity.wiki.WikiMainActivity"
                     android:configChanges="orientation|screenSize"/>
