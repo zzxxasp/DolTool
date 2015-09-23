@@ -140,7 +140,7 @@
 		<activity android:name="com.key.doltool.activity.ability.AbilityForBoatDetailActivity"
                     android:screenOrientation="portrait"
 					/>
-        <activity android:name="com.key.doltool.activity.trade.TradeItemActivity"
+        <activity android:name=".activity.voyage.TradeItemActivity"
                     android:screenOrientation="portrait"
                     />
 		<activity android:name="com.key.doltool.activity.setting.MessageShowActivity"

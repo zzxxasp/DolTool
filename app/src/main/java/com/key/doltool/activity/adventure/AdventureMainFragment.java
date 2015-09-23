@@ -1,6 +1,4 @@
 package com.key.doltool.activity.adventure;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.key.doltool.R;
@@ -19,6 +16,9 @@ import com.key.doltool.event.UpdataCount;
 import com.key.doltool.event.UpdataList;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 public class AdventureMainFragment extends BaseFragment{
 	private DefaultDAO dao;
 	private ListView main_list;

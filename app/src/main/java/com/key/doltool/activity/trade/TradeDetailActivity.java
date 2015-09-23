@@ -34,7 +34,7 @@ public class TradeDetailActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trade_detail);
 		initToolBar(null);
-		dao=SRPUtil.getDAO(context);
+		dao=SRPUtil.getDAO(getApplicationContext());
 		id=getIntent().getIntExtra("id",0);
 		name_txt=getIntent().getStringExtra("name");
 		tw_name=getIntent().getStringExtra("tw_name");
@@ -76,7 +76,7 @@ public class TradeDetailActivity extends BaseActivity{
 		try {
 			pic.setImageBitmap(BitMapUtil.getBitmapByInputStream(getAssets().open(FileManager.TRADE+item.getPic_id()+".png")));
 		} catch (IOException e) {
-
+			e.printStackTrace();
 		}
 		if(item.getSp().equals("")){
 			sp.setVisibility(View.GONE);

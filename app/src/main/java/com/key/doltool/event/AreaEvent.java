@@ -109,7 +109,7 @@ public class AreaEvent {
         FlatButton enter=(FlatButton)view.findViewById(R.id.enter_btn);
 		FlatButton cancel=(FlatButton)view.findViewById(R.id.cancel_btn);
         List<?> list=dao.select(City.class,false,"id>?",new String[]{"0"},"area",null, null, null);
-        List<String> list_area=new ArrayList<String>();
+        List<String> list_area=new ArrayList<>();
         for(int i=0;i<list.size();i++){
         	City city=(City)list.get(i);
         	list_area.add(city.getArea());
@@ -122,7 +122,7 @@ public class AreaEvent {
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 									   int arg2, long arg3) {
 				List<?> list = dao.select(City.class, false, "area=?", new String[]{(String) sp_area.getSelectedItem()}, null, null, null, null);
-				List<String> list_area = new ArrayList<String>();
+				List<String> list_area = new ArrayList<>();
 				for (int i = 0; i < list.size(); i++) {
 					City city = (City) list.get(i);
 					list_area.add(city.getName());

@@ -11,16 +11,23 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
 import com.key.doltool.adapter.CardAdapter;
+import com.key.doltool.adapter.item.NameValueAdapter;
 import com.key.doltool.data.Card;
 import com.key.doltool.data.CardCombo;
+import com.key.doltool.data.base.NameValueItem;
 import com.key.doltool.event.DialogEvent;
+import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.NumberUtil;
+import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
@@ -46,16 +53,17 @@ public class CardListActivity extends BaseAdventureActivity{
 	private CardAdapter mGridAdapter;
 
 	private TextView point_show,card_show;
+	private LinearLayout card_bar;
 	private FlatButton cal_btn;
-
+	private boolean return_flag=false;
 	/**comboList**/
 	private List<CardCombo> comboList=new ArrayList<>();
 	/**自己牌组的Combo总数**/
 	private List<CardCombo> selfCombo=new ArrayList<>();
 	private boolean MODE=false;
 	private int limit=0;
-	private int total;
 	private int poiont_total;
+	private List<NameValueItem> in_list=new ArrayList<>();
 	private Handler mHandler=new Handler(){
 		public void handleMessage(Message msg) {
 			switch (msg.what){
@@ -68,9 +76,26 @@ public class CardListActivity extends BaseAdventureActivity{
 					mGridAdapter=new CardAdapter(list,CardListActivity.this);
 					gridview.setAdapter(mGridAdapter);
 					gridview.onRestoreInstanceState(state);
+					if(return_flag){
+						Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_LONG).show();
+						return_flag=false;
+					}
 					break;
 				case 1:
 					//战斗力计算成功显示明细窗体
+					showBattle(msg.obj);
+					break;
+				case 2:
+					if(!isFinishing()){
+						alert.dismiss();
+					}
+					if(list.size()==0){
+						txt.setVisibility(View.VISIBLE);
+					}else{
+						txt.setVisibility(View.GONE);
+					}
+					mGridAdapter=new CardAdapter(search,CardListActivity.this);
+					gridview.setAdapter(mGridAdapter);
 					break;
 			}
 		}
@@ -91,23 +116,79 @@ public class CardListActivity extends BaseAdventureActivity{
 		initToolBar(onMenuItemClick);
 		toolbar.setTitle("论战卡片");
 		txt=(TextView)findViewById(R.id.null_txt);
+		card_show=(TextView)findViewById(R.id.card_number);
+		point_show=(TextView)findViewById(R.id.card_point);
+		cal_btn=(FlatButton)findViewById(R.id.cal_btn);
+		card_bar=(LinearLayout)findViewById(R.id.card_bar);
 		if(!isFinishing()){
 			alert.show();
 		}
 	}
-	//查询
+	@SuppressWarnings("unchecked")
 	public void select(String select){
 		//类型，点数范围，名称
-//		select_txt=select;
-//		search=(List<Trove>)dao.select(Trove.class, false, "type=? and name like ?",new String[]{type,"%"+select_txt+"%"}, null, null,"rate desc,feats desc", null);
-//		if(list.size()==0){
-//			txt.setVisibility(View.VISIBLE);
-//
-//		}else{
-//			txt.setVisibility(View.GONE);
-//		}
-//		mGridAdapter=new CardAdapter(search,this);
-//		gridview.setAdapter(mGridAdapter);
+		//全部~X~0-10
+		select_txt=select;
+		Log.i("s",""+select);
+		String[] temp=select.split("~");
+		String type="",name ="",range="",if_txt = "",range_temp[];
+		List<String> if_list=new ArrayList<>();
+		if(!temp[0].equals("全部")){
+			type=temp[0];
+		}
+		if(!StringUtil.isNull(temp[1])){
+			name=temp[1];
+		}
+		if(!temp[2].equals("0-10")){
+			range=temp[2];
+		}
+		if(!StringUtil.isNull(name)){
+			if_txt+="name like ?";
+			if_list.add("%"+name+"%");
+		}else{
+			if_txt+="id>?";
+			if_list.add("0");
+		}
+		if(!StringUtil.isNull(type)){
+			if_txt+=" and type=? and";
+			if_list.add(type);
+		}else{
+			if_txt+=" and";
+		}
+		if(!StringUtil.isNull(range)){
+			range_temp=range.split("-");
+			int min=Integer.parseInt(range_temp[0]);
+			int max=Integer.parseInt(range_temp[1]);
+			if(min==max){
+				if(min==0){
+					min=1;
+				}
+				if_list.add(min+"");
+				if_txt+=" point=?";
+			}else{
+				max+=1;
+				if_list.add(min+"");
+				if_list.add(max+"");
+				if_txt+=" point>? and point<?";
+			}
+		}
+		if(!isFinishing()){
+			alert.show();
+		}
+		final String if_txt_final=if_txt;
+		final List<String> if_final_list=if_list;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				search=(List<Card>)dao.select(Card.class,false,if_txt_final,StringUtil.listToArray(if_final_list),null, null,"flag desc,point desc,type desc", null);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				mHandler.sendMessage(mHandler.obtainMessage(2));
+			}
+		}).start();
 	}
 	private void setListener(){
 		gridview=(GridView)findViewById(R.id.gridview);
@@ -119,7 +200,7 @@ public class CardListActivity extends BaseAdventureActivity{
 				if (mGridAdapter.getItem(position).flag == 0) {
 					Card trove = new Card();
 					trove.flag = 1;
-					mGridAdapter.getItem(position).flag=1;
+					mGridAdapter.getItem(position).flag = 1;
 					dao.update(trove, new String[]{"flag"}, "id=?", new String[]{"" + mGridAdapter.getItem(position).id});
 				} else {
 					Card trove = new Card();
@@ -132,17 +213,31 @@ public class CardListActivity extends BaseAdventureActivity{
 				return true;
 			}
 		});
-
-
+		point_show.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showPointLimit();
+			}
+		});
 		//计算战斗力，如果卡组满足三十张，合计点数没有超过设定点数
+		cal_btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				new Thread(mTasks_point).start();
+			}
+		});
 	}
+
+
 	//系统按键监听覆写
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(!select_txt.equals("")){
 			select_txt="";
-			mGridAdapter=new CardAdapter(list,this);
-			gridview.setAdapter(mGridAdapter);
-			Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_LONG).show();
+			if(!isFinishing()){
+				alert.show();
+			}
+			new Thread(mTasks).start();
+			return_flag=true;
 			return true;
 		}
 		return super.onKeyDown(keyCode,event);
@@ -150,7 +245,7 @@ public class CardListActivity extends BaseAdventureActivity{
 	@SuppressWarnings("unchecked")
 	private Runnable mTasks =new Runnable(){
 		public void run() {
-			list=(List<Card>)dao.select(Card.class, false, "id>?",new String[]{"0"}, null, null,"point desc,type desc", null);
+			list=(List<Card>)dao.select(Card.class, false, "id>?",new String[]{"0"}, null, null,"flag desc,point desc,type desc", null);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -175,12 +270,29 @@ public class CardListActivity extends BaseAdventureActivity{
 	//开启自设卡组模式
 	@SuppressWarnings("unchecked")
 	private void startmode(){
-		MODE=true;
-		temp=(List<Card>)dao.select(Card.class, false, "flag=?",new String[]{"1"}, null, null,"point desc,type desc", null);
+		MODE=!MODE;
+		if(!MODE){
+			card_bar.setVisibility(View.GONE);
+			return;
+		}
+		temp=(List<Card>)dao.select(Card.class, false, "flag=?",new String[]{"1"}, null, null,"flag desc,point desc,type desc", null);
 		for(int i=0;i<temp.size();i++){
 			poiont_total+=temp.get(i).point;
 		}
-		//show Bar
+		barshow();
+		card_bar.setVisibility(View.VISIBLE);
+	}
+	private void barshow(){
+		card_show.setText("卡组："+temp.size()+"/30");
+		if(limit!=0){
+			point_show.setText("点数限制：" + poiont_total + "/" + limit);
+		}
+		//如果卡片数超过30则，编辑模式会不允许进行计算
+		if(temp.size()!=30||(poiont_total>limit&&limit!=0)){
+			cal_btn.setEnabled(false);
+		}else{
+			cal_btn.setEnabled(true);
+		}
 	}
 	//卡组变更
 	private void deckChange(int position){
@@ -197,8 +309,8 @@ public class CardListActivity extends BaseAdventureActivity{
 					}
 				}
 			}
+			barshow();
 		}
-		//显示卡组数量
 	}
 	@SuppressWarnings("unchecked")
 	private void getCombo(){
@@ -214,33 +326,97 @@ public class CardListActivity extends BaseAdventureActivity{
 	}
 	//初始化评估战力(原则)
 	private int initPoint(){
+		in_list.clear();
+		selfCombo.clear();
+		int type_add;
+		int combo_add = 0;
+		int random_add;
+		int total = 0;
 		getCombo();
 		//基本点数叠加
-		total+=poiont_total;
+		total +=poiont_total;
 		//种类加成（2种类型为0 1种-5 每多一种Plus 5）
-		total+=((int)srp.countByType(false,2)-2)*2;
+		int type_number = (int) srp.countByType(true, 2);
+		type_add =(type_number -2)*2;
+		in_list.add(new NameValueItem("卡组类型", type_add));
+		total+= type_add;
 		//combo加成(根据Combo的点数，除以所需卡片数，功能性combo均为10)
 		for(int i=0;i<selfCombo.size();i++){
-			total+=selfCombo.get(i).value;
-			Log.i("alist", "" + selfCombo.get(i).getName() + selfCombo.get(i).getEffect());
+			combo_add +=selfCombo.get(i).value;
+			in_list.add(new NameValueItem(selfCombo.get(i).getName(), selfCombo.get(i).value));
 		}
+		total+= combo_add;
 		//随机点数加成[1~20]
-		total+= NumberUtil.getRandom(0,20);
+		random_add =NumberUtil.getRandom(0,20);
+		in_list.add(new NameValueItem("随机数", random_add));
+		total += random_add;
 		return total;
 	}
 
-	private void cardLimit(){
-		if(temp.size()>=30){
-			mGridAdapter=new CardAdapter(temp,context);
-		}
+	//显示点数限制，进行修改
+	private void showPointLimit(){
+		View layout=getLayoutInflater().inflate(R.layout.select_card, null);
+		final Dialog updateDialog = new Dialog(this,R.style.updateDialog);
+		updateDialog.setCancelable(true);
+		updateDialog.setCanceledOnTouchOutside(true);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(this)-30,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+		params.setMargins(10, 10, 10, 10);
+		updateDialog.setContentView(layout, params);
+		updateDialog.show();
+		final TextView number=(TextView)layout.findViewById(R.id.min_point);
+		final Button positive=(Button)layout.findViewById(R.id.btn_confirm);
+		final Button negative=(Button)layout.findViewById(R.id.btn_cancel);
+		negative.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				updateDialog.dismiss();
+			}
+		});
+		positive.setText("搜索");
+		positive.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				updateDialog.dismiss();
+			}
+		});
+	}
+
+	//显示牌组战斗力统计，提供保存功能
+	private void showBattle(Object total){
+		View layout=getLayoutInflater().inflate(R.layout.pop_card_cal, null);
+		final Dialog updateDialog = new Dialog(this,R.style.updateDialog);
+		updateDialog.setCancelable(true);
+		updateDialog.setCanceledOnTouchOutside(true);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(this)-30,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+		params.setMargins(10, 10, 10, 10);
+		updateDialog.setContentView(layout, params);
+		updateDialog.show();
+		final TextView base=(TextView)layout.findViewById(R.id.base);
+		final ListView add_list=(ListView)layout.findViewById(R.id.add_list);
+		final Button positive=(Button)layout.findViewById(R.id.confrim);
+		final Button negative=(Button)layout.findViewById(R.id.cancel);
+		base.setText("总点数:"+poiont_total+"("+total+")");
+		add_list.setAdapter(new NameValueAdapter(in_list,this));
+		negative.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				updateDialog.dismiss();
+			}
+		});
+		positive.setText("保存");
+		positive.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				updateDialog.dismiss();
+			}
+		});
 	}
 
 	public void popWindow(){
 		//对话框显示，输入返回搜索条件
-		View xc=getLayoutInflater().inflate(R.layout.select_trove, null);
-		ViewUtil.popDialog(this, xc);
+		View xc=getLayoutInflater().inflate(R.layout.select_card, null);
+		ViewUtil.popCardDialog(this, xc);
 	}
-
 
 	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 		@Override

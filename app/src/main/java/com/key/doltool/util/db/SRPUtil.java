@@ -124,18 +124,15 @@ public class SRPUtil {
 		}
 		return result;
 	}
-	public long countCard(SQLiteDatabase db,boolean flag,int type){
-		String table="mission ";
-		String where="where tag=?";
+	public long countCard(SQLiteDatabase db,boolean flag){
+		String table="card ";
+		String where="where flag=? ";
+		String groupBy="group by type ";
 		String[] temp={"0"};
-		if(type==1){
-			table="trove ";
-			where="where flag=?";
-		}
 		if(flag){
 			temp[0]="1";
 		}
-		Cursor cursor = db.rawQuery("select count(id)from "+table+where,temp);
+		Cursor cursor = db.rawQuery("select count(*) from (select count(id)from "+table+where+groupBy+")",temp);
 		cursor.moveToFirst();
 		Long count = cursor.getLong(0);
 		cursor.close();
@@ -150,9 +147,7 @@ public class SRPUtil {
 			table="trove ";
 			where="where flag=?";
 		}else if(type==2){
-			table="Card ";
-			where="where id>?";
-			groupBy="group by type";
+			return countCard(db,flag);
 		}
 		if(flag){
 			temp[0]="1";

@@ -28,12 +28,13 @@ import com.key.doltool.activity.adventure.CardComboFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.activity.job.JobListActivity;
-import com.key.doltool.activity.trade.TradeItemActivity;
 import com.key.doltool.activity.trade.TradeItemFragment;
+import com.key.doltool.activity.voyage.TradeItemActivity;
 import com.key.doltool.activity.wiki.WikiListActivity;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
 import com.key.doltool.data.MenuItem;
 import com.key.doltool.view.Toast;
+import com.key.doltool.view.range.RangeBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,98 +74,6 @@ public class ViewUtil {
 			temp[2]="桨船";
 		return temp;
 	}
-	/**初始化Menu**/
-	public static void setList(List<MenuItem> list,int type){
-		String[] item_name={
-				"详细查询","标记任务","批量标记","相关网页",
-				"任务筛选","城市搜索","论战组合","回报发现",
-				"类型搜索"
-		};
-		int[] item_pic_id={
-				R.drawable.ic_menu_find,R.drawable.ic_tag,
-				R.drawable.ic_menu_add,R.drawable.ic_chrome_white,
-				R.drawable.ic_type,R.drawable.ic_city,
-				R.drawable.ic_card,R.drawable.ic_npc,
-				R.drawable.ic_type
-		};
-		switch(type){
-			case 1:			
-				for(int i=0;i<1;i++){
-					MenuItem menuitem=new MenuItem();
-					menuitem.name=item_name[i];
-					menuitem.pic_id=item_pic_id[i];
-					list.add(menuitem);
-				}
-				break;
-			case 2:			
-					MenuItem menuitem=new MenuItem();
-					menuitem.name=item_name[0];
-					menuitem.pic_id=item_pic_id[0];
-					list.add(menuitem);
-				break;
-			case 3:
-					MenuItem menuitem3=new MenuItem();
-					menuitem3.name=item_name[0];
-					menuitem3.pic_id=item_pic_id[0];
-					MenuItem menuitem2=new MenuItem();
-					menuitem2.name=item_name[2];
-					menuitem2.pic_id=item_pic_id[2];
-					list.add(menuitem3);
-					list.add(menuitem2);
-				break;
-			case 4:
-					MenuItem menuitem33=new MenuItem();
-					menuitem33.name=item_name[0];
-					menuitem33.pic_id=item_pic_id[0];
-					MenuItem menuitem22=new MenuItem();
-					menuitem22.name=item_name[2];
-					menuitem22.pic_id=item_pic_id[2];
-					list.add(menuitem33);
-					list.add(menuitem22);
-				break;
-			case 5:
-					MenuItem menuitem11=new MenuItem();
-					menuitem11.name=item_name[0];
-					menuitem11.pic_id=item_pic_id[0];
-					MenuItem menuitem12=new MenuItem();
-					menuitem12.name=item_name[3];
-					menuitem12.pic_id=item_pic_id[3];
-					list.add(menuitem11);
-					list.add(menuitem12);
-				break;
-			case 6:
-					MenuItem menuitem61=new MenuItem();
-					menuitem61.name=item_name[5];
-					menuitem61.pic_id=item_pic_id[5];
-					list.add(menuitem61);
-					MenuItem menuitem62=new MenuItem();
-					menuitem62.name=item_name[8];
-					menuitem62.pic_id=item_pic_id[8];
-					list.add(menuitem62);
-				break;
-			case 7:
-					MenuItem menuitem71=new MenuItem();
-					menuitem71.name=item_name[4];
-					menuitem71.pic_id=item_pic_id[0];
-					MenuItem menuitem72=new MenuItem();
-					menuitem72.name=item_name[1];
-					menuitem72.pic_id=item_pic_id[1];
-					list.add(menuitem71);
-					list.add(menuitem72);
-				break;
-			case 10:
-					MenuItem menuitem101=new MenuItem();
-					menuitem101.name=item_name[6];
-					menuitem101.pic_id=item_pic_id[6];
-					MenuItem menuitem102=new MenuItem();
-					menuitem102.name=item_name[7];
-					menuitem102.pic_id=item_pic_id[7];
-					list.add(menuitem101);
-					list.add(menuitem102);
-				break;
-			}
-	}
-	
 	/**For DockYard Select PopDialog(船只搜索对话框)**/
 	public static void popDialog(final DockYardFragment activity,View layout,final int page){
 		final Dialog updateDialog = new Dialog(activity.getActivity(), R.style.updateDialog);
@@ -318,6 +227,47 @@ public class ViewUtil {
 			}
 		});
 	}
+
+	/**For PopDialog Common **/
+	public static void popCardDialog(final BaseAdventureActivity activity,View layout){
+		final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
+		updateDialog.setCancelable(true);
+		updateDialog.setCanceledOnTouchOutside(true);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity)-30,
+				LayoutParams.MATCH_PARENT);
+		params.setMargins(10, 10, 10, 10);
+		updateDialog.setContentView(layout, params);
+		updateDialog.show();
+		final Spinner type=(Spinner)layout.findViewById(R.id.type);
+		final TextView number=(TextView)layout.findViewById(R.id.min_point);
+		final RangeBar bar=(RangeBar)layout.findViewById(R.id.rangebar1);
+		final EditText name=(EditText)layout.findViewById(R.id.card_name);
+		final Button positive=(Button)layout.findViewById(R.id.btn_confirm);
+		final Button negative=(Button)layout.findViewById(R.id.btn_cancel);
+		bar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+			@Override
+			public void onIndexChangeListener(RangeBar rangeBar, int leftThumbIndex, int rightThumbIndex) {
+				number.setText(leftThumbIndex+"-"+rightThumbIndex);
+			}
+		});
+		negative.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				updateDialog.dismiss();
+			}
+		});
+		positive.setText("搜索");
+		positive.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				activity.select_txt= type.getSelectedItem()+"~"+
+						name.getText().toString().trim()+"~"+number.getText().toString();
+				activity.select(activity.select_txt);
+				updateDialog.dismiss();
+			}
+		});
+	}
+
+
 	/**For PopDialog Common **/
 	public static void popCardDialog(final CardComboFragment activity,View layout){
 		final Dialog updateDialog = new Dialog(activity.getActivity(), R.style.updateDialog);

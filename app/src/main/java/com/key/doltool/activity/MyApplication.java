@@ -1,6 +1,5 @@
 package com.key.doltool.activity;
 
-import com.nrs.utils.tools.CrashHandler;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
@@ -17,10 +16,7 @@ public class MyApplication extends HadiApplication{
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 		ParseACL defaultACL = new ParseACL();
 		LeakCanary.install(this);
-		// If you would like all objects to be private by default, remove this line.
 		defaultACL.setPublicReadAccess(true);
 		ParseACL.setDefaultACL(defaultACL, true);
-        CrashHandler crashHandler = CrashHandler.getInstance() ;
-        crashHandler.init(this) ;
 	}
 }

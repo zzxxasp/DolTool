@@ -89,6 +89,27 @@
 		<item >地理</item>
 		<item >港口‧村落</item>
 	</string-array>
+
+	<string-array name="card_all">
+		<item >全部</item>
+		<item >史迹</item>
+		<item >宗教建筑</item>
+		<item >历史遗物</item>
+		<item >宗教遗物</item>
+		<item >美术品</item>
+		<item >财宝</item>
+		<item >化石</item>
+		<item >小型生物</item>
+		<item >中型生物</item>
+		<item >大型生物</item>
+		<item >海洋生物</item>
+		<item >昆虫</item>
+		<item >鸟类</item>
+		<item >植物</item>
+		<item >地理</item>
+		<item >天文</item>
+		<item >港口</item>
+	</string-array>
 	<string-array name="luck_level_txt">
 	    <item >死兆星现</item>
 	    <item >沉船触礁</item>
@@ -113,14 +134,21 @@
 	    <item >国际服</item>
 	    <item >日服</item>
 	</string-array>
-	
+
 	<string-array name="server_name">
 	    <item >龙之大地</item>
 	    <item >黄金海岸</item>
 	    <item >北方的狮子</item>
 	    <item >狮鹫之翼</item>
 	</string-array>
-	
+
+	<string-array name="card_limit">
+		<item >无限制</item>
+		<item >100</item>
+		<item >150</item>
+		<item >200</item>
+	</string-array>
+
     <integer-array name="pocket_background_colors">
         <item>@color/Blue_SP</item>
         <item>@color/Blue_SP</item>

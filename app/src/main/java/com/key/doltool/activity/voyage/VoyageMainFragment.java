@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class VoyageMainFragment extends BaseFragment{
 	private GridView gridView;
+	private TextView search_view;
 	private View main;
 	private List<VoyageItem> list;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class VoyageMainFragment extends BaseFragment{
 
 	private void findView(){
 		gridView=(GridView)main.findViewById(R.id.gridview);
+		search_view=(TextView)main.findViewById(R.id.search_view);
 		VoyageInfo info=new VoyageInfo(getActivity());
 		list=VoyageEvent.getItemByString(info.getData());
 		gridView.setAdapter(new VoyageAdapter(list, getActivity()));
@@ -42,6 +45,11 @@ public class VoyageMainFragment extends BaseFragment{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 									long arg3) {
 				VoyageEvent.jumpForVoyage(getActivity(),list.get(arg2));
+			}
+		});
+		search_view.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				//跳转至搜索界面
 			}
 		});
 	}

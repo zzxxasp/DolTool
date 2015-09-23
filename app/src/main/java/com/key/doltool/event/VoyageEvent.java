@@ -5,8 +5,10 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.squre.MapActivity;
-import com.key.doltool.activity.trade.TradeItemActivity;
+
+import com.key.doltool.activity.voyage.TradeItemActivity;
 import com.key.doltool.data.VoyageInfo;
 import com.key.doltool.data.VoyageItem;
 import com.key.doltool.util.NumberUtil;
@@ -119,6 +121,16 @@ public class VoyageEvent {
             case "交易品":
                 c=TradeItemActivity.class;
                 it=new Intent(context,c);
+                break;
+            case "委托任务":
+                c= MissonListActivity.class;
+                it=new Intent(context,c);
+                break;
+            case "纺织品":
+                c=TradeItemActivity.class;
+                it=new Intent(context,c);
+                it.putExtra("if_txt","type=?");
+                it.putExtra("if_arg","纺织品");
                 break;
         }
         if(it!=null){
