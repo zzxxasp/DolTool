@@ -1,9 +1,5 @@
 package com.key.doltool.view;
 
-import android.animation.Animator;
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -18,7 +14,10 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.key.doltool.R;
-@SuppressLint("NewApi")
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.ArgbEvaluator;
+import com.nineoldandroids.animation.ValueAnimator;
+
 public class CircularProgressDrawable extends Drawable
     implements Animatable {
 

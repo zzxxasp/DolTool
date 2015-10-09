@@ -25,7 +25,6 @@ public class DataBaseInsertFragment extends BaseFragment {
 	private JsoupForGVO jsoupG=new JsoupForGVO();
 	private FlatButton btn,btn2;
 	private ExecutorService fixedThreadPool ;
-	
     private View main;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		 View view =  inflater.inflate(R.layout.init, container,false);
@@ -134,7 +133,7 @@ public class DataBaseInsertFragment extends BaseFragment {
 //			jsoup.getADC(1, dao);
 //			jsoup.getADC(2, dao);
 //			jsoup.getADC(3, dao);
-			for(int i=4664;i<4695;i++){
+			for(int i=4664;i<4752;i++){
 				jsoupG.getMission(i, dao);
 			}
 //			jsoupG.do_TIANWEN(dao,1);

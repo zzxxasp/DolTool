@@ -66,7 +66,7 @@ public class BookAdapter extends BaseAdapter{
 		holder.name.setText(list.get(position).getName());
 		int types=list.get(position).getType();
 		holder.pic.setImageResource(new BookEvent().PIC_ID[types]);
-		holder.type.setText(list.get(position).getRange()+"");
+		holder.type.setText(list.get(position).getRange());
 		return convertView;
 	}
 }

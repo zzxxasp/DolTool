@@ -150,10 +150,8 @@ public class CardListActivity extends BaseAdventureActivity{
 			if_list.add("0");
 		}
 		if(!StringUtil.isNull(type)){
-			if_txt+=" and type=? and";
+			if_txt+=" and type=?";
 			if_list.add(type);
-		}else{
-			if_txt+=" and";
 		}
 		if(!StringUtil.isNull(range)){
 			range_temp=range.split("-");
@@ -164,12 +162,12 @@ public class CardListActivity extends BaseAdventureActivity{
 					min=1;
 				}
 				if_list.add(min+"");
-				if_txt+=" point=?";
+				if_txt+=" and point=?";
 			}else{
 				max+=1;
 				if_list.add(min+"");
 				if_list.add(max+"");
-				if_txt+=" point>? and point<?";
+				if_txt+=" and point>? and point<?";
 			}
 		}
 		if(!isFinishing()){
@@ -410,6 +408,9 @@ public class CardListActivity extends BaseAdventureActivity{
 				updateDialog.dismiss();
 			}
 		});
+	}
+	public void saveCardCombo(){
+		//名称-(点数)-卡牌组合
 	}
 
 	public void popWindow(){

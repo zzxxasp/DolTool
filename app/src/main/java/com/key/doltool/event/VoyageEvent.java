@@ -5,13 +5,17 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.key.doltool.activity.adventure.CardListActivity;
 import com.key.doltool.activity.mission.MissonListActivity;
+import com.key.doltool.activity.recipe.RecipeForBookDetailsActivity;
 import com.key.doltool.activity.squre.MapActivity;
 
+import com.key.doltool.activity.voyage.FishingActivity;
 import com.key.doltool.activity.voyage.TradeItemActivity;
 import com.key.doltool.data.VoyageInfo;
 import com.key.doltool.data.VoyageItem;
 import com.key.doltool.util.NumberUtil;
+import com.key.doltool.view.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ public class VoyageEvent {
     private static final int WEEK=1000*60*60*24*6;
     public static String[] name={
         "世界地图","交易品","纺织品",
-        "钓鱼","画廊","魔法之物",
+        "钓鱼","论战卡组","魔法之物",
         "阀门","牛之章","猪之章",
         "禽之章","委托任务","航海学校",
     };
@@ -112,7 +116,7 @@ public class VoyageEvent {
     }
     public static void jumpForVoyage(Context context,VoyageItem item){
         Class<?> c;
-        Intent it=null;
+        Intent it;
         switch(item.name){
             case "世界地图":
                 c=MapActivity.class;
@@ -126,15 +130,48 @@ public class VoyageEvent {
                 c= MissonListActivity.class;
                 it=new Intent(context,c);
                 break;
+            case "论战卡组":
+                c= CardListActivity.class;
+                it=new Intent(context,c);
+                break;
             case "纺织品":
                 c=TradeItemActivity.class;
                 it=new Intent(context,c);
                 it.putExtra("if_txt","type=?");
                 it.putExtra("if_arg","纺织品");
                 break;
+            case "钓鱼":
+                c=FishingActivity.class;
+                it=new Intent(context,c);
+                break;
+            default:
+                it=recipeSp(context,item.name);
+                break;
         }
         if(it!=null){
             context.startActivity(it);
+        }else{
+            Toast.makeText(context.getApplicationContext(),"专题界面/快捷方式正在制作中",Toast.LENGTH_SHORT).show();
         }
+    }
+    private static Intent recipeSp(Context context,String name){
+        Intent it=new Intent(context, RecipeForBookDetailsActivity.class);
+        if(name.equals("牛之章")){
+            it.putExtra("id","215");
+            return it;
+        }
+        if(name.equals("禽之章")){
+            it.putExtra("id","213");
+            return it;
+        }
+        if(name.equals("猪之章")){
+            it.putExtra("id","214");
+            return it;
+        }
+        if(name.equals("羊之章")){
+            it.putExtra("id","212");
+            return it;
+        }
+        return null;
     }
 }

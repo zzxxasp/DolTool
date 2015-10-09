@@ -2,7 +2,6 @@ package com.key.doltool.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.key.doltool.data.Card;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.ResourcesUtil;
-import com.key.doltool.view.SimpleTagImageView;
 
 import net.tsz.afinal.FinalBitmap;
 
@@ -82,9 +80,10 @@ public class CardAdapter extends BaseAdapter{
 		}
 		//设置
 		holder.name.setText(list.get(position).name);
-		updateBackground(position,holder);
+		updateBackground(position, holder);
 		fb.display(holder.pic, "assets://" + FileManager.TROVE + list.get(position).pic_id + ".jpg", bm, bm);
-		holder.point.setText(list.get(position).type+":"+list.get(position).point);
+		String point=list.get(position).type+":"+list.get(position).point;
+		holder.point.setText(point);
 		return convertView;
 	}
 	public void updateBackground(int position,ViewHolder holder) {

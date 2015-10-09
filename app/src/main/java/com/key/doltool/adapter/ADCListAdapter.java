@@ -79,13 +79,13 @@ public class ADCListAdapter extends BaseAdapter{
 		}else{
 			holder.type.setText("海事");
 		}
-		String sex=list.get(position).getSex();
+		String sex=list.get(position).getSex()+"";
 		if(sex.equals("男")){
 			holder.sex.setBackgroundResource(R.drawable.theme_blue_btn_rate);
 		}else{
 			holder.sex.setBackgroundResource(R.drawable.theme_pink_btn_rate);
 		}
-		holder.sex.setText(list.get(position).getSex()+"");
+		holder.sex.setText(sex);
 		return convertView;
 	}
 }

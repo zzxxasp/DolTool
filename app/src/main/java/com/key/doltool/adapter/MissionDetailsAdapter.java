@@ -57,7 +57,7 @@ public class MissionDetailsAdapter extends BaseAdapter{
 		}
 		//设置
 		holder.item_name.setText(item_txt[position]);
-		holder.item_content.setText(""+getTextByPosition(position));
+		holder.item_content.setText(getTextByPosition(position));
 		if(getTextByPosition(position).equals("")){
 			convertView.setVisibility(View.GONE);
 		}else{

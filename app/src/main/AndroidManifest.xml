@@ -165,5 +165,12 @@
 		<activity android:name="com.key.doltool.activity.help.WordListAcitivity"
                     android:screenOrientation="portrait"
 					/>
+        <activity android:name="com.key.doltool.activity.search.SearchActivity"
+                    android:configChanges="orientation|screenSize"
+                    android:screenOrientation="portrait"
+                    />
+        <activity android:name="com.key.doltool.activity.voyage.FishingActivity"
+                    android:screenOrientation="portrait"
+                    />
     </application>
 </manifest>

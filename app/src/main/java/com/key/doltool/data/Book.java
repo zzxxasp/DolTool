@@ -42,7 +42,7 @@ public class Book {
 		this.type = type;
 	}
 	public String getRange() {
-		return range;
+		return range+"";
 	}
 	public void setRange(String range) {
 		this.range = range;

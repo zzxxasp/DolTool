@@ -93,9 +93,6 @@ public class JobDetailsActivity extends BaseActivity{
 		String levle_string=temp_1[1].replace("合计","")+"(合计:"+temp_1[2]+")";
 		level.setText(levle_string);
 		money.setText(temp[1].split(":")[1]);
-		
-		
-		
 		if(StringUtil.isNull(item.getSp())){
 			sp_layout.setVisibility(View.GONE);
 		}else{
@@ -109,6 +106,5 @@ public class JobDetailsActivity extends BaseActivity{
 		List<String> list=new Gson().fromJson(item.getGood_list(),new TypeToken<List<String>>(){}.getType());
 		String[] skill=StringUtil.listToArray(list);
 		skill_array.setAdapter(new TagPicAdapter(this, skill));
-		
 	}
 }

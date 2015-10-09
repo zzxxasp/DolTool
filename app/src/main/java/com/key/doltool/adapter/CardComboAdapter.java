@@ -74,7 +74,8 @@ public class CardComboAdapter extends BaseAdapter{
 		}
 		//设置
 		holder.name.setText(list.get(position).getName());
-		holder.effect.setText("效果:"+list.get(position).getEffect());
+		String effect="效果:"+list.get(position).getEffect();
+		holder.effect.setText(effect);
 		if(StringUtil.isNull(list.get(position).getCard_1())){
 			holder.card_1.setVisibility(View.GONE);
 		}else{

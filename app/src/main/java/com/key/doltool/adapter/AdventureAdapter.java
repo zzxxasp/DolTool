@@ -73,8 +73,10 @@ public class AdventureAdapter extends BaseAdapter{
 		}
 		//设置
 		holder.name.setText(UpdataCount.name_type[list.get(position).getType()-1]);
-		holder.now.setText(list.get(position).getNow()+"");
-		holder.size.setText(list.get(position).getSize()+"");
+		String now=list.get(position).getNow()+"";
+		String size=list.get(position).getSize()+"";
+		holder.now.setText(now);
+		holder.size.setText(size);
 		try {
 			holder.pic.setImageBitmap(BitMapUtil.getBitmapByInputStream(context.getAssets().open(FileManager.TROVE+pics[list.get(position).getType()-1])));
 		} catch (IOException e) {

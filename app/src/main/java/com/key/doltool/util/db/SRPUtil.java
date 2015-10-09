@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.key.doltool.activity.MyApplication;
+import com.key.doltool.data.Card;
 import com.key.doltool.data.Mission;
 import com.key.doltool.data.Trove;
 import com.the9tcat.hadi.ColumnAttribute;
@@ -90,8 +91,30 @@ public class SRPUtil {
 		}
 		return result;
 	}
-	
-	
+
+	public long update_Card(List<Card> models) {
+		long result = 0;
+		long tmp_id;
+		synchronized("lock") {
+			SQLiteDatabase db = this.mDatabaseManager.open();
+			try {
+				db.beginTransaction();
+				for(Card obj:models){
+					tmp_id =update(db,obj,new String[]{"flag"}, "id=?", new String[]{"" + obj.id});
+					if(tmp_id>0){
+						result ++;
+					}
+					db.yieldIfContendedSafely();
+				}
+				db.setTransactionSuccessful();
+			} finally {
+				db.endTransaction();
+				this.mDatabaseManager.close();
+			}
+		}
+		return result;
+	}
+
 	public long update_list(List<?> models) {
 		long result = 0;
 		long tmp_id;

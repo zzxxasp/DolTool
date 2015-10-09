@@ -27,192 +27,207 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobListActivity extends BaseActivity{
-		//定义部分
-		private LinearLayout layout_alert;
-		//列表
-		private ListView listview;
-		//数据temp变量
-		private DefaultDAO dao;
-		private List<Job> list=new ArrayList<>();
-		private JobAdapter adapter;
-		private int add=0;
-		private Thread mThread;	// 线程
-		private boolean end_flag=true; //是否为最末标记
-		private ListScrollListener scrollListener;
-		//查询条件
-		private String select_if="id>?";
-	    private String[] select_if_x={"0"};
-		//创建Activity
-		public void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.card_combo_main);
-	        dao=SRPUtil.getDAO(this);
-			getExtra();//外部搜索链接参数处理
-			selectshow("0,"+JobAdapter.SIZE);
-	        findView();
-	        setListener();
-	    }
-		private void getExtra(){
-			if(!StringUtil.isNull(getIntent().getStringExtra("type"))){
-				select_if=getIntent().getStringExtra("type");
-				select_if_x[0]=getIntent().getStringExtra("args");
-			}
-		}
-		//通用findView
-		private void findView() {
-			flag=false;
-			initToolBar(onMenuItemClick);
-			toolbar.setTitle("职业介绍所");
-			layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
-			initPage();
-		}
-		//通用Listener
-		private void setListener() {
-			listview.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-										int arg2, long arg3) {
-					Intent it = new Intent(JobListActivity.this, JobDetailsActivity.class);
-					it.putExtra("id", list.get(arg2).getId() + "");
-					startActivity(it);
-				}
-			});
-		}
-		private void initPage(){
-			initPageItem();
-		}
-		private void initPageItem(){
-			listview=(ListView)findViewById(R.id.listview);
-			adapter=new JobAdapter(list,this);
-			scrollListener=new ListScrollListener(end_flag, mThread, layout_alert,handler);
-			listview.setOnScrollListener(scrollListener);
-			listview.setAdapter(adapter);
-		}
-		protected void onDestroy() {
-			dao=null;
-			super.onDestroy();
-		}
-		
-		protected void onResume() {
-			super.onResume();
-		};
-		@SuppressWarnings("unchecked")
-		//有限数据查询
-		private void selectshow(String limit){
-			if(dao==null){
-				return;
-			}
-			//数据前后记录
-			int size_before=0,size_after=0;
-				size_before=list.size();
-				list.addAll(((List<Job>) dao.select(Job.class, false,select_if, select_if_x, 
-					null, null,null,limit)));
-				size_after=list.size();
-			//数据返回判断
-			if(size_after<JobAdapter.SIZE){
-				//表示，小于
-				end_flag=false;
-				scrollListener.changeFlag(end_flag);
-			}
-	    	if(size_after==size_before&&size_after!=0){
-	    		end_flag=false;
-	    		scrollListener.changeFlag(end_flag);
-	    		Toast.makeText(getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
-	    	}else if(size_after==0){
-	    		Toast.makeText(getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
-	    	}
-		}
-		//数据添加
-		private void change(){
-			add+=JobAdapter.SIZE;
-			selectshow(add + "," + JobAdapter.SIZE);
-			adapter.notifyDataSetChanged();
-		}
-		private void jump(){
-			View xc=getLayoutInflater().inflate(R.layout.select_job, null);
-			ViewUtil.popJobDialog(this, xc);
-		}
-		//修改查询条件
-		public void change_if(String if_s,String if_args){
-			//初始化所有数据
-			select_if=if_s;
-			select_if_x=new String[1];
-			select_if_x[0]=if_args;
-			list.clear();
-			add=0;
-			selectshow("0,"+JobAdapter.SIZE);
-			//重新setAdapter
-			adapter=new JobAdapter(list,this);
-			listview.setAdapter(adapter);
-		}
-		//修改查询条件
-		public void change_if(String if_s,List<String> if_args){
-			//初始化所有数据
-			select_if=if_s;
-			select_if_x=new String[if_args.size()];
-			for(int i=0;i<select_if_x.length;i++){
-				select_if_x[i]=if_args.get(i);
-			}
-			list.clear();
-			add=0;
-			selectshow("0,"+JobAdapter.SIZE);
-			//重新setAdapter
-			adapter=new JobAdapter(list,this);
-			listview.setAdapter(adapter);
-		}
-		//重置最末尾标记
-		public void begin(){
-			end_flag=true;
-			scrollListener.changeFlag(end_flag);
-		}
-		
-	/**
-	 * 华丽的分割线——以下是Handler,线程,系统按键等处理 
-	 */
-		//Handler——线程结束后更新界面
-		 private Handler handler = new Handler() {
-			 public void handleMessage(Message msg) {
-				 change();
-				 layout_alert.setVisibility(View.GONE);
-			 }
-		 };
+public class JobListActivity extends BaseActivity {
+    //定义部分
+    private LinearLayout layout_alert;
+    //列表
+    private ListView listview;
+    //数据temp变量
+    private DefaultDAO dao;
+    private List<Job> list = new ArrayList<>();
+    private JobAdapter adapter;
+    private int add = 0;
+    private Thread mThread;    // 线程
+    private boolean end_flag = true; //是否为最末标记
+    private ListScrollListener scrollListener;
+    //查询条件
+    private String select_if = "id>?";
+    private String[] select_if_x = {"0"};
+    //创建Activity
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.card_combo_main);
+        dao = SRPUtil.getDAO(this);
+        getExtra();//外部搜索链接参数处理
+        selectshow("0," + JobAdapter.SIZE);
+        findView();
+        setListener();
+    }
 
-		//系统按键监听覆写
-		public boolean onKeyDown(int keyCode, KeyEvent event) {
-			 //条件:当菜单未关闭且搜索条件为初始态，允许退出
-			if(select_if.equals("id>?")){
-				super.onKeyDown(keyCode, event);
-			}
-			//其他
-			else{
-				//按键返回
-				if(keyCode==KeyEvent.KEYCODE_BACK)
-				{
-					//条件不是初始状态就重置
-					if(!select_if.equals("id>?")){
-						end_flag=true;
-						scrollListener.changeFlag(end_flag);
-						change_if("id>?","0");
-						Toast.makeText(getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
-					}
-				}
-			}
-			return true;
-		}
-	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
-		@Override
-		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
-			switch (menuItem.getItemId()) {
-				case R.id.search:
-					jump();
-					break;
-			}
-			return true;
-		}
-	};
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+    private void getExtra() {
+        if (!StringUtil.isNull(getIntent().getStringExtra("type"))) {
+            select_if = getIntent().getStringExtra("type");
+            select_if_x[0] = getIntent().getStringExtra("args");
+        }
+    }
+
+    //通用findView
+    private void findView() {
+        flag = false;
+        initToolBar(onMenuItemClick);
+        toolbar.setTitle("职业介绍所");
+        layout_alert = (LinearLayout) findViewById(R.id.layout_alert);
+        initPage();
+    }
+
+    //通用Listener
+    private void setListener() {
+        listview.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int arg2, long arg3) {
+                Intent it = new Intent(JobListActivity.this, JobDetailsActivity.class);
+                it.putExtra("id", list.get(arg2).getId() + "");
+                startActivity(it);
+            }
+        });
+    }
+
+    private void initPage() {
+        initPageItem();
+    }
+
+    private void initPageItem() {
+        listview = (ListView) findViewById(R.id.listview);
+        adapter = new JobAdapter(list, this);
+        scrollListener = new ListScrollListener(end_flag, mThread, layout_alert, handler);
+        listview.setOnScrollListener(scrollListener);
+        listview.setAdapter(adapter);
+    }
+
+    protected void onDestroy() {
+        dao = null;
+        super.onDestroy();
+    }
+
+    protected void onResume() {
+        super.onResume();
+    }
+
+    ;
+
+    @SuppressWarnings("unchecked")
+    //有限数据查询
+    private void selectshow(String limit) {
+        if (dao == null) {
+            return;
+        }
+        //数据前后记录
+        int size_before = 0, size_after = 0;
+        size_before = list.size();
+        list.addAll(((List<Job>) dao.select(Job.class, false, select_if, select_if_x,
+                null, null, null, limit)));
+        size_after = list.size();
+        //数据返回判断
+        if (size_after < JobAdapter.SIZE) {
+            //表示，小于
+            end_flag = false;
+            scrollListener.changeFlag(end_flag);
+        }
+        if (size_after == size_before && size_after != 0) {
+            end_flag = false;
+            scrollListener.changeFlag(end_flag);
+            Toast.makeText(getApplicationContext(), "已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+        } else if (size_after == 0) {
+            Toast.makeText(getApplicationContext(), "没有查到您想要的结果", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //数据添加
+    private void change() {
+        add += JobAdapter.SIZE;
+        selectshow(add + "," + JobAdapter.SIZE);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void jump() {
+        View xc = getLayoutInflater().inflate(R.layout.select_job, null);
+        ViewUtil.popJobDialog(this, xc);
+    }
+
+    //修改查询条件
+    public void change_if(String if_s, String if_args) {
+        //初始化所有数据
+        select_if = if_s;
+        select_if_x = new String[1];
+        select_if_x[0] = if_args;
+        list.clear();
+        add = 0;
+        selectshow("0," + JobAdapter.SIZE);
+        //重新setAdapter
+        adapter = new JobAdapter(list, this);
+        listview.setAdapter(adapter);
+    }
+
+    //修改查询条件
+    public void change_if(String if_s, List<String> if_args) {
+        //初始化所有数据
+        select_if = if_s;
+        select_if_x = new String[if_args.size()];
+        for (int i = 0; i < select_if_x.length; i++) {
+            select_if_x[i] = if_args.get(i);
+        }
+        list.clear();
+        add = 0;
+        selectshow("0," + JobAdapter.SIZE);
+        //重新setAdapter
+        adapter = new JobAdapter(list, this);
+        listview.setAdapter(adapter);
+    }
+
+    //重置最末尾标记
+    public void begin() {
+        end_flag = true;
+        scrollListener.changeFlag(end_flag);
+    }
+
+    /**
+     * 华丽的分割线——以下是Handler,线程,系统按键等处理
+     */
+    //Handler——线程结束后更新界面
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            change();
+            layout_alert.setVisibility(View.GONE);
+        }
+    };
+
+    //系统按键监听覆写
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //条件:当菜单未关闭且搜索条件为初始态，允许退出
+        if (select_if.equals("id>?")) {
+            super.onKeyDown(keyCode, event);
+        }
+        //其他
+        else {
+            //按键返回
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                //条件不是初始状态就重置
+                if (!select_if.equals("id>?")) {
+                    end_flag = true;
+                    scrollListener.changeFlag(end_flag);
+                    change_if("id>?", "0");
+                    Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        return true;
+    }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(android.view.MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.search:
+                    jump();
+                    break;
+            }
+            return true;
+        }
+    };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 }

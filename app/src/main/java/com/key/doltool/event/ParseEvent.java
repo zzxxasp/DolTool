@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.key.doltool.view.Toast;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class ParseEvent {
 	/**错误控制**/
@@ -16,6 +17,6 @@ public class ParseEvent {
 			case 208:content="用户已登录";
 			case 108:content="操作不允许";
 		}
-		Toast.makeText(context,content+e.getCode(),Toast.LENGTH_SHORT).show();
+		Toast.makeText(context,content+"-"+e.getCode(),Toast.LENGTH_SHORT).show();
 	}
 }

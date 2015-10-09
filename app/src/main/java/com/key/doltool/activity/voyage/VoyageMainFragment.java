@@ -1,5 +1,6 @@
 package com.key.doltool.activity.voyage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
+import com.key.doltool.activity.search.SearchActivity;
 import com.key.doltool.adapter.VoyageAdapter;
 import com.key.doltool.data.VoyageInfo;
 import com.key.doltool.data.VoyageItem;
@@ -49,7 +51,7 @@ public class VoyageMainFragment extends BaseFragment{
 		});
 		search_view.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//跳转至搜索界面
+				startActivity(new Intent(getActivity(),SearchActivity.class));
 			}
 		});
 	}

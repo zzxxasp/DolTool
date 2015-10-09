@@ -9,8 +9,10 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 
 import com.key.doltool.R;
@@ -95,6 +97,9 @@ public class FlatButton extends Button implements Attributes.AttributeChangeList
         }
 
         if (attributes.hasTouchEffect()) {
+            if(Build.VERSION.SDK_INT>11){
+                setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+            }
             boolean hasRippleEffect = attributes.getTouchEffect() == Attributes.RIPPLE_TOUCH_EFFECT;
             touchEffectAnimator = new TouchEffectAnimator(this);
             touchEffectAnimator.setHasRippleEffect(hasRippleEffect);
