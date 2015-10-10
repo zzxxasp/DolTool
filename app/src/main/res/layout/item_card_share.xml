@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    android:background="@drawable/material_card"
+    >
+<TextView
+    android:id="@+id/name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:textColor="@color/Black_SP"
+    android:text="必杀卡组"
+    />
+<TextView
+    android:id="@+id/value"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_below="@+id/name"
+    android:textColor="@color/Blue_SP"
+    android:text="战斗力:272"
+    />
+<TextView
+    android:id="@+id/type"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_alignParentRight="true"
+    android:textColor="@color/Black_SP"
+    android:text="无限制"
+    />
+<TextView
+    android:id="@+id/creater"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_alignParentRight="true"
+    android:layout_below="@+id/name"
+    android:textColor="@color/Gainsboro_SP"
+    android:text="白衣沽酒 2015-7"
+    />
+</RelativeLayout>

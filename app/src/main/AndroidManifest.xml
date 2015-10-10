@@ -81,7 +81,7 @@
         android:configChanges="keyboardHidden|orientation"/>
         <activity android:name="com.key.doltool.activity.infobroad.NewsDetailActivity"
                     android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.adventure.CardListActivity"
+		<activity android:name=".activity.adventure.card.CardListActivity"
                     android:configChanges="orientation|screenSize"/>
 		<activity android:name="com.key.doltool.activity.wiki.WikiMainActivity"
                     android:configChanges="orientation|screenSize"/>
@@ -170,6 +170,9 @@
                     android:screenOrientation="portrait"
                     />
         <activity android:name="com.key.doltool.activity.voyage.FishingActivity"
+                    android:screenOrientation="portrait"
+                    />
+        <activity android:name="com.key.doltool.activity.adventure.card.ShareCardDeckActivity"
                     android:screenOrientation="portrait"
                     />
     </application>

@@ -1,4 +1,4 @@
-package com.key.doltool.activity.adventure;
+package com.key.doltool.activity.adventure.card;
 
 import android.os.Bundle;
 import android.util.Log;

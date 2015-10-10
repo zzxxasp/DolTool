@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
 import com.key.doltool.activity.adc.ADCListActivity;
-import com.key.doltool.activity.adventure.CardComboFragment;
+import com.key.doltool.activity.adventure.card.CardComboFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.activity.job.JobListActivity;

@@ -1,6 +1,7 @@
-package com.key.doltool.activity.adventure;
+package com.key.doltool.activity.adventure.card;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -419,12 +420,18 @@ public class CardListActivity extends BaseAdventureActivity{
 		ViewUtil.popCardDialog(this, xc);
 	}
 
+	private void jump(){
+		Intent it=new Intent(this,ShareCardDeckActivity.class);
+		startActivity(it);
+	}
+
 	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
 			switch (menuItem.getItemId()) {
 				case R.id.city_search:popWindow();break;
 				case R.id.type_search:startmode();break;
+				case R.id.share:jump();break;
 			}
 			return true;
 		}
@@ -432,7 +439,7 @@ public class CardListActivity extends BaseAdventureActivity{
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.trove_menu, menu);
+		getMenuInflater().inflate(R.menu.card_menu, menu);
 		return true;
 	}
 }

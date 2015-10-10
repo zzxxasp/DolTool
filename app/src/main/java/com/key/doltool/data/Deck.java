@@ -1,23 +1,48 @@
 package com.key.doltool.data;
 
-import com.the9tcat.hadi.annotation.Column;
-import com.the9tcat.hadi.annotation.Table;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
 
-@Table(name="Deck")
-public class Deck {
-    @Column(autoincrement=true,primary=true)
-    //id
-    private int id;
-    @Column(name="name")
-    //名称
-    public String name;
-    @Column(name="value")
+@ParseClassName("CardShare")
+public class Deck extends ParseObject{
+    // 名称
+    public String getName() {
+        return getString("name");
+    }
+
+    public void setName(String name) {
+        put("name",name);
+    }
     //价值
-    public int value;
-    @Column(name="card_list")
+    public int getValue() {
+        return getInt("value");
+    }
+
+    public void setValue(int value) {
+        put("value",value);
+    }
     //id,id,id（卡片列表）
-    public String card_list;
-    @Column(name="limit")
+    public String getCard_list() {
+        return getString("cardList");
+    }
+
+    public void setCard_list(String card_list) {
+        put("cardList",card_list);
+    }
     //限制类型
-    public String limit;
+    public String getLimit() {
+        return getString("limit");
+    }
+
+    public void setLimit(String limit) {
+        put("limit",limit);
+    }
+    //创建者
+    public String getUserName() {
+        return getString("userName");
+    }
+
+    public void setUserName(String userName) {
+        put("userName",userName);
+    }
 }

@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.key.doltool.activity.adventure.CardListActivity;
+import com.key.doltool.activity.adventure.card.CardListActivity;
 import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.recipe.RecipeForBookDetailsActivity;
 import com.key.doltool.activity.squre.MapActivity;

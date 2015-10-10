@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.InfoMainFragment;
 import com.key.doltool.activity.adventure.AdventureMainFragment;
-import com.key.doltool.activity.adventure.CardComboFragment;
+import com.key.doltool.activity.adventure.card.CardComboFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
 import com.key.doltool.activity.dockyard.DataBaseInsertFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
