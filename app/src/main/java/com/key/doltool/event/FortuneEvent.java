@@ -39,7 +39,6 @@ public class FortuneEvent {
 	public void getRandomChance(){
 		//获得出现的总数
 		int random_times=NumberUtil.getRandom(0,6);
-		//第一次
 		if(random_times==0){
 			random_times=NumberUtil.getRandom(0,6);
 		}		
@@ -47,6 +46,9 @@ public class FortuneEvent {
 			random_times=NumberUtil.getRandom(0,6);
 		}
 		if(random_times<2){
+			random_times=NumberUtil.getRandom(0,6);
+		}
+		if(random_times==0){
 			random_times=NumberUtil.getRandom(0,6);
 		}
 		//随机生成不同的n个数

@@ -9,21 +9,27 @@ import android.os.Parcelable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
 import com.key.doltool.adapter.CardAdapter;
+import com.key.doltool.adapter.ListWordAdapter;
 import com.key.doltool.adapter.item.NameValueAdapter;
 import com.key.doltool.data.Card;
 import com.key.doltool.data.CardCombo;
+import com.key.doltool.data.Deck;
 import com.key.doltool.data.base.NameValueItem;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.CommonUtil;
@@ -33,6 +39,9 @@ import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.util.ArrayList;
@@ -40,7 +49,7 @@ import java.util.List;
 
 public class CardListActivity extends BaseAdventureActivity{
 	private GridView gridview;
-	private Dialog alert;
+	private Dialog alert,dialog;
 	//总卡组列表
 	private List<Card> list;
 	//我的卡组列表
@@ -52,7 +61,6 @@ public class CardListActivity extends BaseAdventureActivity{
 	private TextView txt;
 	private String select_txt="";
 	private CardAdapter mGridAdapter;
-
 	private TextView point_show,card_show;
 	private LinearLayout card_bar;
 	private FlatButton cal_btn;
@@ -64,6 +72,7 @@ public class CardListActivity extends BaseAdventureActivity{
 	private boolean MODE=false;
 	private int limit=0;
 	private int poiont_total;
+	private int value;
 	private List<NameValueItem> in_list=new ArrayList<>();
 	private Handler mHandler=new Handler(){
 		public void handleMessage(Message msg) {
@@ -101,16 +110,19 @@ public class CardListActivity extends BaseAdventureActivity{
 			}
 		}
 	};
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.card_list_show);
 		srp=SRPUtil.getInstance(getApplicationContext());
 		dao=SRPUtil.getDAO(getApplicationContext());
+		dialog=new DialogEvent().itemDialog(this, "请等待");
 		list=new ArrayList<>();
 		findView();
 		setListener();
 		new Thread(mTasks).start();
 	}
+
 	private void findView(){
 		alert=new DialogEvent().showLoading(this);
 		flag=false;
@@ -125,6 +137,7 @@ public class CardListActivity extends BaseAdventureActivity{
 			alert.show();
 		}
 	}
+
 	@SuppressWarnings("unchecked")
 	public void select(String select){
 		//类型，点数范围，名称
@@ -285,6 +298,8 @@ public class CardListActivity extends BaseAdventureActivity{
 		card_show.setText("卡组："+temp.size()+"/30");
 		if(limit!=0){
 			point_show.setText("点数限制：" + poiont_total + "/" + limit);
+		}else{
+			point_show.setText("无限制");
 		}
 		//如果卡片数超过30则，编辑模式会不允许进行计算
 		if(temp.size()!=30||(poiont_total>limit&&limit!=0)){
@@ -354,27 +369,30 @@ public class CardListActivity extends BaseAdventureActivity{
 
 	//显示点数限制，进行修改
 	private void showPointLimit(){
-		View layout=getLayoutInflater().inflate(R.layout.select_card, null);
-		final Dialog updateDialog = new Dialog(this,R.style.updateDialog);
+		//选择类型0/100/150/200
+		final String[] word=getResources().getStringArray(R.array.card_limit);
+		LayoutInflater layoutinflater = context.getLayoutInflater();
+		View view = layoutinflater.inflate(R.layout.pop_word, null);
+		final Dialog updateDialog = new Dialog(context, R.style.updateDialog);
 		updateDialog.setCancelable(true);
 		updateDialog.setCanceledOnTouchOutside(true);
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(this)-30,
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
 				LinearLayout.LayoutParams.MATCH_PARENT);
+		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		params.setMargins(10, 10, 10, 10);
-		updateDialog.setContentView(layout, params);
+		updateDialog.setContentView(view, params);
 		updateDialog.show();
-		final TextView number=(TextView)layout.findViewById(R.id.min_point);
-		final Button positive=(Button)layout.findViewById(R.id.btn_confirm);
-		final Button negative=(Button)layout.findViewById(R.id.btn_cancel);
-		negative.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				updateDialog.dismiss();
-			}
-		});
-		positive.setText("搜索");
-		positive.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+		ListView listview=(ListView)view.findViewById(R.id.listview);
+		listview.setAdapter(new ListWordAdapter(word, context));
+		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+									long arg3) {
+				if(arg2!=0){
+					limit=Integer.parseInt(word[arg2]);
+				}else{
+					limit=0;
+				}
+				barshow();
 				updateDialog.dismiss();
 			}
 		});
@@ -392,10 +410,17 @@ public class CardListActivity extends BaseAdventureActivity{
 		updateDialog.setContentView(layout, params);
 		updateDialog.show();
 		final TextView base=(TextView)layout.findViewById(R.id.base);
+		final TextView message=(TextView)layout.findViewById(R.id.message);
 		final ListView add_list=(ListView)layout.findViewById(R.id.add_list);
 		final Button positive=(Button)layout.findViewById(R.id.confrim);
 		final Button negative=(Button)layout.findViewById(R.id.cancel);
-		base.setText("总点数:"+poiont_total+"("+total+")");
+		value=Integer.parseInt(total.toString());
+		base.setText("总点数:" + poiont_total + "(" + total + ")");
+		if(limit!=0){
+			message.setText(poiont_total + "/" + limit);
+		}else{
+			message.setText("无限制");
+		}
 		add_list.setAdapter(new NameValueAdapter(in_list,this));
 		negative.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -403,15 +428,78 @@ public class CardListActivity extends BaseAdventureActivity{
 				updateDialog.dismiss();
 			}
 		});
-		positive.setText("保存");
+		positive.setText("分享");
 		positive.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				updateDialog.dismiss();
+				showEditDialog();
+			}
+		});
+	}
+	public void showEditDialog(){
+		View layout=getLayoutInflater().inflate(R.layout.select_trove, null);
+		final Dialog updateDialog = new Dialog(this, R.style.updateDialog);
+		updateDialog.setCancelable(true);
+		updateDialog.setCanceledOnTouchOutside(true);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(this)-30,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+		params.setMargins(10,10,10,10);
+		updateDialog.setContentView(layout,params);
+		updateDialog.show();
+		final EditText name=(EditText)layout.findViewById(R.id.boat_name);
+		final Button positive=(Button)layout.findViewById(R.id.btn_confirm);
+		final Button negative=(Button)layout.findViewById(R.id.btn_cancel);
+		name.setHint("请输入卡组的名称");
+		negative.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				updateDialog.dismiss();
 			}
 		});
+		positive.setText("搜索");
+		positive.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				saveCardCombo(name.getText().toString());
+				updateDialog.dismiss();
+			}
+		});
 	}
-	public void saveCardCombo(){
-		//名称-(点数)-卡牌组合
+
+	public void saveCardCombo(String name){
+		//显示等待对话框
+		if(!isFinishing()){
+			dialog.show();
+		}
+		Deck item=new Deck();
+		List<Integer> list=new ArrayList<>();
+		for(int i=0;i<temp.size();i++){
+			list.add(temp.get(i).id);
+		}
+		Gson g=new Gson();
+		item.setCard_list(g.toJson(list));
+		if(limit!=0){
+			item.setLimit(value + "/" + limit);
+		}else{
+			item.setLimit("无限制");
+		}
+		item.setName(name);
+		if(ParseUser.getCurrentUser()!=null){
+			item.setUserName(ParseUser.getCurrentUser().getString("nickName"));
+		}else{
+			item.setUserName("游客");
+		}
+		item.setValue(poiont_total);
+		item.saveInBackground(new SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+				if (e != null) {
+					Toast.makeText(getApplicationContext(), "连接失败", Toast.LENGTH_LONG).show();
+				}
+				if(!isFinishing()){
+					dialog.dismiss();
+				}
+			}
+		});
 	}
 
 	public void popWindow(){

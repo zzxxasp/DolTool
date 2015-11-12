@@ -1,8 +1,6 @@
 package com.key.doltool.activity.ability;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,29 +8,31 @@ import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.view.MenuItem;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.SkillAdapter;
 import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.data.Skill;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AbilityListActivity extends BaseActivity {
     //定义部分
-    private LinearLayout layout_alert;
+    private Dialog alert;
     //列表
     private ListView listview;
-
     //数据temp变量
     private DefaultDAO dao;
     private List<Skill> list = new ArrayList<>();
@@ -45,7 +45,6 @@ public class AbilityListActivity extends BaseActivity {
     private String[] select_if_x = {"0"};
     //创建Activity
     private ListScrollListener srollListener;
-
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +68,7 @@ public class AbilityListActivity extends BaseActivity {
 
     //通用findView
     private void findView() {
-        layout_alert = (LinearLayout) findViewById(R.id.layout_alert);
+        alert=new DialogEvent().showLoading(this);
         initPage();
     }
 
@@ -99,7 +98,7 @@ public class AbilityListActivity extends BaseActivity {
         listview = (ListView) findViewById(R.id.listview);
         adapter = new SkillAdapter(list, this);
         srollListener = new ListScrollListener
-                (end_flag, mThread, layout_alert, handler);
+                (end_flag, mThread, alert, handler);
         listview.setOnScrollListener(srollListener);
         listview.setAdapter(adapter);
     }
@@ -190,7 +189,7 @@ public class AbilityListActivity extends BaseActivity {
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             change();
-            layout_alert.setVisibility(View.GONE);
+            alert.dismiss();
         }
     };
 

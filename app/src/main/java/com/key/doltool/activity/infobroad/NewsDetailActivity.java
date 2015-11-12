@@ -1,25 +1,25 @@
 package com.key.doltool.activity.infobroad;
-import net.youmi.android.banner.AdSize;
-import net.youmi.android.banner.AdView;
+
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
-import com.key.doltool.util.BitMapUtil;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.HttpUtil;
 import com.key.doltool.util.jsoup.JsoupForTX;
+
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
 /**
  * 新闻详情
  * @author key
@@ -30,7 +30,7 @@ import com.key.doltool.util.jsoup.JsoupForTX;
 @SuppressLint("NewApi")
 public class NewsDetailActivity extends BaseActivity{
 	private WebView web_content;
-	private LinearLayout layout_alert;
+	private Dialog layout_alert;
 	private String url="";
 	private String content="";
 	private int width=480;
@@ -82,7 +82,7 @@ public class NewsDetailActivity extends BaseActivity{
 	//初始化控件
 	private void findView(){
 		web_content=(WebView)findViewById(R.id.content);
-		layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
+		layout_alert=new DialogEvent().showLoading(this);
 		// 实例化广告条
 		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
 		// 获取要嵌入广告条的布局
@@ -104,10 +104,10 @@ public class NewsDetailActivity extends BaseActivity{
 			if(HttpUtil.STATE==0||HttpUtil.STATE==3){
 				init();
 				if(!content.equals(""))
-					layout_alert.setVisibility(View.GONE);
+					layout_alert.dismiss();
 			}
 			else{
-				layout_alert.setVisibility(View.GONE);
+				layout_alert.dismiss();
 			}
 		}
 	 };
@@ -118,7 +118,7 @@ public class NewsDetailActivity extends BaseActivity{
 				content=JsoupForTX.getNews(url);
 				mHandler.sendMessage(mHandler.obtainMessage());
 			}
-		    if(HttpUtil.STATE==1&&layout_alert.getVisibility()==View.VISIBLE){
+		    if(HttpUtil.STATE==1&&layout_alert.isShowing()){
 				mHandler.sendMessage(mHandler.obtainMessage());
 			}
 		}

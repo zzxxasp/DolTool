@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-	android:background="@drawable/bg_mycenter_banner" 
     >
 <include 
     layout="@layout/system_actionbar_black"
@@ -15,6 +14,7 @@
 <RelativeLayout 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_person"
     android:padding="7dp"  
     >
 <LinearLayout
@@ -116,9 +116,9 @@
     <com.key.doltool.view.HoloCircularProgressBar
         app:thumb_visible="false"
 		app:progress="0.0"
-		app:stroke_width="3dp"
+		app:stroke_width="1dp"
 		app:progress_color="@color/HighSkyBlue"
-		app:progress_background_color="@color/Gainsboro"
+		app:progress_background_color="@color/Gary_SP"
         app:marker_visible="false" 
         android:id="@+id/holoCircularProgressBar1"
         android:layout_width="wrap_content"
@@ -165,10 +165,10 @@
     <com.key.doltool.view.HoloCircularProgressBar
         app:thumb_visible="false"
 		app:progress="0.0"
-		app:stroke_width="3dp"
+		app:stroke_width="1dp"
 		app:marker_visible="false" 
 		app:progress_color="@color/HighSkyBlue"
-		app:progress_background_color="@color/Gainsboro"
+		app:progress_background_color="@color/Gary_SP"
         android:id="@+id/holoCircularProgressBar2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/oval_height"

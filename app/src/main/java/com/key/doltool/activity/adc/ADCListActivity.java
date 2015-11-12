@@ -1,5 +1,6 @@
 package com.key.doltool.activity.adc;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +11,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.key.doltool.R;
@@ -19,6 +19,7 @@ import com.key.doltool.adapter.ADCListAdapter;
 import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.data.ADCInfo;
 import com.key.doltool.event.AreaEvent;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class ADCListActivity extends BaseActivity {
     //定义部分
-    private LinearLayout layout_alert;
+    private Dialog alert;
     //列表
     private ListView listview;
 
@@ -69,7 +70,7 @@ public class ADCListActivity extends BaseActivity {
 
     //通用findView
     private void findView() {
-        layout_alert = (LinearLayout) findViewById(R.id.layout_alert);
+        alert=new DialogEvent().showLoading(this);
         initPage();
     }
 
@@ -93,7 +94,7 @@ public class ADCListActivity extends BaseActivity {
     private void initPageItem() {
         listview = (ListView) findViewById(R.id.listview);
         adapter = new ADCListAdapter(list, this);
-        scrollListener = new ListScrollListener(end_flag, mThread, layout_alert, handler);
+        scrollListener = new ListScrollListener(end_flag, mThread, alert, handler);
         listview.setOnScrollListener(scrollListener);
         listview.setAdapter(adapter);
     }
@@ -193,7 +194,7 @@ public class ADCListActivity extends BaseActivity {
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             change();
-            layout_alert.setVisibility(View.GONE);
+            alert.dismiss();
         }
     };
 

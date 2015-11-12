@@ -14,7 +14,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -39,6 +41,7 @@ import com.key.doltool.util.db.DataSelectUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.BootstrapCircleThumbnail;
 import com.key.doltool.view.HoloCircularProgressBar;
+import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.Toast;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.Animator.AnimatorListener;
@@ -110,14 +113,12 @@ public class PersonActivity extends BaseActivity{
 	
 	private void findView(){
 		flag=false;
-		initToolBar(null);
+		initToolBar(onMenuItemClick);
 		toolbar.setTitle("个人信息");
-//		main_menu.setOnClickListener(new View.OnClickListener() {
-//			public void onClick(View v) {
-//				startActivity(new Intent(PersonActivity.this,EditUserInfoActivity.class));
-//			}
-//		});
-		
+		toolbar.setBackgroundColor(getResources().getColor(R.color.black));
+		SystemBarTintManager tintManager = new SystemBarTintManager(this);
+		tintManager.setStatusBarTintEnabled(true);
+		tintManager.setStatusBarTintResource(R.color.black);
 		head_img=(BootstrapCircleThumbnail)findViewById(R.id.head_img);
 		name=(TextView)findViewById(R.id.name);
 		tag1=(TextView)findViewById(R.id.tag1);
@@ -263,7 +264,7 @@ public class PersonActivity extends BaseActivity{
 			Trove trove=(Trove)b.get(i);
 			temp.add("t+"+trove.getId());
 		}
-		byte[] data = null;
+		byte[] data={};
 		
 		try {
 			data = g.toJson(temp).getBytes("UTF-8");
@@ -271,7 +272,6 @@ public class PersonActivity extends BaseActivity{
 			e1.printStackTrace();
 		}
 
-		
 		final ParseFile file=new ParseFile(fileName,data);
 		file.saveInBackground();
 		
@@ -390,13 +390,13 @@ public class PersonActivity extends BaseActivity{
 							bitmap=BitMapUtil.getBitmapByInputStream(data,3);
 							head_img.setImageBitmap(bitmap);
 						} else {
-							bg = getResources().getDrawable(R.drawable.dol_trove_defalut); 
+							bg=getResources().getDrawable(R.drawable.dol_trove_defalut);
 							head_img.setImageDrawable(bg);
 						}
 					}
 				});
 			}else{
-				bg = getResources().getDrawable(R.drawable.dol_trove_defalut); 
+				bg = getResources().getDrawable(R.drawable.dol_trove_defalut);
 				head_img.setImageDrawable(bg);
 			}
 
@@ -416,5 +416,19 @@ public class PersonActivity extends BaseActivity{
 				tag2.setText("未填写");
 			}
 		}
+	}
+	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+		@Override
+		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
+			switch (menuItem.getItemId()) {
+				case R.id.city_search:startActivity(new Intent(PersonActivity.this, EditUserInfoActivity.class));break;
+			}
+			return true;
+		}
+	};
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.edit_menu, menu);
+		return true;
 	}
 }

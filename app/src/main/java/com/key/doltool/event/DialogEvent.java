@@ -346,11 +346,11 @@ public class DialogEvent {
 		});
         file_btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-				galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
-				galleryIntent.setType("image/*");
+				Intent galleryIntent = new Intent(
+						Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 				context.startActivityForResult(galleryIntent, 3);
 				updateDialog.dismiss();
+
 			}
 		});
 	}

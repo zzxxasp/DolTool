@@ -1,5 +1,7 @@
 package com.key.doltool.activity.dockyard;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +30,7 @@ import com.key.doltool.adapter.SailBoatListAdapter;
 import com.key.doltool.anime.MyAnimations;
 import com.key.doltool.data.Part;
 import com.key.doltool.data.SailBoat;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.MakeEvent;
 import com.key.doltool.util.NumberUtil;
 import com.key.doltool.util.ResourcesUtil;
@@ -62,7 +65,7 @@ import java.util.List;
  */
 public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	//定义部分
-	private LinearLayout layout_alert;
+	private Dialog alert;
 
 	//查询条件
 	private String select_if="id>?";
@@ -130,7 +133,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 		 if(dao!=null&&list.size()==0){
 			 new Thread(mTasks).start();
 		 }else{
-			 layout_alert.setVisibility(View.GONE);
+			 alert.dismiss();
 		 }
 		 return view; 
 	}
@@ -139,6 +142,13 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+	}
+
 	private void init(View view){
 		main=view;
 		dao=SRPUtil.getDAO(getActivity());
@@ -167,7 +177,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	//通用findView
 	private void findView() {
 		initPage();
-		layout_alert=(LinearLayout)main.findViewById(R.id.layout_alert);
+		alert=new DialogEvent().showLoading(getActivity());
 	}
 	//通用Listener
 	private void setListener() {
@@ -613,13 +623,13 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	//Handler——线程结束后更新界面
 	 private Handler handler = new Handler() {
 		 public void handleMessage(Message msg) {
-			if(msg.what!=0){	
+			if(msg.what!=0&&msg.what!=100){
 				change(msg.what);
-				layout_alert.setVisibility(View.GONE);
+				alert.dismiss();
 			}else if(msg.what==100){
 				change(1);
 				change(2);
-				layout_alert.setVisibility(View.GONE);
+				alert.dismiss();
 			}
 		 }
 	 };
@@ -677,7 +687,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
                 	//没有线程且不为最末时
                     if (mThread == null || !mThread.isAlive()&&flag) {
                     	//显示进度条，区域操作控制
-                    	layout_alert.setVisibility(View.VISIBLE);
+                    	alert.show();
                         mThread = new Thread() {
                             public void run() {
                                 try {

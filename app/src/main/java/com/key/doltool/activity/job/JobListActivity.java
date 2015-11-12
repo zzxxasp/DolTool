@@ -1,5 +1,6 @@
 package com.key.doltool.activity.job;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +11,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.key.doltool.R;
@@ -18,6 +18,7 @@ import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.JobAdapter;
 import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.data.Job;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class JobListActivity extends BaseActivity {
     //定义部分
-    private LinearLayout layout_alert;
+    private Dialog alert;
     //列表
     private ListView listview;
     //数据temp变量
@@ -66,7 +67,7 @@ public class JobListActivity extends BaseActivity {
         flag = false;
         initToolBar(onMenuItemClick);
         toolbar.setTitle("职业介绍所");
-        layout_alert = (LinearLayout) findViewById(R.id.layout_alert);
+        alert=new DialogEvent().showLoading(this);
         initPage();
     }
 
@@ -89,7 +90,7 @@ public class JobListActivity extends BaseActivity {
     private void initPageItem() {
         listview = (ListView) findViewById(R.id.listview);
         adapter = new JobAdapter(list, this);
-        scrollListener = new ListScrollListener(end_flag, mThread, layout_alert, handler);
+        scrollListener = new ListScrollListener(end_flag, mThread,alert, handler);
         listview.setOnScrollListener(scrollListener);
         listview.setAdapter(adapter);
     }
@@ -103,7 +104,7 @@ public class JobListActivity extends BaseActivity {
         super.onResume();
     }
 
-    ;
+
 
     @SuppressWarnings("unchecked")
     //有限数据查询
@@ -112,7 +113,7 @@ public class JobListActivity extends BaseActivity {
             return;
         }
         //数据前后记录
-        int size_before = 0, size_after = 0;
+        int size_before, size_after;
         size_before = list.size();
         list.addAll(((List<Job>) dao.select(Job.class, false, select_if, select_if_x,
                 null, null, null, limit)));
@@ -121,11 +122,11 @@ public class JobListActivity extends BaseActivity {
         if (size_after < JobAdapter.SIZE) {
             //表示，小于
             end_flag = false;
-            scrollListener.changeFlag(end_flag);
+            scrollListener.changeFlag(false);
         }
         if (size_after == size_before && size_after != 0) {
             end_flag = false;
-            scrollListener.changeFlag(end_flag);
+            scrollListener.changeFlag(false);
             Toast.makeText(getApplicationContext(), "已经返回所有查询结果了", Toast.LENGTH_LONG).show();
         } else if (size_after == 0) {
             Toast.makeText(getApplicationContext(), "没有查到您想要的结果", Toast.LENGTH_LONG).show();
@@ -177,7 +178,7 @@ public class JobListActivity extends BaseActivity {
     //重置最末尾标记
     public void begin() {
         end_flag = true;
-        scrollListener.changeFlag(end_flag);
+        scrollListener.changeFlag(true);
     }
 
     /**
@@ -187,7 +188,7 @@ public class JobListActivity extends BaseActivity {
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             change();
-            layout_alert.setVisibility(View.GONE);
+            alert.dismiss();
         }
     };
 
@@ -204,7 +205,7 @@ public class JobListActivity extends BaseActivity {
                 //条件不是初始状态就重置
                 if (!select_if.equals("id>?")) {
                     end_flag = true;
-                    scrollListener.changeFlag(end_flag);
+                    scrollListener.changeFlag(true);
                     change_if("id>?", "0");
                     Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_SHORT).show();
                 }

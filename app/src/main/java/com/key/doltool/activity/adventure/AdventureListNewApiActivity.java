@@ -68,8 +68,8 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.adventure_table);
 		type=getIntent().getStringExtra("type");
-		dao=SRPUtil.getDAO(this);
-		srp=SRPUtil.getInstance(this);
+		dao=SRPUtil.getDAO(getApplicationContext());
+		srp=SRPUtil.getInstance(getApplicationContext());
 		count=new UpdataCount(this);
 		list=new ArrayList<>();
 		findView();

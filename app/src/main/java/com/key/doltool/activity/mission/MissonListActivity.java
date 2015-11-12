@@ -1,5 +1,6 @@
 package com.key.doltool.activity.mission;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,7 +16,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -39,7 +39,7 @@ import java.util.List;
 
 public class MissonListActivity extends BaseActivity implements OnScrollListener{
 	//定义部分
-	private LinearLayout layout_alert;
+	private Dialog alert;
 	private ViewGroup mission;
 	//船只列表页面
 	private ListView listview;
@@ -81,7 +81,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		flag=false;
 		initToolBar(onMenuItemClick);
 		toolbar.setTitle("任务委托所");
-		layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
+		alert=new DialogEvent().showLoading(this);
 	}
 	//通用Listener
 	private void setListener() {
@@ -173,9 +173,9 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 			mode=0;
 		}
 		//显示搜索域
-		searchShow(mode);
+		searchShow();
 	}
-	private void searchShow(int i){
+	private void searchShow(){
 		if(mode==1){
 			mission.setVisibility(View.VISIBLE);
 		}else{
@@ -189,7 +189,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			change();
-			layout_alert.setVisibility(View.GONE);
+			alert.dismiss();
 		}
 	};
 	//系统按键监听覆写
@@ -221,7 +221,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 			}
 		}
 		return true;
-	};
+	}
 	//滚动监听① - useless
 	public void onScroll(AbsListView view, int firstVisibleItem,
 						 int visibleItemCount, int totalItemCount) {
@@ -237,7 +237,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 				//没有线程且不为最末时
 				if (mThread == null || !mThread.isAlive()&&flag) {
 					//显示进度条，区域操作控制
-					layout_alert.setVisibility(View.VISIBLE);
+					alert.show();
 					mThread = new Thread() {
 						public void run() {
 							try {
@@ -271,19 +271,24 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 			if_args.add(type.getSelectedItem().toString());
 		}else if(type.getSelectedItemPosition()==5){
 			String temp=event.getStringByIndex(sp_type.getSelectedItemPosition());
-			if(temp.equals("")){
-				select_if+=" and type = ?";
-				if_args.add(sp_type.getSelectedItem().toString());
-			}else if(temp.equals("沉船")||temp.equals("掠夺")){
-				select_if+=" and start_city like ?";
-				if_args.add("%"+temp+"%");
-			}else if(temp.equals("海上视认")){
-				select_if+=" and start_city like ?";
-				if_args.add("%"+temp+"%");
-			}
-			else{
-				select_if+=" and get_item like ?";
-				if_args.add("%"+temp+"%");
+			switch (temp) {
+				case "":
+					select_if += " and type = ?";
+					if_args.add(sp_type.getSelectedItem().toString());
+					break;
+				case "沉船":
+				case "掠夺":
+					select_if += " and start_city like ?";
+					if_args.add("%" + temp + "%");
+					break;
+				case "海上视认":
+					select_if += " and start_city like ?";
+					if_args.add("%" + temp + "%");
+					break;
+				default:
+					select_if += " and get_item like ?";
+					if_args.add("%" + temp + "%");
+					break;
 			}
 		}
 		//获取技能需求附加条件

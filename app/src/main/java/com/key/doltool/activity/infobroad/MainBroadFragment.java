@@ -1,5 +1,6 @@
 package com.key.doltool.activity.infobroad;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.adapter.NewsAdapter;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.HttpUtil;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.jsoup.JsoupForTX;
@@ -42,7 +44,8 @@ public class MainBroadFragment extends BaseFragment{
 		private List<View> main_list;
 		private LayoutInflater mInflater;
 		//add-非共通部分
-		private LinearLayout layout_alert,main;
+		private Dialog alert;
+		private LinearLayout main;
 		private ListView listview1,listview2,listview3; 
 		//创建Activity
 	    private View main_view;
@@ -61,9 +64,9 @@ public class MainBroadFragment extends BaseFragment{
 		private void findView() {
 			initPage();
 			main=(LinearLayout)main_view.findViewById(R.id.main);
-			layout_alert=(LinearLayout)main_view.findViewById(R.id.layout_alert);
+			alert=new DialogEvent().showLoading(getActivity());
 			if(JsoupForTX.list3.size()!=0){
-				layout_alert.setVisibility(View.GONE);
+				alert.dismiss();
 			}
 		}
 		private void setListener() {
@@ -111,10 +114,10 @@ public class MainBroadFragment extends BaseFragment{
 			if(HttpUtil.STATE==0){
 				initPageItem();
 				if(JsoupForTX.list3.size()!=0)
-					layout_alert.setVisibility(View.GONE);
+					alert.dismiss();
 			}
 			else{
-				layout_alert.setVisibility(View.GONE);
+				alert.dismiss();
 			}
 			ViewUtil.disableSubControls(main, true);
 		}
@@ -127,7 +130,7 @@ public class MainBroadFragment extends BaseFragment{
 				JsoupForTX.getUrl();
 				mHandler.sendMessage(mHandler.obtainMessage());
 			}
-		    if(HttpUtil.STATE==1&&layout_alert.getVisibility()==View.VISIBLE){
+		    if(HttpUtil.STATE==1&&alert.isShowing()){
 				mHandler.sendMessage(mHandler.obtainMessage());
 			}
             Looper.loop(); 

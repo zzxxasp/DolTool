@@ -249,9 +249,10 @@ public class EditUserInfoActivity extends BaseActivity{
         		} else {
         			Toast.makeText(this, "格式不支持", Toast.LENGTH_LONG).show();
         		}
-        	} else {
+				cursor.close();
         	}
         } catch (Exception e) {
+			e.printStackTrace();
         }
     }
     private void cropImageUri(String path_file) {

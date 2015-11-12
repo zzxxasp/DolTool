@@ -1,5 +1,6 @@
 package com.key.doltool.activity.recipe;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import com.key.doltool.adapter.BookAdapter;
 import com.key.doltool.adapter.SkillAdapter;
 import com.key.doltool.data.Book;
 import com.key.doltool.event.BookEvent;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
@@ -29,10 +31,9 @@ import java.util.List;
 
 public class RecipeBookListActivity extends BaseActivity implements OnScrollListener{
 		//定义部分
-		private LinearLayout layout_alert;
+		private Dialog alert;
 		//列表
 		private ListView listview;
-		
 		private DefaultDAO dao;
 		private List<Book> list=new ArrayList<>();
 		private BookAdapter adapter;
@@ -67,7 +68,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		private void findView() {
 			initPage();
 			toolbar.setTitle(new BookEvent().TITLE[getIntent().getIntExtra("type",0)]);
-			layout_alert=(LinearLayout)findViewById(R.id.layout_alert);
+			alert=new DialogEvent().showLoading(this);
 		}
 		//通用Listener
 		private void setListener() {
@@ -166,7 +167,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		 private Handler handler = new Handler() {
 			 public void handleMessage(Message msg) {
 				 change();
-				 layout_alert.setVisibility(View.GONE);
+				 alert.dismiss();
 			 }
 		 };
 
@@ -207,7 +208,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 	                	//没有线程且不为最末时
 	                    if ((mThread == null || !mThread.isAlive())&&flag) {
 	                    	//显示进度条，区域操作控制
-	                    	layout_alert.setVisibility(View.VISIBLE);
+							alert.show();
 	                        mThread = new Thread() {
 	                            public void run() {
 	                                try {

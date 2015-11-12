@@ -1,8 +1,6 @@
 package com.key.doltool.activity.trade;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +17,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
@@ -27,14 +24,18 @@ import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.TradeListAdapter;
 import com.key.doltool.data.TradeItem;
 import com.key.doltool.event.AreaEvent;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	//定义部分
-	private LinearLayout layout_alert;
+	private Dialog alert;
 	//船只列表页面
 	private GridView listview;
 	//数据temp变量
@@ -57,7 +58,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 		 if(dao!=null&&list.size()==0){
 			 new Thread(mTasks).start();
 		 }else{
-			 layout_alert.setVisibility(View.GONE);
+			 alert.dismiss();
 		 }
 		 return view; 
 	}
@@ -87,7 +88,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	//通用findView
 	private void findView() {
 		initPage();
-		layout_alert=(LinearLayout)main.findViewById(R.id.layout_alert);
+		alert=new DialogEvent().showLoading(getActivity());
 	}
 	//通用Listener
 	private void setListener() {
@@ -196,7 +197,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	 private Handler handler = new Handler() {
 		 public void handleMessage(Message msg) {
 			 change();
-			 layout_alert.setVisibility(View.GONE);
+			 alert.dismiss();
 		 }
 	 };
 
@@ -235,7 +236,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
                 	//没有线程且不为最末时
                     if ((mThread == null || !mThread.isAlive())&&flag) {
                     	//显示进度条，区域操作控制
-                    	layout_alert.setVisibility(View.VISIBLE);
+						alert.show();
                         mThread = new Thread() {
                             public void run() {
                                 try {

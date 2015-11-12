@@ -1,20 +1,19 @@
 package com.key.doltool.app.util;
 
+import android.app.Dialog;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.LinearLayout;
 /**
  * 通用滚动方法
  * **/
 public class ListScrollListener implements OnScrollListener{
 	private boolean end_flag;
 	private Thread mThread;
-	private LinearLayout layout_alert;
+	private Dialog layout_alert;
 	private Handler handler;
-	public ListScrollListener(boolean end_flag,Thread mThread,LinearLayout layout_alert
+	public ListScrollListener(boolean end_flag,Thread mThread,Dialog layout_alert
 			,Handler handler){
 		this.end_flag=end_flag;
 		this.handler=handler;
@@ -40,7 +39,7 @@ public class ListScrollListener implements OnScrollListener{
                 	//没有线程且不为最末时
                     if ((mThread == null || !mThread.isAlive())&&flag) {
                     	//显示进度条，区域操作控制
-                    	layout_alert.setVisibility(View.VISIBLE);
+                    	layout_alert.show();
                         mThread = new Thread() {
                             public void run() {
                                 try {
