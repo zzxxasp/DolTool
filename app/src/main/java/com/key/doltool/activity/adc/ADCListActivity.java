@@ -17,7 +17,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.ADCListAdapter;
 import com.key.doltool.app.util.ListScrollListener;
-import com.key.doltool.data.ADCInfo;
+import com.key.doltool.data.sqlite.ADCInfo;
 import com.key.doltool.event.AreaEvent;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
@@ -46,6 +46,7 @@ public class ADCListActivity extends BaseActivity {
     //查询条件
     private String select_if = "id>?";
     private String[] select_if_x = {"0"};
+
 
     //创建Activity
     public void onCreate(Bundle savedInstanceState) {

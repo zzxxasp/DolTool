@@ -44,32 +44,32 @@
                 android:layoutAnimation="@anim/new_in2"
                 />
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:visibility="gone"
             android:id="@+id/card_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
             android:background="@color/Black_SP"
             >
             <TextView
                 android:id="@+id/card_number"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="卡组：0/30"
-                android:gravity="center"
                 android:padding="15dp"
                 android:textColor="@color/White"
                 />
             <TextView
                 android:id="@+id/card_point"
+                android:layout_toRightOf="@+id/card_number"
+                android:layout_toEndOf="@+id/card_number"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:gravity="center"
-                android:text="点数限制：无限制"
+                android:text="无限制"
                 android:textColor="@color/White"
                 />
             <com.key.doltool.view.flat.FlatButton
@@ -77,17 +77,18 @@
                 flatui:fl_cornerRadius="3dp"
                 flatui:fl_borderWidth="0.5dp"
                 flatui:fl_touchEffect="fl_ripple"
+                android:layout_centerVertical="true"
                 flatui:fl_blockButtonEffectHeight="2dp"
                 android:id="@+id/cal_btn"
-                android:layout_weight="1"
                 android:layout_margin="5dp"
                 android:padding="5dp"
-                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:textColor="@color/Black_SP"
                 android:text="战力统计"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

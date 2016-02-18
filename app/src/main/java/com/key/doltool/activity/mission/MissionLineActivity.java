@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.key.doltool.activity.BaseActivity;
-import com.key.doltool.data.Mission;
+import com.key.doltool.data.sqlite.Mission;
 import com.key.doltool.data.MissionTree;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;

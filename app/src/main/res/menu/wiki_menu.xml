@@ -1,10 +1,10 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/back_top"
         android:orderInCategory="100"
-        android:icon="@drawable/dol_b0s1"
-        android:showAsAction="never"
-        android:title="Back Top"/>
-
+        app:showAsAction="never"
+        android:title="返回顶部"
+        />
 </menu>

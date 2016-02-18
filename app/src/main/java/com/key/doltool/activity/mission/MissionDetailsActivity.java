@@ -17,7 +17,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.MissionConnectAdapter;
 import com.key.doltool.adapter.MissionDetailsAdapter;
-import com.key.doltool.data.Mission;
+import com.key.doltool.data.sqlite.Mission;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
@@ -114,8 +114,10 @@ public class MissionDetailsActivity extends BaseActivity{
 	}
 	@SuppressWarnings("unchecked")
 	private void init(){
-		Log.i("type",type_txt);
-		if(type_txt.equals("about")){
+		Log.i("type",type_txt+"");
+		if(StringUtil.isNull(type_txt)){
+			list=(List<Mission>)dao.select(Mission.class, false, "find_item=? ",new String[]{find_item}, null, null,null, null);
+		} else if(type_txt.equals("about")){
 			if(souce_type==1){
 				list=(List<Mission>)dao.select(Mission.class, false, "name=? and after like ?",new String[]{find_item,"%"+souce+"%"}, null, null,null, null);
 			}else if(souce_type==2){
@@ -125,10 +127,11 @@ public class MissionDetailsActivity extends BaseActivity{
 			list=(List<Mission>)dao.select(Mission.class, false, "id=?",new String[]{find_item}, null, null,null, null);
 		}else if(type_txt.equals("word")){
 			list=(List<Mission>)dao.select(Mission.class, false, "name=? or name=?",new String[]{find_item,tw_name}, null, null,null, null);
-		}else if(!StringUtil.isNull(type_txt)){
+		}else if(type_txt.equals("link")){
+			list=(List<Mission>)dao.select(Mission.class, false, "name=?",new String[]{find_item}, null, null,null, null);
+		}
+		else if(!StringUtil.isNull(type_txt)){
 			list=(List<Mission>)dao.select(Mission.class, false, "find_item=? and type=?",new String[]{find_item,type_txt}, null, null,null, null);
-		}else{
-			list=(List<Mission>)dao.select(Mission.class, false, "find_item=? ",new String[]{find_item}, null, null,null, null);
 		}
 		if(list.size()>0){
 			if(list.size()==1){

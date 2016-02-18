@@ -9,10 +9,9 @@ import org.jsoup.select.Elements;
 
 import android.util.Log;
 
-import com.key.doltool.data.CardCombo;
-import com.key.doltool.data.Mission;
-import com.key.doltool.data.Trove;
-import com.key.doltool.event.UpdataCount;
+import com.key.doltool.data.sqlite.CardCombo;
+import com.key.doltool.data.sqlite.Mission;
+import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.util.StringUtil;
 import com.the9tcat.hadi.DefaultDAO;
 public class JsoupForGVO {

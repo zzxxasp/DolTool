@@ -28,8 +28,6 @@ import java.util.List;
  * 新闻看板界面
  * @author key
  * @version 0.3
- * @time 2013-7-3
- * @日志
  * 0.1-加入基本Activity的相关方法和操作<br>
  * 0.2-加入ViewPager负责进行多个页面的切换，并加入显示效果<br>
  * 0.3-加入有限ListView的展示<br>
@@ -65,11 +63,13 @@ public class MainBroadFragment extends BaseFragment{
 			initPage();
 			main=(LinearLayout)main_view.findViewById(R.id.main);
 			alert=new DialogEvent().showLoading(getActivity());
+			alert.show();
 			if(JsoupForTX.list3.size()!=0){
 				alert.dismiss();
 			}
 		}
 		private void setListener() {
+
 		}
 		private void initPage(){
 			//初始化layout相关
@@ -78,7 +78,7 @@ public class MainBroadFragment extends BaseFragment{
 			//添加布局文件
 			layout1 = mInflater.inflate(R.layout.news_main_item_layout, null);
 			layout2 = mInflater.inflate(R.layout.news_main_item_layout, null);
-			layout3 =mInflater.inflate(R.layout.news_main_item_layout, null);
+			layout3 = mInflater.inflate(R.layout.news_main_item_layout, null);
 			main_list.add(layout1);
 			main_list.add(layout2);
 			main_list.add(layout3);
@@ -94,19 +94,21 @@ public class MainBroadFragment extends BaseFragment{
 			mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.White));
 			mSlidingTabLayout.setBackgroundResource(R.drawable.theme_dark_blue);
 			mSlidingTabLayout.setViewPager(main_ViewPage);
+
 		}
-		private void initPageItem(){
-			//初始化第一页(船只列表)
-			listview1=(ListView)layout1.findViewById(R.id.listview);
-			listview1.setAdapter(new NewsAdapter(JsoupForTX.list1, getActivity()));
-			//初始化第二页(造船模拟)
-			listview2=(ListView)layout2.findViewById(R.id.listview);
-			listview2.setAdapter(new NewsAdapter(JsoupForTX.list2, getActivity()));
-			//初始化第三页(船只配件)
-			listview3=(ListView)layout3.findViewById(R.id.listview);
-			listview3.setAdapter(new NewsAdapter(JsoupForTX.list3, getActivity()));
-		}
-		
+
+	private void initPageItem(){
+		//初始化第一页(船只列表)
+		listview1=(ListView)layout1.findViewById(R.id.listview);
+		listview1.setAdapter(new NewsAdapter(JsoupForTX.list1, getActivity()));
+		//初始化第二页(造船模拟)
+		listview2=(ListView)layout2.findViewById(R.id.listview);
+		listview2.setAdapter(new NewsAdapter(JsoupForTX.list2, getActivity()));
+		//初始化第三页(船只配件)
+		listview3=(ListView)layout3.findViewById(R.id.listview);
+		listview3.setAdapter(new NewsAdapter(JsoupForTX.list3, getActivity()));
+	}
+
 	 private  Handler mHandler=new Handler(){
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);

@@ -1,5 +1,4 @@
 package com.key.doltool.activity.adventure;
-import java.io.IOException;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +11,7 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.mission.MissionDetailsActivity;
-import com.key.doltool.data.Trove;
-import com.key.doltool.event.UpdataCount;
+import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.event.UpdataList;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
@@ -21,17 +19,18 @@ import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.flat.FlatButton;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.io.IOException;
 public class AdventureDetailActivity extends BaseActivity{
 	private DefaultDAO dao;
 	//信息
 	private TextView feat,card,need,misson,name,detail;
-	private ImageView pic,ico;
+	private ImageView pic;
 	private RatingBar rate;
 	//数据
 	private Trove item;
 	//附加
 	private TextView need_txt,misson_txt;
-	private UpdataCount count;
 	private int flag=5;
 	private FlatButton goto_mission;
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class AdventureDetailActivity extends BaseActivity{
 		initToolBar(null);
 		setContentView(R.layout.adventure_details);
 		dao=SRPUtil.getDAO(this);
-		count=new UpdataCount(this);
 		findView();
 		setListener();
 		init();
@@ -47,9 +45,8 @@ public class AdventureDetailActivity extends BaseActivity{
 	private void findView(){
 		name=(TextView)findViewById(R.id.txt);
 		pic=(ImageView)findViewById(R.id.img);
-		ViewCompat.setTransitionName(pic,"name");
+		ViewCompat.setTransitionName(pic,"image");
 		rate=(RatingBar)findViewById(R.id.star);
-		ico=(ImageView)findViewById(R.id.over_pic);
 		feat=(TextView)findViewById(R.id.feats);
 		card=(TextView)findViewById(R.id.card_point);
 		need=(TextView)findViewById(R.id.need);
@@ -63,30 +60,14 @@ public class AdventureDetailActivity extends BaseActivity{
 	private void setListener(){
 		goto_mission.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent=new Intent(AdventureDetailActivity.this,MissionDetailsActivity.class);
-				intent.putExtra("find_item",item.getName());
-				intent.putExtra("type",getStringByType(item.getGetWay()));
+				Intent intent = new Intent(AdventureDetailActivity.this, MissionDetailsActivity.class);
+				intent.putExtra("find_item", item.getName());
+				intent.putExtra("type", getStringByType(item.getGetWay()));
 				startActivity(intent);
 			}
 		});
 	}
-	private void setFlag(){
-		//更新标志
-		if(item.getFind_flag()==0){
-			Trove trove=new Trove();
-			flag=1;
-			trove.setFind_flag(1);
-			dao.update(trove, new String[]{"flag"}, "id=?", new String[]{""+getIntent().getIntExtra("id",0)});
-			ico.setVisibility(View.VISIBLE);
-		}else{
-			Trove trove=new Trove();
-			flag=0;
-			trove.setFind_flag(0);
-			dao.update(trove, new String[]{"flag"}, "id=?", new String[]{""+getIntent().getIntExtra("id",0)});
-			ico.setVisibility(View.GONE);
-		}
-		count.init_adventure(item.getType());
-	}
+
 	@Override
 	public void finish() {
 		if(flag!=item.getFind_flag()){
@@ -100,7 +81,7 @@ public class AdventureDetailActivity extends BaseActivity{
 		String names=getIntent().getStringExtra("name");
 		String names_tw=getIntent().getStringExtra("tw_name");
 		if(StringUtil.isNull(names)){
-			names=getIntent().getIntExtra("id",0)+"";
+			names=getIntent().getStringExtra("id")+"";
 			item=(Trove)(dao.select(Trove.class, false, "id = ?",new String[]{names}, null, null, null, null).get(0));
 		}else{
 			item=(Trove)(dao.select(Trove.class, false, "name = ? or name = ?",new String[]{names,names_tw}, null, null, null, null).get(0));
@@ -130,9 +111,7 @@ public class AdventureDetailActivity extends BaseActivity{
 		need.setText(item.getNeed());
 		misson.setText(item.getMisson());
 		detail.setText(item.getDetails());
-		if(item.getFind_flag()==0){
-			ico.setVisibility(View.GONE);
-		}
+
 	}
 	private String getStringByType(int i){
 		String str="";

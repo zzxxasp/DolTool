@@ -19,7 +19,7 @@ import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.wiki.WikiListActivity;
 import com.key.doltool.activity.wiki.WikiMainActivity;
 import com.key.doltool.adapter.WikiAdapter;
-import com.key.doltool.data.WikiInfo;
+import com.key.doltool.data.sqlite.WikiInfo;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
@@ -39,7 +39,7 @@ public class InfoMainFragment extends BaseFragment{
 		 findView();
 		 init();
 		 setListener();
-		 return view; 
+		 return view;
 	}
 	private void init(View view){
 		main=view;

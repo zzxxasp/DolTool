@@ -11,7 +11,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.SailBoatListAdapter;
 import com.key.doltool.data.SailBoat;
-import com.key.doltool.data.Skill;
+import com.key.doltool.data.sqlite.Skill;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.db.SRPUtil;
@@ -41,8 +41,7 @@ public class AbilityForBoatDetailActivity extends BaseActivity{
 		skill_need=(TextView)findViewById(R.id.skill_need);
 		boat_array=(LinearLayoutForListView)findViewById(R.id.boat_array);
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	private void init(){
 		item=(Skill)dao.select(Skill.class,false,"id=?",new String[]{""+id},null,null,null,null).get(0);
 		name.setText(item.getName());
@@ -53,8 +52,8 @@ public class AbilityForBoatDetailActivity extends BaseActivity{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		List<SailBoat> sail=(List<SailBoat>)
-				dao.select(SailBoat.class,false,"ability like ?",new String[]{"%"+item.getName()+"%"},null,null,null,null);
+		List<SailBoat> sail= SRPUtil.getInstance(this).select(SailBoat.class,false,"ability like ?"
+				,new String[]{"%"+item.getName()+"%"},null,null,null,null);
 		boat_array.setAdapter(new SailBoatListAdapter(sail, this));
 	}
 }

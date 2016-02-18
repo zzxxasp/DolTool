@@ -2,6 +2,7 @@ package com.key.doltool.util;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,9 +24,10 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
+import com.key.doltool.activity.ability.AbilityListActivity;
 import com.key.doltool.activity.adc.ADCListActivity;
-import com.key.doltool.activity.adventure.card.CardComboFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
+import com.key.doltool.activity.adventure.card.CardComboFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.activity.job.JobListActivity;
 import com.key.doltool.activity.trade.TradeItemFragment;
@@ -37,6 +39,7 @@ import com.key.doltool.view.Toast;
 import com.key.doltool.view.range.RangeBar;
 
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -45,14 +48,6 @@ import java.util.List;
  * @version 0.1
  */
 public class ViewUtil {
-	/**焦点转移**/
-	public static void setFocus(View v){
-		v.setFocusable(true);
-		v.setFocusableInTouchMode(true);
-		v.requestFocus();
-		v.requestFocusFromTouch();	
-	}
-	
 	/**船只类型处理**/
 	public static String[] setDataForType(int type,int size,int way){
 		String[] temp=new String[3];
@@ -563,23 +558,75 @@ public class ViewUtil {
 		positive.setText("搜索");
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String select_if="";
-				List<String> select_args=new ArrayList<>();
-				if(box_m.isChecked()){
-					select_if="sex = ? ";
+				String select_if = "";
+				List<String> select_args = new ArrayList<>();
+				if (box_m.isChecked()) {
+					select_if = "sex = ? ";
 					select_args.add(box_m.getText().toString());
-				}					
-				else if(box_w.isChecked()){
-					select_if="sex = ? ";
+				} else if (box_w.isChecked()) {
+					select_if = "sex = ? ";
 					select_args.add(box_w.getText().toString());
 				}
-				if(type.getSelectedItemId()!=1000&&type.getSelectedItemId()!=0){
+				if (type.getSelectedItemId() != 1000 && type.getSelectedItemId() != 0) {
+					if (select_if.equals("")) {
+						select_if += "type = ?";
+					} else {
+						select_if += "and type = ?";
+					}
+					String if_s = type.getSelectedItemId() + "";
+					Log.i("s", if_s + "");
+					select_args.add(if_s);
+				}
+				activity.change_if(select_if, select_args);
+				activity.begin();
+				updateDialog.dismiss();
+			}
+		});
+		negative.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				updateDialog.dismiss();
+			}
+		});
+	}
+
+	public static void popSkillDialog(final AbilityListActivity activity,View layout){
+		final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
+		updateDialog.setCancelable(true);
+		updateDialog.setCanceledOnTouchOutside(true);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity)-30,
+				LayoutParams.MATCH_PARENT);
+		params.setMargins(10,10,10,10);
+		updateDialog.setContentView(layout,params);
+		updateDialog.show();
+
+		final EditText name=(EditText)layout.findViewById(R.id.boat_name);
+		final Spinner type=(Spinner)layout.findViewById(R.id.type);
+		ArrayAdapter<String> adapter=new SpinnerArrayAdapter(activity
+				,ResourcesUtil.getArray(activity,R.array.skill_type));
+		type.setAdapter(adapter);
+		final Button positive=(Button)layout.findViewById(R.id.btn_confirm);
+		final Button negative=(Button)layout.findViewById(R.id.btn_cancel);
+		positive.setText("搜索");
+		positive.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				String select_if;
+				List<String> select_args=new ArrayList<>();
+				if(!name.getText().toString().trim().equals("")){
+					select_if="name like ? ";
+					select_args.add("%"+name.getText().toString().trim()+"%");
+				}
+				else{
+					select_if="id>?";
+					select_args.add("0");
+				}
+				if(type.getSelectedItemPosition()!=100){
 					if(select_if.equals("")){
 						select_if+="type = ?";
 					}else{
 						select_if+="and type = ?";
 					}
-					String if_s=type.getSelectedItemId()+"";
+					String if_s=(type.getSelectedItemPosition()+1)+"";
 					Log.i("s",if_s+"");
 					select_args.add(if_s);
 				}
@@ -595,8 +642,7 @@ public class ViewUtil {
 			}
 		});
 	}
-	
-	
+
 	public static void popNPCDialog(final NPCFragment activity,View layout){
 		final Dialog updateDialog = new Dialog(activity.getActivity(), R.style.updateDialog);
         updateDialog.setCancelable(true);
@@ -733,5 +779,36 @@ public class ViewUtil {
 				x=ab.size();
 			father.addView(row);
 		}
+	}
+
+	public static void setImageView(ImageView view,String name,Context context){
+		try {
+			view.setImageBitmap(BitMapUtil.getBitmapByInputStream(context.getAssets().open(FileManager.ITEM +MD5(name)+ ".png")));
+		} catch (IOException e) {
+			view.setImageResource(R.drawable.item_defalut);
+		}
+	}
+	public static String MD5(String plainText) {
+		StringBuilder buf = new StringBuilder("");
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(plainText.getBytes("UTF-8"));
+			byte b[] = md.digest();
+			int i;
+			for (byte aB : b) {
+				i = aB;
+				if (i < 0) {
+					i += 256;
+				}
+				if (i < 16) {
+					buf.append("0");
+				}
+				buf.append(Integer.toHexString(i));
+			}
+			return buf.toString().substring(8,24);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buf.toString();
 	}
 }

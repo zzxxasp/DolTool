@@ -33,8 +33,7 @@ public class NewsDetailActivity extends BaseActivity{
 	private Dialog layout_alert;
 	private String url="";
 	private String content="";
-	private int width=480;
-	private String head="";
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initToolBar(null);
@@ -69,20 +68,21 @@ public class NewsDetailActivity extends BaseActivity{
 		}
 		web_content.getSettings().setDefaultZoom(zoomDensity);
 		web_content.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-		width=(int)(CommonUtil.getScreenWidth(this)/screenDensity)-10;
-		Log.i("x",""+width);
-		head="<style type='text/css'>*{max-width:"+width+"px!important;height:auto!important;}" +
-				"table{width:100%!important;}"+"</style>";
+		int width = (int) (CommonUtil.getScreenWidth(this) / screenDensity) - 10;
+		Log.i("x",""+ width);
+		String head = "<style type='text/css'>*{max-width:" + width + "px!important;height:auto!important;}" +
+				"table{width:100%!important;}" + "</style>";
 		if(HttpUtil.STATE==3){
 			web_content.loadUrl(content);
 		}else{
-			web_content.loadData(head+content,"text/html; charset=UTF-8",null);
+			web_content.loadData(head +content,"text/html; charset=UTF-8",null);
 		}
 	}
 	//初始化控件
 	private void findView(){
 		web_content=(WebView)findViewById(R.id.content);
 		layout_alert=new DialogEvent().showLoading(this);
+		layout_alert.show();
 		// 实例化广告条
 		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
 		// 获取要嵌入广告条的布局
@@ -112,23 +112,23 @@ public class NewsDetailActivity extends BaseActivity{
 		}
 	 };
 	 //获得数据
-	 private Runnable mTask=new Runnable(){
+	private Runnable mTask=new Runnable(){
 		public void run() {
 			while(content.equals("")&&HttpUtil.STATE==0){
 				content=JsoupForTX.getNews(url);
 				mHandler.sendMessage(mHandler.obtainMessage());
 			}
-		    if(HttpUtil.STATE==1&&layout_alert.isShowing()){
+			if(HttpUtil.STATE==1&&layout_alert.isShowing()){
 				mHandler.sendMessage(mHandler.obtainMessage());
 			}
 		}
-	 };
-	 //缓存清空
-	 protected void onDestroy() {
-		 super.onDestroy();
-		 web_content.clearCache(false);
-	 }
-	 @Override
+	};
+	//缓存清空
+	protected void onDestroy() {
+		super.onDestroy();
+		web_content.clearCache(false);
+	}
+	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}

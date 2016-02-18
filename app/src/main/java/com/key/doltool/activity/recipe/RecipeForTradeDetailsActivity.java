@@ -7,27 +7,37 @@ import android.os.Bundle;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.RecipeAdapter;
-import com.key.doltool.data.Recipe;
+import com.key.doltool.data.sqlite.Recipe;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.LinearLayoutForListView;
-import com.the9tcat.hadi.DefaultDAO;
 public class RecipeForTradeDetailsActivity extends BaseActivity{
 	private LinearLayoutForListView list;
 	private List<Recipe> mylist=new ArrayList<>();
-	private DefaultDAO dao;
 	private String need="";
+	private int index=0;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.recipe_list);
+		setContentView(R.layout.recipe_trade_list);
+		flag=false;
 		initToolBar(null);
 		list=(LinearLayoutForListView)findViewById(R.id.listview);
-		need=getIntent().getStringExtra("");
-		dao=SRPUtil.getDAO(this);
+		need=getIntent().getStringExtra("item");
+		if(need!=null){
+			toolbar.setTitle(need);
+			index=1;
+		}else{
+			index=2;
+			need=getIntent().getStringExtra("name");
+			toolbar.setTitle(need+"相关配方");
+		}
 		init();
-		list.setAdapter(new RecipeAdapter(mylist,this));
 	}
-	@SuppressWarnings("unchecked")
 	private void init(){
-		mylist=(List<Recipe>)dao.select(Recipe.class,false,"need like ?",new String[]{"%"+need+"%"},null,null,null,null);	
+		if(index==1){
+			mylist=SRPUtil.getInstance(this).select(Recipe.class,false,"name like ?",new String[]{"%"+need+"%"},null,null,null,null);
+		}else if(index==2){
+			mylist=SRPUtil.getInstance(this).select(Recipe.class,false,"need like ? or result like ?",new String[]{"%"+need+"%","%"+need+"%"},null,null,null,null);
+		}
+		list.setAdapter(new RecipeAdapter(mylist,this));
 	}
 }

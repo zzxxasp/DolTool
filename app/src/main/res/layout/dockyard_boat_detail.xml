@@ -75,16 +75,18 @@
 
     <RelativeLayout
         android:id="@+id/equip"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/base"
         android:paddingLeft="15dp" >
 
         <TextView
             android:id="@+id/boat_equip1"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
+            android:minWidth="84dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:singleLine="true"
             android:background="@color/Black_SP"
             android:gravity="center"
             android:padding="5dp"
@@ -93,7 +95,8 @@
 
         <TextView
             android:id="@+id/boat_equip2"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
+            android:minWidth="80dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_toRightOf="@+id/boat_equip1"
@@ -105,7 +108,8 @@
 
         <TextView
             android:id="@+id/boat_equip3"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
+            android:minWidth="84dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/boat_equip2"
             android:layout_margin="5dp"
@@ -117,7 +121,8 @@
 
         <TextView
             android:id="@+id/boat_equip4"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
+            android:minWidth="80dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/boat_equip2"
             android:layout_margin="5dp"
@@ -130,7 +135,8 @@
 
         <TextView
             android:id="@+id/boat_equip5"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
+            android:minWidth="84dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/boat_equip3"
             android:layout_margin="5dp"
@@ -142,7 +148,8 @@
 
         <TextView
             android:id="@+id/boat_equip6"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
+            android:minWidth="80dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/boat_equip3"
             android:layout_margin="5dp"
@@ -156,14 +163,17 @@
 
     <RelativeLayout
         android:id="@+id/type"
-        android:layout_width="fill_parent"
-        android:layout_height="115dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/base"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/equip"
+        android:layout_toEndOf="@+id/equip"
         android:background="@color/Blue_SP" >
 
         <TextView

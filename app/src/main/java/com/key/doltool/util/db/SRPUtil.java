@@ -7,21 +7,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.key.doltool.activity.MyApplication;
-import com.key.doltool.data.Card;
-import com.key.doltool.data.Mission;
-import com.key.doltool.data.Trove;
+import com.key.doltool.data.sqlite.Card;
+import com.key.doltool.data.sqlite.Mission;
+import com.key.doltool.data.sqlite.Trove;
 import com.the9tcat.hadi.ColumnAttribute;
 import com.the9tcat.hadi.DatabaseManager;
 import com.the9tcat.hadi.DefaultDAO;
 import com.the9tcat.hadi.Util;
+import com.the9tcat.hadi.annotation.Column;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 /**
  * 用于优化现有数据库ORM[对象关系映射]工具的速度的特别类
- * @version 0.1
- * @日志
+ * @version 0.2
  * 0.1-加入批量更新的方法，减少更新所需时间（400条数据约13s）
+ * 0.2-优化原查询方法
  * **/
 public class SRPUtil {
 	private DatabaseManager mDatabaseManager;
@@ -161,6 +164,147 @@ public class SRPUtil {
 		cursor.close();
 		return count;
 	}
+
+	public long insert(Object model) {
+		SQLiteDatabase db = this.mDatabaseManager.open();
+		long result = this.insertModel(db, model);
+		Util.setAutoId(this.mApplication, model, result);
+		this.mDatabaseManager.close();
+		return result;
+	}
+
+
+	private long insertModel(SQLiteDatabase db, Object model) {
+		ContentValues values = new ContentValues();
+		List atas = Util.getTableColumn(this.mApplication, model.getClass());
+
+		for (Object ata : atas) {
+			ColumnAttribute result = (ColumnAttribute) ata;
+			Object value = null;
+
+			try {
+				value = result.field.get(model);
+				if (result.autoincrement && Long.parseLong(value.toString()) <= 0L) {
+					continue;
+				}
+			} catch (Exception var9) {
+//				var9.printStackTrace();
+			}
+
+			if (value != null) {
+				if (!value.getClass().equals(Boolean.class) && !value.getClass().equals(Boolean.TYPE)) {
+					if (value.getClass().equals(Date.class)) {
+						values.put(result.name, ((Date) value).getTime());
+					} else if (value.getClass().equals(java.sql.Date.class)) {
+						values.put(result.name, ((java.sql.Date) value).getTime());
+					} else if (!value.getClass().equals(Double.class) && !value.getClass().equals(Double.TYPE)) {
+						if (!value.getClass().equals(Float.class) && !value.getClass().equals(Float.TYPE)) {
+							if (!value.getClass().equals(Integer.class) && !value.getClass().equals(Integer.TYPE)) {
+								if (!value.getClass().equals(Long.class) && !value.getClass().equals(Long.TYPE)) {
+									if (value.getClass().equals(String.class) || value.getClass().equals(Character.TYPE)) {
+										values.put(result.name, value.toString());
+									}
+								} else {
+									values.put(result.name, (Long) value);
+								}
+							} else {
+								values.put(result.name, (Integer) value);
+							}
+						} else {
+							values.put(result.name, (Float) value);
+						}
+					} else {
+						values.put(result.name, (Double) value);
+					}
+				} else {
+					values.put(result.name, (Boolean) value);
+				}
+			}
+		}
+
+		return db.insert(Util.getTableName(model.getClass()),null, values);
+	}
+
+	public <T>List<T>  select(Class<T> model, boolean distinct, String selection, String[] selectionArgs, String groupBy, String having, String order, String limit) {
+		SQLiteDatabase db = this.mDatabaseManager.open();
+		Cursor cursor = db.query(distinct, Util.getTableName(model), null, selection, selectionArgs, groupBy, having, order, limit);
+		List<T> list = processCursor(model,cursor);
+		cursor.close();
+		db.close();
+		return list;
+	}
+
+	public static <T>List<T> processCursor(Class<T> object, Cursor cursor) {
+		ArrayList<T> entities = new ArrayList<>();
+		try {
+			if(cursor.moveToFirst()) {
+				do {
+					T e = object.newInstance();
+					loadModel(object, cursor, e);
+					entities.add(e);
+				} while(cursor.moveToNext());
+			}
+		} catch (Exception e) {
+			Log.e("Hadi", e.getMessage());
+		}
+		return entities;
+	}
+
+	public static void loadModel(Class<?> object, Cursor cursor, Object model) {
+		Field[] fields = object.getDeclaredFields();
+		for (Field field : fields) {
+			Column tmp_c = field.getAnnotation(Column.class);
+			String fieldName = "";
+			if (tmp_c != null) {
+				fieldName = tmp_c.name();
+				if (fieldName.equals("")) {
+					fieldName = field.getName();
+				}
+			}
+
+			Class fieldType = field.getType();
+			int columnIndex = cursor.getColumnIndex(fieldName);
+			if (columnIndex >= 0) {
+				field.setAccessible(true);
+
+				try {
+					if (!fieldType.equals(Boolean.class) && !fieldType.equals(Boolean.TYPE)) {
+						if (fieldType.equals(Character.TYPE)) {
+							field.set(model, cursor.getString(columnIndex).charAt(0));
+						} else if (fieldType.equals(Date.class)) {
+							field.set(model, new Date(cursor.getLong(columnIndex)));
+						} else if (fieldType.equals(java.sql.Date.class)) {
+							field.set(model, new java.sql.Date(cursor.getLong(columnIndex)));
+						} else if (!fieldType.equals(Double.class) && !fieldType.equals(Double.TYPE)) {
+							if (!fieldType.equals(Float.class) && !fieldType.equals(Float.TYPE)) {
+								if (!fieldType.equals(Integer.class) && !fieldType.equals(Integer.TYPE)) {
+									if (!fieldType.equals(Long.class) && !fieldType.equals(Long.TYPE)) {
+										if (fieldType.equals(String.class)) {
+											field.set(model, cursor.getString(columnIndex));
+										}
+									} else {
+										field.set(model, cursor.getLong(columnIndex));
+									}
+								} else {
+									field.set(model, cursor.getInt(columnIndex));
+								}
+							} else {
+								field.set(model, cursor.getFloat(columnIndex));
+							}
+						} else {
+							field.set(model, cursor.getDouble(columnIndex));
+						}
+					} else {
+						field.set(model, cursor.getInt(columnIndex) != 0);
+					}
+				} catch (Exception e) {
+					Log.e("Hadi", e.getMessage());
+				}
+			}
+		}
+
+	}
+
 	private long count(SQLiteDatabase db,boolean flag,int type){
 		String table="mission ";
 		String where="where tag=?";

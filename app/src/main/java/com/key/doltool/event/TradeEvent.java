@@ -60,11 +60,6 @@ public class TradeEvent {
 		}
 	}
 	public String getRecipeTypeByIndex(int index){
-		String type="";
-		switch(index){
-			case 1:type="烹饪";break;
-			case 2:type="缝纫";break;
-		}
-		return type;
+		return new BookEvent().TYPE_BASE[index];
 	}
 }

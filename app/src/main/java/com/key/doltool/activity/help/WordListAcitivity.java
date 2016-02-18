@@ -1,9 +1,7 @@
 package com.key.doltool.activity.help;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.SaveCallback;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.adventure.AdventureDetailActivity;
@@ -23,35 +23,34 @@ import com.key.doltool.activity.mission.MissionDetailsActivity;
 import com.key.doltool.activity.trade.TradeCityDetailActivity;
 import com.key.doltool.activity.trade.TradeDetailActivity;
 import com.key.doltool.adapter.item.WordAdapter;
-import com.key.doltool.data.WordItem;
+import com.key.doltool.anime.MyAnimations;
+import com.key.doltool.data.sqlite.WordItem;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.SaveCallback;
-import com.the9tcat.hadi.DefaultDAO;
+import com.nineoldandroids.animation.Animator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WordListAcitivity extends BaseActivity{
 	private List<WordItem> list=new ArrayList<>();
 	private ListView listView;
 	private FloatingActionButton action;
-	private DefaultDAO dao;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.help_word_main);
-		dao=SRPUtil.getDAO(this);
 		findView();
 		setListener();
 		flag=false;
 		initToolBar(null);
 		toolbar.setTitle("航海单词表");
 	}
-	@SuppressWarnings("unchecked")
 	private void findView(){
 		listView=(ListView)findViewById(R.id.listView);
 		action=(FloatingActionButton)findViewById(R.id.action);
-		list=(List<WordItem>)dao.select(WordItem.class,false,"id>?",new String[]{"0"},null,null,null,null);
+		list=SRPUtil.getInstance(getApplicationContext()).
+				select(WordItem.class, false, "id>?", new String[]{"0"}, null, null, null, null);
 		listView.setAdapter(new WordAdapter(list, context));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -96,10 +95,34 @@ public class WordListAcitivity extends BaseActivity{
 	private void setListener(){
 		action.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showDialog();
+				MyAnimations.wordAnime(action,500,listener);
 			}
 		});
 	}
+
+	private Animator.AnimatorListener listener=new Animator.AnimatorListener(){
+
+		@Override
+		public void onAnimationStart(Animator animator) {
+
+		}
+
+		@Override
+		public void onAnimationEnd(Animator animator) {
+				showDialog();
+		}
+
+		@Override
+		public void onAnimationCancel(Animator animator) {
+
+		}
+
+		@Override
+		public void onAnimationRepeat(Animator animator) {
+
+		}
+	};
+
 	public void showDialog(){
 		LayoutInflater layoutinflater = context.getLayoutInflater();
 		View view = layoutinflater.inflate(R.layout.panel_material_word_dialog, null);
@@ -127,14 +150,19 @@ public class WordListAcitivity extends BaseActivity{
 				updateDialog.dismiss();
 			}
 		});
+		updateDialog.setOnDismissListener(new DialogInterface.OnDismissListener(){
+			public void onDismiss(DialogInterface dialog) {
+				MyAnimations.wordAnime2(action, 500);
+			}
+		});
         updateDialog.show();
 	}
 	private void addWordByParse(String zh_name,String tw_name){
-		ParseObject word=new ParseObject("WordBack");
+		AVObject word=new AVObject("WordBack");
 		word.put("zh_name",zh_name);
 		word.put("tw_name",tw_name);
 		word.saveInBackground(new SaveCallback(){
-			public void done(ParseException e) {
+			public void done(AVException e) {
 				if(e==null){
 					Toast.makeText(getApplicationContext(),"感谢您对单词表的维护，下次更新即可看到您录入的单词",Toast.LENGTH_SHORT).show();
 				}else{

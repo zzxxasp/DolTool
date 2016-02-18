@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Deck;
+import com.key.doltool.data.parse.Deck;
 
 import java.util.ArrayList;
 import java.util.List;

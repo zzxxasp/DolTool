@@ -1,12 +1,6 @@
 package com.key.doltool.adapter;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import net.tsz.afinal.FinalBitmap;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +12,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Trove;
-import com.key.doltool.util.BitMapUtil;
+import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.util.FileManager;
+import com.key.doltool.util.imageUtil.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class TroveAdapter extends BaseAdapter{
 	private static class ViewHolder{
 		public TextView name;
@@ -31,8 +29,6 @@ public class TroveAdapter extends BaseAdapter{
 	private List<Trove> list=new ArrayList<>();
 	private int[] itemState;
 	private Context context;
-	private FinalBitmap fb;
-	private Bitmap bm;
 	public TroveAdapter(List<Trove> list,Context context){
 		itemState=new int[list.size()];
 		for(int i=0;i<list.size();i++){
@@ -40,12 +36,6 @@ public class TroveAdapter extends BaseAdapter{
 		}
 		this.list=list;
 		this.context=context;
-        fb = FinalBitmap.create(context);
-        try {
-			bm=BitMapUtil.getBitmapByInputStream(context.getAssets().open(FileManager.TROVE+"dol_trove_defalut.jpg"),false);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	public int getCount() {
 			return list.size();
@@ -88,8 +78,10 @@ public class TroveAdapter extends BaseAdapter{
 			holder.name.setBackgroundColor(0xffC0C0C0);
 		}
 		holder.name.setText(list.get(position).getName());
-		updateBackground(position,holder.main);
-		fb.display(holder.pic,"assets://"+FileManager.TROVE+list.get(position).getPic_id()+".jpg",bm,bm);
+		updateBackground(position, holder.main);
+		ImageLoader.picassoLoad(context,
+				FileManager.ROOT + FileManager.TROVE + list.get(position).getPic_id() + ".jpg",
+				holder.pic);
 		holder.rate.setRating(list.get(position).getRate());
 		return convertView;
 	}

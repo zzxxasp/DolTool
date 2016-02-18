@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@null"
+    android:descendantFocusability="beforeDescendants"
+    android:padding="1dp"
     >
 <LinearLayout
+    android:id="@+id/item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:focusable="true"
-    android:clickable="true"
+    android:orientation="horizontal"
     android:padding="5dp"
     android:layout_margin="5dp"
     android:background="@drawable/material_card"
@@ -18,7 +21,7 @@
     android:id="@+id/txt" 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text=""
+    android:text="战术"
     android:padding="5dp"
     android:textColor="@color/Black_SP"
     />

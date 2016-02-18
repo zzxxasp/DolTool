@@ -6,9 +6,10 @@ import java.util.List;
 import android.content.Context;
 import android.util.Log;
 
-import com.key.doltool.data.Mission;
-import com.key.doltool.data.Trove;
-import com.key.doltool.data.Trove_Count;
+import com.key.doltool.data.sqlite.Card;
+import com.key.doltool.data.sqlite.Mission;
+import com.key.doltool.data.sqlite.Trove;
+import com.key.doltool.data.sqlite.Trove_Count;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
 /**更新事件:主要复制初始化和备份数据的操作**/
@@ -111,6 +112,27 @@ public class UpdataCount {
 		//更新统计数据
 		init_adventure();
 	}
+	//还原卡组
+	public void backSaveCard(List<Integer> list){
+		List<Card> temp=new ArrayList<>();
+		List<Card> out_temp=srp.select(Card.class, false, "flag=?",new String[]{"1"}, null, null, null, null);
+		for(int i=0;i<out_temp.size();i++){
+			Card card = new Card();
+			card.flag = 0;
+			card.id = out_temp.get(i).id;
+			temp.add(card);
+		}
+
+		for (int i=0;i<list.size();i++) {
+			Card card = new Card();
+			card.flag = 1;
+			card.id = list.get(i);
+			temp.add(card);
+		}
+
+		srp.update_Card(temp);
+	}
+
 	public void backSync(List<String> list){
 		List<Integer> mList=new ArrayList<>();
 		List<Integer> tList=new ArrayList<>();
@@ -126,4 +148,7 @@ public class UpdataCount {
 		backSaveMission(mList);
 		backSave(tList);
 	}
+
+
+
 }

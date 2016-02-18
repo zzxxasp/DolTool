@@ -15,6 +15,7 @@
  */
 
 package com.key.doltool.view;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -70,7 +71,7 @@ public class SystemBarTintManager {
     private boolean mNavBarTintEnabled;
     private View mStatusBarTintView;
     private View mNavBarTintView;
-
+    private Activity activity;
     /**
      * Constructor. Call this in the host activity onCreate method after its
      * content view has been set. You should always create new instances when
@@ -80,10 +81,9 @@ public class SystemBarTintManager {
      */
     @TargetApi(19)
     public SystemBarTintManager(Activity activity) {
-
+        this.activity=activity;
         Window win = activity.getWindow();
         ViewGroup decorViewGroup = (ViewGroup) win.getDecorView();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // check theme attrs
             int[] attrs = {android.R.attr.windowTranslucentStatus,
@@ -212,8 +212,12 @@ public class SystemBarTintManager {
      * @param res The identifier of the resource.
      */
     public void setStatusBarTintResource(int res) {
-        if (mStatusBarAvailable) {
-            mStatusBarTintView.setBackgroundResource(res);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().setStatusBarColor(activity.getResources().getColor(res));
+        }else{
+            if (mStatusBarAvailable) {
+                mStatusBarTintView.setBackgroundResource(res);
+            }
         }
     }
 
@@ -224,6 +228,7 @@ public class SystemBarTintManager {
      */
     @SuppressWarnings("deprecation")
     public void setStatusBarTintDrawable(Drawable drawable) {
+
         if (mStatusBarAvailable) {
             mStatusBarTintView.setBackgroundDrawable(drawable);
         }

@@ -16,10 +16,9 @@ public class Attributes {
     public static final int DEFAULT_TOUCH_EFFECT = 0;
     public static final int EASE_TOUCH_EFFECT = 1;
     public static final int RIPPLE_TOUCH_EFFECT = 2;
-
-    public static final String DEFAULT_FONT_FAMILY = "roboto";
-    public static final String DEFAULT_FONT_WEIGHT = "light";
-    public static final String DEFAULT_FONT_EXTENSION = "ttf";
+    public static final String DEFAULT_FONT_FAMILY = "brandontext";
+    public static final String DEFAULT_FONT_WEIGHT = "regular";
+    public static final String DEFAULT_FONT_EXTENSION = "otf";
     public static final int DEFAULT_TEXT_APPEARANCE = 0;
 
     public static int DEFAULT_RADIUS_DP = 4;

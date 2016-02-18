@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Mission;
+import com.key.doltool.data.sqlite.Mission;
 import com.key.doltool.util.ResourcesUtil;
 
 public class MissionItemAdapter extends BaseAdapter{

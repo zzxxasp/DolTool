@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@null"
     >
-<LinearLayout 
+<LinearLayout
 	android:id="@+id/panel_container"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
     android:background="@null" 
     >
 <TextView
-    android:id="@+id/title_txt" 
+    android:id="@+id/title_txt"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:textColor="#DE000000"
@@ -32,7 +32,7 @@
 	android:paddingLeft="24dp"
 	android:paddingTop="24dp"
 	android:paddingRight="24dp"
-	android:text="新版本可用"    
+	android:text="新版本可用"
     />
 </LinearLayout>
 <LinearLayout 
@@ -46,15 +46,15 @@
 	android:id="@+id/layout1"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	layout="@layout/update_dialog" 
+	layout="@layout/update_dialog"
 	/>
 <include
-    android:id="@+id/layout2"  
+    android:id="@+id/layout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 	android:visibility="gone"
     layout="@layout/down_dialog"
-    />    
+    />
 </LinearLayout>
 </LinearLayout>
 </LinearLayout>

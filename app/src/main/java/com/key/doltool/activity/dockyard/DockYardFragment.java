@@ -28,7 +28,7 @@ import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.PartListAdapter;
 import com.key.doltool.adapter.SailBoatListAdapter;
 import com.key.doltool.anime.MyAnimations;
-import com.key.doltool.data.Part;
+import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.data.SailBoat;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.MakeEvent;
@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 /**
- * 造船厂主界面(更大的意义,可以作为其他页面暂时的参考，提高20%编写效率)
+ * 造船厂主界面
  * @author key
  * @version 0.7
  * @time 2013-1-10
@@ -178,6 +178,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	private void findView() {
 		initPage();
 		alert=new DialogEvent().showLoading(getActivity());
+		alert.show();
 	}
 	//通用Listener
 	private void setListener() {

@@ -19,7 +19,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.NPCAdapter;
-import com.key.doltool.data.NPCInfo;
+import com.key.doltool.data.sqlite.NPCInfo;
 import com.key.doltool.event.AreaEvent;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.ViewUtil;
@@ -255,7 +255,6 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
 			switch (menuItem.getItemId()) {
 				case R.id.city_search:findObject();break;
 				case R.id.type_search:jump();break;
-
 			}
 			return true;
 		}

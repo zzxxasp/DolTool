@@ -1,6 +1,7 @@
 package com.key.doltool.activity.squre;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -8,14 +9,11 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
-import com.key.doltool.data.MapItem;
-import com.key.doltool.util.BitMapUtil;
+import com.key.doltool.data.sqlite.MapItem;
 import com.key.doltool.util.db.SRPUtil;
-import com.key.doltool.view.MutilTouchImageView;
 import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.flat.FlatButton;
 import com.key.doltool.view.img.ImageSource;
-import com.key.doltool.view.img.PinView;
 import com.key.doltool.view.img.SubsamplingScaleImageView;
 import com.the9tcat.hadi.DefaultDAO;
 /**
@@ -47,7 +45,6 @@ public class MapActivity extends BaseActivity {
 		img.setImage(ImageSource.resource(R.raw.map));
 	}
 	private void initViews() {
-		
 		name=(TextView)findViewById(R.id.name);
 		co_sea=(TextView)findViewById(R.id.co_sea);
 		sea=(TextView)findViewById(R.id.sea);
@@ -57,6 +54,33 @@ public class MapActivity extends BaseActivity {
 		item=(MapItem)dao.select(MapItem.class,false,"id>?", 
 				new String[]{"0"}, null, null, null, null).get(0);
 		img=(SubsamplingScaleImageView)findViewById(R.id.map);
+		img.setOnImageEventListener(new SubsamplingScaleImageView.OnImageEventListener() {
+			@Override
+			public void onReady() {
+				//加载显示对话框停止显示
+				Log.i("Ready","Ready is over");
+			}
+
+			@Override
+			public void onImageLoaded() {
+
+			}
+
+			@Override
+			public void onPreviewLoadError(Exception e) {
+
+			}
+
+			@Override
+			public void onImageLoadError(Exception e) {
+
+			}
+
+			@Override
+			public void onTileLoadError(Exception e) {
+
+			}
+		});
 		detail=(ViewGroup)findViewById(R.id.detail);
 		btn=(Button)findViewById(R.id.btn);
 		btn.setOnClickListener(new View.OnClickListener() {

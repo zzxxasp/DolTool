@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.RecipeAdapter;
-import com.key.doltool.data.Book;
-import com.key.doltool.data.Recipe;
+import com.key.doltool.data.sqlite.Book;
+import com.key.doltool.data.sqlite.Recipe;
 import com.key.doltool.event.BookEvent;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
@@ -37,10 +37,9 @@ public class RecipeForBookDetailsActivity extends BaseActivity{
 		rank=(TextView)findViewById(R.id.rank);
 		get_way=(TextView)findViewById(R.id.get_way);		
 	}
-	@SuppressWarnings("unchecked")
 	private void init(){
-		book=(Book)dao.select(Book.class,false,"id=?",new String[]{""+id},null,null,null,null).get(0);
-		mylist=(List<Recipe>)dao.select(Recipe.class,false,"parent_name=?",new String[]{""+book.getName()},null,null,null,null);
+		book=(Book)dao.select(Book.class,false,"id=?",new String[]{id},null,null,null,null).get(0);
+		mylist=SRPUtil.getInstance(this).select(Recipe.class,false,"parent_name=?",new String[]{""+book.getName()},null,null,null,null);
 		list.setAdapter(new RecipeAdapter(mylist,this));
 		name.setText(book.getName());
 		desc_type.setText(book.getDesc_type());

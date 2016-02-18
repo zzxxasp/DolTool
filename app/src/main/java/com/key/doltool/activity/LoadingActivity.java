@@ -1,8 +1,5 @@
 package com.key.doltool.activity;
 
-import net.youmi.android.AdManager;
-import net.youmi.android.spot.SpotManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,23 +11,22 @@ import com.key.doltool.activity.core.MainActivity;
 import com.key.doltool.anime.MyAnimations;
 import com.key.doltool.event.VoyageEvent;
 import com.key.doltool.util.DBUtil;
-import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
-import com.the9tcat.hadi.DefaultDAO;
+
+import net.youmi.android.AdManager;
+import net.youmi.android.spot.SpotManager;
 
 import java.lang.ref.WeakReference;
 
 
 public class LoadingActivity extends BaseActivity{
-	private DefaultDAO dao;
 	private MyAnimations my;
 	private Thread mThread;
 	private MyHandler updateUI;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loading);
-		dao=SRPUtil.getDAO(getApplicationContext());
-		updateUI=new MyHandler(LoadingActivity.this);
+		updateUI=new MyHandler(this);
 		AdManager.getInstance(this).init("8b0be299a6c08260", "65fb4b2fb906d2e3", false);
 		SpotManager.getInstance(this).loadSpotAds();
 		SpotManager.getInstance(this)
@@ -46,9 +42,9 @@ public class LoadingActivity extends BaseActivity{
 	}
 	private Runnable mTask=new Runnable(){
 		public void run() {
-			DBUtil.copyDB(getApplicationContext(),updateUI,dao);
+			DBUtil.copyDB(getApplicationContext(),updateUI);
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(1500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -73,10 +69,10 @@ public class LoadingActivity extends BaseActivity{
 			if (activity != null) {
 				switch(msg.what) {
 					case 1:
-						Toast.makeText(activity,"更新成功", Toast.LENGTH_SHORT).show();
+						Toast.makeText(activity.getApplicationContext(),"更新成功", Toast.LENGTH_SHORT).show();
 						break;
 					case 2:
-						Toast.makeText(activity,"初始化失败",Toast.LENGTH_SHORT).show();
+						Toast.makeText(activity.getApplicationContext(),"初始化失败",Toast.LENGTH_SHORT).show();
 						break;
 				}
 			}
@@ -86,7 +82,6 @@ public class LoadingActivity extends BaseActivity{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		dao=null;
 		my=null;
 		mThread=null;
 	}

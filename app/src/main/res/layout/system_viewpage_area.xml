@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+    <include
+        layout="@layout/system_actionbar_black"
+        />
+<LinearLayout
+    android:id="@+id/main" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+	android:background="@color/background_material_light"
+    >
+<!--分页区-->
+<com.key.doltool.view.SlidingTabLayout
+    android:id="@+id/sliding_tabs"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    />
+<android.support.v4.view.ViewPager
+ 		android:id="@+id/main_viewpagers"
+		android:layout_height="fill_parent"
+		android:layout_width="wrap_content" 
+	/>
+</LinearLayout>
+</LinearLayout>

@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.WikiInfo;
+import com.key.doltool.data.sqlite.WikiInfo;
 public class WikiAdapter extends BaseAdapter{
 	private static class ViewHolder{
 		public TextView name;

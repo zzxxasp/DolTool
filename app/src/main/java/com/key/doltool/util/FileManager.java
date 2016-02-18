@@ -3,13 +3,15 @@ package com.key.doltool.util;
  * 返回APP目录下的file
  * @author Administrator
  * @version 2013-4-18
- * @日志 2013-4-18<br>
+ * 日志 2013-4-18<br>
  * 
  */
 public class FileManager {
+	public static String ROOT="file:///android_asset/";
 	public static String BOAT="dol_boat/";
 	public static String TROVE="dol_trove/";
 	public static String TRADE="dol_trade/";
+	public static String ITEM="dol_item/";
 	public static String SKILL="dol_skill/";
 	public static String VOYAGE="dol_voyage/";
 	public static String ADC="dol_adc/";

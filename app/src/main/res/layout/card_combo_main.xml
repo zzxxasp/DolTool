@@ -2,8 +2,8 @@
 <!--状态栏-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/background_material_light"
     android:orientation="vertical"    
     >
@@ -11,15 +11,15 @@
     	layout="@layout/system_actionbar_black"
 	/>
 <RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background_material_light"
     >
 <ListView
     android:id="@+id/listview"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:divider="#00000000"
     android:dividerHeight="1dp"
     >

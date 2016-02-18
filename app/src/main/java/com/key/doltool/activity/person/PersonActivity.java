@@ -1,12 +1,5 @@
 package com.key.doltool.activity.person;
 
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,49 +15,52 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVRelation;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.GetDataCallback;
+import com.avos.avoscloud.RequestPasswordResetCallback;
+import com.avos.avoscloud.SaveCallback;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
-import com.key.doltool.data.Mission;
-import com.key.doltool.data.Trove;
-import com.key.doltool.data.Verion;
+import com.key.doltool.data.sqlite.Mission;
+import com.key.doltool.data.sqlite.Trove;
+import com.key.doltool.data.sqlite.Verion;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataCount;
 import com.key.doltool.event.UpdataList;
 import com.key.doltool.event.UserEvent;
-import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.NumberUtil;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.DataSelectUtil;
 import com.key.doltool.util.db.SRPUtil;
-import com.key.doltool.view.BootstrapCircleThumbnail;
+import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.HoloCircularProgressBar;
 import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.Toast;
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.Animator.AnimatorListener;
 import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.animation.ValueAnimator.AnimatorUpdateListener;
-import com.parse.FindCallback;
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseRelation;
-import com.parse.ParseUser;
-import com.parse.RequestPasswordResetCallback;
-import com.parse.SaveCallback;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * 个人信息界面
  * **/
 public class PersonActivity extends BaseActivity{
 	private TextView name,tag1,tag2;
-	private BootstrapCircleThumbnail head_img;
+	private ImageView head_img;
 	private RelativeLayout function_3,function_2,function_1;
 	private Dialog dialog;
 	
@@ -119,7 +115,7 @@ public class PersonActivity extends BaseActivity{
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		tintManager.setStatusBarTintEnabled(true);
 		tintManager.setStatusBarTintResource(R.color.black);
-		head_img=(BootstrapCircleThumbnail)findViewById(R.id.head_img);
+		head_img=(ImageView)findViewById(R.id.head_img);
 		name=(TextView)findViewById(R.id.name);
 		tag1=(TextView)findViewById(R.id.tag1);
 		tag2=(TextView)findViewById(R.id.tag2);
@@ -151,10 +147,6 @@ public class PersonActivity extends BaseActivity{
 		
 	@Override
 	protected void onDestroy() {
-    	if(head_img.mBitmap!=null){
-    		head_img.mBitmap.recycle();
-    		head_img.mBitmap=null;
-    	}
         if (mProgressBarAnimator != null) {
             mProgressBarAnimator.cancel();
             mProgressBarAnimator=null;
@@ -180,13 +172,13 @@ public class PersonActivity extends BaseActivity{
 				back_temp="";
 				Toast.makeText(getApplicationContext(),"数据已同步",Toast.LENGTH_SHORT).show();
 			}
-            mission_number.setText(""+a_size);
-            trove_number.setText(""+b_size);
+            mission_number.setText("" + a_size);
+            trove_number.setText("" + b_size);
             if (mProgressBarAnimator != null) {
                 mProgressBarAnimator.cancel();
             }
-            animate(t_bar, null,b_size*1.0f/ResourcesUtil.getInt(PersonActivity.this,R.integer.all_trove)*1.0f,1000);
-            animate(m_bar, null,a_size*1.0f/ResourcesUtil.getInt(PersonActivity.this,R.integer.all_mission)*1.0f,1000);
+			t_bar.setProgressWithAnimation(b_size * 1.0f / ResourcesUtil.getInt(PersonActivity.this, R.integer.all_trove) * 1.0f, 2000);
+			m_bar.setProgressWithAnimation(a_size * 1.0f / ResourcesUtil.getInt(PersonActivity.this, R.integer.all_mission) * 1.0f, 2000);
 		}
 	 };
 	
@@ -205,46 +197,7 @@ public class PersonActivity extends BaseActivity{
 			b=dao.select(Trove.class,false,"flag=?", new String[]{"1"},null, null, null,null);
 		}
 	};
-	
-    private void animate(final HoloCircularProgressBar progressBar, final AnimatorListener listener,
-            final float progress, final int duration) {
 
-        mProgressBarAnimator = ObjectAnimator.ofFloat(progressBar, "progress", progress);
-        mProgressBarAnimator.setDuration(duration);
-
-        mProgressBarAnimator.addListener(new AnimatorListener() {
-
-            @Override
-            public void onAnimationCancel(final Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(final Animator animation) {
-                progressBar.setProgress(progress);
-            }
-
-            @Override
-            public void onAnimationRepeat(final Animator animation) {
-            }
-
-            @Override
-            public void onAnimationStart(final Animator animation) {
-            }
-        });
-        if (listener != null) {
-            mProgressBarAnimator.addListener(listener);
-        }
-        mProgressBarAnimator.reverse();
-        mProgressBarAnimator.addUpdateListener(new AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(final ValueAnimator animation) {
-                progressBar.setProgress((Float) animation.getAnimatedValue());
-            }
-        });
-        mProgressBarAnimator.start();
-    }
-	
 	//同步信息
 	public void syncInfo(String fileName){
 		if(a==null||b==null){
@@ -272,14 +225,14 @@ public class PersonActivity extends BaseActivity{
 			e1.printStackTrace();
 		}
 
-		final ParseFile file=new ParseFile(fileName,data);
+		final AVFile file=new AVFile(fileName,data);
 		file.saveInBackground();
-		
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("BackUp");
-		query.whereEqualTo("userId",ParseUser.getCurrentUser());
+
+		AVQuery<AVObject> query = AVQuery.getQuery("BackUp");
+		query.whereEqualTo("userId", AVUser.getCurrentUser());
 		//更新
-		query.findInBackground(new FindCallback<ParseObject>() {
-			  public void done(List<ParseObject> commentList, ParseException e) {
+		query.findInBackground(new FindCallback<AVObject>() {
+			  public void done(List<AVObject> commentList, AVException e) {
 				  if(e==null){
 					  if(commentList.size()!=0){
 						  //有数据的情况（判断时间进行更新）
@@ -288,11 +241,11 @@ public class PersonActivity extends BaseActivity{
 						  Log.i("temp",temp+"");
 						  if(temp<0){
 							  //需要本地更新（弹出提示）
-							  ParseFile syncFile =commentList.get(0).getParseFile("backFile");
+							  AVFile syncFile =commentList.get(0).getAVFile("backFile");
 							  //展示对话框-时间不同步
 							  v.update_time=StringUtil.dateFormat(commentList.get(0).getDate("syncTime"));
 							  syncFile.getDataInBackground(new GetDataCallback() {
-									public void done(byte[] data, ParseException e) {
+									public void done(byte[] data, AVException e) {
 										if (e == null) {
 											try {
 												back_temp=new String(data,"UTF-8");
@@ -314,13 +267,13 @@ public class PersonActivity extends BaseActivity{
 							  Date date=new Date();
 							  v.update_time=StringUtil.dateFormat(date);
 							  dao.update(v,new String[]{"update_time"},"verion>?",new String[]{"0"});
-							  ParseObject syncData=commentList.get(0);
-							  ParseRelation<ParseObject> relation=syncData.getRelation("userId");
-							  relation.add(ParseUser.getCurrentUser());
+							  AVObject syncData=commentList.get(0);
+							  AVRelation<AVObject> relation=syncData.getRelation("userId");
+							  relation.add(AVUser.getCurrentUser());
 							  syncData.put("backFile",file);
 							  syncData.put("syncTime", date);
 							  syncData.saveInBackground(new SaveCallback(){
-									public void done(ParseException e) {
+									public void done(AVException e) {
 										if (e == null) {
 											Toast.makeText(PersonActivity.this,"数据已同步",Toast.LENGTH_SHORT).show();
 										} else {
@@ -336,13 +289,13 @@ public class PersonActivity extends BaseActivity{
 						  Date date=new Date();
 						  v.update_time=StringUtil.dateFormat(date);
 						  dao.update(v,new String[]{"update_time"},"verion>?",new String[]{"0"});
-						  ParseObject syncData=new ParseObject("BackUp");
-						  ParseRelation<ParseObject> relation=syncData.getRelation("userId");
-						  relation.add(ParseUser.getCurrentUser());
+						  AVObject syncData=new AVObject("BackUp");
+						  AVRelation<AVObject> relation=syncData.getRelation("userId");
+						  relation.add(AVUser.getCurrentUser());
 						  syncData.put("backFile",file);
 						  syncData.put("syncTime", date);
 						  syncData.saveInBackground(new SaveCallback(){
-							  public void done(ParseException e) {
+							  public void done(AVException e) {
 								  if (e == null) {
 									  Toast.makeText(PersonActivity.this,"数据已同步",Toast.LENGTH_SHORT).show();
 									} else {
@@ -364,9 +317,9 @@ public class PersonActivity extends BaseActivity{
 	//重新密码
 	public void resetPassword(){
 		dialog.show();
-		ParseUser.requestPasswordResetInBackground(ParseUser.getCurrentUser().getEmail(),
+		AVUser.requestPasswordResetInBackground(AVUser.getCurrentUser().getEmail(),
                 new RequestPasswordResetCallback() {
-			public void done(ParseException e) {
+			public void done(AVException e) {
 				if (e == null) {
 					Toast.makeText(getApplicationContext(),"请查收注册的邮箱进行重置密码",Toast.LENGTH_SHORT).show();
 				} else {
@@ -379,28 +332,15 @@ public class PersonActivity extends BaseActivity{
 	}
 	//初始化用户
 	private void init(){
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		AVUser currentUser = AVUser.getCurrentUser();
 		//如果有用户则
 		if (currentUser != null) {
-			ParseFile headImg=currentUser.getParseFile("headPic");
+			AVFile headImg=currentUser.getAVFile("headPic");
 			if(headImg!=null){
-				headImg.getDataInBackground(new GetDataCallback() {
-					public void done(byte[] data, ParseException e) {
-						if (e == null) {
-							bitmap=BitMapUtil.getBitmapByInputStream(data,3);
-							head_img.setImageBitmap(bitmap);
-						} else {
-							bg=getResources().getDrawable(R.drawable.dol_trove_defalut);
-							head_img.setImageDrawable(bg);
-						}
-					}
-				});
+				ImageLoader.picassoLoadCirle(this, headImg.getUrl(),head_img);
 			}else{
-				bg = getResources().getDrawable(R.drawable.dol_trove_defalut);
-				head_img.setImageDrawable(bg);
+				ImageLoader.picassoLoadCirle(this, head_img);
 			}
-
-			
 			if(!StringUtil.isNull(currentUser.getString("nickName"))){
 				name.setText(currentUser.getString("nickName"));
 			}else{

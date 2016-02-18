@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.adapter.util.ApdaterUtil;
-import com.key.doltool.data.NPCInfo;
+import com.key.doltool.data.sqlite.NPCInfo;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;

@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.key.doltool.R;
-import com.key.doltool.data.TradeItem;
+import com.key.doltool.data.sqlite.TradeItem;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 public class TradeListAdapter extends BaseAdapter{

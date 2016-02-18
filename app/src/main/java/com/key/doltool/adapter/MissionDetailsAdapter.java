@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Mission;
+import com.key.doltool.data.sqlite.Mission;
 public class MissionDetailsAdapter extends BaseAdapter{
 	private String[] item_txt={
 			"难度","技能需求","定金/报酬","经验/声望","时间限制","发现物","获得物品",

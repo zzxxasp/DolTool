@@ -15,6 +15,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.LogInCallback;
+import com.avos.avoscloud.RequestPasswordResetCallback;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.core.MainActivity;
@@ -23,10 +27,7 @@ import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.RequestPasswordResetCallback;
+
 
 public class LoginActivity extends BaseActivity{
 	//登录
@@ -163,18 +164,18 @@ public class LoginActivity extends BaseActivity{
 	//重置密码（未登录版本）
 	private void resetPassword(String emali){
 		dialog.show();
-		ParseUser.requestPasswordResetInBackground(emali,
-                new RequestPasswordResetCallback() {
-			public void done(ParseException e) {
-				if (e == null) {
-					Toast.makeText(getApplicationContext(),"请查收注册的邮箱进行重置密码",Toast.LENGTH_SHORT).show();
-				} else {
-					e.printStackTrace();
-					Toast.makeText(getApplicationContext(),"错误4",Toast.LENGTH_SHORT).show();
-				}
-				dialog.dismiss();
-			}
-		});
+		AVUser.requestPasswordResetInBackground(emali,
+				new RequestPasswordResetCallback() {
+					public void done(AVException e) {
+						if (e == null) {
+							Toast.makeText(getApplicationContext(), "请查收注册的邮箱进行重置密码", Toast.LENGTH_SHORT).show();
+						} else {
+							e.printStackTrace();
+							Toast.makeText(getApplicationContext(), "错误4", Toast.LENGTH_SHORT).show();
+						}
+						dialog.dismiss();
+					}
+				});
 	}
 	private boolean judge(){
 		if(account.getText().toString().equals("")){
@@ -205,8 +206,8 @@ public class LoginActivity extends BaseActivity{
 	
 	private void login(){
 		dialog.show();
-		ParseUser.logInInBackground(account.getText().toString(),password.getText().toString(), new LogInCallback() {
-			public void done(ParseUser user, ParseException e) {
+		AVUser.logInInBackground(account.getText().toString(),password.getText().toString(),new LogInCallback<AVUser>() {
+			public void done(AVUser user, AVException e) {
 				if (user != null) {
 					//登录
 					dialog.dismiss();

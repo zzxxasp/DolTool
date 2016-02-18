@@ -5,17 +5,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.SaveCallback;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.data.SailBoat;
+import com.key.doltool.data.TradeCityItem;
+import com.key.doltool.data.sqlite.City;
+import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.util.DBUtil;
+import com.key.doltool.util.FileManager;
+import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.util.jsoup.JsoupForBaHa;
 import com.key.doltool.util.jsoup.JsoupForGVO;
 import com.key.doltool.util.jsoup.JsoupUtil;
 import com.key.doltool.view.flat.FlatButton;
+
 import com.the9tcat.hadi.DefaultDAO;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 public class DataBaseInsertFragment extends BaseFragment {
@@ -26,6 +41,9 @@ public class DataBaseInsertFragment extends BaseFragment {
 	private FlatButton btn,btn2;
 	private ExecutorService fixedThreadPool ;
     private View main;
+	private List<Trove> list;
+	private int index=-1;
+	private Trove trove;
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		 View view =  inflater.inflate(R.layout.init, container,false);
 		 init(view);
@@ -41,7 +59,8 @@ public class DataBaseInsertFragment extends BaseFragment {
 		fixedThreadPool= Executors.newFixedThreadPool(20);
 		btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				update_download();
+				updateCityTradeItem();
+//				update_download();
 			}
 		});
 		btn2.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +69,121 @@ public class DataBaseInsertFragment extends BaseFragment {
 			}
 		});
 	}
-	
+
+
+	private void updateCityTradeItem(){
+		AVQuery<AVObject> p=new AVQuery<>("trade");
+		p.whereEqualTo("flag",0);
+		p.findInBackground(new FindCallback<AVObject>() {
+			@Override
+			public void done(List<AVObject> list, AVException e) {
+				if (e == null && list.size() != 0) {
+					for(int i=0;i<list.size();i++){
+						AVObject object=list.get(i);
+						object.put("flag", 1);
+						object.saveInBackground();
+						City city=selectCity(object);
+						if(city!=null){
+							SRPUtil.getDAO(getActivity()).update(city,
+									new String[]{"trade_list"},"name=?",new String[]{city.getName()});
+						}
+					}
+				}
+			}
+		});
+	}
+
+	private City selectCity(AVObject object){
+		boolean bool=true;
+		Gson g=new Gson();
+		List<City> list=SRPUtil.getInstance(getActivity()).select(City.class, false, "name=?", new String[]{object.getString("name")}, null, null, null, null);
+		if(list.size()==1){
+			City item=list.get(0);
+			List<TradeCityItem> temp=g.fromJson(item.getTrade_list(), new TypeToken<List<TradeCityItem>>() {
+			}.getType());
+			for(int i=0;i<temp.size();i++){
+				if(temp.get(i).name.equals(object.getString("trade_name"))){
+					TradeCityItem item1=new TradeCityItem();
+					item1.name=object.getString("trade_name");
+					item1.price=object.getString("price");
+					item1.invest=object.getString("invest");
+					temp.set(i, item1);
+					bool=false;
+					break;
+				}
+			}
+			if(bool){
+				TradeCityItem item1=new TradeCityItem();
+				item1.name=object.getString("trade_name");
+				item1.price=object.getString("price");
+				item1.invest=object.getString("invest");
+				temp.add(item1);
+			}
+			item.setTrade_list(g.toJson(temp));
+			return item;
+		}else{
+			return null;
+		}
+	}
+
+	private void initParse(){
+		new Thread(){
+			@Override
+			public void run() {
+//				list=SRPUtil.getInstance(getActivity()).select(Trove.class, false, "id>?", new String[]{"0"}, null, null, null,"0,100");
+//				dd();
+			}
+		}.start();
+	}
+
+	private void dd(){
+		index++;
+		if(index>=list.size()){
+			return ;
+		}
+		trove=list.get(index);
+		AVQuery<AVObject> p=new AVQuery<>("Trove");
+		p.whereEqualTo("id", trove.getId());
+		p.findInBackground(new FindCallback<AVObject>() {
+		@Override
+		public void done(List<AVObject> list, AVException e) {
+			if(e==null&&list.size()==0){
+					initPP();
+				}
+			}
+		});
+	}
+
+	private void initPP(){
+		AVObject item=new AVObject("Trove");
+		byte[] file= ResourcesUtil.getHtmlByAsset(getActivity(),FileManager.TROVE+trove.getPic_id()+".jpg");
+		if(file!=null&&file.length>0){
+			AVFile file_item=new AVFile(trove.getPic_id()+".jpg",file);
+			item.put("pic",file_item);
+			file_item.saveInBackground();
+		}
+		item.put("id",trove.getId());
+		item.put("details",trove.getDetails());
+		item.put("card_point",trove.getCard_point());
+		item.put("feats",trove.getFeats());
+		item.put("getWay",trove.getGetWay());
+		item.put("misson",trove.getMisson());
+		item.put("name",trove.getName());
+		if(trove.getNeed()!=null){
+			item.put("need",trove.getNeed());
+		}
+		item.put("type",trove.getType());
+		item.put("rate",trove.getRate());
+		item.saveInBackground(new SaveCallback() {
+			@Override
+			public void done(AVException e) {
+				if(e==null){
+					dd();
+				}
+			}
+		});
+	}
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -133,9 +266,12 @@ public class DataBaseInsertFragment extends BaseFragment {
 //			jsoup.getADC(1, dao);
 //			jsoup.getADC(2, dao);
 //			jsoup.getADC(3, dao);
-			for(int i=4664;i<4752;i++){
-				jsoupG.getMission(i, dao);
-			}
+//			for(int i=4664;i<4752;i++){
+//				jsoupG.getMission(i, dao);
+//			}
+			jsoup.getPicMe(SRPUtil.getInstance(getActivity()));
+//			jsoupB.getTradeItemUrl(dao);
+//			jsoup.getship(dao);
 //			jsoupG.do_TIANWEN(dao,1);
 //			jsoupG.do_TIANWEN(dao,2);
 //			jsoupG.do_TIANWEN(dao,3);

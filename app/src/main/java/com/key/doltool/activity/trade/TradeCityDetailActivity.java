@@ -16,7 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.TradeSimpleListAdapter;
-import com.key.doltool.data.City;
+import com.key.doltool.data.sqlite.City;
 import com.key.doltool.data.TradeCityItem;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;

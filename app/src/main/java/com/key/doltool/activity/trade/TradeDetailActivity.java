@@ -1,23 +1,25 @@
 package com.key.doltool.activity.trade;
 
-import java.io.IOException;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.TagAdapter;
-import com.key.doltool.data.TradeItem;
+import com.key.doltool.data.sqlite.TradeItem;
 import com.key.doltool.event.TradeEvent;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.FlowLayout;
+import com.key.doltool.view.LinearLayoutForListView;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.io.IOException;
 
 public class TradeDetailActivity extends BaseActivity{
 	private TextView name,sp;
@@ -26,16 +28,20 @@ public class TradeDetailActivity extends BaseActivity{
 	private ImageView pic_type,number_type;
 	private TextView details;
 	private FlowLayout city_area;
+	private FlowLayout recipe_area;
 	private DefaultDAO dao;
-	private int id=0;
+	private String id="";
 	private String name_txt="";
 	private String tw_name="";
+	private LinearLayout recipe_way;
+	//钓点查询
+	//--------
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trade_detail);
 		initToolBar(null);
 		dao=SRPUtil.getDAO(getApplicationContext());
-		id=getIntent().getIntExtra("id",0);
+		id=getIntent().getStringExtra("id");
 		name_txt=getIntent().getStringExtra("name");
 		tw_name=getIntent().getStringExtra("tw_name");
 		findView();
@@ -43,6 +49,8 @@ public class TradeDetailActivity extends BaseActivity{
 		init();
 	}
 	private void findView(){
+		recipe_way=(LinearLayout)findViewById(R.id.recipe_way);
+		recipe_area=(FlowLayout)findViewById(R.id.recipse_array);
 		name=(TextView)findViewById(R.id.name);
 		sp=(TextView)findViewById(R.id.sp);
 		type_txt=(TextView)findViewById(R.id.type_txt);
@@ -71,14 +79,23 @@ public class TradeDetailActivity extends BaseActivity{
 			String[] city=item.getProducing_area().split(",");
 			city_area.setAdapter(new TagAdapter(this,city));
 		}
+		if(item.getRecipe_way().equals("")){
+			recipe_way.setVisibility(View.GONE);
+		}else{
+			String[] city=item.getRecipe_way().split(",");
+			recipe_area.setAdapter(new TagAdapter(this,city,item.getName()));
+		}
 		details.setText(item.getDetail());
 		name.setText(item.getName());
+		flag=false;
+		initToolBar(null);
+		toolbar.setTitle(item.getName());
 		try {
 			pic.setImageBitmap(BitMapUtil.getBitmapByInputStream(getAssets().open(FileManager.TRADE+item.getPic_id()+".png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(item.getSp().equals("")){
+		if(item.getSp().equals("")||item.getSp().equals("钓鱼")){
 			sp.setVisibility(View.GONE);
 		}else{
 			sp.setText(item.getSp());

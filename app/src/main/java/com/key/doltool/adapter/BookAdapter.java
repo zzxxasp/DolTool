@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Book;
+import com.key.doltool.data.sqlite.Book;
 import com.key.doltool.event.BookEvent;
 public class BookAdapter extends BaseAdapter{
 	private static class ViewHolder{

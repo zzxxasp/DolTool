@@ -3,6 +3,5 @@
  <item android:id="@+id/action_slelect"
      	android:title="@string/ability_boat"
      	android:showAsAction="never"
-     />   
-
+     />
 </menu>

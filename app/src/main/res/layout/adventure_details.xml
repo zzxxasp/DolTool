@@ -12,7 +12,6 @@
 <RelativeLayout 
 	android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/area_1"
     android:layout_marginTop="10dp"
     >  
 <!--区域①-->
@@ -186,15 +185,6 @@
     android:text=""
     />    
 </LinearLayout>
-<ImageView
-    android:id="@+id/over_pic"
-    android:contentDescription="@null" 
-	android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentRight="true"
-    android:src="@drawable/ic_finish"    
-    />
 </RelativeLayout>
 <!--区域②-->
 <LinearLayout

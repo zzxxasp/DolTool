@@ -15,6 +15,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.SignUpCallback;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.core.MainActivity;
@@ -24,10 +27,6 @@ import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UserEvent;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
 public class RegisterActivity extends BaseActivity{
 	//注册
 	private static final String[] AUTO_EMAILS = {"@163.com", "@sina.com", "@qq.com", "@126.com", "@gmail.com", "@apple.com"};
@@ -118,7 +117,7 @@ public class RegisterActivity extends BaseActivity{
 	public void signUp(){
 		server_name=area.getSelectedItemPosition()+"-"+server.getSelectedItemPosition();
 		Log.i("tag",""+server_name);
-		ParseUser user = new ParseUser();
+		AVUser user = new AVUser();
 		user.setUsername(email.getText().toString());
 		user.setPassword(password_register.getText().toString());
 		user.setEmail(email.getText().toString());
@@ -127,7 +126,7 @@ public class RegisterActivity extends BaseActivity{
 		}
 		user.put("server",server_name);
 		user.signUpInBackground(new SignUpCallback() {
-			public void done(ParseException e) {
+			public void done(AVException e) {
 				if (e == null) {
 					dialog.dismiss();
 					Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_LONG).show();

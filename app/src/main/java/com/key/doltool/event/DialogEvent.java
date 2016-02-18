@@ -8,28 +8,25 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVUser;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.MainActivity;
 import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.person.PersonActivity;
 import com.key.doltool.activity.search.SearchActivity;
 import com.key.doltool.activity.search.SearchFragment;
-import com.key.doltool.adapter.ListWordAdapter;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.DensityUtil;
 import com.key.doltool.util.ExitApplication;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
-import com.parse.ParseUser;
 
 import java.io.File;
 import java.util.List;
@@ -67,6 +64,7 @@ public class DialogEvent {
 			LinearLayout item3=(LinearLayout)view.findViewById(R.id.list_item_type3);
 			LinearLayout item4=(LinearLayout)view.findViewById(R.id.list_item_type4);
 			LinearLayout item5=(LinearLayout)view.findViewById(R.id.list_item_type5);
+			LinearLayout item6=(LinearLayout)view.findViewById(R.id.list_item_type6);
 			pop.setContentView(view);
 			pop.setWidth(DensityUtil.dip2px(context.getActivity(),80));
 			pop.setHeight(LayoutParams.WRAP_CONTENT);
@@ -109,6 +107,13 @@ public class DialogEvent {
 					pop.dismiss();
 				}
 			});
+			item6.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					txt.setText("道具");
+					context.setIndex(5);
+					pop.dismiss();
+				}
+			});
 		}
 		else{
 			pop.dismiss();
@@ -127,6 +132,7 @@ public class DialogEvent {
 			LinearLayout item3=(LinearLayout)view.findViewById(R.id.list_item_type3);
 			LinearLayout item4=(LinearLayout)view.findViewById(R.id.list_item_type4);
 			LinearLayout item5=(LinearLayout)view.findViewById(R.id.list_item_type5);
+			LinearLayout item6=(LinearLayout)view.findViewById(R.id.list_item_type6);
 			pop.setContentView(view);
 			pop.setWidth(DensityUtil.dip2px(context_2, 80));
 			pop.setHeight(LayoutParams.WRAP_CONTENT);
@@ -169,6 +175,13 @@ public class DialogEvent {
 					pop.dismiss();
 				}
 			});
+			item6.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					txt.setText("道具");
+					context_2.setIndex(5);
+					pop.dismiss();
+				}
+			});
 		}
 		else{
 			pop.dismiss();
@@ -189,7 +202,7 @@ public class DialogEvent {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
                 LayoutParams.MATCH_PARENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        params.setMargins(10,10,10,10);
+        params.setMargins(10, 10, 10, 10);
         updateDialog.setContentView(view,params);
         updateDialog.show();
         LinearLayout layout1=(LinearLayout)view.findViewById(R.id.line1);
@@ -235,37 +248,7 @@ public class DialogEvent {
         }
         return updateDialog;
 	}
-	
-	/**
-	 * 选择对话框
-	 * @param txt 要显示的TextView
-	 * @param context 所在界面的上下文
-	 * **/
-	public void itemDialog(final String[] word, final TextView txt,Activity context){
-		txt.setTag(0);
-		LayoutInflater layoutinflater = context.getLayoutInflater();
-		View view = layoutinflater.inflate(R.layout.pop_word, null);
-		final Dialog updateDialog = new Dialog(context, R.style.updateDialog);
-        updateDialog.setCancelable(true);
-        updateDialog.setCanceledOnTouchOutside(true);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
-                LayoutParams.MATCH_PARENT);
-        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        params.setMargins(10, 10, 10, 10);
-        updateDialog.setContentView(view, params);
-        updateDialog.show();
-        ListView listview=(ListView)view.findViewById(R.id.listview);
-        listview.setAdapter(new ListWordAdapter(word,context));
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				txt.setText(word[arg2]);
-				txt.setTag(arg2);
-				updateDialog.dismiss();
-			}
-		});
-	}
-	
+
 	/**
 	 *  确认对话框
 	 * @param title 要显示的标题
@@ -360,7 +343,7 @@ public class DialogEvent {
 		switch(num){
 			//0:数据同步
 			case 0:
-				context.syncInfo(ParseUser.getCurrentUser().getUsername());
+				context.syncInfo(AVUser.getCurrentUser().getUsername());
 				break;
 			//1：重置密码
 			case 1:
@@ -368,7 +351,7 @@ public class DialogEvent {
 				break;
 			//2：注销用户
 			case 2:
-				ParseUser.logOut();
+				AVUser.logOut();
 				Intent intent = new Intent(context,MainActivity.class);
 				context.setResult(Activity.RESULT_OK, intent);
 				context.finish();
@@ -380,7 +363,7 @@ public class DialogEvent {
 		LayoutInflater layoutinflater = context.getLayoutInflater();
 		View view = layoutinflater.inflate(R.layout.loading_layout, null);
 		final Dialog updateDialog = new Dialog(context,R.style.updateDialog);
-		updateDialog.setCancelable(false);
+		updateDialog.setCancelable(true);
 		updateDialog.setCanceledOnTouchOutside(false);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);

@@ -31,7 +31,7 @@
     	android:textColor="@color/Gary_SP"
     	android:text="巴哈姆特大航海资料站\n大航海时代DB\n台服大商战\n大航海时代贴吧"       
         />
-	<TextView 
+	<TextView
      	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	android:padding="10dp"
@@ -97,7 +97,30 @@
     	android:paddingBottom="5dp"
     	android:lineSpacingMultiplier="1.3"
     	android:textColor="@color/Gary_SP"
-    	android:text="邮件至：zzxxap@163.com"       
+    	android:text="邮件至：zzxxasp@163.com"
         />
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="10dp"
+		android:text="开放至GitHub"
+		android:textColor="@color/Blue_SP"
+		/>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="0.5dp"
+		android:background="@color/Gainsboro"
+		/>
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:paddingTop="10dp"
+		android:paddingBottom="5dp"
+		android:lineSpacingMultiplier="1.3"
+		android:textColor="@color/Gary_SP"
+		android:text="https://github.com/zzxxasp/DolTool"
+		/>
 </LinearLayout>
 </ScrollView>

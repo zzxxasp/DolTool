@@ -1,26 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <declare-styleable name="HoloCircularProgressBar">
-        <attr name="stroke_width" format="dimension" />
-        <attr name="progress" format="float"></attr>
-        <attr name="marker_progress" format="float"></attr>
-        <attr name="progress_color" format="color"></attr>
-        <attr name="progress_background_color" format="color"></attr>
-        <attr name="thumb_visible" format="boolean"></attr>
-        <attr name="marker_visible" format="boolean"></attr>
-        <attr name="android:gravity"></attr>
-    </declare-styleable>
-    
     <declare-styleable name="Theme">
-        <attr name="circularProgressBarStyle" format="reference"></attr>        
+        <attr name="circularProgressBarStyle" format="reference"/>        
     </declare-styleable>
 
-    <declare-styleable name="BootstrapCircleThumbnail">
-        <attr name="border_width" format="dimension" />
-        <attr name="border_color" format="color" />
-    </declare-styleable>
-
-	
     <declare-styleable name="FlowLayout">
         <attr name="horizontalSpacing" format="dimension"/>
         <attr name="verticalSpacing" format="dimension"/>
@@ -86,6 +69,14 @@
         <attr name="zoomEnabled" format="boolean"/>
         <attr name="quickScaleEnabled" format="boolean"/>
         <attr name="tileBackgroundColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="HoloCircularProgressBar">
+        <attr name="cpb_progress" format="integer" />
+        <attr name="cpb_progressbar_color" format="color" />
+        <attr name="cpb_background_progressbar_color" format="color" />
+        <attr name="cpb_progressbar_width" format="dimension" />
+        <attr name="cpb_background_progressbar_width" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="SimpleTagImageView">

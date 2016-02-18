@@ -14,14 +14,22 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVAnalytics;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 import com.key.doltool.R;
 import com.key.doltool.activity.InfoMainFragment;
 import com.key.doltool.activity.adventure.AdventureMainFragment;
-import com.key.doltool.activity.adventure.card.CardComboFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
+import com.key.doltool.activity.adventure.card.CardComboFragment;
 import com.key.doltool.activity.dockyard.DataBaseInsertFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.activity.infobroad.MainBroadFragment;
@@ -39,15 +47,9 @@ import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.MenuEvent;
 import com.key.doltool.event.UpdataList;
 import com.key.doltool.event.app.VersionManager;
-import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.StringUtil;
-import com.key.doltool.view.BootstrapCircleThumbnail;
+import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.stick.StickyListHeadersListView;
-import com.parse.GetDataCallback;
-import com.parse.ParseAnalytics;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
 
 import net.youmi.android.spot.SpotManager;
 
@@ -62,7 +64,7 @@ public class MainActivity extends BaseFragmentActivity{
 	private MenuAdapter adapter;
 	
 	private LinearLayout person_info;
-	private BootstrapCircleThumbnail headPic;
+	private ImageView headPic;
 	private TextView username;
 	
 	//内容
@@ -79,32 +81,39 @@ public class MainActivity extends BaseFragmentActivity{
 		findView();
 		initUser();
 		initFragment(savedInstanceState);
-		ParseAnalytics.trackAppOpenedInBackground(getIntent());
-		SpotManager.getInstance(this).showSpotAds(this);
-		SpotManager.getInstance(this).setCloseTime(3000);
+		AVAnalytics.trackAppOpened(getIntent());
+		//获取广告配置确定是否开启
+		AVQuery<AVObject> query= AVQuery.getQuery("setting");
+		query.whereExists("OpenAd");
+		query.findInBackground(new FindCallback<AVObject>() {
+			public void done(List<AVObject> objects, AVException e) {
+				boolean open=true;
+				if (e == null) {
+					if(objects.get(0).get("OpenAd").equals("open")){
+						open=false;
+					}
+				}
+				if(open){
+					SpotManager.getInstance(MainActivity.this).showSpotAds(MainActivity.this);
+					SpotManager.getInstance(MainActivity.this).setCloseTime(3000);
+				}
+			}
+		});
 	}
 	private void initUser(){
 		person_info=(LinearLayout)findViewById(R.id.person_info);
-		headPic=(BootstrapCircleThumbnail)findViewById(R.id.head_img);
+		headPic=(ImageView)findViewById(R.id.head_img);
 		username=(TextView)findViewById(R.id.name);
 		//获取默认用户
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		AVUser currentUser = AVUser.getCurrentUser();
 		//如果有用户则
 		if (currentUser != null) {
-			currentUser.fetchInBackground();
-			ParseFile headImg=currentUser.getParseFile("headPic");
+			currentUser.fetchInBackground(null);
+			AVFile headImg=currentUser.getAVFile("headPic");
 			if(headImg!=null){
-				headImg.getDataInBackground(new GetDataCallback() {
-					public void done(byte[] data, ParseException e) {
-						if (e == null) {
-							headPic.setImageBitmap(BitMapUtil.getBitmapByInputStream(data,3));
-						} else {
-							headPic.setImageResource(R.drawable.dol_trove_defalut);
-						}
-					}
-				});
+				ImageLoader.picassoLoadCirle(this, headImg.getUrl(), headPic);
 			}else{
-				headPic.setImageResource(R.drawable.dol_trove_defalut);
+				ImageLoader.picassoLoadCirle(this, headPic);
 			}
 
 			if(!StringUtil.isNull(currentUser.getString("nickName"))){
@@ -150,8 +159,8 @@ public class MainActivity extends BaseFragmentActivity{
 		if(mContent == null){
 			SystemInfo info=new SystemInfo(this);
 			if(info.getUpdateFlag()==1){
-		        ((VersionManager)VersionManager.getInstance()).setActivity(this);
-		        ((VersionManager)VersionManager.getInstance()).checkVersion(false);
+				((VersionManager)VersionManager.getInstance()).setActivity(this);
+				((VersionManager)VersionManager.getInstance()).checkVersion(false);
 			}
 			Log.i("mContent", mContent + "");
 			toolbar.setTitle("发现之旅");
@@ -277,26 +286,17 @@ public class MainActivity extends BaseFragmentActivity{
     
     private void initParseUser(){
     	//获取默认用户
-    	ParseUser currentUser = ParseUser.getCurrentUser();
+    	AVUser currentUser = AVUser.getCurrentUser();
     	//如果有用户则
     	if (currentUser != null) {
-    		ParseFile headImg=currentUser.getParseFile("headPic");
+			AVFile headImg=currentUser.getAVFile("headPic");
     		headPic.setVisibility(View.VISIBLE);
     		if(headImg!=null){
-        		headImg.getDataInBackground(new GetDataCallback() {
-        			public void done(byte[] data, ParseException e) {
-        				if (e == null) {
-        					headPic.setImageBitmap(BitMapUtil.getBitmapByInputStream(data));
-        				} else {
-        					headPic.setImageResource(R.drawable.dol_trove_defalut);
-        				}
-        			}
-        		});
-    		}else{
-    			headPic.setImageResource(R.drawable.dol_trove_defalut);
-    		}
-
-    		if(!StringUtil.isNull(currentUser.getString("nickName"))){
+				ImageLoader.picassoLoadCirle(this, headImg.getUrl(), headPic);
+			} else{
+				ImageLoader.picassoLoadCirle(this, headPic);
+			}
+			if(!StringUtil.isNull(currentUser.getString("nickName"))){
     			username.setText(currentUser.getString("nickName"));
     		}else{
     			username.setText(currentUser.getUsername());
@@ -399,4 +399,24 @@ public class MainActivity extends BaseFragmentActivity{
 		}
 		super.onRestart();
 	}
+//	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+//		@Override
+//		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
+//			switch (menuItem.getItemId()) {
+//				case R.id.search:
+//					startActivity(new Intent(MainActivity.this, SearchActivity.class));
+//					break;
+//				case R.id.exit:
+//					ExitApplication.getInstance().exit();
+//					break;
+//			}
+//			return true;
+//		}
+//	};
+//
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		getMenuInflater().inflate(R.menu.main_core, menu);
+//		return true;
+//	}
 }

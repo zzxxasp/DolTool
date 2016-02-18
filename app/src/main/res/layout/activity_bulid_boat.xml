@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_material_light"
+    >
+<!--TitleBar-->
+<include
+    layout="@layout/system_actionbar_black"   
+/>
+<!--Content-->
+<ScrollView
+    android:id="@+id/content_s" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="@null"
+    >
+<RelativeLayout
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_material_light"
+	android:layout_marginBottom="5dp"
+    >
+    <!--船只名称-->
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/bg_content_card"
+        >
+        <ImageView
+            android:id="@+id/boat_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+			android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+			android:layout_marginBottom="20dp"
+			android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/other_j0s" />
+        <TextView
+            android:id="@+id/boat_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/boat_pic"
+            android:layout_toEndOf="@+id/boat_pic"
+			android:layout_marginTop="20dp"
+			android:layout_marginBottom="20dp"
+			android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/Black_SP"
+            android:text="小型卡尔维"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <!--强化次数 船只技能-->
+
+    <!--基本资料-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:baselineAligned="false"
+        android:background="@drawable/bg_content_card"
+        android:layout_margin="5dp"
+        android:weightSum="2"
+        >
+    </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
+</LinearLayout>

@@ -1,13 +1,5 @@
 package com.key.doltool.util;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
-import net.tsz.afinal.FinalBitmap;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -16,24 +8,17 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.ScrollView;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 public class BitMapUtil {
 	
-	/**
-	 * 用于网络读取图片(调用afinal.jar包方法)
-	 * @param context	Context对象
-	 * @param resid_load 读取中显示图片R.drawable.XX
-	 * @param resid_fail 读取失败显示图片R.drawable.XX
-	 * @param url	url地址
-	 * @param image 所要显示的imageView
-	 */
-	public static void BitmapLoader(Context context,int resid_load,int resid_fail,String url,ImageView image){
-		FinalBitmap.create(context).configLoadfailImage(resid_load)
-		.configDiskCachePath(FileManager.getSaveFilePath())
-		.configLoadingImage(resid_load).display(image, url);
-	}
-	
+
 	/**View to Bitmap**/
 	public static Bitmap view2Bitmap(View v) {
 		v.setDrawingCacheEnabled(true);
@@ -102,29 +87,7 @@ public class BitMapUtil {
 	public static Bitmap getBitmapByFile(String pathName){
 		return BitmapFactory.decodeFile(pathName);
 	}
-	
-	/** file to Bitmap**/
-	@SuppressWarnings("deprecation")
-	public static Bitmap getBitmapSmallByFile(String pathName){
-		File file=new File(pathName);
-		int inSampleSize=1;
-		if(file.length()>512*1024){
-			inSampleSize=(int)file.length()/(512*1024);
-			if(inSampleSize>4){
-				inSampleSize=4;
-			}
-		}
-		BitmapFactory.Options opt = new BitmapFactory.Options();
-		opt.inJustDecodeBounds = false; 
-		opt.inPreferredConfig = Bitmap.Config.RGB_565;
-		if (android.os.Build.VERSION.SDK_INT<android.os.Build.VERSION_CODES.LOLLIPOP){
-			opt.inPurgeable = true;  
-			opt.inInputShareable = true; 
-		}
-		opt.inSampleSize=inSampleSize;
-		return BitmapFactory.decodeFile(pathName,opt);
-	}
-	
+
 	/** InputStream to Bitmap**/
 	public static Bitmap getBitmapByInputStream(InputStream in){
 		Bitmap bitmap=BitmapFactory.decodeStream(in);
@@ -165,7 +128,6 @@ public class BitMapUtil {
 
 	@SuppressWarnings("deprecation")
 	public static Bitmap getBitmapByInputStream(byte[] data,int sampleSize){
-		int inSampleSize=sampleSize;
 		BitmapFactory.Options opt = new BitmapFactory.Options();
 		opt.inJustDecodeBounds = false;
 		opt.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -173,16 +135,8 @@ public class BitMapUtil {
 			opt.inPurgeable = true;
 			opt.inInputShareable = true;
 		}
-		opt.inSampleSize=inSampleSize;
+		opt.inSampleSize= sampleSize;
 		InputStream in =new ByteArrayInputStream(data);
 		return BitmapFactory.decodeStream(in,null,opt);
-	}
-	@SuppressWarnings("deprecation")
-	public static Bitmap readBitMap(Context context, int resId){  
-		BitmapFactory.Options opt = new BitmapFactory.Options();  
-		opt.inPreferredConfig = Bitmap.Config.RGB_565;
-		//获取资源图片  
-		InputStream is = context.getResources().openRawResource(resId);
-		return BitmapFactory.decodeStream(is,null,opt);  
 	}
 }

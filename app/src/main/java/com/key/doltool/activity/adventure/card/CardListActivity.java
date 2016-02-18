@@ -1,5 +1,6 @@
 package com.key.doltool.activity.adventure.card;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,16 +22,19 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.SaveCallback;
 import com.google.gson.Gson;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
 import com.key.doltool.adapter.CardAdapter;
 import com.key.doltool.adapter.ListWordAdapter;
 import com.key.doltool.adapter.item.NameValueAdapter;
-import com.key.doltool.data.Card;
-import com.key.doltool.data.CardCombo;
-import com.key.doltool.data.Deck;
 import com.key.doltool.data.base.NameValueItem;
+import com.key.doltool.data.parse.Deck;
+import com.key.doltool.data.sqlite.Card;
+import com.key.doltool.data.sqlite.CardCombo;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.NumberUtil;
@@ -39,9 +43,6 @@ import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.util.ArrayList;
@@ -62,9 +63,11 @@ public class CardListActivity extends BaseAdventureActivity{
 	private String select_txt="";
 	private CardAdapter mGridAdapter;
 	private TextView point_show,card_show;
-	private LinearLayout card_bar;
+	private RelativeLayout card_bar;
 	private FlatButton cal_btn;
 	private boolean return_flag=false;
+	private boolean back_flag=false;
+	private boolean showFlag=true;
 	/**comboList**/
 	private List<CardCombo> comboList=new ArrayList<>();
 	/**自己牌组的Combo总数**/
@@ -90,6 +93,10 @@ public class CardListActivity extends BaseAdventureActivity{
 						Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_LONG).show();
 						return_flag=false;
 					}
+					if(back_flag){
+						barshow();
+						back_flag=false;
+					}
 					break;
 				case 1:
 					//战斗力计算成功显示明细窗体
@@ -111,6 +118,21 @@ public class CardListActivity extends BaseAdventureActivity{
 		}
 	};
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode != Activity.RESULT_OK) {
+			return;
+		}
+		switch (requestCode) {
+			case 100:
+				if(!isFinishing()){
+					alert.show();
+				}
+				back_flag=true;
+				new Thread(mTask).start();
+				break;
+		}
+	}
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.card_list_show);
@@ -132,7 +154,7 @@ public class CardListActivity extends BaseAdventureActivity{
 		card_show=(TextView)findViewById(R.id.card_number);
 		point_show=(TextView)findViewById(R.id.card_point);
 		cal_btn=(FlatButton)findViewById(R.id.cal_btn);
-		card_bar=(LinearLayout)findViewById(R.id.card_bar);
+		card_bar=(RelativeLayout)findViewById(R.id.card_bar);
 		if(!isFinishing()){
 			alert.show();
 		}
@@ -235,7 +257,10 @@ public class CardListActivity extends BaseAdventureActivity{
 		cal_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				new Thread(mTasks_point).start();
+				if(showFlag){
+					showFlag=false;
+					new Thread(mTasks_point).start();
+				}
 			}
 		});
 	}
@@ -254,6 +279,25 @@ public class CardListActivity extends BaseAdventureActivity{
 		}
 		return super.onKeyDown(keyCode,event);
 	}
+	/**
+	 * 回调更新任务
+	 * **/
+	private Runnable mTask =new Runnable(){
+		public void run() {
+			list=SRPUtil.getInstance(getApplicationContext()).select(Card.class, false, "id>?",new String[]{"0"}, null, null,"flag desc,point desc,type desc", null);
+			temp=SRPUtil.getInstance(getApplicationContext()).select(Card.class, false, "flag=?",new String[]{"1"}, null, null,"flag desc,point desc,type desc", null);
+			poiont_total=0;
+			for(int i=0;i<temp.size();i++){
+				poiont_total+=temp.get(i).point;
+			}
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			mHandler.sendMessage(mHandler.obtainMessage(0));
+		}
+	};
 	@SuppressWarnings("unchecked")
 	private Runnable mTasks =new Runnable(){
 		public void run() {
@@ -282,6 +326,7 @@ public class CardListActivity extends BaseAdventureActivity{
 	//开启自设卡组模式
 	@SuppressWarnings("unchecked")
 	private void startmode(){
+		poiont_total=0;
 		MODE=!MODE;
 		if(!MODE){
 			card_bar.setVisibility(View.GONE);
@@ -297,7 +342,7 @@ public class CardListActivity extends BaseAdventureActivity{
 	private void barshow(){
 		card_show.setText("卡组："+temp.size()+"/30");
 		if(limit!=0){
-			point_show.setText("点数限制：" + poiont_total + "/" + limit);
+			point_show.setText(poiont_total + "/" + limit);
 		}else{
 			point_show.setText("无限制");
 		}
@@ -401,14 +446,14 @@ public class CardListActivity extends BaseAdventureActivity{
 	//显示牌组战斗力统计，提供保存功能
 	private void showBattle(Object total){
 		View layout=getLayoutInflater().inflate(R.layout.pop_card_cal, null);
-		final Dialog updateDialog = new Dialog(this,R.style.updateDialog);
-		updateDialog.setCancelable(true);
-		updateDialog.setCanceledOnTouchOutside(true);
+		final Dialog showdialog = new Dialog(this,R.style.updateDialog);
+		showdialog.setCancelable(true);
+		showdialog.setCanceledOnTouchOutside(true);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(this)-30,
 				LinearLayout.LayoutParams.MATCH_PARENT);
 		params.setMargins(10, 10, 10, 10);
-		updateDialog.setContentView(layout, params);
-		updateDialog.show();
+		showdialog.setContentView(layout, params);
+		showdialog.show();
 		final TextView base=(TextView)layout.findViewById(R.id.base);
 		final TextView message=(TextView)layout.findViewById(R.id.message);
 		final ListView add_list=(ListView)layout.findViewById(R.id.add_list);
@@ -425,16 +470,17 @@ public class CardListActivity extends BaseAdventureActivity{
 		negative.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				updateDialog.dismiss();
+				showdialog.dismiss();
 			}
 		});
 		positive.setText("分享");
 		positive.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				updateDialog.dismiss();
+				showdialog.dismiss();
 				showEditDialog();
 			}
 		});
+		showFlag=true;
 	}
 	public void showEditDialog(){
 		View layout=getLayoutInflater().inflate(R.layout.select_trove, null);
@@ -483,15 +529,15 @@ public class CardListActivity extends BaseAdventureActivity{
 			item.setLimit("无限制");
 		}
 		item.setName(name);
-		if(ParseUser.getCurrentUser()!=null){
-			item.setUserName(ParseUser.getCurrentUser().getString("nickName"));
+		if(AVUser.getCurrentUser()!=null){
+			item.setUserName(AVUser.getCurrentUser().getString("nickName"));
 		}else{
 			item.setUserName("游客");
 		}
 		item.setValue(poiont_total);
 		item.saveInBackground(new SaveCallback() {
 			@Override
-			public void done(ParseException e) {
+			public void done(AVException e) {
 				if (e != null) {
 					Toast.makeText(getApplicationContext(), "连接失败", Toast.LENGTH_LONG).show();
 				}
@@ -510,15 +556,18 @@ public class CardListActivity extends BaseAdventureActivity{
 
 	private void jump(){
 		Intent it=new Intent(this,ShareCardDeckActivity.class);
-		startActivity(it);
+		startActivityForResult(it,100);
 	}
 
 	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
 			switch (menuItem.getItemId()) {
+				//搜索
 				case R.id.city_search:popWindow();break;
+				//模式更改
 				case R.id.type_search:startmode();break;
+				//分享
 				case R.id.share:jump();break;
 			}
 			return true;

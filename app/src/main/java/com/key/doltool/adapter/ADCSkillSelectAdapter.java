@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
 import com.key.doltool.activity.adc.ADCDetailsActivity;
-import com.key.doltool.data.ADCInfo;
+import com.key.doltool.data.sqlite.ADCInfo;
 import com.key.doltool.data.ADCSkill;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;

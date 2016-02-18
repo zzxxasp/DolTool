@@ -1,0 +1,262 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/bootstrap-theme.min.css" rel="stylesheet" />
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script language="javascript">
+    $(function () {
+		$("a.wiki1").click(function (e) {
+			event.preventDefault();
+			var context=$(this).text();
+			window.jump.mission(0,context);
+		});
+		$("a.wiki2").click(function (e) {
+			event.preventDefault();
+			var context=$(this).text();
+			window.jump.mission(1,context);
+		});
+	});
+</script>
+<div class="wikiContent" style="margin:4px;">
+    <div class="panel panel-default" style="margin:4px;">
+        <div class="panel-heading">初级学校</div>
+        <div class="panel-body">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#课程地点1" data-toggle="tab">课程地点</a>
+                </li>
+                <li><a href="#课程讲义1" data-toggle="tab">课程讲义</a>
+                </li>
+            </ul>
+            <br>
+            <div class="tab-content list-group-item">
+                <div class="tab-pane active" id="课程地点1">
+                    <ul>
+                        <li>六国首都 (<a>伦敦</a>、<a>阿姆斯特丹</a>、<a>里斯本</a>、<a>塞维尔</a>、<a>马赛</a>、<a>威尼斯</a>) </li>
+                        <li>学校内点选受理人选择接受冒险、交易、战斗初级课程 </li>
+                        <li>可以同时学习冒险、交易、战斗的课程 </li>
+                        <li>如果<font color="#ff0000">不是本职系的，经验和声望会减半 </font>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="课程讲义1">
+                    <div>
+                        共通课程
+                        <ul>
+                            <li><a class="wiki1">成为航海者的第一步</a>
+                            </li>
+                            <li><a class="wiki1">行动力、疲劳度及理</a>
+                            </li>
+                            <li><a class="wiki1">关于装备物品</a>
+                            </li>
+                            <li><a class="wiki1">关于船只配件</a>
+                            </li>
+                            <li><a class="wiki1">关于交易物品</a>
+                            </li>
+                            <li><a class="wiki1">关于海上战斗</a>
+                            </li>
+                            <li><a class="wiki1">走在城中</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        冒险课程
+                        <ul>
+                            <li><a class="wiki1">所谓的冒险家</a>
+                            </li>
+                            <li><a class="wiki1">发现物与技能</a>
+                            </li>
+                            <li><a class="wiki1">初级冒险专攻修了考试</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        商业课程
+                        <ul>
+                            <li><a class="wiki1">所谓的商人</a>
+                            </li>
+                            <li><a class="wiki1">交易品的运送</a>
+                            </li>
+                            <li><a class="wiki1">初级商业专攻修了考试</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        海事课程
+                        <ul>
+                            <li><a class="wiki1">所谓的军人</a>
+                            </li>
+                            <li><a class="wiki1">明敌与暗敌</a>
+                            </li>
+                            <li><a class="wiki1">初级海事专攻修了考试</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <li>每种课程只可接受一次(每种课程=海事,冒险,商业)</li>
+            <li>有些课程并不需要全部修完就可以毕业</li>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default" style="margin:4px;">
+        <div class="panel-heading">中级学校</div>
+        <div class="panel-body">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#课程地点2" data-toggle="tab">课程地点</a>
+                </li>
+                <li><a href="#课程讲义2" data-toggle="tab">课程讲义</a>
+                </li>
+            </ul>
+            <br>
+            <div class="tab-content list-group-item">
+                <div class="tab-pane active" id="课程地点2">
+                    <ul>
+                        <li>
+                            <a>格罗宁根</a>、<a>休达</a>、<a>锡拉库萨</a> </li>
+                        <li>备注：完成冒险、交易、战斗3系课程，可以拿到6张转职证，冒险、交易、战斗各2张</li>
+                        <li>学校内点选受理人选择接受冒险、交易、战斗中级课程 </li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="课程讲义2">
+                    <div>
+                        共通课程
+                        <ul>
+                            <li><a class="wiki1">任务的结构</a>
+                            </li>
+                            <li><a class="wiki1">航海时发生的灾害</a>
+                            </li>
+                            <li><a class="wiki1">关于船˙造船</a>
+                            </li>
+                            <li><a class="wiki1">与其他航海者的关系</a>
+                            </li>
+                            <li><a class="wiki1">职业及技能</a>
+                            </li>
+                            <li><a class="wiki1">转职为商人</a>
+                            </li>
+                            <li><a class="wiki1">转职为军人</a>
+                            </li>
+                            <li><a class="wiki1">转职为冒险家</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        冒险课程
+                        <ul>
+                            <li><a class="wiki1">迈向大发现之路</a>
+                            </li>
+                            <li><a class="wiki1">关于地图及发现物报告</a>
+                            </li>
+                            <li><a class="wiki">中级冒险专攻修了考试</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        商业课程
+                        <ul>
+                            <li><a class="wiki1">关于买卖技能</a>
+                            </li>
+                            <li><a class="wiki1">关于生产</a>
+                            </li>
+                            <li><a class="wiki1">中级商业课程结业考试</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        海事课程
+                        <ul>
+                            <li><a class="wiki1">海战时之砲击系技能</a>
+                            </li>
+                            <li><a class="wiki1">肉搏战及撞角</a>
+                            </li>
+                            <li><a class="wiki">中级海事考试--格罗宁根</a>
+                                <li><a class="wiki">中级海事考试--休达</a>
+                                    <li><a class="wiki">中级海事考试--锡拉库萨</a>
+                                    </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default" style="margin:4px;">
+        <div class="panel-heading">高级学校</div>
+        <div class="panel-body">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#课程地点3" data-toggle="tab">课程地点</a>
+                </li>
+                <li><a href="#课程讲义3" data-toggle="tab">课程讲义</a>
+                </li>
+            </ul>
+            <br>
+            <div class="tab-content list-group-item">
+                <div class="tab-pane active" id="课程地点3">
+                    <ul>
+                        <li>
+                            <a>比萨</a> </li>
+                        <li>需完成5次演习课程才能参加毕业考试(5次演习任务可以重复解)</li>
+                        <li>学校内点选受理人选择接受冒险、交易、战斗高级课程 </li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="课程讲义3">
+                    <div>
+                        共通课程
+                        <ul>
+                            <li><a class="wiki1">关于危险海域</a>
+                            </li>
+                            <li><a class="wiki1">关于副官</a>
+                            </li>
+                            <li><a class="wiki1">关于特殊造船</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        冒险课程
+                        <ul>
+                            <li><a class="wiki1">若要打开那道锁</a>
+                            </li>
+                            <li><a class="wiki1">与自然共生</a>
+                            </li>
+                            <li><a class="wiki1">发现物对决</a>
+                            </li>
+                            <li><a class="wiki">冒险综合演习</a>
+                            </li>
+                            <li><a class="wiki">航海者养成学校冒险课程毕业考试</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        商业课程
+                        <ul>
+                            <li><a class="wiki1">名产品交易及相乘效果</a>
+                            </li>
+                            <li><a class="wiki1">城里的人拥有的配方</a>
+                            </li>
+                            <li><a class="wiki1">对城市的投资</a>
+                            </li>
+                            <li><a class="wiki1">商业综合演习</a>
+                            </li>
+                            <li><a class="wiki">航海者养成学校商业课程毕业考试</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        海事课程
+                        <ul>
+                            <li><a class="wiki1">砲弹的种类与效果</a>
+                            </li>
+                            <li><a class="wiki1">肉搏战上的技能</a>
+                            </li>
+                            <li><a class="wiki1">所谓的大海战</a>
+                                <li><a class="wiki">海事综合演习</a>
+                                    <li><a class="wiki">航海者养成学校海事课程毕业考试</a>
+                                    </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

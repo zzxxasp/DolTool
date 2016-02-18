@@ -19,7 +19,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.trade.TradeDetailActivity;
 import com.key.doltool.adapter.TradeListAdapter;
-import com.key.doltool.data.TradeItem;
+import com.key.doltool.data.sqlite.TradeItem;
 import com.key.doltool.event.AreaEvent;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
@@ -83,6 +83,7 @@ public class TradeItemActivity extends BaseActivity implements OnScrollListener{
 	private void findView() {
 		initPage();
 		alert=new DialogEvent().showLoading(this);
+		alert.show();
 	}
 	//通用Listener
 	private void setListener() {
@@ -91,7 +92,7 @@ public class TradeItemActivity extends BaseActivity implements OnScrollListener{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 									long arg3) {
 				Intent it = new Intent(TradeItemActivity.this, TradeDetailActivity.class);
-				it.putExtra("id", list.get(arg2).getId());
+				it.putExtra("id", list.get(arg2).getId()+"");
 				startActivity(it);
 			}
 		});

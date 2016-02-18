@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Part;
+import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 public class PartListAdapter extends BaseAdapter{

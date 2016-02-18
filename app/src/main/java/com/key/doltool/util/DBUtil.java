@@ -1,10 +1,4 @@
 package com.key.doltool.util;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,12 +12,19 @@ import com.key.doltool.util.db.DataSelectUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 数据库处理工具
  */
 public class DBUtil {
 	/**单个小于1M的db拷贝方式 **/
-	public static void copyDB(Context context, android.os.Handler handler,DefaultDAO dao){
+	public static void copyDB(Context context, android.os.Handler handler){
 		int tagert =0;
 		boolean flag=true;
 		List<Integer> list = new ArrayList<>();
@@ -52,12 +53,12 @@ public class DBUtil {
 			flag=false;
 		}
 		else{
-			dao=SRPUtil.getDAO(context);
+			DefaultDAO dao=SRPUtil.getDAO(context);
 			Log.i("com", ""+CommonUtil.getAppVersionName(context));
 			tagert=DataSelectUtil.dbVerion(dao);
 			Log.i("data", ""+tagert);
 			//缺点:每次更新都要复制数据库
-			if(CommonUtil.getAppVersionCode(context)==tagert){
+			if(CommonUtil.getMetaDataInt(context,"DB_VERSION")==tagert){
 				if(system.getOverFlag()==1){
 					return ;
 				}
@@ -146,39 +147,37 @@ public class DBUtil {
 		}catch(Exception e){
 			Toast.makeText(context,"初始化数据库失败",Toast.LENGTH_SHORT).show(); 
 		}
-	 }
+	}
    /**
     * 备份数据库文件到SD卡中
     * @param context
     */
    public static void copyDB_SD(Context context){
-	 File fs=context.getDatabasePath("demo.db");
-	 String str=FileManager.getSaveFilePath()+"demo.db";
-  	 File f=new File(str);
-  	 try{
-   	 	if(!f.exists()){
-   	 		f.getParentFile().mkdir();
-   	  		f.createNewFile();
-   	 	}
-   	 	if(!fs.exists())
-   	 	{
-   	 		Toast.makeText(context,"没有数据库文件", Toast.LENGTH_LONG).show();
-   	 		return ;
-   	 	}
-        FileInputStream is = new FileInputStream(fs.getParent()+"/demo.db");
-   		FileOutputStream fos = new FileOutputStream(str);
-        byte[] buffer = new byte[8192];
-        int count = 0;
-        while ((count = is.read(buffer)) > 0)
-        {
-            fos.write(buffer, 0, count);
-        }
-        Toast.makeText(context,"备份成功",Toast.LENGTH_LONG).show();
-        fos.close();
-        is.close();
-   	 }catch(Exception e){
-   		 e.printStackTrace();
-   	 }
+	   File fs=context.getDatabasePath("demo.db");
+	   String str=FileManager.getSaveFilePath()+"demo.db";
+	   File f=new File(str);
+	   try{
+		   if(!f.exists()){
+			   f.getParentFile().mkdir();
+			   f.createNewFile();
+		   }
+		   if(!fs.exists()){
+			   Toast.makeText(context,"没有数据库文件", Toast.LENGTH_LONG).show();
+			   return ;
+		   }
+		   FileInputStream is = new FileInputStream(fs.getParent()+"/demo.db");
+		   FileOutputStream fos = new FileOutputStream(str);
+		   byte[] buffer = new byte[8192];
+		   int count = 0;
+		   while ((count = is.read(buffer)) > 0) {
+			   fos.write(buffer, 0, count);
+		   }
+		   Toast.makeText(context,"备份成功",Toast.LENGTH_LONG).show();
+		   fos.close();
+		   is.close();
+	   }catch(Exception e){
+		   e.printStackTrace();
+	   }
    }
    /**
     * 导入SD卡数据库文件到DB中去
@@ -201,7 +200,7 @@ public class DBUtil {
 	        FileInputStream is = new FileInputStream(str);
 	   		FileOutputStream fos = new FileOutputStream(fs.getParent()+"/demo.db");
 	        byte[] buffer = new byte[8192];
-	        int count = 0;
+	        int count;
 	        // 开始复制testDatabase.db文件
 	        while ((count = is.read(buffer)) > 0)
 	        {

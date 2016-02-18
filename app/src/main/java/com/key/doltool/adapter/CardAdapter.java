@@ -1,7 +1,6 @@
 package com.key.doltool.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Card;
-import com.key.doltool.util.BitMapUtil;
+import com.key.doltool.data.sqlite.Card;
 import com.key.doltool.util.FileManager;
+import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.util.ResourcesUtil;
 
-import net.tsz.afinal.FinalBitmap;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,17 +28,9 @@ public class CardAdapter extends BaseAdapter{
 	public static int SIZE=60;
 	private List<Card> list=new ArrayList<>();
 	private Context context;
-	private FinalBitmap fb;
-	private Bitmap bm;
 	public CardAdapter(List<Card> list, Context context){
 		this.list=list;
 		this.context=context;
-		fb = FinalBitmap.create(context);
-		try {
-			bm=BitMapUtil.getBitmapByInputStream(context.getAssets().open(FileManager.TROVE+"dol_trove_defalut.jpg"),false);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	public int getCount() {
 			return list.size();
@@ -73,15 +61,16 @@ public class CardAdapter extends BaseAdapter{
 			holder.pic=(ImageView)convertView.findViewById(R.id.img);
 			// 为view设置标签 
 			convertView.setTag(holder);
-		} 
-		else { 
+		} else {
 			// 取出holder
 			holder = (ViewHolder) convertView.getTag();
 		}
+		ImageLoader.picassoLoad(context,
+				FileManager.ROOT + FileManager.TROVE + list.get(position).pic_id + ".jpg",
+				holder.pic);
 		//设置
 		holder.name.setText(list.get(position).name);
 		updateBackground(position, holder);
-		fb.display(holder.pic, "assets://" + FileManager.TROVE + list.get(position).pic_id + ".jpg", bm, bm);
 		String point=list.get(position).type+":"+list.get(position).point;
 		holder.point.setText(point);
 		return convertView;

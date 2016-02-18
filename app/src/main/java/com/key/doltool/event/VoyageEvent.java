@@ -10,9 +10,11 @@ import com.key.doltool.activity.adventure.card.CardListActivity;
 import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.recipe.RecipeForBookDetailsActivity;
 import com.key.doltool.activity.squre.MapActivity;
-
-import com.key.doltool.activity.voyage.FishingActivity;
+import com.key.doltool.activity.squre.PortActivity;
+import com.key.doltool.activity.useitem.UseItemShowListActivity;
 import com.key.doltool.activity.voyage.TradeItemActivity;
+import com.key.doltool.activity.voyage.fishing.FishingActivity;
+import com.key.doltool.activity.wiki.WikiMainActivity;
 import com.key.doltool.data.VoyageInfo;
 import com.key.doltool.data.VoyageItem;
 import com.key.doltool.util.NumberUtil;
@@ -28,39 +30,25 @@ import java.util.Set;
 
 public class VoyageEvent {
     private Context context;
-    private static final int WEEK=1000*60*60*24*6;
+    private static final int WEEK=1000*60*60*24;
     public static String[] name={
         "世界地图","交易品","纺织品",
         "钓鱼","论战卡组","魔法之物",
-        "阀门","牛之章","猪之章",
-        "禽之章","委托任务","航海学校",
+        "牛之章","猪之章", "禽之章",
+        "委托任务","航海学校", "定期船","羊之章"
     };
     public static String[] pic_id={
         "ic_map","ic_tradeitem","ic_roll",
         "ic_fishing","ic_gallery","ic_wizard",
-        "ic_steam","ic_cow","ic_pig",
-        "ic_duck","ic_diploma","ic_graduation",
+        "ic_cow","ic_pig","ic_duck",
+        "ic_diploma","ic_graduation","ic_cargo_ship","ic_sheep"
     };
-    /**
-     * 1：核心跳转
-     * 2：核心内容限定查询显示
-     * 3：单一内容详情显示
-     * 4：单独说明web页面
-     * 5：独立原生界面
-     * **/
     public static int[] type={
-         1,1,2,
-         1,1,1,
-         1,1,1,
-         1,1,1,
+            0,0,0,
+            0,0,0,
+            1,1,1,
+            0,2,0,1
     };
-    public static String[] value={
-            "","","",
-            "","","",
-            "","","",
-            "","","",
-    };
-
     public VoyageEvent(Context context){
         this.context=context;
     }
@@ -78,6 +66,7 @@ public class VoyageEvent {
             e.printStackTrace();
             before=new Date(System.currentTimeMillis());
         }
+        Log.i("WEEK",""+WEEK);
         if(curDate.getTime()-before.getTime()>=WEEK) {
             int random_times = 9;
             Set<Integer> set = new HashSet<>();
@@ -145,16 +134,40 @@ public class VoyageEvent {
                 c=FishingActivity.class;
                 it=new Intent(context,c);
                 break;
+            case "定期船":
+                c= PortActivity.class;
+                it=new Intent(context,c);
+                break;
+            case "魔法之物":
+                c=UseItemShowListActivity.class;
+                it=new Intent(context,c);
+                it.putExtra("type","魔法之物");
+                break;
             default:
-                it=recipeSp(context,item.name);
+                if(item.type==1){
+                    it=recipeSp(context,item.name);
+                }else if(item.type==2){
+                    it=wikiSp(context,item.name);
+                }else{
+                    it=null;
+                }
                 break;
         }
         if(it!=null){
             context.startActivity(it);
         }else{
-            Toast.makeText(context.getApplicationContext(),"专题界面/快捷方式正在制作中",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context.getApplicationContext(),"专题界面/快捷查询正在制作中",Toast.LENGTH_SHORT).show();
         }
     }
+    private static Intent wikiSp(Context context,String name){
+        Intent it=new Intent(context, WikiMainActivity.class);
+        if(name.equals("航海学校")){
+            it.putExtra("id","10");
+            return it;
+        }
+        return null;
+    }
+
     private static Intent recipeSp(Context context,String name){
         Intent it=new Intent(context, RecipeForBookDetailsActivity.class);
         if(name.equals("牛之章")){

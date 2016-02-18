@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.job.JobDetailsActivity;
-import com.key.doltool.data.Job;
+import com.key.doltool.data.sqlite.Job;
 public class TagSkillAdapter extends BaseAdapter{
 	private List<Job> list;	
 	private String skill_name;

@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.Job;
+import com.key.doltool.data.sqlite.Job;
 public class JobAdapter extends BaseAdapter{
 	private static class ViewHolder{
 		public TextView name;

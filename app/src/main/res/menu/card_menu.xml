@@ -12,13 +12,13 @@
     <item
         android:id="@+id/type_search"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_add_white_24dp"
+        android:icon="@drawable/ic_assessment_white_24dp"
         app:showAsAction="ifRoom"
-        android:title="批量标记"/>
+        android:title="卡组分析"/>
     <item
         android:id="@+id/share"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_add_white_24dp"
+        android:icon="@drawable/ic_share_white_24dp"
         app:showAsAction="ifRoom"
         android:title="网络卡组"/>
 </menu>

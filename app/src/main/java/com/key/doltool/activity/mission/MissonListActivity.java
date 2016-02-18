@@ -24,7 +24,7 @@ import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.MissionItemAdapter;
 import com.key.doltool.adapter.SailBoatListAdapter;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
-import com.key.doltool.data.Mission;
+import com.key.doltool.data.sqlite.Mission;
 import com.key.doltool.event.AreaEvent;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.ResourcesUtil;
@@ -120,7 +120,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 				return true;
 			}
 		});
-		temp=event.ADVENTURE_CITY;
+		temp=AreaEvent.ADVENTURE_CITY;
 	}
 	protected void onDestroy() {
 		dao=null;
@@ -325,7 +325,7 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		area=(Spinner)findViewById(R.id.sp_area);
 		city=(Spinner)findViewById(R.id.sp_city);
 		ArrayAdapter<String> adapter=new SpinnerArrayAdapter
-				(this,event.ADVENTURE_AREA);
+				(this,AreaEvent.ADVENTURE_AREA);
 		area.setAdapter(adapter);
 		//地区-城市联动事件
 		area.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -396,13 +396,13 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 					adventure_type.setVisibility(View.GONE);
 				}
 				if(arg2==4){
-					temp=event.LIB_CITY;
+					temp=AreaEvent.LIB_CITY;
 					area.setSelection(0);
 					city_adapter=new ArrayAdapter<>(MissonListActivity.this,android.R.layout.simple_spinner_item,temp[0]);
 					city.setAdapter(city_adapter);
 				}
 				if(temp_click==4){
-					temp=event.ADVENTURE_CITY;
+					temp=AreaEvent.ADVENTURE_CITY;
 					area.setSelection(0);
 					city_adapter=new ArrayAdapter<>(MissonListActivity.this,android.R.layout.simple_spinner_item,temp[0]);
 					city.setAdapter(city_adapter);

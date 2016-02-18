@@ -24,11 +24,6 @@
     android:text="LV64"    
     />
     <com.key.doltool.view.HoloCircularProgressBar
-        app:thumb_visible="false"
-		app:progress="0.5"
-		app:progress_color="@color/HighSkyBlue"
-		app:progress_background_color="@color/Gainsboro"
-        app:marker_visible="false" 
         android:id="@+id/holoCircularProgressBar1"
         android:layout_width="150dp"
         android:layout_height="150dp"

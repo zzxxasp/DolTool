@@ -18,9 +18,10 @@ import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.SkillAdapter;
 import com.key.doltool.app.util.ListScrollListener;
-import com.key.doltool.data.Skill;
+import com.key.doltool.data.sqlite.Skill;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
+import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
@@ -195,14 +196,19 @@ public class AbilityListActivity extends BaseActivity {
 
     //系统按键监听覆写
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //按键返回
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            //条件不是初始状态就重置
-            if (!select_if.equals("id>?")) {
-                end_flag = true;
-                srollListener.changeFlag(true);
-                change_if("id>?", "0");
-                Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_SHORT).show();
+        //条件:当菜单未关闭且搜索条件为初始态，允许退出
+        if (select_if.equals("id>?")) {
+            super.onKeyDown(keyCode, event);
+        } else {
+            //按键返回
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                //条件不是初始状态就重置
+                if (!select_if.equals("id>?")) {
+                    end_flag = true;
+                    srollListener.changeFlag(true);
+                    change_if("id>?", "0");
+                    Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         return true;
@@ -213,6 +219,8 @@ public class AbilityListActivity extends BaseActivity {
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.search:
+                    View xc = getLayoutInflater().inflate(R.layout.select_skill, null);
+                    ViewUtil.popSkillDialog(AbilityListActivity.this, xc);
                     break;
             }
             return true;

@@ -11,14 +11,13 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.BookAdapter;
 import com.key.doltool.adapter.SkillAdapter;
-import com.key.doltool.data.Book;
+import com.key.doltool.data.sqlite.Book;
 import com.key.doltool.event.BookEvent;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
@@ -96,7 +95,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		}
 		protected void onResume() {
 			super.onResume();
-		};
+		}
 		@SuppressWarnings("unchecked")
 		//有限数据查询
 		private void selectshow(String limit){
@@ -191,7 +190,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 				}
 			}
 			 return true;
-		 };
+		 }
 		//滚动监听① - useless
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
@@ -199,7 +198,7 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		//滚动监听②
 		public void onScrollStateChanged(final AbsListView view, int scrollState) {
 	        //当不滚动时
-			boolean flag=true;
+			boolean flag;
 			flag=end_flag;
 	        if(scrollState == SCROLL_STATE_IDLE){  
 	                System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());

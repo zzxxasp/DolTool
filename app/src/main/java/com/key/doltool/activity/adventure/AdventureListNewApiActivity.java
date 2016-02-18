@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
 import com.key.doltool.adapter.TroveAdapter;
-import com.key.doltool.data.Trove;
+import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataCount;
 import com.key.doltool.event.UpdataList;
@@ -89,8 +89,6 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	/**批量标记**/
 	private void mutilMode() {
 		startSupportActionMode(mCallback);
-		//To-do
-		toolbar.setVisibility(View.GONE);
 		MODE_FLAG=true;
 	}
 	@SuppressWarnings("unchecked")
@@ -121,9 +119,9 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 					mCallback.setSeletedCountShow();
 					mGridAdapter.notifyDataSetChanged();
 				}else{
-					Intent intent=new Intent(AdventureListNewApiActivity.this,AdventureDetailActivity.class);
-					intent.putExtra("id",mGridAdapter.getItem(arg2).getId());
-					jump(intent);
+					Intent intent=new Intent(AdventureListNewApiActivity.this, AdventureDetailActivity.class);
+					intent.putExtra("id",mGridAdapter.getItem(arg2).getId()+"");
+					startActivity(intent);
 				}
 			}
 		});
@@ -170,10 +168,12 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		}
 		super.onResume();
 	}
+
 	private void jump(Intent intent){
 		UpdataList.FLAG_CHANGE=0;
 		AdventureListNewApiActivity.this.startActivity(intent);
 	}
+
 	//系统按键监听覆写
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(!select_txt.equals("")){
@@ -264,7 +264,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
                     		gridview.setSelection(i);
                     }
                     mGridAdapter.notifyDataSetChanged();
-                    mSelectedConvCount.setText(Integer.toString(mGridAdapter.getCheckedItemCount()));
+                    mSelectedConvCount.setText(mGridAdapter.getCheckedItemCount()+"");
                     break;
 
                 default:
@@ -276,7 +276,6 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
         @Override
         public void onDestroyActionMode(ActionMode mode) {
         	MODE_FLAG=false;
-			toolbar.setVisibility(View.VISIBLE);
         	if(keyCode==0){
             	//更新数据
             	updataForMutil();
@@ -284,7 +283,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
         }
         
         public void setSeletedCountShow(){
-        	mSelectedConvCount.setText(Integer.toString(mGridAdapter.getCheckedItemCount()));
+        	mSelectedConvCount.setText(mGridAdapter.getCheckedItemCount()+"");
         }
 
     }

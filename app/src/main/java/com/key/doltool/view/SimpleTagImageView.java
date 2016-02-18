@@ -311,7 +311,7 @@ public class SimpleTagImageView extends ImageView {
         Bitmap mBitmap = drawableToBitmap(drawable);
         BitmapShader mBitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         if(getScaleType() != ScaleType.FIT_XY){
-            Log.w(TAG,String.format("Now scale type just support fitXY,other type invalid"));
+            Log.w(TAG, "Now scale type just support fitXY,other type invalid");
         }
         //now scale type just support fitXY
         //todo support all scale type

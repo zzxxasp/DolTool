@@ -1,13 +1,17 @@
 package com.key.doltool.anime;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
+
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+
 /**
  * 各类动画存储类，说明:<br>
  * 里面的所有动画都是补间动画，没有帧动画有单例和复合动画，实现比较简单，主要
@@ -16,42 +20,39 @@ import android.view.animation.RotateAnimation;
  * @author key
  */
 public class MyAnimations {
-	// 用来适配不同的分辨率
-	private static int x=0;
-	public static void initOffset(Context context) {
-		x = (int) (x*context.getResources().getDisplayMetrics().density);
-	}
 	/**
-	 * 3D旋转，使用于一张纸牌两面的显示切换，即:一个LinearLayout 横向填充<br>
-	 * 有两个子布局，都为width:fill,其中一个设为GONE
 	 * @param view 要旋转的ViewGroup
 	 * @param view_g 消失的View
 	 * @param view_v 显示的View
 	 * @param durationMillis 时间
 	 **/
 	public static void rotate3D(final ViewGroup view,final ViewGroup view_g,final ViewGroup view_v,final int durationMillis){
-		final float centerX = view.getWidth() / 2.0f;
-        final float centerY = view.getHeight() / 2.0f;
-        Rotate3dAnimation rotation =
-            new Rotate3dAnimation(0, -90, centerX, centerY, 0.0f, true);
-        rotation.setDuration(durationMillis);
-        rotation.setInterpolator(new AccelerateInterpolator());
-        rotation.setAnimationListener(new AnimationListener() {
-        public void onAnimationEnd(Animation arg0) {
-        	view_g.setVisibility(View.GONE);
-        	view_v.setVisibility(View.VISIBLE);
-            Rotate3dAnimation rotation =
-                    new Rotate3dAnimation(90,0, centerX, centerY, 0.0f, true);
-                rotation.setDuration(durationMillis);
-                rotation.setInterpolator(new DecelerateInterpolator());
-                view.startAnimation(rotation);
-        }
-        public void onAnimationRepeat(Animation arg0) {
-        }
-        public void onAnimationStart(Animation arg0) {
-        }
-        });
-        view.startAnimation(rotation);
+		ObjectAnimator gone=ObjectAnimator.ofFloat(view,"alpha",1f,0f);
+		gone.setDuration(durationMillis);
+		gone.addListener(new Animator.AnimatorListener() {
+			@Override
+			public void onAnimationCancel(final Animator animation) {
+			}
+
+			@Override
+			public void onAnimationEnd(final Animator animation) {
+				view_g.setVisibility(View.GONE);
+				view_v.setVisibility(View.VISIBLE);
+				ObjectAnimator show =
+						ObjectAnimator.ofFloat(view, "alpha", 0f, 1f);
+				show.setDuration(durationMillis);
+				show.start();
+			}
+
+			@Override
+			public void onAnimationRepeat(final Animator animation) {
+			}
+
+			@Override
+			public void onAnimationStart(final Animator animation) {
+			}
+		});
+		gone.start();
 	}
 	/** 淡入动画，适用于子布局的一个个淡入的动画
 	 * @param viewgroup 要淡入的ViewGroup(不是他自己，而是子布局的动画)
@@ -59,7 +60,7 @@ public class MyAnimations {
 	 **/
 	public static void fadein(ViewGroup viewgroup ,int durationMillis){
 		for(int i=viewgroup.getChildCount()-1;i>0;i--){
-			View layout=(View)viewgroup.getChildAt(viewgroup.getChildCount()-i);
+			View layout=viewgroup.getChildAt(viewgroup.getChildCount()-i);
 			AlphaAnimation animation1 = new AlphaAnimation(0.0f, 1);
 			animation1.setFillAfter(true);
 			animation1.setDuration(durationMillis);
@@ -75,5 +76,41 @@ public class MyAnimations {
 		animation1.setInterpolator(context, android.R.anim.linear_interpolator);
 		animation1.setDuration(durationMillis);
 		view.startAnimation(animation1);
+	}
+
+	public static void wordAnime(View view,int durationMillis,Animator.AnimatorListener listener){
+		ObjectAnimator anime1=ObjectAnimator.ofFloat(view, "translationX", 0, -240);
+		ObjectAnimator anime2=ObjectAnimator.ofFloat(view, "translationY", 0, -400);
+		ObjectAnimator anime3=ObjectAnimator.ofFloat(view, "ScaleX", 1,2);
+		ObjectAnimator anime4=ObjectAnimator.ofFloat(view, "ScaleY", 1,2);
+		ObjectAnimator anime5=ObjectAnimator.ofFloat(view, "alpha",1,0);
+		anime1.setDuration(durationMillis);
+		anime2.setDuration(durationMillis);
+		anime3.setDuration(durationMillis/2+100);
+		anime4.setDuration(durationMillis/2+100);
+		anime5.setDuration(durationMillis/2+100);
+		AnimatorSet set=new AnimatorSet();
+		set.play(anime1).with(anime2).before(anime3);
+		set.play(anime3).with(anime4).with(anime5);
+		set.setInterpolator(new AccelerateInterpolator());
+		set.addListener(listener);
+		set.start();
+	}
+	public static void wordAnime2(View view,int durationMillis){
+		ObjectAnimator anime1=ObjectAnimator.ofFloat(view, "translationX", -240,0);
+		ObjectAnimator anime2=ObjectAnimator.ofFloat(view, "translationY", -400,0);
+		ObjectAnimator anime3=ObjectAnimator.ofFloat(view, "ScaleX", 2,1);
+		ObjectAnimator anime4=ObjectAnimator.ofFloat(view, "ScaleY", 2,1);
+		ObjectAnimator anime5=ObjectAnimator.ofFloat(view, "alpha",0,1);
+		anime1.setDuration(durationMillis);
+		anime2.setDuration(durationMillis);
+		anime3.setDuration(durationMillis/2+100);
+		anime4.setDuration(durationMillis/2+100);
+		anime5.setDuration(durationMillis/2+100);
+		AnimatorSet set=new AnimatorSet();
+		set.play(anime3).with(anime4).with(anime5).before(anime2);
+		set.play(anime2).with(anime1);
+		set.setInterpolator(new AccelerateInterpolator());
+		set.start();
 	}
 }

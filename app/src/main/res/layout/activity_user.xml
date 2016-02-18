@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,14 +45,12 @@
     android:text="服务器" 
     />
 </LinearLayout> 
-<com.key.doltool.view.BootstrapCircleThumbnail
+<ImageView
 	android:id="@+id/head_img"
 	android:layout_width="60dp"
 	android:layout_height="60dp"
 	android:padding="1dp"
 	android:src="@drawable/dol_trove_defalut"
-	bootstrap:border_width="2dp"
-    bootstrap:border_color="@color/White"
     android:layout_centerVertical="true"
 	android:layout_marginTop="5dp"
 	android:layout_marginBottom="5dp"
@@ -74,10 +71,15 @@
     />   
 </RelativeLayout>
 <!--本地数据记录-->
-<LinearLayout 
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
+    android:fillViewport="true"
+    >
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:background="@color/background_material_light"
     >
 <TextView 
@@ -114,15 +116,13 @@
     android:layout_height="wrap_content"
     >
     <com.key.doltool.view.HoloCircularProgressBar
-        app:thumb_visible="false"
-		app:progress="0.0"
-		app:stroke_width="1dp"
-		app:progress_color="@color/HighSkyBlue"
-		app:progress_background_color="@color/Gary_SP"
-        app:marker_visible="false" 
+        app:cpb_background_progressbar_color="@color/Gary_SP"
+        app:cpb_background_progressbar_width="2dp"
+        app:cpb_progressbar_color="@color/HighSkyBlue"
+        app:cpb_progressbar_width="4dp"
         android:id="@+id/holoCircularProgressBar1"
-        android:layout_width="wrap_content"
-		android:layout_height="@dimen/oval_height"
+        android:layout_width="@dimen/oval_height"
+        android:layout_height="@dimen/oval_height"
 		android:layout_centerInParent="true"
         android:layout_centerHorizontal="true" 
         />
@@ -163,14 +163,12 @@
     android:layout_height="wrap_content"
     >
     <com.key.doltool.view.HoloCircularProgressBar
-        app:thumb_visible="false"
-		app:progress="0.0"
-		app:stroke_width="1dp"
-		app:marker_visible="false" 
-		app:progress_color="@color/HighSkyBlue"
-		app:progress_background_color="@color/Gary_SP"
+        app:cpb_background_progressbar_color="@color/Gary_SP"
+        app:cpb_background_progressbar_width="2dp"
+        app:cpb_progressbar_color="@color/HighSkyBlue"
+        app:cpb_progressbar_width="4dp"
         android:id="@+id/holoCircularProgressBar2"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/oval_height"
         android:layout_height="@dimen/oval_height"
 		android:layout_centerInParent="true"
         android:layout_centerHorizontal="true" 
@@ -273,4 +271,5 @@
     android:background="@color/Gainsboro"   
     />
 </LinearLayout>
+</ScrollView>
 </LinearLayout>

@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.CardCombo;
+import com.key.doltool.data.sqlite.CardCombo;
 import com.key.doltool.util.StringUtil;
 
 public class CardComboAdapter extends BaseAdapter{

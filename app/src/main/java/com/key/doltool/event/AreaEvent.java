@@ -22,7 +22,7 @@ import com.key.doltool.activity.adc.ADCListActivity;
 import com.key.doltool.activity.adventure.NPCFragment;
 import com.key.doltool.activity.trade.TradeCityDetailActivity;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
-import com.key.doltool.data.City;
+import com.key.doltool.data.sqlite.City;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.view.flat.FlatButton;
@@ -30,12 +30,12 @@ import com.the9tcat.hadi.DefaultDAO;
 /**地域处理事件**/
 public class AreaEvent {
 	/**冒险区域**/
-	public String[] ADVENTURE_AREA={
+	public static final String[] ADVENTURE_AREA={
 		"全部","北欧","西欧","东欧",
 		"非洲·印度","美洲","亚洲",
 	};
 	/**冒险城市**/
-	public String[][] ADVENTURE_CITY={
+	public static final String[][] ADVENTURE_CITY={
 			{},
 			{"伦敦","阿姆斯特丹","斯德哥尔摩","圣彼得堡"},
 			{"里斯本","塞维尔","马赛","热那亚","突尼斯"},
@@ -45,7 +45,7 @@ public class AreaEvent {
 			{"雅加达","安平"},
 	};
 	/**书库城市**/
-	public String[][] LIB_CITY={
+	public static final String[][] LIB_CITY={
 			{},
 			{"伦敦","阿姆斯特丹","斯德哥尔摩","圣彼得堡"},
 			{"里斯本","塞维尔","马赛","热那亚","突尼斯"},
@@ -55,7 +55,7 @@ public class AreaEvent {
 			{"东南亚开拓港","杭州","汉阳","堺市","安平"},
 	};
 	/**回报城市**/
-	public String[][] BACK_CITY={
+	public static final String[][] BACK_CITY={
 			{"全部"},
 			{"波尔多","南特","加莱","安特卫普","阿姆斯特丹","伦敦","汉堡","卢贝克","圣彼得堡"},
 			{"里斯本","塞维尔","马赛","热那亚","突尼斯","奥波多","瓦伦西亚","巴赛隆纳","比萨","的黎波里"},
@@ -65,7 +65,7 @@ public class AreaEvent {
 			{"马尼拉","安平","长崎","汉阳","澳门"},
 	};
 	/**副官城市**/
-	public String[][] ADC_CITY={
+	public static final String[][] ADC_CITY={
 			{"全部"},
 			{"伦敦","阿姆斯特丹","圣彼得堡"},
 			{"里斯本","塞维尔","马赛","热那亚","突尼斯"},
@@ -73,9 +73,7 @@ public class AreaEvent {
 			{"桑给巴尔","卡利卡特"},
 			{"波多贝罗","里约热内卢","利马"},
 			{"雅加达","杭州","安平","堺市","汉阳"},
-	}; 
-	
-	public String star="★";
+	};
 	public String getStringByIndex(int i){
 		String str="";
 		switch(i){

@@ -1,12 +1,15 @@
 package com.key.doltool.activity.core;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.key.doltool.R;
+import com.key.doltool.event.CrashHandler;
 import com.key.doltool.util.ExitApplication;
+import com.key.doltool.util.StringUtil;
 import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.Toast;
 public abstract class BaseFragmentActivity extends AppCompatActivity {
@@ -20,7 +23,39 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
         getWindow().setBackgroundDrawable(null);
         //添加栈内进行管理
         ExitApplication.getInstance().addActivity(this);
+		CrashHandler.WHERE=getClass().getName();
+		CrashHandler.WHO="";
     }
+
+	@Override
+	public Intent getIntent() {
+		Intent it=super.getIntent();
+		CrashHandler.WHO=setWho(it);
+		return it;
+	}
+
+	public String setWho(Intent it){
+		String temp="";
+		if(it!=null){
+			String id=it.getStringExtra("id");
+			String name=it.getStringExtra("name");
+			String tw_name=it.getStringExtra("tw_name");
+			String city_name=it.getStringExtra("city_name");
+			if(!StringUtil.isNull(id)){
+				temp+="id:"+id+" ";
+			}
+			if(!StringUtil.isNull(name)){
+				temp+="name:"+name+" ";
+			}
+			if(!StringUtil.isNull(tw_name)){
+				temp+="tw_name:"+tw_name+" ";
+			}
+			if(!StringUtil.isNull(city_name)){
+				temp+="city_name:"+city_name+" ";
+			}
+		}
+		return temp;
+	}
 
 	public void initToolBar(Toolbar.OnMenuItemClickListener onMenuItemClick){
 		toolbar = (Toolbar) findViewById(R.id.toolbar);

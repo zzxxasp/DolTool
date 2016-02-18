@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,38 +14,37 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.SaveCallback;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataList;
 import com.key.doltool.event.UserEvent;
-import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
-import com.key.doltool.view.BootstrapCircleThumbnail;
+import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.Toast;
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
+
 
 public class EditUserInfoActivity extends BaseActivity{
 	//编辑
 	private TextView nickName;
 	private TextView area_server;
-	private BootstrapCircleThumbnail head;
+	private ImageView head;
 	private String server_name="0-0";
-	private Bitmap photo;
 	private RelativeLayout area_1,area_2,area_3;
     private static final int TAKE_PICTURE = 1;
     private static final int LOCAL_PICTURE = 3;
@@ -67,7 +65,7 @@ public class EditUserInfoActivity extends BaseActivity{
 		area_2=(RelativeLayout)findViewById(R.id.area_2);
 		area_3=(RelativeLayout)findViewById(R.id.area_3);
 		
-		head=(BootstrapCircleThumbnail)findViewById(R.id.head_img);
+		head=(ImageView)findViewById(R.id.head_img);
 		nickName=(TextView)findViewById(R.id.nick_name);
 		area_server=(TextView)findViewById(R.id.area_server);
 	}
@@ -148,11 +146,11 @@ public class EditUserInfoActivity extends BaseActivity{
         		Toast.makeText(getApplicationContext(),"昵称在3~12个字符之间",Toast.LENGTH_SHORT).show();
         		return;
         	}
-        	ParseUser currentUser = ParseUser.getCurrentUser();
+			AVUser currentUser = AVUser.getCurrentUser();
         	nickName.setText(name);
         	currentUser.put("nickName",name);
         	currentUser.saveInBackground(new SaveCallback(){
-				public void done(ParseException e) {
+				public void done(AVException e) {
 					if(e==null){
 			        	UpdataList.PIC_CHANGE=1;
 					}
@@ -164,11 +162,11 @@ public class EditUserInfoActivity extends BaseActivity{
 	}
 	private void changeArea(Spinner area,Spinner server){
 		server_name=area.getSelectedItemPosition()+"-"+server.getSelectedItemPosition();
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		AVUser currentUser = AVUser.getCurrentUser();
 		area_server.setText(area.getSelectedItem()+" "+server.getSelectedItem());
     	currentUser.put("server",server_name);
     	currentUser.saveInBackground(new SaveCallback(){
-			public void done(ParseException e) {
+			public void done(AVException e) {
 				if(e==null){
 		        	UpdataList.PIC_CHANGE=1;
 				}
@@ -177,22 +175,14 @@ public class EditUserInfoActivity extends BaseActivity{
 	}
 	
 	private void init(){
-		ParseUser currentUser = ParseUser.getCurrentUser();
+		AVUser currentUser = AVUser.getCurrentUser();
 		//如果有用户则
 		if (currentUser != null) {
-			ParseFile headImg=currentUser.getParseFile("headPic");
+			AVFile headImg=currentUser.getAVFile("headPic");
 			if(headImg!=null){
-				headImg.getDataInBackground(new GetDataCallback() {
-					public void done(byte[] data, ParseException e) {
-						if (e == null) {
-							head.setImageBitmap(BitMapUtil.getBitmapByInputStream(data,3));
-						} else {
-							head.setImageResource(R.drawable.dol_trove_defalut);
-						}
-					}
-				});
+				ImageLoader.picassoLoadCirle(this, headImg.getUrl(),head);
 			}else{
-				head.setImageResource(R.drawable.dol_trove_defalut);
+				ImageLoader.picassoLoadCirle(this,head);
 			}
 			
 			if(!StringUtil.isNull(currentUser.getString("nickName"))){
@@ -257,14 +247,13 @@ public class EditUserInfoActivity extends BaseActivity{
     }
     private void cropImageUri(String path_file) {
         if (imageUri != null) {
-        	photo = BitMapUtil.getBitmapByFile(path_file);
-        	head.setImageBitmap(photo);
-        	ParseUser currentUser = ParseUser.getCurrentUser();
-        	ParseFile headImg=new ParseFile("head.png",ResourcesUtil.getBytes(path_file));
+			ImageLoader.picassoLoadCirle(this,path_file,head);
+			AVUser currentUser = AVUser.getCurrentUser();
+			AVFile headImg=new AVFile("head.png",ResourcesUtil.getBytes(path_file));
         	headImg.saveInBackground();
         	currentUser.put("headPic",headImg);
         	currentUser.saveInBackground(new SaveCallback(){
-				public void done(ParseException e) {
+				public void done(AVException e) {
 					if(e!=null){
 			        	UpdataList.PIC_CHANGE=1;
 					}
@@ -274,16 +263,6 @@ public class EditUserInfoActivity extends BaseActivity{
     }
     @Override
     protected void onDestroy() {
-    	if(head.mBitmap!=null){
-    		head.mBitmap.recycle();
-    		head.mBitmap=null;
-    		System.gc();
-    	}
-    	if(photo!=null){
-    		photo.recycle();
-    		photo=null;
-    		System.gc();
-    	}
     	super.onDestroy();
     }
 }

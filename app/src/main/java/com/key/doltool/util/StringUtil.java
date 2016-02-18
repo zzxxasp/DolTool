@@ -30,7 +30,7 @@ public class StringUtil {
 	  }
 	  
 	  public static boolean isNull(String str){
-		  return str == null || str.equals("");
+		  return str == null || str.equals("")|| str.equals("null");
 	  }
 	  public static String[] listToArray(List<String> list){
 		String[] temp=new String[list.size()];

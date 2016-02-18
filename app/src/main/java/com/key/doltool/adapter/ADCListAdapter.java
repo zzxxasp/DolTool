@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.ADCInfo;
+import com.key.doltool.data.sqlite.ADCInfo;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 public class ADCListAdapter extends BaseAdapter{

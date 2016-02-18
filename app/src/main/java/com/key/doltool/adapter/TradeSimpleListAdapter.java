@@ -63,8 +63,8 @@ public class TradeSimpleListAdapter extends BaseAdapter{
 			convertView.setTag(holder);
 		} 
 		else { 
-				// 取出holder 
-				holder = (ViewHolder) convertView.getTag();
+			// 取出holder
+			holder = (ViewHolder) convertView.getTag();
 		}
 		//设置
 		holder.name.setText(list.get(position).name);

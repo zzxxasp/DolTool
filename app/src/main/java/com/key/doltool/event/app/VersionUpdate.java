@@ -1,26 +1,10 @@
 package com.key.doltool.event.app;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Looper;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +15,10 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.avos.avoscloud.okhttp.Callback;
+import com.avos.avoscloud.okhttp.OkHttpClient;
+import com.avos.avoscloud.okhttp.Request;
+import com.avos.avoscloud.okhttp.Response;
 import com.cundong.utils.PatchUtils;
 import com.key.doltool.R;
 import com.key.doltool.util.CommonUtil;
@@ -39,7 +27,10 @@ import com.key.doltool.view.NumberProgressBar;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 /**
@@ -51,7 +42,7 @@ import com.key.doltool.view.flat.FlatButton;
  */
 public class VersionUpdate {
 	static {
-		System.loadLibrary("apkpatch");
+		System.loadLibrary("ApkPatchLibrary");
 	}
     private final Activity context;
     private NumberProgressBar downloadProgressBar;
@@ -168,109 +159,88 @@ public class VersionUpdate {
     private class DownloadThread extends Thread {
 
         private boolean isStop = false;
-        private HttpResponse httpResponse = null;
+        private OkHttpClient client = new OkHttpClient();
 
         @Override
         public void run() {
+            Request request = new Request.Builder()
+                    .url(version.getUpdataUrl())
+                    .build();
 
-            final HttpClient httpClient = new DefaultHttpClient();
-
-            HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 2000);
-            HttpConnectionParams.setSoTimeout(httpClient.getParams(), 4000);
-            final HttpGet httpGet = new HttpGet(version.getUpdataUrl());
-
-            try {
-                // 启动新线程无法找到资源停滞现�?
-                httpResponse = httpClient.execute(httpGet);
-            } catch (ClientProtocolException e) {
-                httpResponse = null;
-                e.printStackTrace();
-                context.runOnUiThread(updateMsg);
-            } catch (IOException e) {
-                httpResponse = null;
-                e.printStackTrace();
-                context.runOnUiThread(updateMsg);
-            } catch (Exception e) {
-                httpResponse = null;
-                e.printStackTrace();
-                context.runOnUiThread(updateMsg);
-            }
-
-            if (httpResponse != null
-                    && httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                new CopyFileThread().start();
-
-            } else {
-            	Log.i("",""+httpResponse.getStatusLine().getStatusCode());
-                context.runOnUiThread(updateMsg);
-            }
-
-        }
-
-        private class CopyFileThread extends Thread {
-
-            @Override
-            public void run() {
-                try {
-                    HttpEntity entity = httpResponse.getEntity();
-                    long contentLength = entity.getContentLength();
-                    setMaxProgress(contentLength);
-                    File ffFile = new File(FileManager.getSaveFilePath()+FileManager.DOWNLOAD);
-                    if (!ffFile.exists())
-                        ffFile.mkdirs();
-                    apkFile = new File(FileManager.getSaveFilePath()+FileManager.DOWNLOAD + "/" + appname + "tem"
-                            + UpdateConst.APK_EXTENSION);
-
-                    if (apkFile.exists()) {
-                        apkFile.delete();
-                    }
-                    FileOutputStream outputStream = new FileOutputStream(apkFile);
-                    InputStream inputStream = entity.getContent();
-                    byte[] bytes = new byte[1024];
-
-                    int alreadyReadCount = 0;
-                    int readCount = 0;
-                    while ((readCount = inputStream.read(bytes)) > 0 && !isStop) {
-                        outputStream.write(bytes, 0, readCount);
-                        alreadyReadCount += readCount;
-                        updateProgress(alreadyReadCount);
-                    }
-                    outputStream.flush();
-                    outputStream.close();
-                    inputStream.close();
-                    File file = new File(patch_path);
-                    if (file.exists())
-                        file.delete();
-                    Looper.prepare();
-                    Toast.makeText(context, "下载完成，请等待安装.", Toast.LENGTH_SHORT).show();
-                    Thread.sleep(1000);
-                    apkFile.renameTo(file);
-                    Thread.sleep(500);
-                    if(!CommonUtil.backupApplication(context,"com.key.doltool",old_path).equals("success")){
-                    	Toast.makeText(context, "您的手机并不支持增量更新，今后请尝试直接从网络下载", Toast.LENGTH_SHORT).show();
-                    }
-        			int ret = PatchUtils.patch(old_path,new_path,patch_path);
-        			if(ret!=0){
-        				Toast.makeText(context, "补丁安装失败，请尝试从网站上直接下载更新", Toast.LENGTH_SHORT).show();
-        			}else{
-                        checkInstall(apkFile);
-        			}        			
-        			//无论成功与否都删除除安装apk外所有文件
-        			File file_patch = new File(patch_path);
-        			File file_old = new File(old_path);
-                    if (file_patch.exists())
-                    	file_patch.delete();
-                    if (file_old.exists())
-                    	file_old.delete();		
-                } catch (Exception e) {
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
                     e.printStackTrace();
                     context.runOnUiThread(updateMsg);
                 }
 
-                super.run();
-            }
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    if (!response.isSuccessful()) {
+                        context.runOnUiThread(updateMsg);
+                    }else{
+                        try {
+                            setMaxProgress(response.body().contentLength());
+                            File ffFile = new File(FileManager.getSaveFilePath()+FileManager.DOWNLOAD);
+                            if (!ffFile.exists())
+                                ffFile.mkdirs();
+                            apkFile = new File(FileManager.getSaveFilePath()+FileManager.DOWNLOAD + "/" + appname + "tem"
+                                    + UpdateConst.APK_EXTENSION);
 
+                            if (apkFile.exists()) {
+                                apkFile.delete();
+                            }
+                            FileOutputStream outputStream = new FileOutputStream(apkFile);
+                            InputStream inputStream = response.body().byteStream();
+                            byte[] bytes = new byte[1024];
+
+                            int alreadyReadCount = 0;
+                            int readCount;
+                            while ((readCount = inputStream.read(bytes)) > 0 && !isStop) {
+                                outputStream.write(bytes, 0, readCount);
+                                alreadyReadCount += readCount;
+                                updateProgress(alreadyReadCount);
+                            }
+                            outputStream.flush();
+                            outputStream.close();
+                            inputStream.close();
+                            if(!isStop){
+                                context.runOnUiThread(sucessMsg);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            context.runOnUiThread(updateMsg);
+                        }
+                    }
+                }
+            });
         }
+        Runnable sucessMsg = new Runnable() {
+            @Override
+            public void run() {
+                File file = new File(patch_path);
+                if (file.exists())
+                    file.delete();
+                apkFile.renameTo(file);
+                if(!CommonUtil.backupApplication(context,"com.key.doltool",old_path).equals("success")){
+                    Toast.makeText(context, "您的手机并不支持增量更新，今后请尝试直接从网络下载", Toast.LENGTH_SHORT).show();
+                }
+                int ret = PatchUtils.patch(old_path,new_path,patch_path);
+                if(ret!=0){
+                    Toast.makeText(context, "补丁安装失败，请尝试从网站上直接下载更新", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "下载完成，请等待安装.", Toast.LENGTH_SHORT).show();
+                    checkInstall(apkFile);
+                }
+                //无论成功与否都删除除安装apk外所有文件
+                File file_patch = new File(patch_path);
+                File file_old = new File(old_path);
+                if (file_patch.exists())
+                    file_patch.delete();
+                if (file_old.exists())
+                    file_old.delete();
+            }
+        };
 
         Runnable updateMsg = new Runnable() {
             @Override

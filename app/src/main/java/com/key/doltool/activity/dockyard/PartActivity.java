@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.anime.MyAnimations;
-import com.key.doltool.data.Part;
+import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.db.SRPUtil;

@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.data.WordItem;
+import com.key.doltool.data.sqlite.WordItem;
 public class WordAdapter extends BaseAdapter{
 	public static int SIZE=20;
 	private static class ViewHolder{

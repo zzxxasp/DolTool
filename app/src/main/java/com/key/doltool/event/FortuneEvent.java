@@ -39,13 +39,13 @@ public class FortuneEvent {
 	public void getRandomChance(){
 		//获得出现的总数
 		int random_times=NumberUtil.getRandom(0,6);
+		if(random_times<2){
+			random_times=NumberUtil.getRandom(0,6);
+		}
 		if(random_times==0){
 			random_times=NumberUtil.getRandom(0,6);
 		}		
 		if(random_times==0){
-			random_times=NumberUtil.getRandom(0,6);
-		}
-		if(random_times<2){
 			random_times=NumberUtil.getRandom(0,6);
 		}
 		if(random_times==0){

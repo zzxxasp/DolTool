@@ -21,7 +21,7 @@ import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.CardComboAdapter;
 import com.key.doltool.adapter.SailBoatListAdapter;
-import com.key.doltool.data.CardCombo;
+import com.key.doltool.data.sqlite.CardCombo;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;

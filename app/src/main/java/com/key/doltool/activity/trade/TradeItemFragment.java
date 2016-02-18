@@ -22,7 +22,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.TradeListAdapter;
-import com.key.doltool.data.TradeItem;
+import com.key.doltool.data.sqlite.TradeItem;
 import com.key.doltool.event.AreaEvent;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.ViewUtil;
@@ -89,6 +89,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	private void findView() {
 		initPage();
 		alert=new DialogEvent().showLoading(getActivity());
+		alert.show();
 	}
 	//通用Listener
 	private void setListener() {
@@ -100,7 +101,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 									long arg3) {
 				Intent it = new Intent(getActivity(), TradeDetailActivity.class);
-				it.putExtra("id", list.get(arg2).getId());
+				it.putExtra("id", list.get(arg2).getId()+"");
 				startActivity(it);
 			}
 		});
@@ -210,8 +211,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 		//其他
 		else{
 			//按键返回
-			if(keyCode==KeyEvent.KEYCODE_BACK)
-			{
+			if(keyCode==KeyEvent.KEYCODE_BACK) {
 				//条件不是初始状态就重置
 				if(!select_if.equals("id>?")){
 					end_flag=true;
@@ -230,29 +230,29 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	public void onScrollStateChanged(final AbsListView view, int scrollState) {
 		boolean flag=end_flag;
         if(scrollState == SCROLL_STATE_IDLE){  
-                System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());
-                //判断滚动到底部   
-                if(view.getLastVisiblePosition()==(view.getCount()-1)){
-                	//没有线程且不为最末时
-                    if ((mThread == null || !mThread.isAlive())&&flag) {
-                    	//显示进度条，区域操作控制
-						alert.show();
-                        mThread = new Thread() {
-                            public void run() {
-                                try {
-                                    Thread.sleep(2500);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                Message message = new Message();
-                                message.what = 1;
-                                handler.sendMessage(message);
-                            }  
-                        };
-                        mThread.start();                
-                    }
-                }
-        	}
+			System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());
+			//判断滚动到底部
+			if(view.getLastVisiblePosition()==(view.getCount()-1)){
+				//没有线程且不为最末时
+				if ((mThread == null || !mThread.isAlive())&&flag) {
+					//显示进度条，区域操作控制
+					alert.show();
+					mThread = new Thread() {
+						public void run() {
+							try {
+								Thread.sleep(2500);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Message message = new Message();
+ 							message.what = 1;
+							handler.sendMessage(message);
+						}
+					};
+					mThread.start();
+				}
+			}
+		}
 	}
 	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 		@Override

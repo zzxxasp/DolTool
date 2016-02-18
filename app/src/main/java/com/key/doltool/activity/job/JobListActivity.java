@@ -17,7 +17,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.JobAdapter;
 import com.key.doltool.app.util.ListScrollListener;
-import com.key.doltool.data.Job;
+import com.key.doltool.data.sqlite.Job;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.ViewUtil;
@@ -197,9 +197,7 @@ public class JobListActivity extends BaseActivity {
         //条件:当菜单未关闭且搜索条件为初始态，允许退出
         if (select_if.equals("id>?")) {
             super.onKeyDown(keyCode, event);
-        }
-        //其他
-        else {
+        } else {
             //按键返回
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 //条件不是初始状态就重置

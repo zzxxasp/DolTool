@@ -184,6 +184,37 @@
 		android:layout_marginRight="5dp"
 		android:background="@color/Black_SP">  
 	</com.key.doltool.view.FlowLayout>
+	<LinearLayout
+		android:id="@+id/recipe_way"
+		android:layout_marginTop="5dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		>
+		<TextView
+			android:id="@+id/recipe_txt"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textColor="@color/White"
+			android:background="@color/Blue_SP"
+			android:padding="5dp"
+			android:gravity="center"
+			android:text="生产方式"
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="5dp"
+			/>
+		<com.key.doltool.view.FlowLayout
+			android:id="@+id/recipse_array"
+			f:horizontalSpacing="3dip"
+			f:verticalSpacing="6dip"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="5dp"
+			android:background="@color/Black_SP">
+		</com.key.doltool.view.FlowLayout>
+	</LinearLayout>
 </LinearLayout>
 </LinearLayout>
 </ScrollView>

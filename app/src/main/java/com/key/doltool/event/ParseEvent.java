@@ -2,13 +2,12 @@ package com.key.doltool.event;
 
 import android.content.Context;
 
+import com.avos.avoscloud.AVException;
 import com.key.doltool.view.Toast;
-import com.parse.ParseException;
-import com.parse.ParseUser;
 
 public class ParseEvent {
 	/**错误控制**/
-	public static void error(Context context,ParseException e){
+	public static void error(Context context,AVException e){
 		String content="";
 		e.printStackTrace();
 		switch(e.getCode()){

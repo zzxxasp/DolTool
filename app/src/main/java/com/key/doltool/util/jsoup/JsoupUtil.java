@@ -1,30 +1,34 @@
 package com.key.doltool.util.jsoup;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.key.doltool.data.ADCInfo;
 import com.key.doltool.data.ADCSkill;
-import com.key.doltool.data.City;
-import com.key.doltool.data.Job;
-import com.key.doltool.data.NPCInfo;
-import com.key.doltool.data.Part;
-import com.key.doltool.data.Recipe;
 import com.key.doltool.data.SailBoat;
-import com.key.doltool.data.Skill;
 import com.key.doltool.data.TradeCityItem;
-import com.key.doltool.data.TradeItem;
+import com.key.doltool.data.item.UseItem;
+import com.key.doltool.data.sqlite.ADCInfo;
+import com.key.doltool.data.sqlite.City;
+import com.key.doltool.data.sqlite.Job;
+import com.key.doltool.data.sqlite.NPCInfo;
+import com.key.doltool.data.sqlite.Part;
+import com.key.doltool.data.sqlite.Recipe;
+import com.key.doltool.data.sqlite.RegularShip;
+import com.key.doltool.data.sqlite.Skill;
+import com.key.doltool.data.sqlite.TradeItem;
 import com.key.doltool.util.NumberUtil;
 import com.key.doltool.util.StringUtil;
+import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 爬虫工具,主要用于爬取网络上的数据,再进行入库<br>
  * 因为是网络数据，因此所有方法不能在UI线程中加载。
@@ -33,7 +37,7 @@ import com.the9tcat.hadi.DefaultDAO;
  */
 public class JsoupUtil {
 	/**DB源**/
-	public static String DB_BASE_URL="http://uwodbmirror.ivyro.net/cn/main.php?";
+	public static String DB_BASE_URL="http://www.uwodb.com/tw/main.php?";
 	private final static String BOAT="id=145";
 	private final static String PART="id=146";
 	private final static String TRADE="id=141";
@@ -44,32 +48,127 @@ public class JsoupUtil {
 	private final static String ADC="id=144";
 	private final static String Z_PART="id=85000050";
 	private final static String NPC="id=85000016";
-	private List<Integer> number=new ArrayList<Integer>();
+	private final static String REGULAR_SHIP="id=85000018";
+	private final static String ME_ITEM="id=85000023";
+	private List<Integer> number=new ArrayList<>();
 	private String temp="";
 	public JsoupUtil(Context context){
 		
 	}
-	/**连接url**/
-	public List<String> getUrl(String url){
-		List<String> list=new ArrayList<String>();
-		Document doc = null;
+
+	public void getPicMe(SRPUtil dao){
+		Document doc;
 		try {
-		doc = Jsoup.connect(url).timeout(30*1000).get();
-		Elements table=doc.select("div.table0");
-		Elements ul=table.select("ul.unli0");
-		for(int i=1;i<ul.size();i++){
-			Elements li=ul.get(i).select("li.item0");
-			Elements link =li.select("a");
-			for(int j=0;j<link.size();j++)
-			{
-				String abs_url=link.attr("abs:href");
-				if(!abs_url.equals("http://uwodbmirror.ivyro.net/cn/main.php?id="))
-				{
-					list.add(abs_url);
-					Log.i("abs_url",abs_url);
+			doc = Jsoup.connect(DB_BASE_URL+ME_ITEM).timeout(30*1000).get();
+			Elements img=doc.select("a").select("img");
+			for(int i=0;i<img.size();i++){
+				if(img.get(i).attr("title")!=null&&!img.get(i).attr("title").equals("")){
+					String urls=img.get(i).attr("src");
+					if(urls.contains("ITEM")){
+						String aurl=img.get(i).parents().select("a").attr("abs:href");
+						getItem(aurl,dao);
+					}
 				}
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+
+	public UseItem getItem(String url,SRPUtil dao){
+		Document doc;
+		UseItem useitem = null;
+		try {
+			doc = Jsoup.connect(url).timeout(30*1000).get();
+			Elements table=doc.select("div.INFO_BG_C0");
+			Elements item=table.select("li.item0");
+			Elements name=item.select("img");
+			Elements brs=item.select("br");
+			String temp="";
+			for(int i=0;i<brs.size();i++){
+				temp+=brs.get(i).nextSibling().outerHtml().trim();
+			}
+			if(!temp.contains("<a")&&!temp.contains("級別")&&!temp.contains("船体")){
+				List<String> type_temp=new ArrayList<>();
+				if(temp.contains("行動力")){
+					type_temp.add("食物");
+				}
+				if(temp.contains("消除疲勞")){
+					type_temp.add("消除疲劳");
+				}
+				if(temp.contains("壞血病")){
+					type_temp.add("坏血病");
+				}
+				if(temp.contains("實驗")){
+					type_temp.add("炼金");type_temp.add("实验");
+				}
+				if(temp.contains("親愛之證")){
+					type_temp.add("兑换");type_temp.add("酒馆礼物");
+				}
+				if(temp.contains("備忘錄")){
+					type_temp.add("翻译");
+				}
+				if(temp.contains("裝材")){
+					type_temp.add("装材");
+				}
+				if(temp.contains("營養套餐")){
+					type_temp.add("副料");
+				}
+				if(temp.contains("探險獎賞")){
+					type_temp.add("兑换");type_temp.add("地下城");
+				}
+				if(temp.contains("海戰")){
+					type_temp.add("海战");
+				}
+				if(temp.contains("肉搏戰")){
+					type_temp.add("肉搏战");
+				}
+				temp=temp.replace("・","·");
+				useitem=new UseItem();
+				useitem.name=StringUtil.TransToSimple(name.attr("title"));
+				useitem.info=StringUtil.TransToSimple(temp.replace("&middot;","·").replace("‧", "·"));
+				String stemp="";
+				for(int k=0;k<type_temp.size();k++){
+					stemp+=type_temp.get(k)+",";
+				}
+				if(type_temp.size()==0){
+					stemp="其他,";
+				}
+				useitem.type=StringUtil.TransToSimple(stemp.substring(0,stemp.length()-1));
+				useitem.get_way="";
+				System.out.println(url);
+				System.out.println(useitem.name);
+				System.out.println(useitem.info);
+				System.out.println(useitem.type);
+				onlyOneInsertItem(useitem, dao);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return useitem;
+	}
+
+	/**连接url**/
+	public List<String> getUrl(String url){
+		List<String> list=new ArrayList<>();
+		Document doc ;
+		try {
+			doc = Jsoup.connect(url).timeout(30*1000).get();
+			Elements table=doc.select("div.table0");
+			Elements ul=table.select("ul.unli0");
+			for(int i=1;i<ul.size();i++){
+				Elements li=ul.get(i).select("li.item0");
+				Elements link =li.select("a");
+				for(int j=0;j<link.size();j++)
+				{
+					String abs_url=link.attr("abs:href");
+					if(!abs_url.equals("http://uwodbmirror.ivyro.net/cn/main.php?id="))
+					{
+						list.add(abs_url);
+						Log.i("abs_url",abs_url);
+					}
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -78,8 +177,8 @@ public class JsoupUtil {
 	
 	/**连接url**/
 	public List<String> getUrlBoat(String url){
-		List<String> list=new ArrayList<String>();
-		Document doc = null;
+		List<String> list=new ArrayList<>();
+		Document doc;
 		try {
 		doc = Jsoup.connect(url).timeout(30*1000).get();
 		Elements table=doc.select("div.table0");
@@ -90,7 +189,7 @@ public class JsoupUtil {
 			for(int j=0;j<link.size();j++)
 			{
 				String abs_url=link.attr("abs:href");
-				if(!abs_url.equals("http://uwodbmirror.ivyro.net/cn/main.php?id="))
+				if(!abs_url.equals(DB_BASE_URL+"id="))
 				{
 					list.add(abs_url);
 					Log.i("abs_url",abs_url);
@@ -105,10 +204,10 @@ public class JsoupUtil {
 	
 	/**炮要特殊处理**/
 	public List<String> getCannonUrl(){
-		number=new ArrayList<Integer>();
-		List<String> list=new ArrayList<String>();
+		number=new ArrayList<>();
+		List<String> list=new ArrayList<>();
 		for(int k=6;k<=11;k++){
-			Document doc = null;
+			Document doc;
 			try {
 			doc = Jsoup.connect(DB_BASE_URL+PART+"&chp="+k).timeout(30*1000).get();
 			Elements table=doc.select("div.table0");
@@ -139,7 +238,7 @@ public class JsoupUtil {
 		List<String> list3=getUrl(DB_BASE_URL+BOAT+"&chp=6");
 		//第一步:小型船获取
 		for(int i=0;i<list1.size();i++){
-			Document doc = null;
+			Document doc;
 			try {
 			//遍历链接
 			doc = Jsoup.connect(list1.get(i)).timeout(30*1000).get();
@@ -340,7 +439,7 @@ public class JsoupUtil {
 			String ab=tab.first().nextSibling().toString();
 			//part部分
 			part.setPic_id(uid);
-			Log.i("x",ab);
+			Log.i("x", ab);
 			part.setName(img.attr("title"));
 			part.setType(1);
 			part.setZtype(0);
@@ -395,12 +494,12 @@ public class JsoupUtil {
 			part.setType(2);
 			part.setZtype(0);
 			part.setAdd(
-					"炮弹种类:"+type+","+"贯穿力:"+state17.text().trim()+","+
-					"射程:"+state18.text().trim()+","+"弹速:"+state19.text().trim()+","+
-					"爆炸范围:"+state20.text().trim()+","+"装填速度:"+state21.text().trim()+","+
-					"耐久:"+state10.text().trim()
+					"炮弹种类:" + type + "," + "贯穿力:" + state17.text().trim() + "," +
+							"射程:" + state18.text().trim() + "," + "弹速:" + state19.text().trim() + "," +
+							"爆炸范围:" + state20.text().trim() + "," + "装填速度:" + state21.text().trim() + "," +
+							"耐久:" + state10.text().trim()
 			);
-			Log.i("x","id="+i+" "+part.getAdd());
+			Log.i("x", "id=" + i + " " + part.getAdd());
 			//避免重复
 			onlyOneInsertPart(part,dao);
 			} catch (IOException e) {
@@ -410,7 +509,7 @@ public class JsoupUtil {
 	}
 	/**板子**/
 	public void getDef(DefaultDAO dao){
-		List<String> list1=getUrl(DB_BASE_URL+PART+"&chp="+2);
+		List<String> list1=getUrl(DB_BASE_URL + PART + "&chp=" + 2);
 		for(int i=0;i<list1.size();i++){
 			Document doc = null;
 			try {
@@ -606,9 +705,7 @@ public class JsoupUtil {
 			part.setName(img.attr("title"));
 			part.setType(6);
 			part.setZtype(1);
-			part.setAdd(
-					str
-			);
+			part.setAdd(str);
 			Log.i("x","id="+i+" "+part.getAdd());
 			onlyOneInsertPart(part,dao);
 			} catch (IOException e) {
@@ -647,9 +744,7 @@ public class JsoupUtil {
 			part.setName(img.attr("title"));
 			part.setType(7);
 			part.setZtype(1);
-			part.setAdd(
-					str
-			);
+			part.setAdd(str);
 			Log.i("x","id="+i+" "+part.getAdd());
 			onlyOneInsertPart(part,dao);
 			} catch (IOException e) {
@@ -731,9 +826,7 @@ public class JsoupUtil {
 			part.setName(img.attr("title"));
 			part.setType(8);
 			part.setZtype(1);
-			part.setAdd(
-					str
-			);
+			part.setAdd(str);
 			Log.i("x","id="+i+" "+part.getAdd());
 			onlyOneInsertPart(part,dao);
 			} catch (IOException e) {
@@ -811,15 +904,15 @@ public class JsoupUtil {
 			trade.setProducing_area(area);//生产地
 			trade.setSp(StringUtil.TransToSimple(sp));//特产文化圈
 			trade.setRecipe_way(StringUtil.TransToSimple(recipe));//生产方式
-			onlyOneInsertTrade(trade,dao);
+			onlyOneInsertTrade(trade, dao);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	public List<String> getRecipe(DefaultDAO dao,int type){
-		List<String> list=new ArrayList<String>();
-		Document doc = null;
+		List<String> list=new ArrayList<>();
+		Document doc ;
 		try {
 			doc = Jsoup.connect(DB_BASE_URL+RECIPE+"&chp="+type).timeout(30*1000).get();
 			Elements table=doc.select("div.table0");
@@ -915,7 +1008,7 @@ public class JsoupUtil {
 				npc.setLove_type(love_type);
 				npc.setName(name);
 				npc.setSkill_tech(skill_tech);
-				onlyOneInsertNPC(npc,dao);
+				onlyOneInsertNPC(npc, dao);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -964,7 +1057,7 @@ public class JsoupUtil {
 						}
 					}
 				}
-				List<TradeCityItem> trade_list=new ArrayList<TradeCityItem>();
+				List<TradeCityItem> trade_list=new ArrayList<>();
 				for(int j=1;j<ul0.size();j++){
 					TradeCityItem item=new TradeCityItem();
 					Elements item2=ul0.get(j).select("li.item2");
@@ -987,7 +1080,7 @@ public class JsoupUtil {
 						trade_list.add(item);
 					}
 				}
-				String trade=gson.toJson(trade_list).toString();
+				String trade=gson.toJson(trade_list);
 				Log.i("city", name);
 				Log.i("city", culture);
 				Log.i("city", area);
@@ -1236,7 +1329,7 @@ public class JsoupUtil {
 			Elements span=li1.select("span");
 			String sex=span.get(0).text();
 			String city=span.get(1).text();
-			List<ADCSkill> skill_list=new ArrayList<ADCSkill>();
+			List<ADCSkill> skill_list=new ArrayList<>();
 			Log.i("",""+ulx.size());
 			for(int j=1;j<ulx.size();j++){
 				ADCSkill adc_skill=new ADCSkill();
@@ -1248,7 +1341,7 @@ public class JsoupUtil {
 				adc_skill.setNeed(StringUtil.TransToSimple(item1.text()));
 				skill_list.add(adc_skill);
 			}
-			String skill_list_txt=gson.toJson(skill_list).toString();
+			String skill_list_txt= gson.toJson(skill_list);
 			String uid="dol_"+"adc"+i+"s"+type;
 			adc.setCity(city);
 			adc.setName(name);
@@ -1352,6 +1445,19 @@ public class JsoupUtil {
 	        if(list.size()==0)
 	        	dao.insert(part);
 	}
+
+	@SuppressWarnings("unchecked")
+	private void onlyOneInsertItem(UseItem part,SRPUtil dao){
+		String[] x={part.name+""};
+		Log.i("s",""+x[0]);
+		List<UseItem>list=dao.select(UseItem.class,
+				false, "name=?", x,
+				null, null, null, null);
+		if(list.size()==0){
+			dao.insert(part);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	private void onlyOneInsertRecipe(Recipe part,DefaultDAO dao){
 		   String[] x={part.getName()+""};
@@ -1455,18 +1561,64 @@ public class JsoupUtil {
 		city.setTrade_list(StringUtil.TransToSimple(""));
 		onlyOneInsertCity(city, dao);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public void getship(DefaultDAO dao){
+		try {
+			Document doc = Jsoup.connect(DB_BASE_URL+REGULAR_SHIP).timeout(30*1000).get();
+			Elements table=doc.select("div.table0");
+			Elements ul=table.select("ul.unli0");
+			Log.i("1", "" + ul.size());
+			for(int i=1;i<ul.size();i++){
+				RegularShip regularShip=new RegularShip();
+				Elements li0=ul.get(i).select("li.item0");
+				Elements li1_1=ul.get(i).select("li.item1");
+				Elements li1_2=ul.get(i).select("li.item1");
+				Elements li2_1=ul.get(i).select("li.item2");
+				Elements li2_2=ul.get(i).select("li.item2");
+				String abs_url=li0.select("a").attr("abs:href");
+				List<String> list=getUrlTimeList(abs_url);
+				String name=StringUtil.TransToSimple(li0.text());
+				String start_city=StringUtil.TransToSimple(li1_1.get(0).text());
+				String end_city=StringUtil.TransToSimple(li1_2.get(1).text());
+				String money=StringUtil.TransToSimple(li2_1.get(0).text());
+				String time=StringUtil.TransToSimple(li2_2.get(1).text());
+				Log.i("1",name);
+				Log.i("2",start_city);
+				Log.i("3",end_city);
+				Log.i("4",money);
+				Log.i("5",time);
+				regularShip.name=name;
+				regularShip.start_city=start_city;
+				regularShip.end_city=end_city;
+				regularShip.money=money;
+				regularShip.time=time;
+				regularShip.time_list=new Gson().toJson(list);
+				dao.insert(regularShip);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public List<String> getUrlTimeList(String url){
+		List<String> list=new ArrayList<>();
+		Document doc;
+		try {
+			doc = Jsoup.connect(url).timeout(30*1000).get();
+			Elements table=doc.select("div.table0");
+			Elements ul=table.select("ul.unli1");
+			Log.i("s",ul.size()+"");
+			for(int i=1;i<ul.size();i++){
+				Elements li=ul.get(i).select("li.item0");
+				for(int j=0;j<li.size();j++){
+					String str=li.get(j).text().trim().replace("  ", "");
+					if(!str.equals("")){
+						list.add(j+"w"+str);
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

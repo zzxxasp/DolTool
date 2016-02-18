@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.adapter.util.ApdaterUtil;
-import com.key.doltool.data.Recipe;
+import com.key.doltool.data.sqlite.Recipe;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
 
@@ -172,7 +172,11 @@ public class RecipeAdapter extends BaseAdapter{
 			holder.skill1_number.setVisibility(View.VISIBLE);
 			holder.skill1_name.setVisibility(View.VISIBLE);
 			String[] message=skill[0].split(" ");
-			holder.skill1_number.setText(""+message[1]);
+			if(message.length>1){
+				holder.skill1_number.setText(""+message[1]);
+			}else{
+				holder.skill1_number.setText("");
+			}
 			holder.skill1_name.setText(message[0]);
 			util.findByName(holder.skill1,message[0],1);
 		}

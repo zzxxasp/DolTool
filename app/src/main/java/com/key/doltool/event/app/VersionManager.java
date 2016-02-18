@@ -4,12 +4,12 @@ import java.util.List;
 import android.app.Activity;
 import android.util.Log;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.view.Toast;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 public class VersionManager {
 
@@ -34,12 +34,12 @@ public class VersionManager {
     public void checkVersion(final boolean flag) {
     	final Version v=new Version();
     	String old_verion=CommonUtil.getAppVersionName(activity);
-    	ParseQuery<ParseObject> query =ParseQuery.getQuery("update");
+		AVQuery<AVObject> query =AVQuery.getQuery("update");
   	  	query.whereEqualTo("name","dol_tool");
   	  	query.whereEqualTo("verion_dest",old_verion);
   	  	v.setAppname("dol_tool");
-  	  	query.findInBackground(new FindCallback<ParseObject>() {
-  	  		public void done(List<ParseObject> item, ParseException e) {
+  	  	query.findInBackground(new FindCallback<AVObject>() {
+  	  		public void done(List<AVObject> item, AVException e) {
   	  			if (e == null) {
   	  				if(item.size()==0&&flag){
   	  					Toast.makeText(activity, "已经是最新版本", Toast.LENGTH_SHORT).show();
@@ -79,9 +79,6 @@ public class VersionManager {
     }
     
     private boolean isUpdate(String localVersion, String remoteVersion) {
-        if (localVersion.compareTo(remoteVersion) < 0)
-            return true;
-        else
-            return false;
+		return localVersion.compareTo(remoteVersion) < 0;
     }
 }

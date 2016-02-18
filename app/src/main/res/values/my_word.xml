@@ -142,6 +142,15 @@
 	    <item >狮鹫之翼</item>
 	</string-array>
 
+	<string-array name="skill_type">
+		<item >冒险</item>
+		<item >商业</item>
+		<item >海事</item>
+		<item >语言</item>
+		<item >副官</item>
+		<item >船只</item>
+	</string-array>
+
 	<string-array name="card_limit">
 		<item >无限制</item>
 		<item >100</item>

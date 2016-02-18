@@ -15,7 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.TagPicAdapter;
-import com.key.doltool.data.Job;
+import com.key.doltool.data.sqlite.Job;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.DataSelectUtil;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
 import com.key.doltool.activity.adc.ADCListActivity;
+import com.key.doltool.activity.mission.MissionDetailsActivity;
 import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.squre.MapActivity;
 import com.key.doltool.activity.trade.TradeDetailActivity;
@@ -38,6 +39,24 @@ public class WebEvent {
 		it.putExtra("name",txt);
 		context.startActivity(it);
 	}
+
+	/**
+	 * html调用android-页面跳转事件(任务链接)
+	 * */
+	@JavascriptInterface
+	public void mission(int index,String name){
+		if(index==0){
+			Intent it=new Intent(context, MissionDetailsActivity.class);
+			it.putExtra("type","link");
+			it.putExtra("find_item",name);
+			context.startActivity(it);
+		}else{
+			Intent it=new Intent(context,MissonListActivity.class);
+			it.putExtra("find_item",name);
+			context.startActivity(it);
+		}
+	}
+
 	/**
 	 * html调用android-页面跳转事件(副官列表页【带搜索条件】)
 	 * */

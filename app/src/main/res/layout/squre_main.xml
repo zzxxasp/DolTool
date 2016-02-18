@@ -48,7 +48,7 @@
     />
 </LinearLayout>
 <LinearLayout 
-    android:id="@+id/fortune" 
+    android:id="@+id/fortune"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -70,13 +70,13 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingBottom="10dp"
-    android:text="爱丽丝" 
+    android:text="爱丽丝"
     />
 <TextView 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textColor="@color/GhostWhite"
-    android:text="航海运势" 
+    android:text="航海运势"
     />
 </LinearLayout>
 <TextView 
@@ -88,5 +88,47 @@
     android:lines="4"
     android:text="未知的少女，游弋在世界之海中，引导时间的流向，决定着航海者们的命运。" 
     />
-</LinearLayout>   
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/port"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/theme_blue_listitem_t"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|top"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="码头官员"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/GhostWhite"
+                android:text="港口定期船"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:lines="4"
+            android:text="默默的为航海者服务，精通世界所有语言。"
+            />
+    </LinearLayout>
 </LinearLayout>

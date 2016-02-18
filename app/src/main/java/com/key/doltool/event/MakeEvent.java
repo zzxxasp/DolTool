@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.adapter.PartSpinnerdapter;
-import com.key.doltool.data.Part;
+import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.util.CommonUtil;
 /**造船控件处理事件**/
 public class MakeEvent {

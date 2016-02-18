@@ -16,7 +16,7 @@ import android.widget.ListView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.WikiAdapter;
-import com.key.doltool.data.WikiInfo;
+import com.key.doltool.data.sqlite.WikiInfo;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
@@ -30,7 +30,6 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		private Dialog alert;
 		//船只列表页面
 		private ListView listview;
-		
 		//数据temp变量
 		private DefaultDAO dao;
 		private List<WikiInfo> list=new ArrayList<>();
@@ -45,7 +44,6 @@ public class WikiListActivity extends BaseActivity implements OnScrollListener{
 		public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.card_combo_main);
-			initToolBar(null);
 	        dao=SRPUtil.getDAO(context);
 			selectshow("0,"+WikiAdapter.SIZE);
 	        findView();

@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -167,5 +168,16 @@ public class CommonUtil {
 	        Log.e("VersionInfo", "Exception", e);
 	    }   
 	    return versionName;   
-	} 
+	}
+	public static int getMetaDataInt(Context context, String name) {
+		PackageManager pm = context.getPackageManager();
+
+		try {
+			ApplicationInfo e = pm.getApplicationInfo(context.getPackageName(), 128);
+			return e.metaData.getInt(name);
+		} catch (Exception var4) {
+			Log.e("DataInt", "Exception", var4);
+			return 0;
+		}
+	}
 }

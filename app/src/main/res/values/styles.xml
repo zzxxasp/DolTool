@@ -10,43 +10,31 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/Animation.Activity.Translucent.Style</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
         <item name="actionBarItemBackground">@drawable/theme_blue_btn</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="alertDialogTheme">@style/commonDialog</item>
         <item name="actionModeCloseDrawable">@drawable/ic_check_white_24dp</item>
         <item name="actionModeCloseButtonStyle">@style/AppTheme.ActionMode</item>
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowStyle</item>
         <item name="actionModeBackground">@color/Blue_SP</item>
         <item name="toolbarNavigationButtonStyle">@style/AppTheme.Toolbar.Navigation</item>
         <item name="android:fitsSystemWindows">true</item>
-        <!--<item name="android:clipToPadding">true</item>-->
+        <item name="android:typeface">monospace</item>
     </style>
+
+    <style name="commonDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/Blue_SP</item>
+        <item name="colorPrimary">@color/Blue_SP</item>
+    </style>
+
     <style name="AppTheme.Base.FullScreen" parent="AppTheme.Base">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/blue_wallpaper</item>
-    </style>
-    <style name="CircularProgressBar">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="stroke_width">5dp</item>
-        <item name="progress" format="float">0.1</item>
-        <item name="progress_color">#ffff4444</item>
-        <item name="progress_background_color">@android:color/background_light</item>
-        <item name="marker_visible">true</item>
-        <item name="thumb_visible">true</item>
-    </style>
-    <style name="CircularProgressBarLight">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="stroke_width">5dp</item>
-        <item name="progress" format="float">0.1</item>
-        <item name="progress_color">#ffff4444</item>
-        <item name="progress_background_color">@android:color/darker_gray</item>
-        <item name="marker_visible">true</item>
-        <item name="thumb_visible">true</item>
     </style>
     <!-- Application theme. -->
 
@@ -65,10 +53,6 @@
 	<style name="dialog_up" parent="android:Animation">
         <item name="@android:windowEnterAnimation">@anim/dialog_enter</item>
         <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
-    </style>
-	
-    <style name="Theme.SmoothProgressBarDefaults" parent="AppTheme">
-        <item name="cpbStyle">@style/CircularProgressBar</item>
     </style>
 
     <style name="CircularProgressBarLoading" parent="android:Widget.ProgressBar">
@@ -95,5 +79,7 @@
     <style name="Animation.Activity.Translucent.Style" parent="@android:style/Animation.Translucent">
         <item name="android:windowEnterAnimation">@anim/activity_transition_slide_in_new</item>
         <item name="android:windowExitAnimation">@anim/activity_transition_slide_out_new</item>
+        <item name="android:windowShowAnimation">@anim/activity_transition_slide_in_new</item>
+        <item name="android:windowHideAnimation">@anim/activity_transition_slide_out_new</item>
     </style>
 </resources>

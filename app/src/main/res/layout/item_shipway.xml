@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    android:background="@drawable/material_card"
+    >
+<TextView
+    android:id="@+id/target"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_marginBottom="5dp"
+    android:textColor="@color/Blue_SP"
+    android:text="塞维尔-比萨"
+    />
+<TextView
+    android:id="@+id/name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_below="@+id/target"
+    android:textColor="@color/Black_SP"
+    android:text="圣玛利亚号"
+    />
+<TextView
+    android:id="@+id/money"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_alignParentRight="true"
+    android:textColor="@color/Black_SP"
+    android:text="€:1,560,200"
+    />
+<TextView
+    android:id="@+id/time"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_alignParentRight="true"
+    android:layout_below="@+id/target"
+    android:textColor="@color/Gainsboro_SP"
+    android:text="20分钟"
+    />
+</RelativeLayout>

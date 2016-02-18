@@ -69,7 +69,7 @@ public class FlowLayout extends ViewGroup {
     /**
      * 设置数据
      * 
-     * @param adpater
+     * @param adpater adpater
      */
     public void setAdapter(BaseAdapter adpater) {
         this.adapter = adpater;
@@ -79,7 +79,7 @@ public class FlowLayout extends ViewGroup {
     /**
      * 获取点击事件
      * 
-     * @return
+     * @return OnClickListener
      */
     public OnClickListener getOnclickListner() {
         return onClickListener;
@@ -88,7 +88,7 @@ public class FlowLayout extends ViewGroup {
     /**
      * 设置点击事件
      * 
-     * @param onClickListener
+     * @param onClickListener OnClickListener
      */
     public void setOnclickLinstener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
