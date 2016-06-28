@@ -10,8 +10,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.key.doltool.R;
@@ -24,22 +22,26 @@ import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
-import com.the9tcat.hadi.DefaultDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnItemClick;
+
+/**
+ * 技能列表界面
+ * **/
 public class AbilityListActivity extends BaseActivity {
     //定义部分
     private Dialog alert;
     //列表
-    private ListView listview;
+    @BindView(R.id.listview) ListView listview;
     //数据temp变量
-    private DefaultDAO dao;
+    private SRPUtil dao;
     private List<Skill> list = new ArrayList<>();
     private SkillAdapter adapter;
     private int add = 0;
-    private Thread mThread;    // 线程
     private boolean end_flag = true; //是否为最末标记
     //查询条件
     private String select_if = "id>?";
@@ -47,16 +49,19 @@ public class AbilityListActivity extends BaseActivity {
     //创建Activity
     private ListScrollListener srollListener;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_combo_main);
-        dao = SRPUtil.getDAO(this);
+    @Override
+    public int getContentViewId() {
+        return R.layout.card_combo_main;
+    }
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
+        dao = SRPUtil.getInstance(getApplicationContext());
         flag=false;
         initToolBar(onMenuItemClick);
-        toolbar.setTitle("技能锻炼场");
+        toolbar.setTitle(R.string.skill_title);
         getExtra();//外部搜索链接参数处理
         findView();
-        setListener();
         selectshow("0," + SkillAdapter.SIZE);
     }
 
@@ -72,23 +77,16 @@ public class AbilityListActivity extends BaseActivity {
         alert=new DialogEvent().showLoading(this);
         initPage();
     }
-
-    //通用Listener
-    private void setListener() {
-        listview.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int arg2, long arg3) {
-                if (list.get(arg2).getType() <= 5) {
-                    Intent it = new Intent(AbilityListActivity.this, AbilityForNormalDetailActivity.class);
-                    it.putExtra("id", list.get(arg2).getId() + "");
-                    startActivity(it);
-                } else {
-                    Intent it = new Intent(AbilityListActivity.this, AbilityForBoatDetailActivity.class);
-                    it.putExtra("id", list.get(arg2).getId() + "");
-                    startActivity(it);
-                }
-            }
-        });
+    @OnItemClick(R.id.listview) void itemClick(int position) {
+        if (list.get(position).getType() <= 5) {
+            Intent it = new Intent(AbilityListActivity.this, AbilityForNormalDetailActivity.class);
+            it.putExtra("id", list.get(position).getId() + "");
+            startActivity(it);
+        } else {
+            Intent it = new Intent(AbilityListActivity.this, AbilityForBoatDetailActivity.class);
+            it.putExtra("id", list.get(position).getId() + "");
+            startActivity(it);
+        }
     }
 
     private void initPage() {
@@ -96,10 +94,9 @@ public class AbilityListActivity extends BaseActivity {
     }
 
     private void initPageItem() {
-        listview = (ListView) findViewById(R.id.listview);
         adapter = new SkillAdapter(list, this);
         srollListener = new ListScrollListener
-                (end_flag, mThread, alert, handler);
+                (end_flag, alert, handler);
         listview.setOnScrollListener(srollListener);
         listview.setAdapter(adapter);
     }
@@ -113,7 +110,6 @@ public class AbilityListActivity extends BaseActivity {
         super.onResume();
     }
 
-    @SuppressWarnings("unchecked")
     //有限数据查询
     private void selectshow(String limit) {
         if (dao == null) {
@@ -122,7 +118,7 @@ public class AbilityListActivity extends BaseActivity {
         //数据前后记录
         int size_before, size_after;
         size_before = list.size();
-        list.addAll(((List<Skill>) dao.select(Skill.class, false, select_if, select_if_x,
+        list.addAll((dao.select(Skill.class, false, select_if, select_if_x,
                 null, null, null, limit)));
         size_after = list.size();
         //数据返回判断
@@ -134,9 +130,9 @@ public class AbilityListActivity extends BaseActivity {
         if (size_after == size_before && size_after != 0) {
             end_flag = false;
             srollListener.changeFlag(false);
-            Toast.makeText(getApplicationContext(), "已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.search_no_more, Toast.LENGTH_LONG).show();
         } else if (size_after == 0) {
-            Toast.makeText(getApplicationContext(), "没有查到您想要的结果", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.search_no, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -207,7 +203,7 @@ public class AbilityListActivity extends BaseActivity {
                     end_flag = true;
                     srollListener.changeFlag(true);
                     change_if("id>?", "0");
-                    Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.search_rest, Toast.LENGTH_SHORT).show();
                 }
             }
         }

@@ -29,33 +29,36 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class ADCListActivity extends BaseActivity {
     //定义部分
     private Dialog alert;
     //列表
-    private ListView listview;
-
+    @BindView(R.id.listview) ListView listview;
     //数据temp变量
     private DefaultDAO dao;
     private List<ADCInfo> list = new ArrayList<>();
     private ADCListAdapter adapter;
     private int add = 0;
-    private Thread mThread;    // 线程
     private boolean end_flag = true; //是否为最末标记
     private ListScrollListener scrollListener;
     //查询条件
     private String select_if = "id>?";
     private String[] select_if_x = {"0"};
 
+    @Override
+    public int getContentViewId() {
+        return R.layout.card_combo_main;
+    }
 
-    //创建Activity
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_combo_main);
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
         dao = SRPUtil.getDAO(this);
         flag=false;
         initToolBar(onMenuItemClick);
-        toolbar.setTitle("副官集会所");
+        toolbar.setTitle(R.string.adc_title);
         getExtra();//外部搜索链接参数处理
         findView();
         setListener();
@@ -95,7 +98,7 @@ public class ADCListActivity extends BaseActivity {
     private void initPageItem() {
         listview = (ListView) findViewById(R.id.listview);
         adapter = new ADCListAdapter(list, this);
-        scrollListener = new ListScrollListener(end_flag, mThread, alert, handler);
+        scrollListener = new ListScrollListener(end_flag, alert, handler);
         listview.setOnScrollListener(scrollListener);
         listview.setAdapter(adapter);
     }
@@ -130,9 +133,9 @@ public class ADCListActivity extends BaseActivity {
         if (size_after == size_before && size_after != 0) {
             end_flag = false;
             scrollListener.changeFlag(false);
-            Toast.makeText(getApplicationContext(), "已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.search_no_more, Toast.LENGTH_LONG).show();
         } else if (size_after == 0) {
-            Toast.makeText(getApplicationContext(), "没有查到您想要的结果", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.search_no, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -208,7 +211,7 @@ public class ADCListActivity extends BaseActivity {
                 end_flag = true;
                 scrollListener.changeFlag(true);
                 change_if("id>?", "0");
-                Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),R.string.search_rest, Toast.LENGTH_SHORT).show();
             }
         }
         return true;

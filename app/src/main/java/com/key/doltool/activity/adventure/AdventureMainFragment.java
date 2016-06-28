@@ -20,32 +20,28 @@ import com.key.doltool.util.db.SRPUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+
 public class AdventureMainFragment extends BaseFragment{
-	private ListView main_list;
-	private List<Trove_Count> list_count;
-	private View main;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.adventure_main_area, container,false);
-		 init(view);
-		 findView();
-		 setListener();
-		 return view; 
-	}
-	private void init(View view){
-		list_count=new ArrayList<>();
-		main=view;
+	@BindView(R.id.main_list)  ListView main_list;
+	private List<Trove_Count> list_count=new ArrayList<>();;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.adventure_main_area;
 	}
 
-	private void findView(){
-		main_list=(ListView)main.findViewById(R.id.main_list);
-		main.setOnDragListener(new View.OnDragListener() {
-			@Override
-			public boolean onDrag(View v, DragEvent event) {
-				Log.i("s",event.getAction()+"");
-				return false;
-			}
-		});
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		init();
+		findView();
+		setListener();
+	}
+
+
+	private void findView(){
 		main_list.setAdapter(new AdventureAdapter(list_count, getActivity()));
 	}
 	@Override

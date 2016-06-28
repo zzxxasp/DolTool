@@ -25,8 +25,25 @@ import com.key.doltool.util.db.DataSelectUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
 
+import butterknife.BindView;
+
 public class TradeCityDetailActivity extends BaseActivity{
-	private ListView listview;
+
+	@BindView(R.id.listview) ListView listview;
+	@BindView(R.id.city_img) ImageView pic;
+	@BindView(R.id.city_name) TextView city_name;
+	@BindView(R.id.city_area) TextView city_area;
+	@BindView(R.id.city_culture) TextView city_culture;
+	@BindView(R.id.inverst) RelativeLayout inverst;
+	@BindView(R.id.inverst_money) TextView inverst_money;
+	@BindView(R.id.inverst_item) TextView inverst_item;
+	@BindView(R.id.lang1) LinearLayout lang1;
+	@BindView(R.id.lang2) LinearLayout lang2;
+	@BindView(R.id.lang_txt1) TextView lang_txt1;
+	@BindView(R.id.lang_txt2) TextView lang_txt2;
+	@BindView(R.id.lang_pic1) ImageView lang_pic1;
+	@BindView(R.id.lang_pic2) ImageView lang_pic2;
+
 	private String name="";
 	private String tw_name="";
 	private String pic_id="";
@@ -34,48 +51,24 @@ public class TradeCityDetailActivity extends BaseActivity{
 	private DefaultDAO dao;
 	private Gson gson;
 	private List<TradeCityItem> list;
-	
-	private ImageView pic;
-	private TextView city_name,city_area,city_culture;
-	
-	private RelativeLayout inverst;
-	private TextView inverst_money,inverst_item;
-	
-	private LinearLayout lang1,lang2;
-	private TextView lang_txt1,lang_txt2;
-	private ImageView lang_pic1,lang_pic2;
 	private String id;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.trade_city_list;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		initToolBar(null);
-		setContentView(R.layout.trade_city_list);
 		dao=SRPUtil.getDAO(context);
 		gson=new Gson();
 		name=getIntent().getStringExtra("city_name");
 		tw_name=getIntent().getStringExtra("tw_name");
 		id=getIntent().getStringExtra("id");
 		init();
-		findView();
 		setListener();
-	}
-	private void findView(){
-		listview=(ListView)findViewById(R.id.listview);
-		pic=(ImageView)findViewById(R.id.city_img);
-		city_name=(TextView)findViewById(R.id.city_name);
-		city_area=(TextView)findViewById(R.id.city_area);
-		city_culture=(TextView)findViewById(R.id.city_culture);
-		
-		inverst=(RelativeLayout)findViewById(R.id.inverst);
-		inverst_money=(TextView)findViewById(R.id.inverst_money);
-		inverst_item=(TextView)findViewById(R.id.inverst_item);
-		
-		lang1=(LinearLayout)findViewById(R.id.lang1);
-		lang2=(LinearLayout)findViewById(R.id.lang2);
-		lang_txt1=(TextView)findViewById(R.id.lang_txt1);
-		lang_txt2=(TextView)findViewById(R.id.lang_txt2);
-		
-		lang_pic1=(ImageView)findViewById(R.id.lang_pic1);
-		lang_pic2=(ImageView)findViewById(R.id.lang_pic2);
 	}
 	
 	private void setListener(){

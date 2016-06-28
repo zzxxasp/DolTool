@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ArrayRes;
 
 import com.key.doltool.R;
 
@@ -47,7 +48,7 @@ public class ResourcesUtil {
 			return image; 
 	}
 	/**通过R.array去拿数组**/
-	public static String[] getArray(Activity context,int arrayId)
+	public static String[] getArray(Activity context,@ArrayRes int arrayId)
 	{
 		Resources res =context.getResources();
 		return res.getStringArray(arrayId);

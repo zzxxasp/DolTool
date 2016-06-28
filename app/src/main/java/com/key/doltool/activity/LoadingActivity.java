@@ -13,8 +13,8 @@ import com.key.doltool.event.VoyageEvent;
 import com.key.doltool.util.DBUtil;
 import com.key.doltool.view.Toast;
 
-import net.youmi.android.AdManager;
-import net.youmi.android.spot.SpotManager;
+//import net.youmi.android.AdManager;
+//import net.youmi.android.spot.SpotManager;
 
 import java.lang.ref.WeakReference;
 
@@ -23,16 +23,15 @@ public class LoadingActivity extends BaseActivity{
 	private MyAnimations my;
 	private Thread mThread;
 	private MyHandler updateUI;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.loading);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.loading;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		updateUI=new MyHandler(this);
-		AdManager.getInstance(this).init("8b0be299a6c08260", "65fb4b2fb906d2e3", false);
-		SpotManager.getInstance(this).loadSpotAds();
-		SpotManager.getInstance(this)
-	    .setAutoCloseSpot(true);
-		SpotManager.getInstance(this)
-	    .setCloseTime(5000);
 		ImageView load = (ImageView) findViewById(R.id.load);
 		my=new MyAnimations();
 		my.roate(this,load,2000);
@@ -40,6 +39,7 @@ public class LoadingActivity extends BaseActivity{
 		mThread.start();
 		new VoyageEvent(this).getRandomChance();
 	}
+
 	private Runnable mTask=new Runnable(){
 		public void run() {
 			DBUtil.copyDB(getApplicationContext(),updateUI);

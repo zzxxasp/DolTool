@@ -27,52 +27,62 @@ import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UserEvent;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
+
+import butterknife.BindView;
+
 public class RegisterActivity extends BaseActivity{
 	//注册
 	private static final String[] AUTO_EMAILS = {"@163.com", "@sina.com", "@qq.com", "@126.com", "@gmail.com", "@apple.com"};
-	private EditText password_register,password_repeat;
-	private TextInputLayout usernameWrapper,passwordWrapper,password_repeatWrapper,nickWrapper;
-	private AutoCompleteTextView email;
+	@BindView(R.id.password) EditText password_register;
+	@BindView(R.id.password_repeat) EditText password_repeat;
+	@BindView(R.id.emailWrapper) TextInputLayout usernameWrapper;
+	@BindView(R.id.passwordWrapper) TextInputLayout passwordWrapper;
+	@BindView(R.id.password_repeatWrapper) TextInputLayout password_repeatWrapper;
+	@BindView(R.id.nickWrapper) TextInputLayout nickWrapper;
+	@BindView(R.id.email) AutoCompleteTextView email;
+	@BindView(R.id.nick) EditText nickName;
+	@BindView(R.id.area) Spinner area;
+	@BindView(R.id.server) Spinner server;
+	@BindView(R.id.login) FlatButton login;
+
 	private AutoTextViewAdapter adapter_email;
-	private EditText nickName;
-	private Spinner area,server;
 	private String server_name="0-0";
-	private FlatButton login;
 	private Dialog dialog;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.login_register;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_register);
+
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		findView();
 		flag=false;
 		initToolBar(null);
 		toolbar.setTitle("注册");
 	}
+
 	private void findView(){
 		dialog=new DialogEvent().itemDialog(this,"注册中");
 
-		usernameWrapper = (TextInputLayout) findViewById(R.id.emailWrapper);
-		passwordWrapper = (TextInputLayout) findViewById(R.id.passwordWrapper);
-		password_repeatWrapper = (TextInputLayout) findViewById(R.id.password_repeatWrapper);
-		nickWrapper = (TextInputLayout) findViewById(R.id.nickWrapper);
 		usernameWrapper.setHint("登录邮箱");
 		passwordWrapper.setHint("登录密码");
 		password_repeatWrapper.setHint("重复密码");
 		nickWrapper.setHint("昵称(非必填)");
 
-		password_register=(EditText)findViewById(R.id.password);
-		password_repeat=(EditText)findViewById(R.id.password_repeat);
-		nickName=(EditText)findViewById(R.id.nick);
-		email=(AutoCompleteTextView)findViewById(R.id.email);
 		adapter_email = new AutoTextViewAdapter(this);
 		email.setAdapter(adapter_email);
 		email.setThreshold(1);//输入1个字符时就开始检测，默认为2个
 		email.addTextChangedListener(watahcer);//监听autoview的变化
 
 
-		area=(Spinner)findViewById(R.id.area);
-		server=(Spinner)findViewById(R.id.server);
-		login=(FlatButton)findViewById(R.id.login);
         ArrayAdapter<String> adapter=new SpinnerArrayAdapter
 		(RegisterActivity.this,UserEvent.AREA,1);
         area.setAdapter(adapter);

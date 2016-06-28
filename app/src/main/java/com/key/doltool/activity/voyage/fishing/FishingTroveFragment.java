@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
@@ -24,25 +22,30 @@ import com.the9tcat.hadi.DefaultDAO;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 public class FishingTroveFragment extends BaseFragment {
-    private View main;
     private List<Trove> list;
     //定义部分
     private Dialog alert;
     //船只列表页面
-    private GridView gridview;
+    @BindView(R.id.listview) GridView gridview;
     private TroveAdapter adapter;
     private DefaultDAO dao;
     private UpdataCount count;
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.trade_list, container,false);
-        main=view;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.trade_list;
+    }
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
         dao=SRPUtil.getDAO(getActivity());
         findView();
         setListener();
         count=new UpdataCount(getActivity());
         new Thread(mTask).start();
-        return view;
     }
 
     private Handler mHandler=new Handler(){
@@ -75,7 +78,6 @@ public class FishingTroveFragment extends BaseFragment {
     private void findView(){
         alert=new DialogEvent().showLoading(getActivity());
         alert.show();
-        gridview=(GridView)main.findViewById(R.id.listview);
     }
 
     private void setListener() {

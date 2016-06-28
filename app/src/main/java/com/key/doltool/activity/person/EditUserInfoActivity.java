@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,37 +39,38 @@ import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.Toast;
 
+import butterknife.BindView;
+
 
 public class EditUserInfoActivity extends BaseActivity{
 	//编辑
-	private TextView nickName;
-	private TextView area_server;
-	private ImageView head;
+	@BindView(R.id.nick_name) TextView nickName;
+	@BindView(R.id.area_server) TextView area_server;
+	@BindView(R.id.head_img) ImageView head;
+	@BindView(R.id.area_1) RelativeLayout area_1;
+	@BindView(R.id.area_2) RelativeLayout area_2;
+	@BindView(R.id.area_3) RelativeLayout area_3;
 	private String server_name="0-0";
-	private RelativeLayout area_1,area_2,area_3;
     private static final int TAKE_PICTURE = 1;
     private static final int LOCAL_PICTURE = 3;
     private Uri imageUri = Uri.parse(FileManager.IMAGE_FILE_LOCATION);
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_edit);
-		findView();
+	public int getContentViewId() {
+		return R.layout.activity_edit;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		setListener();
 		init();
 		flag=false;
 		initToolBar(null);
 		toolbar.setTitle("修改信息");
 	}
-	private void findView(){
-		area_1=(RelativeLayout)findViewById(R.id.area_1);
-		area_2=(RelativeLayout)findViewById(R.id.area_2);
-		area_3=(RelativeLayout)findViewById(R.id.area_3);
-		
-		head=(ImageView)findViewById(R.id.head_img);
-		nickName=(TextView)findViewById(R.id.nick_name);
-		area_server=(TextView)findViewById(R.id.area_server);
-	}
+
+
 	private void setListener(){
 		area_1.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -207,6 +209,7 @@ public class EditUserInfoActivity extends BaseActivity{
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.i("a",""+resultCode);
         if (resultCode != Activity.RESULT_OK) {
             imageUri = Uri.parse(FileManager.IMAGE_FILE_LOCATION);
             return;
@@ -246,7 +249,9 @@ public class EditUserInfoActivity extends BaseActivity{
         }
     }
     private void cropImageUri(String path_file) {
+		Log.i("path_file",""+path_file);
         if (imageUri != null) {
+			Log.i("path_file",""+imageUri.getPath());
 			ImageLoader.picassoLoadCirle(this,path_file,head);
 			AVUser currentUser = AVUser.getCurrentUser();
 			AVFile headImg=new AVFile("head.png",ResourcesUtil.getBytes(path_file));

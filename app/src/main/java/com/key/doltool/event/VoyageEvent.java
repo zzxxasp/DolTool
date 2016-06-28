@@ -28,6 +28,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * 发现界面生成相关规则和资源
+ * **/
 public class VoyageEvent {
     private Context context;
     private static final int WEEK=1000*60*60*24;

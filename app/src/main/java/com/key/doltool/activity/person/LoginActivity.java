@@ -28,42 +28,42 @@ import com.key.doltool.util.CommonUtil;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 
+import butterknife.BindView;
+
 
 public class LoginActivity extends BaseActivity{
 	//登录
 	private static final String[] AUTO_EMAILS = {"@163.com", "@sina.com", "@qq.com", "@126.com", "@gmail.com", "@apple.com"};
-	private TextInputLayout usernameWrapper,passwordWrapper;
-	private EditText password;
-	private AutoCompleteTextView account;
-	private FlatButton register,forgetpassword;
-	private FlatButton login;
+	@BindView(R.id.usernameWrapper) TextInputLayout usernameWrapper;
+	@BindView(R.id.passwordWrapper) TextInputLayout passwordWrapper;
+	@BindView(R.id.password) EditText password;
+	@BindView(R.id.account) AutoCompleteTextView account;
+	@BindView(R.id.register) FlatButton register;
+	@BindView(R.id.forget_password) FlatButton forgetpassword;
+	@BindView(R.id.login) FlatButton login;
 	private Dialog dialog;
 	private AutoTextViewAdapter adapter;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.login_main);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.login_main;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		findView();
 	}
-	private void findView(){
 
-		usernameWrapper = (TextInputLayout) findViewById(R.id.usernameWrapper);
-		passwordWrapper = (TextInputLayout) findViewById(R.id.passwordWrapper);
+	private void findView(){
 		usernameWrapper.setHint("登录邮箱");
 		passwordWrapper.setHint("登录密码");
 		dialog=new DialogEvent().itemDialog(this,"请等待");
-		
-		register=(FlatButton)findViewById(R.id.register);
-		forgetpassword=(FlatButton)findViewById(R.id.forget_password);
-
-		account=(AutoCompleteTextView)findViewById(R.id.account);
 
 		adapter = new AutoTextViewAdapter(this);
 		account.setAdapter(adapter);
 		account.setThreshold(1);//输入1个字符时就开始检测，默认为2个
 		account.addTextChangedListener(watahcer);//监听autoview的变化
-
-		password=(EditText)findViewById(R.id.password);
-		
 		login=(FlatButton)findViewById(R.id.login);
 		login.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

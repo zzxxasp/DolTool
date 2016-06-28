@@ -1,16 +1,15 @@
 package com.key.doltool.activity.adventure;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
@@ -30,11 +29,13 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class NPCFragment extends BaseFragment implements OnScrollListener{
 	//定义部分
 	private Dialog layout_alert;
 	//船只列表页面
-	private ListView listview;
+	@BindView(R.id.listview) ListView listview;
 	//数据temp变量
 	private DefaultDAO dao;
 	private List<NPCInfo> list=new ArrayList<>();
@@ -45,22 +46,28 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
 	//查询条件
 	private String select_if="id>?";
     private String[] select_if_x={"0"};
-	//创建Activity
-    private View main;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.common_list, container,false);
-		 init(view);
-		 findView();
-		 setListener();
-		 if(dao!=null&&list.size()==0){
-			 new Thread(mTasks).start();
-		 }else{
-			 if(!getActivity().isFinishing()){
-				 layout_alert.dismiss();
-			 }
-		 }
-		 return view;
+	private Activity context;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.common_list;
 	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+		context=getActivity();
+		findView();
+		setListener();
+		if(dao!=null&&list.size()==0){
+			new Thread(mTasks).start();
+		}else{
+			if(!getActivity().isFinishing()){
+				layout_alert.dismiss();
+			}
+		}
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,16 +85,13 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
             handler.sendMessage(message);
 		}
 	};
-	
-	private void init(View view){
-		main=view;
-		dao=SRPUtil.getDAO(getActivity());
-	}
+
 	
 	//通用findView
 	private void findView() {
+		dao=SRPUtil.getDAO(context.getApplicationContext());
 		initPage();
-		layout_alert=new DialogEvent().showLoading(getActivity());
+		layout_alert=new DialogEvent().showLoading(context);
 		layout_alert.show();
 	}
 	//通用Listener
@@ -99,7 +103,6 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
 		initPageItem();
 	}
 	private void initPageItem(){
-		listview=(ListView)main.findViewById(R.id.listview);
 		adapter=new NPCAdapter(list,getActivity());
 		listview.setOnScrollListener(this);
 		listview.setAdapter(adapter);
@@ -127,9 +130,9 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
 		}
     	if(size_after==size_before&&size_after!=0){
     		end_flag=false;
-    		Toast.makeText(getActivity(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+    		Toast.makeText(context.getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
     	}else if(size_after==0){
-    		Toast.makeText(getActivity(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+    		Toast.makeText(context.getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
     	}
 	}
 	//数据添加

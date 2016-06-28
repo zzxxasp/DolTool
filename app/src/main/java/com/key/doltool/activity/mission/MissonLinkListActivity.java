@@ -17,22 +17,30 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class MissonLinkListActivity extends BaseActivity{
 
-	private ListView listview;
+	@BindView(R.id.listview) ListView listview;
 	private MissionItemAdapter adapter;
 	private String select_if;
 	private List<Mission> list_mission=new ArrayList<>();
 	private List<String> if_args=new ArrayList<>();
 
 	private DefaultDAO dao;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mission_list_main);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.mission_list_main;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		dao=SRPUtil.getDAO(this);
 		selectInit();
 		findView();
 	}
+
 	//通用findView
 	private void findView() {
 		initPage();
@@ -41,7 +49,6 @@ public class MissonLinkListActivity extends BaseActivity{
 		toolbar.setTitle("任务委托所");
 	}
 	private void initPage(){
-		listview=(ListView)findViewById(R.id.listview);
 		selectshow();
 		adapter=new MissionItemAdapter(list_mission,this);
 		listview.setAdapter(adapter);
@@ -87,7 +94,6 @@ public class MissonLinkListActivity extends BaseActivity{
 	}
 
 	private void selectInit(){
-
 		select_if="id>?";
 		if_args.clear();
 		if_args.add("0");

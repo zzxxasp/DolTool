@@ -23,49 +23,39 @@ import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.FlowLayout;
 import com.the9tcat.hadi.DefaultDAO;
 
+import butterknife.BindView;
+
 public class JobDetailsActivity extends BaseActivity{
-	private TextView name,type,details;
-	private TextView level,money,book_mark;
-	private RelativeLayout sp_layout;
-	private ImageView sp_pic;
-	private TextView sp_name;
+	@BindView(R.id.name) TextView name;
+	@BindView(R.id.type) TextView type;
+	@BindView(R.id.details) TextView details;
+	@BindView(R.id.level) TextView level;
+	@BindView(R.id.money) TextView money;
+	@BindView(R.id.book_mark) TextView book_mark;
+	@BindView(R.id.sp_layout) RelativeLayout sp_layout;
+	@BindView(R.id.sp_pic) ImageView sp_pic;
+	@BindView(R.id.sp_name) TextView sp_name;
+	@BindView(R.id.skill_array) FlowLayout skill_array;
 	private DefaultDAO dao;
 	private String id="0";
 	private String name_str="0";
 	private Job item;
-	private FlowLayout skill_array;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.job_details;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		initToolBar(null);
-		setContentView(R.layout.job_details);
 		dao=SRPUtil.getDAO(this);
 		id=getIntent().getStringExtra("id");
 		name_str=getIntent().getStringExtra("name");
-		findViewById();
-		setListener();
 		init();
 	}
-	
-	private void findViewById(){
-		type=(TextView)findViewById(R.id.type);
-		name=(TextView)findViewById(R.id.name);
-		details=(TextView)findViewById(R.id.details);
-		
-		level=(TextView)findViewById(R.id.level);
-		money=(TextView)findViewById(R.id.money);
-		book_mark=(TextView)findViewById(R.id.book_mark);
-		
-		sp_layout=(RelativeLayout)findViewById(R.id.sp_layout);
-		sp_pic=(ImageView)findViewById(R.id.sp_pic);
-		sp_name=(TextView)findViewById(R.id.sp_name);
-		
-		skill_array=(FlowLayout)findViewById(R.id.skill_array);
 
-	}
-	private void setListener(){
-		
-	}
-	
 	private void init(){
 		if(!StringUtil.isNull(id)){
 			item=(Job)dao.select(Job.class,false,"id=?",new String[]{""+id},null,null,null,null).get(0);

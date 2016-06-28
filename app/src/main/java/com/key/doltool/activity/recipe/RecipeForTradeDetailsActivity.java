@@ -10,17 +10,24 @@ import com.key.doltool.adapter.RecipeAdapter;
 import com.key.doltool.data.sqlite.Recipe;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.LinearLayoutForListView;
+
+import butterknife.BindView;
+
 public class RecipeForTradeDetailsActivity extends BaseActivity{
-	private LinearLayoutForListView list;
+	@BindView(R.id.listview) LinearLayoutForListView list;
 	private List<Recipe> mylist=new ArrayList<>();
 	private String need="";
 	private int index=0;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.recipe_trade_list);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.recipe_trade_list;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		flag=false;
 		initToolBar(null);
-		list=(LinearLayoutForListView)findViewById(R.id.listview);
 		need=getIntent().getStringExtra("item");
 		if(need!=null){
 			toolbar.setTitle(need);
@@ -32,6 +39,7 @@ public class RecipeForTradeDetailsActivity extends BaseActivity{
 		}
 		init();
 	}
+
 	private void init(){
 		if(index==1){
 			mylist=SRPUtil.getInstance(this).select(Recipe.class,false,"name like ?",new String[]{"%"+need+"%"},null,null,null,null);

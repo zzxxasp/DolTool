@@ -1,5 +1,8 @@
 package com.key.doltool.event;
 
+/**
+ * 区服数据集
+ * **/
 public class UserEvent {
 	public static final String[] AREA={
 		"国服","台服","国际服","日服"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_material_light"
+    android:background="@color/background_material_white"
     >
 <!--TitleBar-->
 <include
@@ -22,7 +22,7 @@
     android:id="@+id/attr" 
 	android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="right"    
+    android:gravity="end"
     >
 <TextView
     android:id="@+id/adc_sex" 
@@ -32,7 +32,7 @@
     android:padding="3dp"
     android:layout_margin="3dp"
     android:background="@drawable/theme_pink_btn_rate"
-    android:text="女"    
+    android:text="@string/test_adc_sex"
     />
 <TextView
     android:id="@+id/adc_type" 
@@ -42,7 +42,7 @@
     android:background="@drawable/theme_blue_btn_rate"
     android:padding="3dp"
     android:layout_margin="3dp"
-    android:text="冒险"    
+    android:text="@string/test_adc_type"
     />
 <TextView
     android:id="@+id/adc_country" 
@@ -52,7 +52,7 @@
     android:background="@drawable/theme_blue_btn_rate"
     android:padding="3dp"
     android:layout_margin="3dp"
-    android:text="英格兰"    
+    android:text="@string/test_adc_country"
     />    
 </LinearLayout>
 <TextView
@@ -62,10 +62,11 @@
     android:textColor="@color/White"
     android:layout_below="@+id/attr"
     android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
     android:background="@drawable/theme_blue_btn_rate"
     android:padding="3dp"
     android:layout_margin="3dp"
-    android:text="亚历山大 里约热内卢"    
+    android:text="@string/test_adc_city"
     /> 
 <RelativeLayout 
 	android:id="@+id/info" 
@@ -90,7 +91,7 @@
     android:layout_centerHorizontal="true"
     android:padding="3dp"
     android:layout_below="@+id/adc_head"
-    android:text="马伍利西奥"    
+    android:text="@string/test_adc_name"
     />
 </RelativeLayout>
 </RelativeLayout>

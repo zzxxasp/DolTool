@@ -17,6 +17,8 @@ import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.view.SystemBarTintManager;
 
+import butterknife.BindView;
+
 /**
  * 航海运势
  * @author key
@@ -28,34 +30,28 @@ public class FortuneActivity extends BaseActivity{
 	private List<String> total_list=new ArrayList<>();
 	private List<Integer> good_list=new ArrayList<>();
 	private List<Integer> bad_list=new ArrayList<>();
-	
-	private TextView main_txt;
-	private TextView bottom_txt;
-	
-	private TextView good_txt,bad_txt;
-	
-	private ViewGroup main_area;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.magic_layout);
-		findViewById();
-		setListener();
+
+	@BindView(R.id.main_txt) TextView main_txt;
+	@BindView(R.id.bottom_txt) TextView bottom_txt;
+
+	@BindView(R.id.good_txt) TextView good_txt;
+	@BindView(R.id.bad_txt) TextView bad_txt;
+
+	@BindView(R.id.main_area) ViewGroup main_area;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.magic_layout;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		flag=false;
 		initToolBar(null);
 		toolbar.setTitle("今日运势");
 		initData();
 	}
-	private void findViewById(){
-		main_txt=(TextView)findViewById(R.id.main_txt);
-		bottom_txt=(TextView)findViewById(R.id.bottom_txt);
-		main_area=(ViewGroup)findViewById(R.id.main_area);
-		
-		good_txt=(TextView)findViewById(R.id.good_txt);
-		bad_txt=(TextView)findViewById(R.id.bad_txt);
-	}
-	private void setListener(){
-		
-	}
+
 	private void initData(){
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		tintManager.setStatusBarTintEnabled(true);

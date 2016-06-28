@@ -37,12 +37,20 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class MissonListActivity extends BaseActivity implements OnScrollListener{
 	//定义部分
+
+	@BindView(R.id.mission) ViewGroup mission;
+	@BindView(R.id.listview) ListView listview;
+	@BindView(R.id.sp_area) Spinner area;
+	@BindView(R.id.sp_city) Spinner	city;
+	@BindView(R.id.sp_type) Spinner type;
+	@BindView(R.id.adventure_type) Spinner adventure_type;
+	@BindView(R.id.sp_mission_type) Spinner sp_type;
+	@BindView(R.id.search_btn) FlatButton search;
 	private Dialog alert;
-	private ViewGroup mission;
-	//船只列表页面
-	private ListView listview;
 	private MissionItemAdapter adapter;
 	//数据temp变量
 	private int mode=0;
@@ -50,9 +58,6 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private Thread mThread;	// 线程
 	private boolean end_flag=true; //是否为最末标记
 
-	private Spinner area,city;
-	private Spinner type,adventure_type,sp_type;
-	private FlatButton search;
 	private AreaEvent event;
 
 	private String select_if;
@@ -63,9 +68,14 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	private DefaultDAO dao;
 	private String[][] temp;
 	private int temp_click;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mission_list_main);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.mission_list_main;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		event=new AreaEvent();
 		dao=SRPUtil.getDAO(this);
 		selectInit();
@@ -74,10 +84,10 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		initSelectForCity();
 		initSelectForType();
 	}
+
 	//通用findView
 	private void findView() {
 		initPage();
-		mission=(ViewGroup)findViewById(R.id.mission);
 		flag=false;
 		initToolBar(onMenuItemClick);
 		toolbar.setTitle("任务委托所");
@@ -91,7 +101,6 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 		initPageItem();
 	}
 	private void initPageItem(){
-		listview=(ListView)findViewById(R.id.listview);
 		listview.setOnScrollListener(this);
 		selectshow("0,"+MissionItemAdapter.SIZE);
 		adapter=new MissionItemAdapter(list_mission,this);
@@ -322,8 +331,6 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	}
 	//初始化-搜索栏
 	private void initSelectForCity(){
-		area=(Spinner)findViewById(R.id.sp_area);
-		city=(Spinner)findViewById(R.id.sp_city);
 		ArrayAdapter<String> adapter=new SpinnerArrayAdapter
 				(this,AreaEvent.ADVENTURE_AREA);
 		area.setAdapter(adapter);
@@ -347,11 +354,9 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 	}
 	//初始化-搜索栏
 	private void initSelectForType(){
-		type=(Spinner)findViewById(R.id.sp_type);
 		ArrayAdapter<String> adapter3=new SpinnerArrayAdapter
 				(this,ResourcesUtil.getArray(this,R.array.mission_type));
 		type.setAdapter(adapter3);
-		search=(FlatButton)findViewById(R.id.search_btn);
 		search.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				setSelectArgs();
@@ -365,11 +370,10 @@ public class MissonListActivity extends BaseActivity implements OnScrollListener
 				listview.setAdapter(adapter);
 			}
 		});
-		adventure_type=(Spinner)findViewById(R.id.adventure_type);
 		ArrayAdapter<String> adapter=new SpinnerArrayAdapter
 				(this,ResourcesUtil.getArray(this,R.array.adventure_type));
 		adventure_type.setAdapter(adapter);
-		sp_type=(Spinner)findViewById(R.id.sp_mission_type);
+
 		ArrayAdapter<String> adapter2=new SpinnerArrayAdapter
 				(this,ResourcesUtil.getArray(this,R.array.sp_mission_type));
 		sp_type.setAdapter(adapter2);

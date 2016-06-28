@@ -16,23 +16,30 @@ import com.key.doltool.util.db.SRPUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  *
  * **/
 public class UseItemShowListActivity extends BaseActivity {
-    private ListView listview;
+    @BindView(R.id.listview) ListView listview;
     private List<UseItem> list=new ArrayList<>();
     private String order="name desc";
     private String type="";
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_item_show);
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.user_item_show;
+    }
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
         findView();
         init();
     }
+
     private void findView(){
         type=getIntent().getStringExtra("type");
-        listview=(ListView)findViewById(R.id.listview);
         flag=false;
         initToolBar(null);
         toolbar.setTitle(type);

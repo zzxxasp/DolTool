@@ -6,7 +6,13 @@ import android.view.ViewGroup;
 
 import com.key.doltool.R;
 public class DevFragment extends BaseFragment {
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.dev_main, container,false);
+	@Override
+	public int getContentViewId() {
+		return R.layout.dev_main;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+
 	}
 }

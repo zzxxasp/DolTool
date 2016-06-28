@@ -31,11 +31,12 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class TradeItemActivity extends BaseActivity implements OnScrollListener{
+	@BindView(R.id.listview) GridView listview;
 	//定义部分
 	private Dialog alert;
-	//船只列表页面
-	private GridView listview;
 	//数据temp变量
 	private DefaultDAO dao;
 	private List<TradeItem> list=new ArrayList<>();
@@ -46,10 +47,14 @@ public class TradeItemActivity extends BaseActivity implements OnScrollListener{
 	//查询条件
 	private String select_if="id>?";
     private String[] select_if_x={"0"};
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.trade_list_toolbar);
+	public int getContentViewId() {
+		return R.layout.trade_list_toolbar;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		dao=SRPUtil.getDAO(getApplicationContext());
 		flag=false;
 		initToolBar(onMenuItemClick);
@@ -66,6 +71,7 @@ public class TradeItemActivity extends BaseActivity implements OnScrollListener{
 			alert.dismiss();
 		}
 	}
+
 	private Runnable mTasks =new Runnable(){
 		public void run() {
 			try {
@@ -186,16 +192,16 @@ public class TradeItemActivity extends BaseActivity implements OnScrollListener{
  * 华丽的分割线——以下是Handler,线程,系统按键等处理 
  */
 	//Handler——线程结束后更新界面
-	 private Handler handler = new Handler() {
-		 public void handleMessage(Message msg) {
-			 change();
-			 alert.dismiss();
-		 }
-	 };
+	private Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			change();
+			alert.dismiss();
+		}
+	};
 
 	//系统按键监听覆写
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		 //条件:当菜单未关闭且搜索条件为初始态，允许退出
+		//条件:当菜单未关闭且搜索条件为初始态，允许退出
 		if(select_if.equals("id>?")){
 			return super.onKeyDown(keyCode,event);
 		}

@@ -322,7 +322,7 @@ public class DialogEvent {
 					context.startActivityForResult(intent, 1);
 					updateDialog.dismiss();
 				} else {
-					Toast.makeText(context, "没有检测到SD卡，无法进行拍照", Toast.LENGTH_LONG).show();
+					Toast.makeText(context.getApplicationContext(), "没有检测到SD卡，无法进行拍照", Toast.LENGTH_LONG).show();
 					updateDialog.dismiss();
 				}
 			}

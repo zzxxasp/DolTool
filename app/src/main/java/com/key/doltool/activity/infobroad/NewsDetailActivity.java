@@ -9,7 +9,6 @@ import android.os.Message;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
@@ -18,8 +17,8 @@ import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.HttpUtil;
 import com.key.doltool.util.jsoup.JsoupForTX;
 
-import net.youmi.android.banner.AdSize;
-import net.youmi.android.banner.AdView;
+import butterknife.BindView;
+
 /**
  * 新闻详情
  * @author key
@@ -29,20 +28,25 @@ import net.youmi.android.banner.AdView;
  */
 @SuppressLint("NewApi")
 public class NewsDetailActivity extends BaseActivity{
-	private WebView web_content;
+	@BindView(R.id.content) WebView web_content;
 	private Dialog layout_alert;
 	private String url="";
 	private String content="";
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	@Override
+	public int getContentViewId() {
+		return R.layout.news_detail;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		initToolBar(null);
-		setContentView(R.layout.news_detail);
 		findView();
 		setListener();
 		url=getIntent().getStringExtra("url");
 		new Thread(mTask).start();
 	}
+
 	//获取数据，填充显示
 	@SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
@@ -84,11 +88,11 @@ public class NewsDetailActivity extends BaseActivity{
 		layout_alert=new DialogEvent().showLoading(this);
 		layout_alert.show();
 		// 实例化广告条
-		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-		// 获取要嵌入广告条的布局
-		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
-		// 将广告条加入到布局中
-		adLayout.addView(adView);
+//		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+//		// 获取要嵌入广告条的布局
+//		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
+//		// 将广告条加入到布局中
+//		adLayout.addView(adView);
 	}
 	//事件监听
 	private void setListener(){

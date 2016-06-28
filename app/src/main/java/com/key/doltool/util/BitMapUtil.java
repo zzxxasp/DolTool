@@ -17,7 +17,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 public class BitMapUtil {
-	
 
 	/**View to Bitmap**/
 	public static Bitmap view2Bitmap(View v) {

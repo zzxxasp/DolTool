@@ -27,28 +27,36 @@ import com.key.doltool.view.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * 展示云平台分享的论战组合
  * 带命令的跳转至该界面，如果什么没做则不进行回传更新
  * 如果更新了数据则回到上个界面同时更新显示数据
  * **/
 public class ShareCardDeckActivity extends BaseActivity {
-    private ListView listview;
+    @BindView(R.id.list) ListView listview;
     private List<Deck> list=new ArrayList<>();
     private AVQuery<Deck> query;
     private Dialog alert;
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_share_show);
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.card_share_show;
+    }
+
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
         findView();
         setListener();
         postMessage();
     }
+
     private void findView(){
         flag=false;
         initToolBar(onMenuItemClick);
         toolbar.setTitle("卡组分享");
-        listview=(ListView)findViewById(R.id.list);
         alert=new DialogEvent().showLoading(this);
         alert.show();
     }

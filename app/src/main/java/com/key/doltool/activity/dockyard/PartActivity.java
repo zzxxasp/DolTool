@@ -17,31 +17,37 @@ import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
+
+import butterknife.BindView;
+
 public class PartActivity extends BaseActivity{
 	private DefaultDAO dao;
 	private Part part;
-	private TextView name,type;
-	private ImageView pic;
-	private LinearLayout base;
-	private TextView title_base;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dockyard_part_detail);
+	@BindView(R.id.name) TextView name;
+	@BindView(R.id.type) TextView type;
+	@BindView(R.id.pic) ImageView pic;
+	@BindView(R.id.details_base) LinearLayout base;
+	@BindView(R.id.base) TextView title_base;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.dockyard_part_detail;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		dao=SRPUtil.getDAO(this);
 		findView();
 		init();
 		setListener();
 	}
+
 	private void findView(){
 		int id=getIntent().getIntExtra("id",0);
 		String[] x={""+id};
 		part=(Part)(dao.select(Part.class, false, "id=?", x, 
 				null, null, null, null).get(0));
-		name=(TextView)findViewById(R.id.name);
-		type=(TextView)findViewById(R.id.type);
-		pic=(ImageView)findViewById(R.id.pic);
-		base=(LinearLayout)findViewById(R.id.details_base);
-		title_base=(TextView)findViewById(R.id.base);
 	}
 	private void init(){
 		try {

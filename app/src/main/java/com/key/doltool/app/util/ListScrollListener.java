@@ -13,11 +13,10 @@ public class ListScrollListener implements OnScrollListener{
 	private Thread mThread;
 	private Dialog layout_alert;
 	private Handler handler;
-	public ListScrollListener(boolean end_flag,Thread mThread,Dialog layout_alert
+	public ListScrollListener(boolean end_flag,Dialog layout_alert
 			,Handler handler){
 		this.end_flag=end_flag;
 		this.handler=handler;
-		this.mThread=mThread;
 		this.layout_alert=layout_alert;
 	}
 	public void changeFlag(boolean flag){

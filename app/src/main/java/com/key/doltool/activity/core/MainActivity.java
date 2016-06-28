@@ -19,12 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVAnalytics;
-import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.FindCallback;
 import com.key.doltool.R;
 import com.key.doltool.activity.InfoMainFragment;
 import com.key.doltool.activity.adventure.AdventureMainFragment;
@@ -51,10 +47,10 @@ import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.stick.StickyListHeadersListView;
 
-import net.youmi.android.spot.SpotManager;
-
 import java.util.ArrayList;
 import java.util.List;
+
+
 public class MainActivity extends BaseFragmentActivity{
 	private DrawerLayout mDrawerLayout = null;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -82,23 +78,6 @@ public class MainActivity extends BaseFragmentActivity{
 		initUser();
 		initFragment(savedInstanceState);
 		AVAnalytics.trackAppOpened(getIntent());
-		//获取广告配置确定是否开启
-		AVQuery<AVObject> query= AVQuery.getQuery("setting");
-		query.whereExists("OpenAd");
-		query.findInBackground(new FindCallback<AVObject>() {
-			public void done(List<AVObject> objects, AVException e) {
-				boolean open=true;
-				if (e == null) {
-					if(objects.get(0).get("OpenAd").equals("open")){
-						open=false;
-					}
-				}
-				if(open){
-					SpotManager.getInstance(MainActivity.this).showSpotAds(MainActivity.this);
-					SpotManager.getInstance(MainActivity.this).setCloseTime(3000);
-				}
-			}
-		});
 	}
 	private void initUser(){
 		person_info=(LinearLayout)findViewById(R.id.person_info);
@@ -159,8 +138,8 @@ public class MainActivity extends BaseFragmentActivity{
 		if(mContent == null){
 			SystemInfo info=new SystemInfo(this);
 			if(info.getUpdateFlag()==1){
-				((VersionManager)VersionManager.getInstance()).setActivity(this);
-				((VersionManager)VersionManager.getInstance()).checkVersion(false);
+				VersionManager.getInstance().setActivity(this);
+				VersionManager.getInstance().checkVersion(false);
 			}
 			Log.i("mContent", mContent + "");
 			toolbar.setTitle("发现之旅");
@@ -338,31 +317,27 @@ public class MainActivity extends BaseFragmentActivity{
 			BaseFragment s=(BaseFragment)mContent;
 			if(!s.onKeyDown(keyCode, event)){
 				if(keyCode==KeyEvent.KEYCODE_BACK){
-					if(!SpotManager.getInstance(this).disMiss(true)){
-						if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
-							mDrawerLayout.closeDrawers();
-							return true;
-						}else{
-							if(fragment_list.size()>1){
-								fragment_list.remove(fragment_list.size()-1);
-								index=fragment_list.get(fragment_list.size()-1).index;
-								mContent=fragment_list.get(fragment_list.size()-1).fragment;
-								toolbar.setTitle(fragment_list.get(fragment_list.size()-1).title);
-								FragmentManager fm = getSupportFragmentManager();
-								FragmentTransaction transaction = fm.beginTransaction();
-								transaction.setCustomAnimations(R.anim.activity_transition_slide_in_new, R.anim.activity_transition_slide_out_new);
-								transaction.replace(R.id.content_frame, mContent);
-								transaction.commit();
-								adapter=new MenuAdapter(this,list,new MenuEvent().head,fragment_list.get(fragment_list.size()-1).index);
-								menu_list.setAdapter(adapter);
-								return false;
-							}else{
-								//弹出退出对话框
-								new DialogEvent().materialDialog(0,"退出","确认是否要退出？",MainActivity.this,0);
-							}
-						}
+					if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+						mDrawerLayout.closeDrawers();
+						return true;
 					}else{
-						return false;
+						if(fragment_list.size()>1){
+							fragment_list.remove(fragment_list.size()-1);
+							index=fragment_list.get(fragment_list.size()-1).index;
+							mContent=fragment_list.get(fragment_list.size()-1).fragment;
+							toolbar.setTitle(fragment_list.get(fragment_list.size()-1).title);
+							FragmentManager fm = getSupportFragmentManager();
+							FragmentTransaction transaction = fm.beginTransaction();
+							transaction.setCustomAnimations(R.anim.activity_transition_slide_in_new, R.anim.activity_transition_slide_out_new);
+							transaction.replace(R.id.content_frame, mContent);
+							transaction.commit();
+							adapter=new MenuAdapter(this,list,new MenuEvent().head,fragment_list.get(fragment_list.size()-1).index);
+							menu_list.setAdapter(adapter);
+							return false;
+						}else{
+							//弹出退出对话框
+							new DialogEvent().materialDialog(0,"退出","确认是否要退出？",MainActivity.this,0);
+						}
 					}
 				}
 			}else{
@@ -372,26 +347,7 @@ public class MainActivity extends BaseFragmentActivity{
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	 
-	@Override
-	protected void onDestroy() {
-		SpotManager.getInstance(this).unregisterSceenReceiver();
-		super.onDestroy();
-	}
-    
-	@Override
-	public void onBackPressed() {
-		// 如果有需要，可以点击后退关闭插屏广告。
-		if (!SpotManager.getInstance(this).disMiss(true)) {
-			super.onBackPressed();
-		}
-	} 
-	@Override
-	protected void onStop() {
-	     //如果不调用此方法，则按home键的时候会出现图标无法显示的情况。
-	     SpotManager.getInstance(this).disMiss(false);
-	     super.onStop();
-	} 
+
 	@Override
 	protected void onRestart() {
 		if(UpdataList.PIC_CHANGE==1){

@@ -28,10 +28,22 @@ public class BuildBoatActivity extends BaseActivity{
 	private FlatButton plus_btn;
 	private FlatButton btn;
 	private TextView sp_s,sp_c,sp_eq,sp_eq2;
+
+	@Override
+	public int getContentViewId() {
+		return 0;
+	}
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		findView();
 	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+
+	}
+
 	private void findView(){
 		info_txt=(TextView)findViewById(R.id.info_txt);
 		show_layout=(LinearLayout)findViewById(R.id.show_broad);

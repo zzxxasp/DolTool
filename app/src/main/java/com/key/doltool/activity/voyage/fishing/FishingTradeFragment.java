@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
@@ -23,25 +21,27 @@ import com.key.doltool.util.db.SRPUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 public class FishingTradeFragment extends BaseFragment{
-    private View main;
     //定义部分
     private Dialog alert;
     //船只列表页面
-    private GridView gridview;
+    @BindView(R.id.listview) GridView gridview;
     private List<TradeItem> list;
 
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.trade_list, container,false);
-        init(view);
+    @Override
+    public int getContentViewId() {
+        return R.layout.trade_list;
+    }
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
+        new Thread(mTask).start();
         findView();
         setListener();
-        return view;
     }
-    private void init(View view){
-        main=view;
-        new Thread(mTask).start();
-    }
+
 
     private Runnable mTask=new Runnable() {
         @Override
@@ -72,7 +72,6 @@ public class FishingTradeFragment extends BaseFragment{
     private void findView(){
         alert=new DialogEvent().showLoading(getActivity());
         alert.show();
-        gridview=(GridView)main.findViewById(R.id.listview);
     }
 
 

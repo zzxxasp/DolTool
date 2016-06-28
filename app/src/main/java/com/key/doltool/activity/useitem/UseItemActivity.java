@@ -15,25 +15,35 @@ import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.FlowLayout;
 
+import butterknife.BindView;
+
 public class UseItemActivity extends BaseActivity{
-    private TextView name,main_txt,city_txt;
-    private FlowLayout array;
-    private ImageView pic;
+
+    @BindView(R.id.name) TextView name;
+    @BindView(R.id.main_txt) TextView main_txt;
+    @BindView(R.id.city_txt) TextView city_txt;
+    @BindView(R.id.city_array) FlowLayout array;
+    @BindView(R.id.pic) ImageView pic;
+
     private String id="";
     private String name_txt="";
     private String tw_name="";
     private UseItem item;
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.useitem_detail);
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.useitem_detail;
+    }
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
         id=getIntent().getStringExtra("id");
         name_txt=getIntent().getStringExtra("name");
         tw_name=getIntent().getStringExtra("tw_name");
         flag=false;
-        findView();
-        setListener();
         init();
     }
+
     private void init(){
         if(!StringUtil.isNull(id)){
             item= SRPUtil.getInstance(getApplicationContext()).select
@@ -60,15 +70,5 @@ public class UseItemActivity extends BaseActivity{
             }
             array.setAdapter(new TagAdapter(this,city,false));
         }
-    }
-    private void findView(){
-        pic=(ImageView)findViewById(R.id.pic);
-        name=(TextView)findViewById(R.id.name);
-        main_txt=(TextView)findViewById(R.id.main_txt);
-        array=(FlowLayout)findViewById(R.id.city_array);
-        city_txt=(TextView)findViewById(R.id.city_txt);
-    }
-    private void setListener(){
-
     }
 }

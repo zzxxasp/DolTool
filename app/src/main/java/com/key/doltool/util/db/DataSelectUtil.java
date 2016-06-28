@@ -9,7 +9,9 @@ import com.key.doltool.data.sqlite.Verion;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.ViewUtil;
 import com.the9tcat.hadi.DefaultDAO;
-/**---关联查询---**/
+/**
+ * 数据库指定查询方法，使用多处
+ * **/
 public class DataSelectUtil {
 	public static String getSkillPicByName(String name,DefaultDAO dao){
 		List<?> list=dao.select(Skill.class, false,"name=?", new String[]{name}, 

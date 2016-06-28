@@ -40,37 +40,33 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * 快速查询界面
  * **/
 public class SearchFragment extends BaseFragment{
 	private DefaultDAO dao;
 	private List<SearchItem> list;
-	private EditText search_txt;
-	private ListView content_list;
-	private TextView type;
+	@BindView(R.id.search) EditText search_txt;
+	@BindView(R.id.content_list) ListView content_list;
+	@BindView(R.id.type) TextView type;
 	private int index=0;
 	private PopupWindow pop;
 	private DialogEvent dialogEvent;
-    private View main;
 	private boolean end=true;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.search_main, container,false);
-		 init(view);
-		 findView();
-		 setListener();
-		 return view; 
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.search_main;
 	}
-	private void init(View view){
-		main=view;
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		dao=SRPUtil.getDAO(getActivity());
 		dialogEvent=new DialogEvent(pop,SearchFragment.this);
-	}
-	
-	private void findView(){
-		search_txt=(EditText)main.findViewById(R.id.search);
-		content_list=(ListView)main.findViewById(R.id.content_list);
-		type=(TextView)main.findViewById(R.id.type);
+		setListener();
 	}
 
 	

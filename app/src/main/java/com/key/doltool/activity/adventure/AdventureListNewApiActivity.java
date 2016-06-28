@@ -33,8 +33,11 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class AdventureListNewApiActivity extends BaseAdventureActivity{
-	private GridView gridview;
+	@BindView(R.id.gridview) GridView gridview;
+	@BindView(R.id.null_txt) TextView txt;
 	private Dialog alert;
 	private List<Trove> list;
 	private List<Trove> temp_list=new ArrayList<>();
@@ -43,7 +46,6 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	private String type;
 	private UpdataCount count;
 	private Parcelable state;
-	private TextView txt;
 	private String select_txt="";
 	
 	private TroveAdapter mGridAdapter;
@@ -64,9 +66,15 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 			gridview.onRestoreInstanceState(state);
 		}
 	 };
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.adventure_table);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.adventure_table;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		type=getIntent().getStringExtra("type");
 		dao=SRPUtil.getDAO(getApplicationContext());
 		srp=SRPUtil.getInstance(getApplicationContext());
@@ -76,12 +84,12 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		setListener();
 		new Thread(mTasks).start();
 	}
+
 	private void findView(){
 		alert=new DialogEvent().showLoading(this);
 		flag=false;
 		initToolBar(onMenuItemClick);
 		toolbar.setTitle(type);
-		txt=(TextView)findViewById(R.id.null_txt);
 		if(!isFinishing()){
 			alert.show();
 		}
@@ -107,7 +115,6 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	}
 	private void setListener(){
 		mCallback = new ModeCallback();
-		gridview=(GridView)findViewById(R.id.gridview);
 		mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this);
 		gridview.setAdapter(mGridAdapter);
 		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

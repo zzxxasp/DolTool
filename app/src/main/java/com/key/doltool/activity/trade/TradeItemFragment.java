@@ -7,11 +7,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -33,12 +31,13 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	//定义部分
-	private Dialog alert;
-	//船只列表页面
-	private GridView listview;
+	@BindView(R.id.listview) GridView listview;
 	//数据temp变量
+	private Dialog alert;
 	private DefaultDAO dao;
 	private List<TradeItem> list=new ArrayList<>();
 	private TradeListAdapter adapter;
@@ -48,20 +47,23 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	//查询条件
 	private String select_if="id>?";
     private String[] select_if_x={"0"};
-	//创建Activity	
-    private View main;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.trade_list, container,false);
-		 init(view);
-		 findView();
-		 setListener();
-		 if(dao!=null&&list.size()==0){
-			 new Thread(mTasks).start();
-		 }else{
-			 alert.dismiss();
-		 }
-		 return view; 
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.trade_list;
 	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+		findView();
+		setListener();
+		if(dao!=null&&list.size()==0){
+			new Thread(mTasks).start();
+		}else{
+			alert.dismiss();
+		}
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,14 +81,10 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
             handler.sendMessage(message);
 		}
 	};
-
-	private void init(View view){
-		main=view;
-		dao=SRPUtil.getDAO(getActivity());
-	}
 	
 	//通用findView
 	private void findView() {
+		dao=SRPUtil.getDAO(getActivity());
 		initPage();
 		alert=new DialogEvent().showLoading(getActivity());
 		alert.show();
@@ -110,7 +108,6 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 		initPageItem();
 	}
 	private void initPageItem(){
-		listview=(GridView)main.findViewById(R.id.listview);
 		adapter=new TradeListAdapter(list,getActivity());
 		listview.setOnScrollListener(this);
 		listview.setAdapter(adapter);
@@ -216,7 +213,7 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 				if(!select_if.equals("id>?")){
 					end_flag=true;
 					change_if("id>?","0");
-					Toast.makeText(getActivity(),"重置搜索条件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity().getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}

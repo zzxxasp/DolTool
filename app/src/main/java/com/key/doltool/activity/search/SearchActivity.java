@@ -38,36 +38,39 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * 快速查询界面
  * **/
 public class SearchActivity extends BaseActivity{
+
+	@BindView(R.id.search) EditText search_txt;
+	@BindView(R.id.content_list) ListView content_list;
+	@BindView(R.id.type) TextView type;
+
 	private DefaultDAO dao;
 	private List<SearchItem> list;
-	private EditText search_txt;
-	private ListView content_list;
-	private TextView type;
 	private int index=0;
 	private PopupWindow pop;
 	private DialogEvent dialogEvent;
 	private boolean end=true;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_search);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.activity_search;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		init();
-		findView();
 		setListener();
 	}
 
 	private void init(){
 		dao=SRPUtil.getDAO(getApplicationContext());
 		dialogEvent=new DialogEvent(pop,SearchActivity.this);
-	}
-	
-	private void findView(){
-		search_txt=(EditText)findViewById(R.id.search);
-		content_list=(ListView)findViewById(R.id.content_list);
-		type=(TextView)findViewById(R.id.type);
 	}
 
 	

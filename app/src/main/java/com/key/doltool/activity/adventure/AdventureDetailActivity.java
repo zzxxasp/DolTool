@@ -21,42 +21,41 @@ import com.key.doltool.view.flat.FlatButton;
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.io.IOException;
+
+import butterknife.BindView;
+
 public class AdventureDetailActivity extends BaseActivity{
-	private DefaultDAO dao;
-	//信息
-	private TextView feat,card,need,misson,name,detail;
-	private ImageView pic;
-	private RatingBar rate;
+
+	@BindView(R.id.txt) TextView name;
+	@BindView(R.id.feats) TextView feat;
+	@BindView(R.id.card_point) TextView card;
+	@BindView(R.id.need) TextView need;
+	@BindView(R.id.misson) TextView misson;
+	@BindView(R.id.details) TextView detail;
+	@BindView(R.id.img) ImageView pic;
+	@BindView(R.id.star) RatingBar rate;
+	@BindView(R.id.goto_mission) FlatButton goto_mission;
+	@BindView(R.id.need_txt) TextView need_txt;
+	@BindView(R.id.misson_txt) TextView misson_txt;
 	//数据
 	private Trove item;
+	private DefaultDAO dao;
 	//附加
-	private TextView need_txt,misson_txt;
 	private int flag=5;
-	private FlatButton goto_mission;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	@Override
+	public int getContentViewId() {
+		return R.layout.adventure_details;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		initToolBar(null);
-		setContentView(R.layout.adventure_details);
 		dao=SRPUtil.getDAO(this);
-		findView();
 		setListener();
 		init();
 	}
-	private void findView(){
-		name=(TextView)findViewById(R.id.txt);
-		pic=(ImageView)findViewById(R.id.img);
-		ViewCompat.setTransitionName(pic,"image");
-		rate=(RatingBar)findViewById(R.id.star);
-		feat=(TextView)findViewById(R.id.feats);
-		card=(TextView)findViewById(R.id.card_point);
-		need=(TextView)findViewById(R.id.need);
-		misson=(TextView)findViewById(R.id.misson);
-		detail=(TextView)findViewById(R.id.details);
-		
-		need_txt=(TextView)findViewById(R.id.misson_txt);
-		misson_txt=(TextView)findViewById(R.id.need_txt);
-		goto_mission=(FlatButton)findViewById(R.id.goto_mission);
-	}
+
 	private void setListener(){
 		goto_mission.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -106,8 +105,9 @@ public class AdventureDetailActivity extends BaseActivity{
 			pic.setImageResource(R.drawable.dol_trove_defalut);
 		}
 		rate.setRating(item.getRate());
-		feat.setText(item.getFeats()+"");
-		card.setText(item.getCard_point()+"");
+		feat.setText(String.valueOf(item.getFeats()));
+		card.setText(String.valueOf(item.getCard_point()));
+
 		need.setText(item.getNeed());
 		misson.setText(item.getMisson());
 		detail.setText(item.getDetails());

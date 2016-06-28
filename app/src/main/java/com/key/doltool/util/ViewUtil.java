@@ -82,7 +82,7 @@ public class ViewUtil {
 		});
 		//第二页无弹窗
 		if(page==2){
-			Toast.makeText(activity.getActivity(),"造船页面无资源搜索", Toast.LENGTH_SHORT).show();
+			Toast.makeText(activity.getActivity().getApplicationContext(),"造船页面无资源搜索", Toast.LENGTH_SHORT).show();
 			return ;
 		//第一页内容
 		}else if(page==1){

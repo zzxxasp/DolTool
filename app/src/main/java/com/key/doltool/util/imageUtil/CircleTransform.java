@@ -6,7 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.squareup.picasso.Transformation;
-
+/**
+ * 圆角图片处理 for Picasso
+ * 存在问题：无法处理占位图片，仅能处理从网络读取后的图片
+ * **/
 public class CircleTransform implements Transformation {
     @Override
     public Bitmap transform(Bitmap source) {

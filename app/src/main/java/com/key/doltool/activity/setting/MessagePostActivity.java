@@ -12,25 +12,26 @@ import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 
+import butterknife.BindView;
+
 public class MessagePostActivity extends BaseActivity{
-	private EditText name,content;
-	private FlatButton btn;
+	@BindView(R.id.name) EditText name;
+	@BindView(R.id.content) EditText content;
+	@BindView(R.id.btn) FlatButton btn;
 	//控制提交状态
 	private boolean over=false;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.system_message_layout;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		initToolBar(null);
-		setContentView(R.layout.system_message_layout);
-		findViewById();
 		setListener();
 	}
-	
-	private void findViewById(){
-		name=(EditText)findViewById(R.id.name);
-		content=(EditText)findViewById(R.id.content);
-		btn=(FlatButton)findViewById(R.id.btn);
-	}
-	
+
 	private void setListener(){
 		btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

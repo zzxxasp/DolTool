@@ -26,9 +26,13 @@ import com.key.doltool.view.LinearLayoutForListView;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
+import butterknife.BindView;
+
 public class MissionDetailsActivity extends BaseActivity{
-	private LinearLayoutForListView detail_list;
-	private TextView type,name;
+	@BindView(R.id.details) LinearLayoutForListView detail_list;
+	@BindView(R.id.type) TextView type;
+	@BindView(R.id.name) TextView name;
+	@BindView(R.id.null_txt) TextView txt;
 	private DefaultDAO dao;
 	private String find_item="";
 	private String tw_name="";
@@ -37,11 +41,16 @@ public class MissionDetailsActivity extends BaseActivity{
 	private String souce="";
 	private int index=0;
 	private List<Mission> list;
-	private TextView txt;
+
 	private int temp=0;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mission_detail);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.mission_detail;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		find_item=getIntent().getStringExtra("find_item");
 		tw_name=getIntent().getStringExtra("tw_name");
 		type_txt=getIntent().getStringExtra("type");
@@ -50,25 +59,14 @@ public class MissionDetailsActivity extends BaseActivity{
 		souce=getIntent().getStringExtra("souce_name");
 		dao=SRPUtil.getDAO(this);
 		findView();
-		setListener();
 		init();
 	}
+
 	private void findView(){
-		type=(TextView)findViewById(R.id.type);
-		name=(TextView)findViewById(R.id.name);
-		detail_list=(LinearLayoutForListView)findViewById(R.id.details);
-		txt=(TextView)findViewById(R.id.null_txt);
 		flag=false;
 		initToolBar(onMenuItemClick);
 	}
-	private void setListener(){
 
-	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
 	
 	private void initMenu(){
 		LayoutInflater layoutinflater = context.getLayoutInflater();

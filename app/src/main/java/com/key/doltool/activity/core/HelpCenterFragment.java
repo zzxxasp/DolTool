@@ -1,10 +1,8 @@
 package com.key.doltool.activity.core;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.key.doltool.R;
@@ -12,22 +10,31 @@ import com.key.doltool.activity.help.HintListActivity;
 import com.key.doltool.activity.help.WordListAcitivity;
 import com.key.doltool.activity.setting.MessagePostActivity;
 import com.key.doltool.activity.setting.MessageShowActivity;
+
+import butterknife.BindView;
+
 /**
  * 单词表维护
  * 一些hint
  * **/
 public class HelpCenterFragment extends BaseFragment {
-	private RelativeLayout fun1,fun2,fun3,fun4;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		View view =  inflater.inflate(R.layout.help_main,container,false);
-		init(view);
-		return view;
+	@BindView(R.id.function_1)  RelativeLayout fun1;
+	@BindView(R.id.function_2)  RelativeLayout fun2;
+	@BindView(R.id.function_3)  RelativeLayout fun3;
+	@BindView(R.id.function_4)  RelativeLayout fun4;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.help_main;
 	}
-	private void init(View view){
-		fun1=(RelativeLayout)view.findViewById(R.id.function_1);
-		fun2=(RelativeLayout)view.findViewById(R.id.function_2);
-		fun3=(RelativeLayout)view.findViewById(R.id.function_3);
-		fun4=(RelativeLayout)view.findViewById(R.id.function_4);
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+		init();
+	}
+
+	private void init(){
 		fun2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent it=new Intent(getActivity(),HintListActivity.class);

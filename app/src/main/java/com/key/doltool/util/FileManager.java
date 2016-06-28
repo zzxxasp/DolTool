@@ -1,10 +1,7 @@
 package com.key.doltool.util;
 /**
  * 返回APP目录下的file
- * @author Administrator
- * @version 2013-4-18
- * 日志 2013-4-18<br>
- * 
+ * 管理所有文件的目录
  */
 public class FileManager {
 	public static String ROOT="file:///android_asset/";
@@ -17,7 +14,7 @@ public class FileManager {
 	public static String ADC="dol_adc/";
 	public static String WIKI="file:///android_asset/wiki_html/";
 	public static String DOWNLOAD="apk/";
-	public static final String IMAGE_FILE_LOCATION = "temp.png";
+	public static final String IMAGE_FILE_LOCATION =getSaveFilePath()+"temp.png";
 	public static String getSaveFilePath() {
 		if (CommonUtil.hasSDCard()) {
 			return CommonUtil.getRootFilePath() + "dol_db/";

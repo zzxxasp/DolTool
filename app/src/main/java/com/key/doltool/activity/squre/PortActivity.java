@@ -22,18 +22,26 @@ import com.key.doltool.util.db.SRPUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * 定期船
  * @author key
  * @version 1.0
  **/
 public class PortActivity extends BaseActivity {
-	private Dialog alert;
-	private ListView listView;
+
+	@BindView(R.id.listview) ListView listView;
 	private List<RegularShip> shipList=new ArrayList<>();
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_port_ship);
+	private Dialog alert;
+	@Override
+	public int getContentViewId() {
+		return R.layout.activity_port_ship;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		flag=false;
 		initToolBar(null);
 		toolbar.setTitle("港口定期船");
@@ -41,8 +49,8 @@ public class PortActivity extends BaseActivity {
 		setListener();
 		init();
 	}
+
 	private void findView(){
-		listView=(ListView) findViewById(R.id.listview);
 		alert=new DialogEvent().showLoading(this);
 	}
 

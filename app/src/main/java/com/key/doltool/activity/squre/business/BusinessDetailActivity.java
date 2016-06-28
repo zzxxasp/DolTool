@@ -19,8 +19,8 @@ import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.HttpUtil;
 import com.key.doltool.util.jsoup.JsoupForTB;
 
-import net.youmi.android.banner.AdSize;
-import net.youmi.android.banner.AdView;
+//import net.youmi.android.banner.AdSize;
+//import net.youmi.android.banner.AdView;
 
 /**
  * 新闻详情
@@ -36,6 +36,11 @@ public class BusinessDetailActivity extends BaseActivity{
 	private String id="4157094114";
 	private String content="";
 
+	@Override
+	public int getContentViewId() {
+		return 0;
+	}
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initToolBar(null);
@@ -46,6 +51,12 @@ public class BusinessDetailActivity extends BaseActivity{
 //		id=getIntent().getStringExtra("id");
 		new Thread(mTask).start();
 	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+
+	}
+
 	//获取数据，填充显示
 	@SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
@@ -78,12 +89,12 @@ public class BusinessDetailActivity extends BaseActivity{
 		web_content=(WebView)findViewById(R.id.content);
 		layout_alert=new DialogEvent().showLoading(this);
 		layout_alert.show();
-		// 实例化广告条
-		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-		// 获取要嵌入广告条的布局
-		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
-		// 将广告条加入到布局中
-		adLayout.addView(adView);
+//		// 实例化广告条
+//		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+//		// 获取要嵌入广告条的布局
+//		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
+//		// 将广告条加入到布局中
+//		adLayout.addView(adView);
 	}
 	//事件监听
 	private void setListener(){

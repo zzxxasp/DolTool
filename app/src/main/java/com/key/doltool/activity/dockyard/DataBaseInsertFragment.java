@@ -33,33 +33,40 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import butterknife.BindView;
+
 public class DataBaseInsertFragment extends BaseFragment {
 	private DefaultDAO dao;
 	private JsoupUtil jsoup;
 	private JsoupForBaHa jsoupB=new JsoupForBaHa();
 	private JsoupForGVO jsoupG=new JsoupForGVO();
-	private FlatButton btn,btn2;
+	@BindView(R.id.btn)  FlatButton btn;
+	@BindView(R.id.btn2)  FlatButton btn2;
 	private ExecutorService fixedThreadPool ;
-    private View main;
 	private List<Trove> list;
 	private int index=-1;
 	private Trove trove;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.init, container,false);
-		 init(view);
-		 return view; 
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.init;
 	}
-	
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+		init(mRootView);
+	}
+
 	private void init(View view){
-		main=view;
 		dao=SRPUtil.getDAO(getActivity());
 		jsoup=new JsoupUtil(getActivity());
-		btn=(FlatButton)main.findViewById(R.id.btn);
-		btn2=(FlatButton)main.findViewById(R.id.btn2);
 		fixedThreadPool= Executors.newFixedThreadPool(20);
 		btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				updateCityTradeItem();
+//				updateCityTradeItem();
+				initParse();
 //				update_download();
 			}
 		});
@@ -130,8 +137,8 @@ public class DataBaseInsertFragment extends BaseFragment {
 		new Thread(){
 			@Override
 			public void run() {
-//				list=SRPUtil.getInstance(getActivity()).select(Trove.class, false, "id>?", new String[]{"0"}, null, null, null,"0,100");
-//				dd();
+				list=SRPUtil.getInstance(getActivity()).select(Trove.class, false, "id>?", new String[]{"0"}, null, null, null,"0,100");
+				dd();
 			}
 		}.start();
 	}
@@ -143,7 +150,7 @@ public class DataBaseInsertFragment extends BaseFragment {
 		}
 		trove=list.get(index);
 		AVQuery<AVObject> p=new AVQuery<>("Trove");
-		p.whereEqualTo("id", trove.getId());
+		p.whereEqualTo("index_id", trove.getId());
 		p.findInBackground(new FindCallback<AVObject>() {
 		@Override
 		public void done(List<AVObject> list, AVException e) {
@@ -162,7 +169,7 @@ public class DataBaseInsertFragment extends BaseFragment {
 			item.put("pic",file_item);
 			file_item.saveInBackground();
 		}
-		item.put("id",trove.getId());
+		item.put("index_id",trove.getId());
 		item.put("details",trove.getDetails());
 		item.put("card_point",trove.getCard_point());
 		item.put("feats",trove.getFeats());

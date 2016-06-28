@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -24,6 +23,10 @@ import com.key.doltool.viewpage.MyPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindColor;
+import butterknife.BindView;
+
 /**
  * 新闻看板界面
  * @author key
@@ -35,36 +38,33 @@ import java.util.List;
  * 0.5-网络调整
  */
 public class MainBroadFragment extends BaseFragment{
-		//ViewPager定义部分
-		private ViewPager main_ViewPage;
-		private MyPagerAdapter main_adapter;
-		private View layout1,layout2,layout3;
-		private List<View> main_list;
-		private LayoutInflater mInflater;
-		//add-非共通部分
-		private Dialog alert;
-		private LinearLayout main;
-		private ListView listview1,listview2,listview3; 
-		//创建Activity
-	    private View main_view;
-		private SlidingTabLayout mSlidingTabLayout;
-		public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-			 View view =  inflater.inflate(R.layout.news_main_area,container,false);
-			 init(view);
-			 findView();
-			 setListener();
-			 new Thread(mTask).start();
-			 return view; 
-		}
-		private void init(View view){
-			main_view=view;
-		}		
-		private void findView() {
-			initPage();
-			main=(LinearLayout)main_view.findViewById(R.id.main);
-			alert=new DialogEvent().showLoading(getActivity());
-			alert.show();
-			if(JsoupForTX.list3.size()!=0){
+	//ViewPager定义部分
+	@BindView(R.id.main_viewpagers) ViewPager main_ViewPage;
+	@BindView(R.id.sliding_tabs) SlidingTabLayout mSlidingTabLayout;
+	@BindView(R.id.main) LinearLayout main;
+	@BindColor(R.color.white) int white;
+	private View layout1,layout2,layout3;
+	//add-非共通部分
+	private Dialog alert;
+	//创建Activity
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.news_main_area;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+		findView();
+		setListener();
+		new Thread(mTask).start();
+	}
+
+	private void findView() {
+		initPage();
+		alert=new DialogEvent().showLoading(getActivity());
+		alert.show();
+		if(JsoupForTX.list3.size()!=0){
 				alert.dismiss();
 			}
 		}
@@ -73,8 +73,8 @@ public class MainBroadFragment extends BaseFragment{
 		}
 		private void initPage(){
 			//初始化layout相关
-			main_list = new ArrayList<>();
-			mInflater = getActivity().getLayoutInflater();
+			List<View> main_list = new ArrayList<>();
+			LayoutInflater mInflater = getActivity().getLayoutInflater();
 			//添加布局文件
 			layout1 = mInflater.inflate(R.layout.news_main_item_layout, null);
 			layout2 = mInflater.inflate(R.layout.news_main_item_layout, null);
@@ -83,15 +83,13 @@ public class MainBroadFragment extends BaseFragment{
 			main_list.add(layout2);
 			main_list.add(layout3);
 			//初始化ViewPager相关
-			main_adapter = new MyPagerAdapter(main_list,new String[]{"新闻","活动","公告"});
-			main_ViewPage = (ViewPager)main_view.findViewById(R.id.main_viewpagers);
+			MyPagerAdapter main_adapter = new MyPagerAdapter(main_list, new String[]{"新闻", "活动", "公告"});
 			main_ViewPage.setAdapter(main_adapter);
 			main_ViewPage.setCurrentItem(0);
 			//初始化PageItem
 			initPageItem();
 			//初始化PageEvent相关
-			mSlidingTabLayout=(SlidingTabLayout)main_view.findViewById(R.id.sliding_tabs);
-			mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.White));
+			mSlidingTabLayout.setSelectedIndicatorColors(white);
 			mSlidingTabLayout.setBackgroundResource(R.drawable.theme_dark_blue);
 			mSlidingTabLayout.setViewPager(main_ViewPage);
 
@@ -99,13 +97,13 @@ public class MainBroadFragment extends BaseFragment{
 
 	private void initPageItem(){
 		//初始化第一页(船只列表)
-		listview1=(ListView)layout1.findViewById(R.id.listview);
+		ListView listview1 = (ListView) layout1.findViewById(R.id.listview);
 		listview1.setAdapter(new NewsAdapter(JsoupForTX.list1, getActivity()));
 		//初始化第二页(造船模拟)
-		listview2=(ListView)layout2.findViewById(R.id.listview);
+		ListView listview2 = (ListView) layout2.findViewById(R.id.listview);
 		listview2.setAdapter(new NewsAdapter(JsoupForTX.list2, getActivity()));
 		//初始化第三页(船只配件)
-		listview3=(ListView)layout3.findViewById(R.id.listview);
+		ListView listview3 = (ListView) layout3.findViewById(R.id.listview);
 		listview3.setAdapter(new NewsAdapter(JsoupForTX.list3, getActivity()));
 	}
 

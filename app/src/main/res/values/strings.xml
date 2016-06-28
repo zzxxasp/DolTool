@@ -3,6 +3,7 @@
 <!--系统用-->
     <string name="app_name">大航海时代助手</string>
     <string name="loading_txt">正在加载数据，请稍等</string>
+	<string name="common_wait">请等待</string>
 <!--页面用：MainActivity-->
 <!--标题栏-->
     <string name="main_menu">菜单</string>
@@ -60,9 +61,7 @@
 	<string name="hint_name2">请输入要搜索配件的名称</string> 
 	<string name="hint_bulid">请在船只列表中，长按你需要造船的船只</string> 
 	<string name="select_boat_txt">搜索船只</string>
-	
-	
-	
+
 	<string name="help_title_one">网络连接</string>
     <string name="help_title_two">使用问题</string>
     <string name="help_title_three">其他问题</string>
@@ -80,5 +79,22 @@
     <string name="help_3_2_instroduce">至少现在没有</string>
     <string name="help_3_3">3.更新周期怎么样？</string>
     <string name="help_3_3_instroduce">更新周期不定，快则一月，慢则接近长假会有更新</string>
-		
+<!--common search-->
+	<string name="search_no_more">已经返回所有查询结果了</string>
+	<string name="search_no">没有查到您想要的结果</string>
+	<string name="search_rest">重置搜索条件</string>
+<!--skill show-->
+	<string name="skill_detail_need_hint">技能需求</string>
+	<string name="skill_detail_boat_hint">推荐船只</string>
+	<string name="skill_detail_job_hint">推荐职业</string>
+	<string name="skill_detail_adc_hint">推荐职业</string>
+	<string name="skill_detail_normal_no_hint">无技能前置</string>
+	<string name="skill_level_hint">等级需求</string>
+	<string name="skill_gold_hint">等级需求</string>
+	<string name="skill_title">技能锻炼场</string>
+<!-- adc show-->
+	<string name="adc_title">副官集会所</string>
+	<string name="adc_sex_male">男</string>
+<!-- adventrue show-->
+	<string name="card_title">论战卡片</string>
 </resources>

@@ -12,7 +12,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
@@ -23,10 +22,11 @@ import com.key.doltool.util.FileManager;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
 
-import net.youmi.android.banner.AdSize;
-import net.youmi.android.banner.AdView;
-
 import java.util.List;
+
+import butterknife.BindView;
+
+
 /**
  * WIKI详情页面（web方式）
  * @author key
@@ -34,18 +34,24 @@ import java.util.List;
  * time 2013-1-2
  */
 public class WikiMainActivity extends BaseActivity{
-	private WebView web_content;
+	@BindView(R.id.content) WebView web_content;
 	private Dialog layout_alert;
 	private DefaultDAO dao;
 	private WikiInfo item;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.news_detail);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.news_detail;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		initToolBar(null);
 		dao=SRPUtil.getDAO(context);
 		findView();
 		init();
 	}
+
 	//获取数据，填充显示
 	@SuppressLint("SetJavaScriptEnabled")
 	private void init(){
@@ -71,15 +77,7 @@ public class WikiMainActivity extends BaseActivity{
 	}
 	//初始化控件
 	private void findView(){
-		web_content=(WebView)findViewById(R.id.content);
 		layout_alert=new DialogEvent().showLoading(this);
-		
-		// 实例化广告条
-		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-		// 获取要嵌入广告条的布局
-		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
-		// 将广告条加入到布局中
-		adLayout.addView(adView);
 		layout_alert.dismiss();
 	}
 	private void initData(){

@@ -28,26 +28,32 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class JobListActivity extends BaseActivity {
+
+    @BindView(R.id.listview) ListView listview;
     //定义部分
     private Dialog alert;
-    //列表
-    private ListView listview;
     //数据temp变量
     private DefaultDAO dao;
     private List<Job> list = new ArrayList<>();
     private JobAdapter adapter;
     private int add = 0;
-    private Thread mThread;    // 线程
     private boolean end_flag = true; //是否为最末标记
     private ListScrollListener scrollListener;
     //查询条件
     private String select_if = "id>?";
     private String[] select_if_x = {"0"};
-    //创建Activity
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_combo_main);
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.card_combo_main;
+    }
+
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
         dao = SRPUtil.getDAO(this);
         getExtra();//外部搜索链接参数处理
         selectshow("0," + JobAdapter.SIZE);
@@ -90,7 +96,7 @@ public class JobListActivity extends BaseActivity {
     private void initPageItem() {
         listview = (ListView) findViewById(R.id.listview);
         adapter = new JobAdapter(list, this);
-        scrollListener = new ListScrollListener(end_flag, mThread,alert, handler);
+        scrollListener = new ListScrollListener(end_flag,alert, handler);
         listview.setOnScrollListener(scrollListener);
         listview.setAdapter(adapter);
     }

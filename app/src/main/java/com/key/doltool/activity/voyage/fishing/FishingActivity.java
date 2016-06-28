@@ -13,13 +13,21 @@ import com.key.doltool.viewpage.FPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * 钓鱼专题界面
  * 钓鱼发现物，显示钓鱼地点，钓鱼交易品
  * **/
 public class FishingActivity extends BaseActivity {
-    private ViewPager main_ViewPage;
-    private SlidingTabLayout mSlidingTabLayout;
+    @BindView(R.id.main_viewpagers) ViewPager main_ViewPage;
+    @BindView(R.id.sliding_tabs) SlidingTabLayout mSlidingTabLayout;
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.system_viewpage_area;
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.system_viewpage_area);
@@ -28,6 +36,12 @@ public class FishingActivity extends BaseActivity {
         toolbar.setTitle("钓鱼");
         initPage();
     }
+
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
+
+    }
+
     private void initPage(){
         //初始化layout相关
         List<Fragment> main_list = new ArrayList<>();
@@ -36,11 +50,9 @@ public class FishingActivity extends BaseActivity {
         //初始化ViewPager相关
         FPagerAdapter main_adapter = new FPagerAdapter(
                 main_list,new String[]{"钓鱼发现物","钓鱼交易品"},getSupportFragmentManager());
-        main_ViewPage = (ViewPager)findViewById(R.id.main_viewpagers);
         main_ViewPage.setAdapter(main_adapter);
         main_ViewPage.setCurrentItem(0);
         //初始化PageEvent相关
-        mSlidingTabLayout=(SlidingTabLayout)findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.White));
         mSlidingTabLayout.setBackgroundResource(R.drawable.theme_dark_blue);
         mSlidingTabLayout.setViewPager(main_ViewPage);

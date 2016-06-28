@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skill_test_name">司令台</string>
+    <string name="job_test_detail">从事游击任务的专家。</string>
+    <string name="job_test_need">未开垦地调查委任书</string>
+    <string name="test_type">商业</string>
+    <string name="test_short_num">10</string>
+    <string name="test_normal_num">800000</string>
+    <string name="test_combo_num">38/10/10 合计:80</string>
+
+    <string name="test_adc_sex">女</string>
+    <string name="test_adc_type">冒险</string>
+    <string name="test_adc_country">英格兰</string>
+    <string name="test_adc_city">亚历山大 里约热内卢</string>
+    <string name="test_adc_name">马伍利西奥</string>
+</resources>

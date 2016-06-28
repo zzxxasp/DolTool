@@ -1,5 +1,6 @@
 package com.key.doltool.activity.adventure.card;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
 import com.key.doltool.R;
@@ -21,46 +20,55 @@ import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.CardComboAdapter;
 import com.key.doltool.adapter.SailBoatListAdapter;
+import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.data.sqlite.CardCombo;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
-import com.the9tcat.hadi.DefaultDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardComboFragment extends BaseFragment implements OnScrollListener{
+import butterknife.BindView;
+
+public class CardComboFragment extends BaseFragment{
 	//定义部分
 	private Dialog layout_alert;
 	//船只列表页面
-	private ListView listview;
+	@BindView(R.id.listview) ListView listview;
 	//数据temp变量
-	private DefaultDAO dao;
+	private SRPUtil dao;
 	private List<CardCombo> list=new ArrayList<>();
 	private CardComboAdapter adapter;
 	private int add=-30;
-	private Thread mThread;	// 线程
 	private boolean end_flag=true; //是否为最末标记
 	//查询条件
 	private String select_if="id>?";
     private String[] select_if_x={"0"};
 	//创建Activity
-    private View main;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.common_list, container,false);
-		 init(view);
-		 findView();
-		 setListener();
-		 if(dao!=null&&list.size()==0){
-			 new Thread(mTasks).start();
-		 }else{
-			 if(!getActivity().isFinishing()){
-				 layout_alert.dismiss();
-			 }
-		 }
-		 return view; 
+	private Activity context;
+	private ListScrollListener scrollListener;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.common_list;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+		context=getActivity();
+		init();
+		findView();
+		setListener();
+		if(dao!=null&&list.size()==0){
+			new Thread(mTasks).start();
+		}else{
+			if(!getActivity().isFinishing()){
+				layout_alert.dismiss();
+			}
+		}
 	}
 
 	@Override
@@ -82,18 +90,17 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 		}
 	};
 
-	private void init(View view){
-		main=view;
-		dao=SRPUtil.getDAO(getActivity());
-		BaseFragmentActivity a=(BaseFragmentActivity)getActivity();
+	private void init(){
+		dao=SRPUtil.getInstance(context);
+		BaseFragmentActivity a=(BaseFragmentActivity)context;
 		a.toolbar.setOnMenuItemClickListener(onMenuItemClick);
 	}
 
 	//通用findView
 	private void findView() {
-		initPage();
 		layout_alert=new DialogEvent().showLoading(getActivity());
 		layout_alert.show();
+		initPage();
 	}
 	//通用Listener
 	private void setListener() {
@@ -104,16 +111,15 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 		initPageItem();
 	}
 	private void initPageItem(){
-		listview=(ListView)main.findViewById(R.id.listview);
-		adapter=new CardComboAdapter(list,getActivity());
-		listview.setOnScrollListener(this);
+		adapter=new CardComboAdapter(list,context);
+		scrollListener = new ListScrollListener(end_flag,layout_alert, handler);
+		listview.setOnScrollListener(scrollListener);
 		listview.setAdapter(adapter);
 	}
 	public void onDestroy() {
 		dao=null;
 		super.onDestroy();
 	}
-	@SuppressWarnings("unchecked")
 	//有限数据查询
 	private void selectshow(String limit){
 		if(dao==null){
@@ -122,15 +128,21 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 		//数据前后记录
 		int size_before,size_after;
 			size_before=list.size();
-			list.addAll(((List<CardCombo>) dao.select(CardCombo.class, false,select_if, select_if_x, 
+			list.addAll((dao.select(CardCombo.class, false,select_if, select_if_x,
 				null, null,null,limit)));
 			size_after=list.size();
 		//数据返回判断
+		if (size_after < CardComboAdapter.SIZE) {
+			//表示，小于
+			end_flag = false;
+			scrollListener.changeFlag(false);
+		}
     	if(size_after==size_before&&size_after!=0){
     		end_flag=false;
-    		Toast.makeText(getActivity(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+			scrollListener.changeFlag(false);
+    		Toast.makeText(getActivity(),R.string.search_no_more, Toast.LENGTH_LONG).show();
     	}else if(size_after==0){
-    		Toast.makeText(getActivity(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+    		Toast.makeText(getActivity(),R.string.search_no, Toast.LENGTH_LONG).show();
     	}
 	}
 	//数据添加
@@ -208,49 +220,12 @@ public class CardComboFragment extends BaseFragment implements OnScrollListener{
 				if(!select_if.equals("id>?")){
 					end_flag=true;
 					change_if("id>?","0");
-					Toast.makeText(getActivity(),"重置搜索条件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), R.string.search_rest, Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
 		 return true;
 	 }
-	 
-	//滚动监听① - useless
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
-	}
-	//滚动监听②
-	public void onScrollStateChanged(final AbsListView view, int scrollState) {
-        //当不滚动时
-		boolean flag;
-		flag=end_flag;
-        if(scrollState == SCROLL_STATE_IDLE){  
-                System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());
-                //判断滚动到底部   
-                if(view.getLastVisiblePosition()==(view.getCount()-1)){
-                	//没有线程且不为最末时
-                    if (mThread == null || !mThread.isAlive()&&flag) {
-                    	//显示进度条，区域操作控制
-						if(!getActivity().isFinishing()){
-							layout_alert.show();
-						}
-                        mThread = new Thread() {
-                            public void run() {
-                                try {
-                                    Thread.sleep(2500);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                Message message = new Message();
-                                message.what = 1;
-                                handler.sendMessage(message);
-                            }  
-                        };
-                        mThread.start();                
-                    }
-                }
-        	}
-	}
 	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(android.view.MenuItem menuItem) {

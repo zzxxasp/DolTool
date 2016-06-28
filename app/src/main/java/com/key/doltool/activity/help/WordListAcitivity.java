@@ -1,5 +1,6 @@
 package com.key.doltool.activity.help;
 
+import android.animation.Animator;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,27 +29,33 @@ import com.key.doltool.data.sqlite.WordItem;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
-import com.nineoldandroids.animation.Animator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class WordListAcitivity extends BaseActivity{
 	private List<WordItem> list=new ArrayList<>();
-	private ListView listView;
-	private FloatingActionButton action;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.help_word_main);
+	@BindView(R.id.listview) ListView listView;
+	@BindView(R.id.action) FloatingActionButton action;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.help_word_main;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		findView();
 		setListener();
 		flag=false;
 		initToolBar(null);
 		toolbar.setTitle("航海单词表");
 	}
+
 	private void findView(){
-		listView=(ListView)findViewById(R.id.listView);
-		action=(FloatingActionButton)findViewById(R.id.action);
 		list=SRPUtil.getInstance(getApplicationContext()).
 				select(WordItem.class, false, "id>?", new String[]{"0"}, null, null, null, null);
 		listView.setAdapter(new WordAdapter(list, context));

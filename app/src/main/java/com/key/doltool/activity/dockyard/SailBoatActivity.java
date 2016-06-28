@@ -23,6 +23,9 @@ import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.DataSelectUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
+
+import butterknife.BindView;
+
 //import com.key.doltool.util.DataSelectUtil;
 public class SailBoatActivity extends BaseActivity{
 	//数据
@@ -30,26 +33,40 @@ public class SailBoatActivity extends BaseActivity{
 	private DefaultDAO dao;
 	private String[] temp=new String[3];
 	//控件显示(区域一:Base-基本)
-	private TextView ship_name,need;
-	private ImageView boat_pic;
-	private TextView[] equip_txt;
-	private TextView type1,type2,type3;
+	@BindView(R.id.boat_name)  TextView ship_name;
+	@BindView(R.id.boat_need)  TextView need;
+	@BindView(R.id.boat_pic)  ImageView boat_pic;
+	@BindView(R.id.type_1)  TextView type1;
+	@BindView(R.id.type_2)  TextView type2;
+	@BindView(R.id.type_3)  TextView type3;
 	//控件显示(区域二:Ability-能力)
-	private TextView vo_s,vo_f,vo_tu,vo_de,vo_p;
-	private TextView bt_h,bt_p,bt_a,bt_c,bt_s;
+	@BindView(R.id.square_sail_point)  TextView vo_s;
+	@BindView(R.id.fore_sail_point)  TextView vo_f;
+	@BindView(R.id.turn_point)  TextView vo_tu;
+	@BindView(R.id.def_wave_point)  TextView vo_de;
+	@BindView(R.id.paddle_point)  TextView vo_p;
+	@BindView(R.id.health_boat_point)  TextView bt_h;
+	@BindView(R.id.people_number_point)  TextView bt_p;
+	@BindView(R.id.armor_point)  TextView bt_a;
+	@BindView(R.id.crenelle_point)  TextView bt_c;
+	@BindView(R.id.shipping_space_point)  TextView bt_s;
 	//控件显示(区域三:GetWay-获得途径)
-	private TableLayout line;
+	@BindView(R.id.line) TableLayout line;
 	//布局显示
-	private RelativeLayout equip;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		initToolBar(null);
-		setContentView(R.layout.dockyard_boat_detail);
-		dao=SRPUtil.getDAO(this);
-		findView();
-		init();
-		setListener();
+	@BindView(R.id.equip) RelativeLayout equip;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.dockyard_boat_detail;
 	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+		initToolBar(null);
+		dao=SRPUtil.getDAO(this);
+		init();
+	}
+
 	@SuppressWarnings("unchecked")
 	//获取数据，填充显示
 	private void init(){
@@ -59,7 +76,7 @@ public class SailBoatActivity extends BaseActivity{
 				null, null, null, null);
 		ship_name.setText(list.get(0).getName());
 		String[] part=list.get(0).getNumber_part().split(",");
-		equip_txt=new TextView[equip.getChildCount()];
+		TextView[] equip_txt = new TextView[equip.getChildCount()];
 		for(int i=0;i<equip.getChildCount();i++){
 			equip_txt[i]=(TextView)equip.getChildAt(i);
 			equip_txt[i].append(""+part[i]);
@@ -92,32 +109,7 @@ public class SailBoatActivity extends BaseActivity{
 		ViewUtil.fill_boat_detail(this,ab, line);
 	}
 	//初始化控件
-	private void findView(){
-		ship_name=(TextView)findViewById(R.id.boat_name);
-		boat_pic=(ImageView)findViewById(R.id.boat_pic);
-		line=(TableLayout)findViewById(R.id.line);
-		need=(TextView)findViewById(R.id.boat_need);
-		equip=(RelativeLayout)findViewById(R.id.equip);
-		
-		type1=(TextView)findViewById(R.id.type_1);
-		type2=(TextView)findViewById(R.id.type_2);
-		type3=(TextView)findViewById(R.id.type_3);
 
-		findView_A();
-	}
-	private void findView_A(){
-		vo_s=(TextView)findViewById(R.id.square_sail_point);
-		vo_f=(TextView)findViewById(R.id.fore_sail_point);
-		vo_tu=(TextView)findViewById(R.id.turn_point);
-		vo_de=(TextView)findViewById(R.id.def_wave_point);
-		vo_p=(TextView)findViewById(R.id.paddle_point);
-		
-		bt_h=(TextView)findViewById(R.id.health_boat_point);
-		bt_p=(TextView)findViewById(R.id.people_number_point);
-		bt_a=(TextView)findViewById(R.id.armor_point);
-		bt_c=(TextView)findViewById(R.id.crenelle_point);
-		bt_s=(TextView)findViewById(R.id.shipping_space_point);
-	}
 	private List<MenuItem> initMenuItem(){
 		String yx=list.get(0).getAbility();
 		String yy[]=yx.split(",");
@@ -129,14 +121,5 @@ public class SailBoatActivity extends BaseActivity{
 			ab.add(item);
 		}
 		return ab;
-	}
-	//事件监听
-	private void setListener(){
-
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
 	}
 }

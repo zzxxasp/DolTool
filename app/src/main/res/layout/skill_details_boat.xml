@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:f="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_material_light"
+    android:background="@color/background_material_white"
     >
 <!--TitleBar-->
 <include
@@ -30,6 +29,7 @@
     >
 <ImageView
     android:id="@+id/pic"
+    android:contentDescription="@null"
     android:layout_width="wrap_content"
     android:layout_centerVertical="true"
     android:layout_height="wrap_content"
@@ -42,9 +42,10 @@
     android:layout_height="wrap_content"
     android:textColor="@color/white"
     android:layout_toRightOf="@+id/pic"
+    android:layout_toEndOf="@+id/pic"
     android:padding="3dp"
     android:textSize="17sp"
-    android:text="司令台"    
+    android:text="@string/skill_test_name"
     />
 </RelativeLayout>
 <!--Details-->
@@ -66,7 +67,7 @@
     android:textColor="@color/white"
     android:padding="5dp"
 	android:background="@color/Black_SP"
-    android:text="从事游击任务的专家。"   
+    android:text="@string/job_test_detail"
     />
 </LinearLayout>
 <!--Need-->
@@ -86,17 +87,18 @@
     android:padding="3dp"
     android:layout_margin="5dp"
 	android:background="@drawable/theme_blue_btn_rate"
-    android:text="技能需求"   
+    android:text="@string/skill_detail_need_hint"
     />
 <TextView
     android:id="@+id/skill_need" 
     android:layout_toRightOf="@+id/tag1"
+    android:layout_toEndOf="@+id/tag1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textColor="@color/white"
     android:padding="3dp"
     android:layout_margin="5dp"
-    android:text="未开垦地调查委任书"
+    android:text="@string/job_test_need"
     />
 </RelativeLayout>
 <!--Skill-list-->
@@ -110,7 +112,7 @@
     android:gravity="center"
     android:background="@color/Blue_SP"
     android:padding="3dp"
-    android:text="推荐船只"    
+    android:text="@string/skill_detail_boat_hint"
     />
     <com.key.doltool.view.LinearLayoutForListView
         android:id="@+id/boat_array"

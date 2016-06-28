@@ -23,8 +23,9 @@ public class BookEvent {
 			"特别生产","时代配方"
 	};
 	public final int[] PIC_ID={
-			R.drawable.dol_book1,R.drawable.dol_book1,R.drawable.dol_book2,R.drawable.dol_book3,
-			R.drawable.dol_book4,R.drawable.dol_book5,R.drawable.dol_book1,R.drawable.dol_book1,
-			R.drawable.dol_book1,R.drawable.dol_book1
+			R.drawable.dol_book1,R.drawable.dol_book1,R.drawable.dol_book2,
+			R.drawable.dol_book3, R.drawable.dol_book4,R.drawable.dol_book5,
+			R.drawable.dol_book1,R.drawable.dol_book1, R.drawable.dol_book1,
+			R.drawable.dol_book1
 	};
 }

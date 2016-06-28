@@ -1,5 +1,6 @@
 package com.key.doltool.activity.person;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -45,7 +46,6 @@ import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.HoloCircularProgressBar;
 import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.Toast;
-import com.nineoldandroids.animation.ObjectAnimator;
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.io.UnsupportedEncodingException;
@@ -55,18 +55,25 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+
 /**
  * 个人信息界面
  * **/
 public class PersonActivity extends BaseActivity{
-	private TextView name,tag1,tag2;
-	private ImageView head_img;
-	private RelativeLayout function_3,function_2,function_1;
+	@BindView(R.id.name) TextView name;
+	@BindView(R.id.tag1) TextView tag1;
+	@BindView(R.id.tag2) TextView tag2;
+	@BindView(R.id.head_img) ImageView head_img;
+	@BindView(R.id.function_3) RelativeLayout function_3;
+	@BindView(R.id.function_2) RelativeLayout function_2;
+	@BindView(R.id.function_1) RelativeLayout function_1;
+	@BindView(R.id.holoCircularProgressBar2) HoloCircularProgressBar t_bar;
+	@BindView(R.id.holoCircularProgressBar1) HoloCircularProgressBar m_bar;
+	@BindView(R.id.mission_number) TextView mission_number;
+	@BindView(R.id.trove_number) TextView trove_number;
+
 	private Dialog dialog;
-	
-	private HoloCircularProgressBar t_bar,m_bar;
-	private TextView mission_number,trove_number;
-	
 	private DefaultDAO dao;
 	private SRPUtil srp;
 	private Gson g=new Gson();
@@ -78,9 +85,15 @@ public class PersonActivity extends BaseActivity{
 	private Drawable bg;
 	private Bitmap bitmap;
 	private String back_temp="";
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.activity_user;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		event=new DialogEvent();
 		dialog=event.itemDialog(this,"请稍候...");
 		dao=SRPUtil.getDAO(getApplication());
@@ -88,6 +101,7 @@ public class PersonActivity extends BaseActivity{
 		findView();
 		setListener();
 	}
+
 	private void setListener(){
 		function_1.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -115,18 +129,6 @@ public class PersonActivity extends BaseActivity{
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		tintManager.setStatusBarTintEnabled(true);
 		tintManager.setStatusBarTintResource(R.color.black);
-		head_img=(ImageView)findViewById(R.id.head_img);
-		name=(TextView)findViewById(R.id.name);
-		tag1=(TextView)findViewById(R.id.tag1);
-		tag2=(TextView)findViewById(R.id.tag2);
-		function_2=(RelativeLayout)findViewById(R.id.function_2);
-		function_3=(RelativeLayout)findViewById(R.id.function_3);
-		function_1=(RelativeLayout)findViewById(R.id.function_1);
-		
-		t_bar=(HoloCircularProgressBar)findViewById(R.id.holoCircularProgressBar2);
-		m_bar=(HoloCircularProgressBar)findViewById(R.id.holoCircularProgressBar1);
-		trove_number=(TextView)findViewById(R.id.trove_number);
-		mission_number=(TextView)findViewById(R.id.mission_number);
 		new Thread(mTask).start();
 		init();
 	}

@@ -27,14 +27,13 @@ public class PinView extends SubsamplingScaleImageView {
 
     private PointF sPin;
     private Bitmap pin;
-
+    Paint paint = new Paint();
     public PinView(Context context) {
         this(context, null);
     }
 
     public PinView(Context context, AttributeSet attr) {
         super(context, attr);
-        //initialise();
     }
 
     public void setPin(PointF sPin) {
@@ -49,7 +48,7 @@ public class PinView extends SubsamplingScaleImageView {
 
     private void initialise() {
         float density = getResources().getDisplayMetrics().densityDpi;
-        pin = BitmapFactory.decodeResource(this.getResources(),R.drawable.pushpin_blue);
+        pin = BitmapFactory.decodeResource(this.getResources(),R.drawable.ic_place_white_36dp);
         float w = (density/420f) * pin.getWidth();
         float h = (density/420f) * pin.getHeight();
         pin = Bitmap.createScaledBitmap(pin, (int)w, (int)h, true);
@@ -64,7 +63,6 @@ public class PinView extends SubsamplingScaleImageView {
             return;
         }
 
-        Paint paint = new Paint();
         paint.setAntiAlias(true);
 
         if (sPin != null && pin != null) {

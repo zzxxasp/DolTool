@@ -223,13 +223,13 @@ public class VersionUpdate {
                     file.delete();
                 apkFile.renameTo(file);
                 if(!CommonUtil.backupApplication(context,"com.key.doltool",old_path).equals("success")){
-                    Toast.makeText(context, "您的手机并不支持增量更新，今后请尝试直接从网络下载", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), "您的手机并不支持增量更新，今后请尝试直接从网络下载", Toast.LENGTH_SHORT).show();
                 }
                 int ret = PatchUtils.patch(old_path,new_path,patch_path);
                 if(ret!=0){
-                    Toast.makeText(context, "补丁安装失败，请尝试从网站上直接下载更新", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), "补丁安装失败，请尝试从网站上直接下载更新", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context, "下载完成，请等待安装.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), "下载完成，请等待安装.", Toast.LENGTH_SHORT).show();
                     checkInstall(apkFile);
                 }
                 //无论成功与否都删除除安装apk外所有文件
@@ -293,7 +293,4 @@ public class VersionUpdate {
         }
     }
 
-    public void showUpdateTip() {
-        Toast.makeText(context,"", Toast.LENGTH_SHORT).show();
-    }
 }

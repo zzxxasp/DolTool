@@ -16,7 +16,7 @@ public class VersionManager {
     private static VersionManager versionManager = null;
     private VersionUpdate versionUpdate;
     private Activity activity;
-    public static Object getInstance() {
+    public static VersionManager getInstance() {
         if (versionManager == null) {
             versionManager = new VersionManager();
         }
@@ -42,7 +42,7 @@ public class VersionManager {
   	  		public void done(List<AVObject> item, AVException e) {
   	  			if (e == null) {
   	  				if(item.size()==0&&flag){
-  	  					Toast.makeText(activity, "已经是最新版本", Toast.LENGTH_SHORT).show();
+  	  					Toast.makeText(activity.getApplicationContext(), "已经是最新版本", Toast.LENGTH_SHORT).show();
   	  					return;
   	  				}
   	  				for(int i=0;i<item.size();i++){

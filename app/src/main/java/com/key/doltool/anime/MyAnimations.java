@@ -1,5 +1,8 @@
 package com.key.doltool.anime;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +11,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
+
 
 /**
  * 各类动画存储类，说明:<br>
@@ -97,8 +98,8 @@ public class MyAnimations {
 		set.start();
 	}
 	public static void wordAnime2(View view,int durationMillis){
-		ObjectAnimator anime1=ObjectAnimator.ofFloat(view, "translationX", -240,0);
-		ObjectAnimator anime2=ObjectAnimator.ofFloat(view, "translationY", -400,0);
+		ObjectAnimator anime1=ObjectAnimator.ofFloat(view, "translationX", -360,0);
+		ObjectAnimator anime2=ObjectAnimator.ofFloat(view, "translationY", -600,0);
 		ObjectAnimator anime3=ObjectAnimator.ofFloat(view, "ScaleX", 2,1);
 		ObjectAnimator anime4=ObjectAnimator.ofFloat(view, "ScaleY", 2,1);
 		ObjectAnimator anime5=ObjectAnimator.ofFloat(view, "alpha",0,1);

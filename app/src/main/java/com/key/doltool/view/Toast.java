@@ -1,5 +1,6 @@
 package com.key.doltool.view;
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -28,9 +29,24 @@ public class Toast {
 		}
 		return mToast;
 	}
-	 public static void cancelToast() {    
-         if (mToast != null) {    
-             mToast.cancel();    
-         }    
-     } 
+	public static android.widget.Toast makeText(Context context ,@StringRes int res_id,int duration){
+		LayoutInflater mInflater = LayoutInflater.from(context);
+		View view = mInflater.inflate(R.layout.toast_view, null);
+		TextView txt=(TextView)view.findViewById(R.id.toast_txt);
+		txt.setText(res_id);
+		if(mToast==null){
+			mToast=new android.widget.Toast(context);
+			mToast.setView(view);
+			mToast.setDuration(duration);
+		}else{
+			mToast.setView(view);
+			mToast.setDuration(duration);
+		}
+		return mToast;
+	}
+	public static void cancelToast() {
+		if (mToast != null) {
+			mToast.cancel();
+		}
+	}
 }

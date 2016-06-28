@@ -1,6 +1,5 @@
 package com.key.doltool.activity.dockyard;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -28,8 +26,8 @@ import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.PartListAdapter;
 import com.key.doltool.adapter.SailBoatListAdapter;
 import com.key.doltool.anime.MyAnimations;
-import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.data.SailBoat;
+import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.MakeEvent;
 import com.key.doltool.util.NumberUtil;
@@ -45,12 +43,13 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import butterknife.BindView;
+
 /**
  * 造船厂主界面
  * @author key
  * @version 0.7
- * @time 2013-1-10
- * @日志
  * 0.1-加入基本Activity的相关方法和操作<br>
  * 0.2-加入ViewPager负责进行多个页面的切换，并加入显示效果<br>
  * 0.3-加入有限ListView的展示以及搜索功能<br>
@@ -76,7 +75,8 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
     
     private String order="name desc";
 	//ViewPager定义部分
-	private ViewPager main_ViewPage;
+	@BindView(R.id.main_viewpagers) ViewPager main_ViewPage;
+	@BindView(R.id.sliding_tabs) SlidingTabLayout mSlidingTabLayout;
 	private MyPagerAdapter main_adapter;
 	private View layout1,layout2,layout3;
 	private List<View> main_list;
@@ -123,34 +123,34 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 	private Thread mThread;	// 线程
 	private boolean end_flag=true; //是否为最末标记
 	private boolean end_flag2=true; //是否为最末标记
-    private View main;
-	private SlidingTabLayout mSlidingTabLayout;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.dockyard_main_area, container,false);
-		 init(view);
-		 findView();
-		 setListener();
-		 if(dao!=null&&list.size()==0){
-			 new Thread(mTasks).start();
-		 }else{
-			 alert.dismiss();
-		 }
-		 return view; 
+
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.dockyard_main_area;
 	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
+		init();
+		findView();
+		setListener();
+		if(dao!=null&&list.size()==0){
+			new Thread(mTasks).start();
+		}else{
+			alert.dismiss();
+		}
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
 
-	}
-
-	private void init(View view){
-		main=view;
+	private void init(){
 		dao=SRPUtil.getDAO(getActivity());
 		BaseFragmentActivity a=(BaseFragmentActivity)getActivity();
 		a.toolbar.setOnMenuItemClickListener(onMenuItemClick);
@@ -237,13 +237,11 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 		main_list.add(layout3);
 		//初始化ViewPager相关
 		main_adapter = new MyPagerAdapter(main_list,new String[]{"船只列表","造船模拟","船只配件"});
-		main_ViewPage = (ViewPager)main.findViewById(R.id.main_viewpagers);
 		main_ViewPage.setAdapter(main_adapter);
 		main_ViewPage.setCurrentItem(0);
 		//初始化PageItem
 		initPageItem();
 		//初始化PageEvent相关
-		mSlidingTabLayout=(SlidingTabLayout)main.findViewById(R.id.sliding_tabs);
 		mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.White));
 		mSlidingTabLayout.setBackgroundResource(R.drawable.theme_dark_blue);
 		mSlidingTabLayout.setViewPager(main_ViewPage);

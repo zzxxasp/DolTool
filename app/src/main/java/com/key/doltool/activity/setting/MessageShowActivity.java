@@ -22,14 +22,21 @@ import com.key.doltool.data.Message;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.view.Toast;
 
+import butterknife.BindView;
+
 public class MessageShowActivity extends BaseActivity{
+	@BindView(R.id.listview) ListView listview;
 	private List<Message> list=new ArrayList<>();
-	private ListView listview;
 	private Dialog alert;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.message_show);
-		findView();
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.message_show;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		flag=false;
 		initToolBar(null);
 		toolbar.setTitle("本月作者留言");
@@ -37,9 +44,7 @@ public class MessageShowActivity extends BaseActivity{
 		alert.show();
 		postMessage();
 	}
-	private void findView(){
-		listview=(ListView)findViewById(R.id.listview);
-	}
+
 	//显示作者的留言
 	private void postMessage(){
 		AVQuery<AVObject> query= AVQuery.getQuery("message_maker");

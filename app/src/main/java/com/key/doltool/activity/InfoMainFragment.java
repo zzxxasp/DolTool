@@ -26,34 +26,32 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class InfoMainFragment extends BaseFragment{
 	private String order="id desc";
-	private Button mission,skill,adc,job,wiki;
-	private ListView listview;
+	@BindView(R.id.mission) Button mission;
+	@BindView(R.id.skill) Button skill;
+	@BindView(R.id.adc) Button adc;
+	@BindView(R.id.job) Button job;
+	@BindView(R.id.wiki_btn) Button wiki;
+	@BindView(R.id.wiki_list) ListView listview;
 	private DefaultDAO dao;
 	private List<WikiInfo> list=new ArrayList<>();
-    private View main;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.info_main, container,false);
-		 init(view);
-		 findView();
-		 init();
-		 setListener();
-		 return view;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.info_main;
 	}
-	private void init(View view){
-		main=view;
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		dao=new DefaultDAO(getActivity());
+		init();
+		setListener();
 	}
-	
-	private void findView(){
-		mission=(Button)main.findViewById(R.id.mission);
-		skill=(Button)main.findViewById(R.id.skill);
-		adc=(Button)main.findViewById(R.id.adc);
-		job=(Button)main.findViewById(R.id.job);
-		wiki=(Button)main.findViewById(R.id.wiki_btn);
-		listview=(ListView)main.findViewById(R.id.wiki_list);
-	}
+
 	private void setListener(){
 		listview.setAdapter(new WikiAdapter(list, getActivity()));
 		mission.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +100,7 @@ public class InfoMainFragment extends BaseFragment{
 			case 3:c=JobListActivity.class;break;
 			case 4:c=ADCListActivity.class;break;
 			case 5:c=WikiListActivity.class;break;
-			default:Toast.makeText(getActivity(),"还在建设中",Toast.LENGTH_SHORT).show();return;
+			default:Toast.makeText(getActivity().getApplicationContext(),"还在建设中",Toast.LENGTH_SHORT).show();return;
 		}
 		Intent intent=new Intent(getActivity(),c);
 		startActivity(intent);

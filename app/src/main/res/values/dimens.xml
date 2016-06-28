@@ -2,8 +2,8 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
 	<dimen name="bbuton_rounded_corner_radius">5dp</dimen>
-    <dimen name="oval_height">100dp</dimen>    
-	<integer name="all_mission">4037</integer>
+    <dimen name="oval_height">100dp</dimen>
+	<integer name="all_mission">4002</integer>
 	<integer name="all_trove">2584</integer>
 	<dimen name="default_stroke_width">7dp</dimen>
 	<dimen name="default_background_stroke_width">3dp</dimen>

@@ -16,55 +16,46 @@ import com.key.doltool.util.FileManager;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.FlowLayout;
-import com.key.doltool.view.LinearLayoutForListView;
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+
 public class TradeDetailActivity extends BaseActivity{
-	private TextView name,sp;
-	private ImageView pic;
-	private TextView type_txt,number_txt,city_txt;
-	private ImageView pic_type,number_type;
-	private TextView details;
-	private FlowLayout city_area;
-	private FlowLayout recipe_area;
+	@BindView(R.id.name) TextView name;
+	@BindView(R.id.sp) TextView sp;
+	@BindView(R.id.pic) ImageView pic;
+	@BindView(R.id.type_txt) TextView type_txt;
+	@BindView(R.id.number_txt) TextView number_txt;
+	@BindView(R.id.city_txt) TextView city_txt;
+	@BindView(R.id.tag_type) ImageView pic_type;
+	@BindView(R.id.tag_number) ImageView number_type;
+	@BindView(R.id.main_txt) TextView details;
+	@BindView(R.id.city_array) FlowLayout city_area;
+	@BindView(R.id.recipse_array) FlowLayout recipe_area;
+	@BindView(R.id.recipe_way) LinearLayout recipe_way;
+
 	private DefaultDAO dao;
 	private String id="";
 	private String name_txt="";
 	private String tw_name="";
-	private LinearLayout recipe_way;
-	//钓点查询
-	//--------
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.trade_detail);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.trade_detail;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		initToolBar(null);
 		dao=SRPUtil.getDAO(getApplicationContext());
 		id=getIntent().getStringExtra("id");
 		name_txt=getIntent().getStringExtra("name");
 		tw_name=getIntent().getStringExtra("tw_name");
-		findView();
-		setListener();
 		init();
 	}
-	private void findView(){
-		recipe_way=(LinearLayout)findViewById(R.id.recipe_way);
-		recipe_area=(FlowLayout)findViewById(R.id.recipse_array);
-		name=(TextView)findViewById(R.id.name);
-		sp=(TextView)findViewById(R.id.sp);
-		type_txt=(TextView)findViewById(R.id.type_txt);
-		number_txt=(TextView)findViewById(R.id.number_txt);
-		details=(TextView)findViewById(R.id.main_txt);
-		city_txt=(TextView)findViewById(R.id.city_txt);
-		pic=(ImageView)findViewById(R.id.pic);
-		pic_type=(ImageView)findViewById(R.id.tag_type);
-		number_type=(ImageView)findViewById(R.id.tag_number);
-		city_area=(FlowLayout)findViewById(R.id.city_array);
-	}
-	private void setListener(){
-		
-	}
+
 	private void init(){
 		TradeItem item;
 		if(StringUtil.isNull(name_txt)){

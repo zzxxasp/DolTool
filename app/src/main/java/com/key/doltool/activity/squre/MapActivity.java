@@ -1,7 +1,8 @@
 package com.key.doltool.activity.squre;
+
+import android.app.Dialog;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -10,12 +11,17 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.data.sqlite.MapItem;
+import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.flat.FlatButton;
 import com.key.doltool.view.img.ImageSource;
+import com.key.doltool.view.img.PinView;
 import com.key.doltool.view.img.SubsamplingScaleImageView;
 import com.the9tcat.hadi.DefaultDAO;
+
+import butterknife.BindView;
+
 /**
  * 大航海时代ol世界地图
  * @author key
@@ -23,16 +29,27 @@ import com.the9tcat.hadi.DefaultDAO;
  * 
  **/
 public class MapActivity extends BaseActivity {
-	private SubsamplingScaleImageView img;
-	private Button btn;
-	private ViewGroup detail;
-	private DefaultDAO dao;
+
+	@BindView(R.id.map) PinView img;
+	@BindView(R.id.btn) Button btn;
+	@BindView(R.id.detail) ViewGroup detail;
+	@BindView(R.id.name) TextView name;
+	@BindView(R.id.co_sea) TextView co_sea;
+	@BindView(R.id.sea) TextView sea;
+	@BindView(R.id.confrim) FlatButton confrim;
+	@BindView(R.id.cancel) FlatButton cancel;
+
 	private MapItem item;
-	private TextView name,co_sea,sea;
-	private FlatButton confrim,cancel;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dol_map);
+	private Dialog dialog;
+	private DefaultDAO dao;
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.dol_map;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		dao=SRPUtil.getDAO(this);
 		flag=false;
 		initToolBar(null);
@@ -43,22 +60,19 @@ public class MapActivity extends BaseActivity {
 		tintManager.setStatusBarTintEnabled(true);
 		tintManager.setStatusBarTintResource(R.color.Black_SP);
 		img.setImage(ImageSource.resource(R.raw.map));
+		dialog=new DialogEvent().showLoading(this);
+		dialog.show();
 	}
+
 	private void initViews() {
-		name=(TextView)findViewById(R.id.name);
-		co_sea=(TextView)findViewById(R.id.co_sea);
-		sea=(TextView)findViewById(R.id.sea);
-		confrim=(FlatButton)findViewById(R.id.confrim);
-		cancel=(FlatButton)findViewById(R.id.cancel);
-		
+
 		item=(MapItem)dao.select(MapItem.class,false,"id>?", 
 				new String[]{"0"}, null, null, null, null).get(0);
-		img=(SubsamplingScaleImageView)findViewById(R.id.map);
+
 		img.setOnImageEventListener(new SubsamplingScaleImageView.OnImageEventListener() {
 			@Override
 			public void onReady() {
-				//加载显示对话框停止显示
-				Log.i("Ready","Ready is over");
+				dialog.dismiss();
 			}
 
 			@Override
@@ -81,15 +95,13 @@ public class MapActivity extends BaseActivity {
 
 			}
 		});
-		detail=(ViewGroup)findViewById(R.id.detail);
-		btn=(Button)findViewById(R.id.btn);
+
 		btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				String [] seal=item.co_map.split(",");
-//				img.setScaleAndCenter(1,new PointF(Integer.parseInt(seal[0]),Integer.parseInt(seal[1])));
 				img.setPanEnabled(true);
-//				img.setPin(new PointF(Integer.parseInt(seal[0]),Integer.parseInt(seal[1])));
-				img.animateScaleAndCenter(1,new PointF(Integer.parseInt(seal[0]),Integer.parseInt(seal[1]))).start();
+				img.animateScaleAndCenter(1.5f,new PointF(Integer.parseInt(seal[0]),Integer.parseInt(seal[1]))).start();
+				img.setPin(new PointF(Integer.parseInt(seal[0]),Integer.parseInt(seal[1])));
 				showDialog();
 			}
 		});

@@ -22,9 +22,10 @@ import java.util.Date;
 import java.util.List;
 /**
  * 用于优化现有数据库ORM[对象关系映射]工具的速度的特别类
- * @version 0.2
+ * @version 0.3
  * 0.1-加入批量更新的方法，减少更新所需时间（400条数据约13s）
  * 0.2-优化原查询方法
+ * 0.3-对泛型进行优化，减少强制转换
  * **/
 public class SRPUtil {
 	private DatabaseManager mDatabaseManager;

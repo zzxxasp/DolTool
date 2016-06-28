@@ -48,8 +48,16 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class CardListActivity extends BaseAdventureActivity{
-	private GridView gridview;
+	@BindView(R.id.null_txt) TextView txt;
+	@BindView(R.id.gridview) GridView gridview;
+	@BindView(R.id.card_point) TextView point_show;
+	@BindView(R.id.card_number) TextView card_show;
+	@BindView(R.id.card_bar) RelativeLayout card_bar;
+	@BindView(R.id.cal_btn) FlatButton cal_btn;
+
 	private Dialog alert,dialog;
 	//总卡组列表
 	private List<Card> list;
@@ -59,12 +67,8 @@ public class CardListActivity extends BaseAdventureActivity{
 	private List<Card> search;
 	private DefaultDAO dao;
 	private SRPUtil srp;
-	private TextView txt;
 	private String select_txt="";
 	private CardAdapter mGridAdapter;
-	private TextView point_show,card_show;
-	private RelativeLayout card_bar;
-	private FlatButton cal_btn;
 	private boolean return_flag=false;
 	private boolean back_flag=false;
 	private boolean showFlag=true;
@@ -90,7 +94,7 @@ public class CardListActivity extends BaseAdventureActivity{
 					gridview.setAdapter(mGridAdapter);
 					gridview.onRestoreInstanceState(state);
 					if(return_flag){
-						Toast.makeText(getApplicationContext(), "重置搜索条件", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(),R.string.search_rest, Toast.LENGTH_LONG).show();
 						return_flag=false;
 					}
 					if(back_flag){
@@ -133,12 +137,17 @@ public class CardListActivity extends BaseAdventureActivity{
 				break;
 		}
 	}
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.card_list_show);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.card_list_show;
+	}
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		srp=SRPUtil.getInstance(getApplicationContext());
 		dao=SRPUtil.getDAO(getApplicationContext());
-		dialog=new DialogEvent().itemDialog(this, "请等待");
+		dialog=new DialogEvent().itemDialog(this, getResources().getString(R.string.common_wait));
 		list=new ArrayList<>();
 		findView();
 		setListener();
@@ -149,12 +158,7 @@ public class CardListActivity extends BaseAdventureActivity{
 		alert=new DialogEvent().showLoading(this);
 		flag=false;
 		initToolBar(onMenuItemClick);
-		toolbar.setTitle("论战卡片");
-		txt=(TextView)findViewById(R.id.null_txt);
-		card_show=(TextView)findViewById(R.id.card_number);
-		point_show=(TextView)findViewById(R.id.card_point);
-		cal_btn=(FlatButton)findViewById(R.id.cal_btn);
-		card_bar=(RelativeLayout)findViewById(R.id.card_bar);
+		toolbar.setTitle(R.string.card_title);
 		if(!isFinishing()){
 			alert.show();
 		}
@@ -225,7 +229,6 @@ public class CardListActivity extends BaseAdventureActivity{
 		}).start();
 	}
 	private void setListener(){
-		gridview=(GridView)findViewById(R.id.gridview);
 		mGridAdapter=new CardAdapter(list,this);
 		gridview.setAdapter(mGridAdapter);
 		gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

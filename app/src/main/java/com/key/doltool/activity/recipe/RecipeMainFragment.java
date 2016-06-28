@@ -15,24 +15,24 @@ import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.adapter.RecipeMainAdapter;
 import com.key.doltool.event.BookEvent;
 
+import butterknife.BindView;
+
 public class RecipeMainFragment extends BaseFragment{
-	private GridView gridview;
+	@BindView(R.id.gridView) GridView gridview;
 	private BookEvent event;
-	private View main;
-	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-		 View view =  inflater.inflate(R.layout.recipe_main, container,false);
-		 init(view);
-		 findView();
-		 setListener();
-		 return view; 
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.recipe_main;
 	}
-	private void init(View view){
-		main=view;
-	}
-	private void findView(){
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		event=new BookEvent();
-		gridview=(GridView)main.findViewById(R.id.gridView);
+		setListener();
 	}
+
 	private void setListener(){
 		gridview.setAdapter(new RecipeMainAdapter(event.TYPE_BASE2,event.TYPE_BASE_PIC,getActivity()));
 		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

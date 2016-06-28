@@ -6,6 +6,7 @@ import java.util.List;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.data.sqlite.Mission;
 import com.key.doltool.data.MissionTree;
@@ -17,10 +18,18 @@ public class MissionLineActivity extends BaseActivity{
 	private MissionTree tree;
 	private String name="石头的记忆";
 	private int level=0;
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+
+	@Override
+	public int getContentViewId() {
+		return R.layout.toast_view;
+	}
+
+
+	@Override
+	protected void initAllMembersView(Bundle savedInstanceState) {
 		init();
 	}
+
 	private void init(){
 		dao=SRPUtil.getDAO(this);
 		tree=new MissionTree();

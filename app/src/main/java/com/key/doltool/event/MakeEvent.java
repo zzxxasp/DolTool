@@ -57,7 +57,7 @@ public class MakeEvent {
         listview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				txt.setText(list.get(arg2).getName()+"");
+				txt.setText(list.get(arg2).getName());
 				updateDialog.dismiss();
 				context.setPartChose(list.get(arg2),number);
 			}
