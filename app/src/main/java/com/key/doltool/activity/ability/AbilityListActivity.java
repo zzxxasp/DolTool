@@ -3,7 +3,6 @@ package com.key.doltool.activity.ability;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.key.doltool.R;
+import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.SkillAdapter;
 import com.key.doltool.app.util.ListScrollListener;
@@ -94,6 +94,13 @@ public class AbilityListActivity extends BaseActivity {
     }
 
     private void initPageItem() {
+        ViewHandler handler=new ViewHandler(new ViewHandler.ViewCallBack() {
+            @Override
+            public void onHandleMessage(Message msg) {
+                change();
+                alert.dismiss();
+            }
+        });
         adapter = new SkillAdapter(list, this);
         srollListener = new ListScrollListener
                 (end_flag, alert, handler);
@@ -182,13 +189,6 @@ public class AbilityListActivity extends BaseActivity {
     /**
      * 华丽的分割线——以下是Handler,线程,系统按键等处理
      */
-    //Handler——线程结束后更新界面
-    private Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            change();
-            alert.dismiss();
-        }
-    };
 
     //系统按键监听覆写
     public boolean onKeyDown(int keyCode, KeyEvent event) {

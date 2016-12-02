@@ -3,6 +3,7 @@ package com.key.doltool.util;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
+import com.key.doltool.activity.ability.AbilityForBoatDetailActivity;
 import com.key.doltool.activity.ability.AbilityListActivity;
 import com.key.doltool.activity.adc.ADCListActivity;
 import com.key.doltool.activity.adventure.NPCFragment;
@@ -766,7 +768,7 @@ public class ViewUtil {
 				item.setBackgroundResource(R.drawable.theme_blue_btn);
 //				item.setOnClickListener(new View.OnClickListener() {
 //					public void onClick(View v) {
-//						Intent it=new Intent(context,AbilityForBoatDetail.class);
+//						Intent it=new Intent(context,AbilityForBoatDetailActivity.class);
 //						it.putExtra("name",number);
 //						context.startActivity(it);
 //					}

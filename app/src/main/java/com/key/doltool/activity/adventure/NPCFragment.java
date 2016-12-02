@@ -210,7 +210,7 @@ public class NPCFragment extends BaseFragment implements OnScrollListener{
 				if(!select_if.equals("id>?")){
 					end_flag=true;
 					change_if("id>?","0");
-					Toast.makeText(getActivity(),"重置搜索条件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context.getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}

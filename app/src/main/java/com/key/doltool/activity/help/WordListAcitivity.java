@@ -37,7 +37,7 @@ import butterknife.BindView;
 
 public class WordListAcitivity extends BaseActivity{
 	private List<WordItem> list=new ArrayList<>();
-	@BindView(R.id.listview) ListView listView;
+	@BindView(R.id.listView) ListView listView;
 	@BindView(R.id.action) FloatingActionButton action;
 
 	@Override

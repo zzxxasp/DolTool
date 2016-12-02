@@ -90,9 +90,9 @@ public class MainActivity extends BaseFragmentActivity{
 			currentUser.fetchInBackground(null);
 			AVFile headImg=currentUser.getAVFile("headPic");
 			if(headImg!=null){
-				ImageLoader.picassoLoadCirle(this, headImg.getUrl(), headPic);
+				ImageLoader.picassoLoadCircle(this, headImg.getUrl(), headPic);
 			}else{
-				ImageLoader.picassoLoadCirle(this, headPic);
+				ImageLoader.picassoLoadCircle(this, headPic);
 			}
 
 			if(!StringUtil.isNull(currentUser.getString("nickName"))){
@@ -271,9 +271,9 @@ public class MainActivity extends BaseFragmentActivity{
 			AVFile headImg=currentUser.getAVFile("headPic");
     		headPic.setVisibility(View.VISIBLE);
     		if(headImg!=null){
-				ImageLoader.picassoLoadCirle(this, headImg.getUrl(), headPic);
+				ImageLoader.picassoLoadCircle(this, headImg.getUrl(), headPic);
 			} else{
-				ImageLoader.picassoLoadCirle(this, headPic);
+				ImageLoader.picassoLoadCircle(this, headPic);
 			}
 			if(!StringUtil.isNull(currentUser.getString("nickName"))){
     			username.setText(currentUser.getString("nickName"));

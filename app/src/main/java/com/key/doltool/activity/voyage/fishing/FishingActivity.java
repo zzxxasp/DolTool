@@ -28,18 +28,12 @@ public class FishingActivity extends BaseActivity {
         return R.layout.system_viewpage_area;
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.system_viewpage_area);
+    @Override
+    protected void initAllMembersView(Bundle savedInstanceState) {
         flag=false;
         initToolBar(null);
         toolbar.setTitle("钓鱼");
         initPage();
-    }
-
-    @Override
-    protected void initAllMembersView(Bundle savedInstanceState) {
-
     }
 
     private void initPage(){

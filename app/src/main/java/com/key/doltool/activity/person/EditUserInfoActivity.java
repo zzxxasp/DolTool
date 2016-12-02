@@ -182,9 +182,9 @@ public class EditUserInfoActivity extends BaseActivity{
 		if (currentUser != null) {
 			AVFile headImg=currentUser.getAVFile("headPic");
 			if(headImg!=null){
-				ImageLoader.picassoLoadCirle(this, headImg.getUrl(),head);
+				ImageLoader.picassoLoadCircle(this, headImg.getUrl(),head);
 			}else{
-				ImageLoader.picassoLoadCirle(this,head);
+				ImageLoader.picassoLoadCircle(this,head);
 			}
 			
 			if(!StringUtil.isNull(currentUser.getString("nickName"))){
@@ -252,7 +252,7 @@ public class EditUserInfoActivity extends BaseActivity{
 		Log.i("path_file",""+path_file);
         if (imageUri != null) {
 			Log.i("path_file",""+imageUri.getPath());
-			ImageLoader.picassoLoadCirle(this,path_file,head);
+			ImageLoader.picassoLoadCircle(this,path_file,head);
 			AVUser currentUser = AVUser.getCurrentUser();
 			AVFile headImg=new AVFile("head.png",ResourcesUtil.getBytes(path_file));
         	headImg.saveInBackground();

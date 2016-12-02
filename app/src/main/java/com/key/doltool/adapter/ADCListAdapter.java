@@ -15,13 +15,17 @@ import com.key.doltool.R;
 import com.key.doltool.data.sqlite.ADCInfo;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ADCListAdapter extends BaseAdapter{
 	public static int SIZE=30;
-	private static class ViewHolder{
-		public TextView name;
-		public ImageView pic;
-		public TextView type;
-		public TextView sex;
+	static class ViewHolder{
+		@BindView(R.id.name) TextView name;
+		@BindView(R.id.pic) ImageView pic;
+		@BindView(R.id.type) TextView type;
+		@BindView(R.id.sex) TextView sex;
 	} 
 	private List<ADCInfo> list=new ArrayList<>();
 	private Context context;
@@ -53,10 +57,7 @@ public class ADCListAdapter extends BaseAdapter{
             // 导入布局并赋值给convertView
 			LayoutInflater mInflater = LayoutInflater.from(context);
 			convertView = mInflater.inflate(R.layout.adc_simple_item, null);
-			holder.name=(TextView)convertView.findViewById(R.id.name);
-			holder.pic=(ImageView)convertView.findViewById(R.id.pic);
-			holder.type=(TextView)convertView.findViewById(R.id.type);
-			holder.sex=(TextView)convertView.findViewById(R.id.sex);
+			ButterKnife.bind(holder, convertView);
 			// 为view设置标签 
 			convertView.setTag(holder);
 		} 

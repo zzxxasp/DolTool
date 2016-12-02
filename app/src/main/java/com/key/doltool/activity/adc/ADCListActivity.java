@@ -205,13 +205,18 @@ public class ADCListActivity extends BaseActivity {
     //系统按键监听覆写
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //按键返回
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            //条件不是初始状态就重置
-            if (!select_if.equals("id>?")) {
-                end_flag = true;
-                scrollListener.changeFlag(true);
-                change_if("id>?", "0");
-                Toast.makeText(getApplicationContext(),R.string.search_rest, Toast.LENGTH_SHORT).show();
+        if (select_if.equals("id>?")) {
+            super.onKeyDown(keyCode, event);
+        } else {
+            //按键返回
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                //条件不是初始状态就重置
+                if (!select_if.equals("id>?")) {
+                    end_flag = true;
+                    scrollListener.changeFlag(true);
+                    change_if("id>?", "0");
+                    Toast.makeText(getApplicationContext(),R.string.search_rest, Toast.LENGTH_SHORT).show();
+                }
             }
         }
         return true;

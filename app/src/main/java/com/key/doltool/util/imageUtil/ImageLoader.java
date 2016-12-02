@@ -24,7 +24,7 @@ public class ImageLoader {
                 .centerCrop()
                 .into(view);
     }
-    public static void picassoLoadCirle(Context context,String url,ImageView view){
+    public static void picassoLoadCircle(Context context, String url, ImageView view){
         Picasso.with(context)
                 .load(url)
                 .placeholder(R.drawable.dol_trove_defalut)
@@ -35,7 +35,7 @@ public class ImageLoader {
                 .transform(new CircleTransform())
                 .into(view);
     }
-    public static void picassoLoadCirle(Context context,ImageView view){
+    public static void picassoLoadCircle(Context context, ImageView view){
         Picasso.with(context)
                 .load(R.drawable.dol_trove_defalut)
                 .placeholder(R.drawable.dol_trove_defalut)

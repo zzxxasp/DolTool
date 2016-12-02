@@ -63,7 +63,7 @@ public class VersionManager {
   	  	  	  							return;
   	  	  	  						}else{
   	  	  	  							if(flag){
-  	  	  	  								Toast.makeText(activity, "已经是最新版本", Toast.LENGTH_SHORT).show();
+  	  	  	  								Toast.makeText(activity.getApplicationContext(), "已经是最新版本", Toast.LENGTH_SHORT).show();
   	  	  	  								return;
   	  	  	  							}
   	  	  	  						}

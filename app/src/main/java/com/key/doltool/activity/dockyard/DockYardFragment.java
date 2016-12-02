@@ -266,7 +266,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				baseboat=list.get(position);
-				Toast.makeText(getActivity(),"挑选为造船白板", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context.getApplicationContext(),"挑选为造船白板", Toast.LENGTH_SHORT).show();
 				//更新第二页内容
 				resetBuild();
 				refreshPage();
@@ -357,7 +357,7 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 		plus_btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if(part_s==null){
-					Toast.makeText(getActivity(),"至少要选择一个强化素材", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context.getApplicationContext(),"至少要选择一个强化素材", Toast.LENGTH_SHORT).show();
 					return ;
 				}
 				//①强化次数变化
@@ -404,9 +404,9 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
     			end_flag=false;
     		else
     			end_flag2=false;
-    		Toast.makeText(getActivity(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+    		Toast.makeText(context.getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
     	}else if(size_after==0){
-    		Toast.makeText(getActivity(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+    		Toast.makeText(context.getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
     	}
 	}
 	//数据添加
@@ -654,12 +654,12 @@ public class DockYardFragment extends BaseFragment implements OnScrollListener{
 				if(!select_if.equals("id>?")&&main_ViewPage.getCurrentItem()==0){
 					end_flag=true;
 					change_if("id>?","0",main_ViewPage.getCurrentItem()+1);
-					Toast.makeText(getActivity(),"重置搜索条件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context.getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 				}
 				else if(!select_if2.equals("id>?")&&main_ViewPage.getCurrentItem()==2){
 					end_flag2=true;
 					change_if("id>?","0",main_ViewPage.getCurrentItem()+1);
-					Toast.makeText(getActivity(),"重置搜索条件", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context.getApplicationContext(),"重置搜索条件", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}

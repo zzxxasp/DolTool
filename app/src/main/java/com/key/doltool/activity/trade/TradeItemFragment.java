@@ -10,8 +10,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -20,6 +18,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.TradeListAdapter;
+import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.data.sqlite.TradeItem;
 import com.key.doltool.event.AreaEvent;
 import com.key.doltool.event.DialogEvent;
@@ -33,7 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class TradeItemFragment extends BaseFragment implements OnScrollListener{
+public class TradeItemFragment extends BaseFragment{
 	//定义部分
 	@BindView(R.id.listview) GridView listview;
 	//数据temp变量
@@ -42,12 +41,11 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	private List<TradeItem> list=new ArrayList<>();
 	private TradeListAdapter adapter;
 	private int add=-60;
-	private Thread mThread;	// 线程
 	private boolean end_flag=true; //是否为最末标记
 	//查询条件
 	private String select_if="id>?";
     private String[] select_if_x={"0"};
-
+	private ListScrollListener scrollListener;
 	@Override
 	public int getContentViewId() {
 		return R.layout.trade_list;
@@ -109,7 +107,8 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 	}
 	private void initPageItem(){
 		adapter=new TradeListAdapter(list,getActivity());
-		listview.setOnScrollListener(this);
+		scrollListener=new ListScrollListener(end_flag,alert,handler);
+		listview.setOnScrollListener(scrollListener);
 		listview.setAdapter(adapter);
 	}
 	public void onDestroy() {
@@ -132,13 +131,15 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 		if(size_after<TradeListAdapter.SIZE){
 			//表示，小于
 			end_flag=false;
-			Toast.makeText(getActivity(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+			scrollListener.changeFlag(false);
+			Toast.makeText(context.getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
 		}
     	if(size_after==size_before&&size_after!=0){
     		end_flag=false;
-    		Toast.makeText(getActivity(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
+			scrollListener.changeFlag(false);
+    		Toast.makeText(context.getApplicationContext(),"已经返回所有查询结果了", Toast.LENGTH_LONG).show();
     	}else if(size_after==0){
-    		Toast.makeText(getActivity(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
+    		Toast.makeText(context.getApplicationContext(),"没有查到您想要的结果", Toast.LENGTH_LONG).show();
     	}
 	}
 	//数据添加
@@ -219,45 +220,13 @@ public class TradeItemFragment extends BaseFragment implements OnScrollListener{
 		}
 		return true;
 	}
-	//滚动监听① - useless
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
-	}
-	//滚动监听②
-	public void onScrollStateChanged(final AbsListView view, int scrollState) {
-		boolean flag=end_flag;
-        if(scrollState == SCROLL_STATE_IDLE){  
-			System.out.println(view.getFirstVisiblePosition()+"===" + view.getLastVisiblePosition()+"==="+view.getCount());
-			//判断滚动到底部
-			if(view.getLastVisiblePosition()==(view.getCount()-1)){
-				//没有线程且不为最末时
-				if ((mThread == null || !mThread.isAlive())&&flag) {
-					//显示进度条，区域操作控制
-					alert.show();
-					mThread = new Thread() {
-						public void run() {
-							try {
-								Thread.sleep(2500);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-							Message message = new Message();
- 							message.what = 1;
-							handler.sendMessage(message);
-						}
-					};
-					mThread.start();
-				}
-			}
-		}
-	}
+
 	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
 			switch (menuItem.getItemId()) {
 				case R.id.city_search:findObject();break;
 				case R.id.type_search:jump();break;
-
 			}
 			return true;
 		}

@@ -203,7 +203,7 @@ public class PersonActivity extends BaseActivity{
 	//同步信息
 	public void syncInfo(String fileName){
 		if(a==null||b==null){
-			Toast.makeText(PersonActivity.this,"暂无数据，无需同步",Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),"暂无数据，无需同步",Toast.LENGTH_SHORT).show();
 		}
 		//同步数据
 		dialog.show();
@@ -260,7 +260,7 @@ public class PersonActivity extends BaseActivity{
 										} else {
 											e.printStackTrace();
 											dialog.dismiss();
-											Toast.makeText(PersonActivity.this,"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
+											Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
 										}
 									}
 								});
@@ -277,10 +277,10 @@ public class PersonActivity extends BaseActivity{
 							  syncData.saveInBackground(new SaveCallback(){
 									public void done(AVException e) {
 										if (e == null) {
-											Toast.makeText(PersonActivity.this,"数据已同步",Toast.LENGTH_SHORT).show();
+											Toast.makeText(getApplicationContext(),"数据已同步",Toast.LENGTH_SHORT).show();
 										} else {
 											e.printStackTrace();
-											Toast.makeText(PersonActivity.this,"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
+											Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
 										}
 										dialog.dismiss();
 									}
@@ -299,10 +299,10 @@ public class PersonActivity extends BaseActivity{
 						  syncData.saveInBackground(new SaveCallback(){
 							  public void done(AVException e) {
 								  if (e == null) {
-									  Toast.makeText(PersonActivity.this,"数据已同步",Toast.LENGTH_SHORT).show();
+									  Toast.makeText(getApplicationContext(),"数据已同步",Toast.LENGTH_SHORT).show();
 									} else {
 										e.printStackTrace();
-										Toast.makeText(PersonActivity.this,"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
+										Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
 									}
 									dialog.dismiss();
 								}
@@ -310,7 +310,7 @@ public class PersonActivity extends BaseActivity{
 					  }
 				  }else{
 					  e.printStackTrace();
-					  Toast.makeText(PersonActivity.this,"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
+					  Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
 					  dialog.dismiss();
 				  }
 			  }
@@ -339,9 +339,9 @@ public class PersonActivity extends BaseActivity{
 		if (currentUser != null) {
 			AVFile headImg=currentUser.getAVFile("headPic");
 			if(headImg!=null){
-				ImageLoader.picassoLoadCirle(this, headImg.getUrl(),head_img);
+				ImageLoader.picassoLoadCircle(this, headImg.getUrl(),head_img);
 			}else{
-				ImageLoader.picassoLoadCirle(this, head_img);
+				ImageLoader.picassoLoadCircle(this, head_img);
 			}
 			if(!StringUtil.isNull(currentUser.getString("nickName"))){
 				name.setText(currentUser.getString("nickName"));

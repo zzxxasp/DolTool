@@ -80,7 +80,7 @@ public class RegisterActivity extends BaseActivity{
 		adapter_email = new AutoTextViewAdapter(this);
 		email.setAdapter(adapter_email);
 		email.setThreshold(1);//输入1个字符时就开始检测，默认为2个
-		email.addTextChangedListener(watahcer);//监听autoview的变化
+		email.addTextChangedListener(watcher);//监听autoview的变化
 
 
         ArrayAdapter<String> adapter=new SpinnerArrayAdapter
@@ -159,7 +159,7 @@ public class RegisterActivity extends BaseActivity{
 		});
 	}
 
-	private TextWatcher watahcer=new TextWatcher() {
+	private TextWatcher watcher=new TextWatcher() {
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lint>
     <issue id="ClickableViewAccessibility" severity="ignore" />
-    <issue id="HandlerLeak" severity="ignore" />
     <issue id="InflateParams" severity="ignore" />
-    <issue id="WrongCall">
-        <ignore path="src/com/key/doltool/view/map/ImageMap.java" />
-    </issue>
 </lint>

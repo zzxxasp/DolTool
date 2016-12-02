@@ -1,9 +1,7 @@
 package com.key.doltool.activity.dockyard;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
@@ -11,13 +9,9 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.SaveCallback;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.data.SailBoat;
-import com.key.doltool.data.TradeCityItem;
-import com.key.doltool.data.sqlite.City;
 import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.util.DBUtil;
 import com.key.doltool.util.FileManager;
@@ -27,7 +21,6 @@ import com.key.doltool.util.jsoup.JsoupForBaHa;
 import com.key.doltool.util.jsoup.JsoupForGVO;
 import com.key.doltool.util.jsoup.JsoupUtil;
 import com.key.doltool.view.flat.FlatButton;
-
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.util.List;
@@ -72,65 +65,9 @@ public class DataBaseInsertFragment extends BaseFragment {
 		});
 		btn2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				DBUtil.copyDB_SD(getActivity());
+				DBUtil.copyDB_SD(context.getApplicationContext());
 			}
 		});
-	}
-
-
-	private void updateCityTradeItem(){
-		AVQuery<AVObject> p=new AVQuery<>("trade");
-		p.whereEqualTo("flag",0);
-		p.findInBackground(new FindCallback<AVObject>() {
-			@Override
-			public void done(List<AVObject> list, AVException e) {
-				if (e == null && list.size() != 0) {
-					for(int i=0;i<list.size();i++){
-						AVObject object=list.get(i);
-						object.put("flag", 1);
-						object.saveInBackground();
-						City city=selectCity(object);
-						if(city!=null){
-							SRPUtil.getDAO(getActivity()).update(city,
-									new String[]{"trade_list"},"name=?",new String[]{city.getName()});
-						}
-					}
-				}
-			}
-		});
-	}
-
-	private City selectCity(AVObject object){
-		boolean bool=true;
-		Gson g=new Gson();
-		List<City> list=SRPUtil.getInstance(getActivity()).select(City.class, false, "name=?", new String[]{object.getString("name")}, null, null, null, null);
-		if(list.size()==1){
-			City item=list.get(0);
-			List<TradeCityItem> temp=g.fromJson(item.getTrade_list(), new TypeToken<List<TradeCityItem>>() {
-			}.getType());
-			for(int i=0;i<temp.size();i++){
-				if(temp.get(i).name.equals(object.getString("trade_name"))){
-					TradeCityItem item1=new TradeCityItem();
-					item1.name=object.getString("trade_name");
-					item1.price=object.getString("price");
-					item1.invest=object.getString("invest");
-					temp.set(i, item1);
-					bool=false;
-					break;
-				}
-			}
-			if(bool){
-				TradeCityItem item1=new TradeCityItem();
-				item1.name=object.getString("trade_name");
-				item1.price=object.getString("price");
-				item1.invest=object.getString("invest");
-				temp.add(item1);
-			}
-			item.setTrade_list(g.toJson(temp));
-			return item;
-		}else{
-			return null;
-		}
 	}
 
 	private void initParse(){

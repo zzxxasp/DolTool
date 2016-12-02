@@ -140,9 +140,9 @@ public class CardComboFragment extends BaseFragment{
     	if(size_after==size_before&&size_after!=0){
     		end_flag=false;
 			scrollListener.changeFlag(false);
-    		Toast.makeText(getActivity(),R.string.search_no_more, Toast.LENGTH_LONG).show();
+    		Toast.makeText(context.getApplicationContext(),R.string.search_no_more, Toast.LENGTH_LONG).show();
     	}else if(size_after==0){
-    		Toast.makeText(getActivity(),R.string.search_no, Toast.LENGTH_LONG).show();
+    		Toast.makeText(context.getApplicationContext(),R.string.search_no, Toast.LENGTH_LONG).show();
     	}
 	}
 	//数据添加
@@ -220,7 +220,7 @@ public class CardComboFragment extends BaseFragment{
 				if(!select_if.equals("id>?")){
 					end_flag=true;
 					change_if("id>?","0");
-					Toast.makeText(getActivity(), R.string.search_rest, Toast.LENGTH_SHORT).show();
+					Toast.makeText(context.getApplicationContext(), R.string.search_rest, Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
