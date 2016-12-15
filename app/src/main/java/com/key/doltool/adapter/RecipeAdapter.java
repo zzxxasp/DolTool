@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.adapter.util.ApdaterUtil;
+import com.key.doltool.adapter.util.AdapterUtil;
 import com.key.doltool.data.sqlite.Recipe;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
@@ -40,12 +40,12 @@ public class RecipeAdapter extends BaseAdapter{
 	private List<Recipe> list=new ArrayList<>();
 	private Context context;
 	private DefaultDAO dao;
-	private ApdaterUtil util;
+	private AdapterUtil util;
 	public RecipeAdapter(List<Recipe> list,Context context){
 		this.list=list;
 		this.context=context;
 		dao=SRPUtil.getDAO(context);
-		util=new ApdaterUtil(context, dao);
+		util=new AdapterUtil(context, dao);
 	}
 	public int getCount() {
 		return list.size();

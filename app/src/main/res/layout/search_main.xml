@@ -12,16 +12,15 @@
     android:gravity="center_vertical"
     android:orientation="horizontal" 
     >
-<TextView
-    android:id="@+id/type" 
-	android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="任务"
-    android:textSize="16sp"
-    android:textColor="@color/white"
-    android:padding="10dp"
-    android:background="@drawable/theme_blue_btn_rate"    
-    />
+	<android.support.v7.widget.AppCompatSpinner
+		android:id="@+id/type"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/white"
+		android:padding="10dp"
+		android:entries="@array/search_list"
+		android:background="@drawable/theme_blue_btn_rate"
+		/>
 <EditText
     android:id="@+id/search" 
     android:layout_width="match_parent"

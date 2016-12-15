@@ -15,16 +15,17 @@ import com.the9tcat.hadi.DefaultDAO;
  * 列表图片关联缓存类<br>
  * 用处：缓存列表中存在的关联图片id，以便加速载入
  * **/
-public class ApdaterUtil {
+public class AdapterUtil {
 	private static HashMap<String,String> name_list=new HashMap<>();
 	private Context context;
 	private DefaultDAO dao;
-	public ApdaterUtil(Context context,DefaultDAO dao){
+	public AdapterUtil(Context context, DefaultDAO dao){
 		this.context=context;
 		this.dao=dao;
 	}
+
+	/**分类查询**/
 	private String getPicByType(int type,String name){
-		/**类型1**/
 		String temp="";
 		if(type==1){
 			temp=DataSelectUtil.getSkillPicByName(name, dao);
@@ -34,7 +35,9 @@ public class ApdaterUtil {
 			temp=DataSelectUtil.getRecipePicByName(name, dao);
 		}
 		return temp;
-	}	
+	}
+
+	/**寻找指定类型的图片并进行显示**/
 	public void findByName(ImageView view,String name,int type){
 		String url="";
 		boolean temp=true;
@@ -58,6 +61,7 @@ public class ApdaterUtil {
 			view.setImageResource(R.drawable.item_defalut);
 		}
 	}
+
 	public void clear(){
 		if(name_list!=null){
 			name_list.clear();

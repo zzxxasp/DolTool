@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.help.HintListActivity;
-import com.key.doltool.activity.help.WordListAcitivity;
+import com.key.doltool.activity.help.WordListActivity;
 import com.key.doltool.activity.setting.MessagePostActivity;
 import com.key.doltool.activity.setting.MessageShowActivity;
 
@@ -43,7 +43,7 @@ public class HelpCenterFragment extends BaseFragment {
 		});
 		fun1.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent it=new Intent(getActivity(),WordListAcitivity.class);
+				Intent it=new Intent(getActivity(),WordListActivity.class);
 				getActivity().startActivity(it);
 			}
 		});

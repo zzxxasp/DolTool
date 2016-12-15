@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.adapter.util.ApdaterUtil;
+import com.key.doltool.adapter.util.AdapterUtil;
 import com.key.doltool.data.TradeCityItem;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
@@ -24,12 +24,12 @@ public class TradeSimpleListAdapter extends BaseAdapter{
 	private List<TradeCityItem> list=new ArrayList<>();
 	private Context context;
 	private DefaultDAO dao;
-	private ApdaterUtil util;
+	private AdapterUtil util;
 	public TradeSimpleListAdapter(List<TradeCityItem> list,Context context){
 		this.list=list;
 		this.context=context;
 		dao=SRPUtil.getDAO(context);
-		util=new ApdaterUtil(context, dao);
+		util=new AdapterUtil(context, dao);
 	}
 	public int getCount() {
 			return list.size();

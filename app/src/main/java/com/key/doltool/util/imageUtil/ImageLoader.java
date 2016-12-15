@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.key.doltool.R;
+import com.key.doltool.util.BitMapUtil;
 import com.squareup.picasso.Picasso;
 
 public class ImageLoader {
@@ -27,8 +28,8 @@ public class ImageLoader {
     public static void picassoLoadCircle(Context context, String url, ImageView view){
         Picasso.with(context)
                 .load(url)
-                .placeholder(R.drawable.dol_trove_defalut)
-                .error(R.drawable.dol_trove_defalut)
+                .placeholder(CircleTransform.getDrawable(R.drawable.dol_trove_defalut,context.getResources()))
+                .error(CircleTransform.getDrawable(R.drawable.dol_trove_defalut,context.getResources()))
 //                .config(Bitmap.Config.RGB_565)
                 .fit()
                 .centerCrop()

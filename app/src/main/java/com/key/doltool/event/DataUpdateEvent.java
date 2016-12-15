@@ -15,7 +15,7 @@ import com.key.doltool.util.db.SRPUtil;
 import java.util.List;
 
 /**
- *
+ * 数据更新事件
  * Created by Administrator on 2016/12/2.
  */
 public class DataUpdateEvent {

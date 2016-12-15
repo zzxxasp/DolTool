@@ -164,7 +164,7 @@
 		<activity android:name="com.key.doltool.activity.help.HintListActivity"
                     android:screenOrientation="portrait"
 					/>
-		<activity android:name="com.key.doltool.activity.help.WordListAcitivity"
+		<activity android:name=".activity.help.WordListActivity"
                     android:screenOrientation="portrait"
 					/>
         <activity android:name="com.key.doltool.activity.search.SearchActivity"

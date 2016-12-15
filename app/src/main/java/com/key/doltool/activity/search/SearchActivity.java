@@ -2,16 +2,15 @@ package com.key.doltool.activity.search;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
@@ -22,16 +21,19 @@ import com.key.doltool.activity.recipe.RecipeForBookDetailsActivity;
 import com.key.doltool.activity.trade.TradeCityDetailActivity;
 import com.key.doltool.activity.useitem.UseItemActivity;
 import com.key.doltool.adapter.SimpleSearchAdapter;
+import com.key.doltool.adapter.SpinnerArrayAdapter;
+import com.key.doltool.app.util.ViewHandler;
+import com.key.doltool.data.SearchItem;
 import com.key.doltool.data.item.UseItem;
 import com.key.doltool.data.sqlite.ADCInfo;
 import com.key.doltool.data.sqlite.Book;
 import com.key.doltool.data.sqlite.City;
 import com.key.doltool.data.sqlite.Mission;
-import com.key.doltool.data.SearchItem;
 import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.data.sqlite.WordItem;
-import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.TradeEvent;
+import com.key.doltool.event.UserEvent;
+import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
 
@@ -47,15 +49,12 @@ public class SearchActivity extends BaseActivity{
 
 	@BindView(R.id.search) EditText search_txt;
 	@BindView(R.id.content_list) ListView content_list;
-	@BindView(R.id.type) TextView type;
-
+	@BindView(R.id.type) AppCompatSpinner type;
 	private DefaultDAO dao;
 	private List<SearchItem> list;
 	private int index=0;
-	private PopupWindow pop;
-	private DialogEvent dialogEvent;
 	private boolean end=true;
-
+	private ViewHandler updateUi;
 	@Override
 	public int getContentViewId() {
 		return R.layout.activity_search;
@@ -70,7 +69,13 @@ public class SearchActivity extends BaseActivity{
 
 	private void init(){
 		dao=SRPUtil.getDAO(getApplicationContext());
-		dialogEvent=new DialogEvent(pop,SearchActivity.this);
+		updateUi=new ViewHandler(new ViewHandler.ViewCallBack() {
+			@Override
+			public void onHandleMessage(Message msg) {
+				content_list.setAdapter(new SimpleSearchAdapter(context,list));
+				end=true;
+			}
+		});
 	}
 
 	
@@ -82,9 +87,18 @@ public class SearchActivity extends BaseActivity{
 				jump(index,list.get(position).id);
 			}
 		});
-		type.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				dialogEvent.popMenuForSearch(type);
+		ArrayAdapter<String> adapter=new SpinnerArrayAdapter
+				(this,ResourcesUtil.getArray(this,R.array.search_list),2);
+		type.setAdapter(adapter);
+		type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				setIndex(i);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> adapterView) {
+
 			}
 		});
 	}
@@ -209,13 +223,6 @@ public class SearchActivity extends BaseActivity{
 		}
 	};
 
-	private Handler updateUi=new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			content_list.setAdapter(new SimpleSearchAdapter(context,list));
-			end=true;
-		}
-	};
 
 	private TextWatcher watcher = new TextWatcher() {
 	    public void onTextChanged(CharSequence s, int start, int before, int count) {

@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.ability.AbilityForNormalDetailActivity;
-import com.key.doltool.adapter.util.ApdaterUtil;
+import com.key.doltool.adapter.util.AdapterUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
 public class TagPicAdapter extends BaseAdapter{
 	private String[] item_txt;
 	private DefaultDAO dao;
-	private ApdaterUtil util;
+	private AdapterUtil util;
 	private static class ViewHolder{
 		public ViewGroup item;
 		public TextView item_name;
@@ -28,7 +28,7 @@ public class TagPicAdapter extends BaseAdapter{
 		this.item_txt=new String[item_txt.length];
 		this.item_txt=item_txt;
 		dao=SRPUtil.getDAO(context);
-		util=new ApdaterUtil(context, dao);
+		util=new AdapterUtil(context, dao);
 	}
 	public int getCount() {
 		return item_txt.length;

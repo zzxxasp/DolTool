@@ -12,7 +12,7 @@
     android:id="@+id/list_item_type1" 
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
-    android:padding="5dp" 
+    android:padding="10dp"
     android:background="@drawable/theme_background_transparent"
     android:gravity="center"  
     >
@@ -33,7 +33,7 @@
     android:id="@+id/list_item_type2"  
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
-    android:padding="5dp" 
+    android:padding="10dp"
     android:background="@drawable/theme_background_transparent"
     android:gravity="center"  
     >
@@ -54,7 +54,7 @@
     android:id="@+id/list_item_type3"  
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
-    android:padding="5dp" 
+    android:padding="10dp"
     android:background="@drawable/theme_background_transparent"
     android:gravity="center"  
     >
@@ -62,7 +62,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     android:textColor="@color/Black_SP"
-    android:padding="5dp"
+    android:padding="10dp"
     android:text="副官"     
     />
 </LinearLayout>
@@ -75,7 +75,7 @@
     android:id="@+id/list_item_type4"  
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
-    android:padding="5dp" 
+    android:padding="10dp"
     android:background="@drawable/theme_background_transparent"
     android:gravity="center"  
     >
@@ -96,7 +96,7 @@
     android:id="@+id/list_item_type5"  
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
-    android:padding="5dp" 
+    android:padding="10dp"
     android:background="@drawable/theme_background_transparent"
     android:gravity="center"  
     >
@@ -117,7 +117,7 @@
         android:id="@+id/list_item_type6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:padding="10dp"
         android:background="@drawable/theme_background_transparent"
         android:gravity="center"
         >

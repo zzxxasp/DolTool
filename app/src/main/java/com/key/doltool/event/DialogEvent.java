@@ -3,14 +3,12 @@ package com.key.doltool.event;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,10 +17,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.core.MainActivity;
 import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.person.PersonActivity;
-import com.key.doltool.activity.search.SearchActivity;
-import com.key.doltool.activity.search.SearchFragment;
 import com.key.doltool.util.CommonUtil;
-import com.key.doltool.util.DensityUtil;
 import com.key.doltool.util.ExitApplication;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.view.Toast;
@@ -31,9 +26,6 @@ import com.key.doltool.view.flat.FlatButton;
 import java.io.File;
 import java.util.List;
 public class DialogEvent {
-	private PopupWindow pop;
-	private SearchFragment context;
-	private SearchActivity context_2;
 	private String select_if;
 	private List<String> select_args;
 	public DialogEvent(){
@@ -43,151 +35,6 @@ public class DialogEvent {
 		this.select_args=select_args;
 		this.select_if=select_if;
 	}
-	public DialogEvent(PopupWindow pop,SearchFragment context){
-		this.context=context;
-		this.pop=pop;
-	}
-	public DialogEvent(PopupWindow pop,SearchActivity context){
-		this.context_2=context;
-		this.pop=pop;
-	}
-	@SuppressWarnings("deprecation")
-	public void popMenuForShare(View anchor){
-		if(pop==null){
-			pop=new PopupWindow(context.getActivity());
-		}
-		if(!pop.isShowing()){
-			LayoutInflater layoutinflater =context.getActivity().getLayoutInflater();
-			View view = layoutinflater.inflate(R.layout.panel_search, null);
-			LinearLayout item1=(LinearLayout)view.findViewById(R.id.list_item_type1);
-			LinearLayout item2=(LinearLayout)view.findViewById(R.id.list_item_type2);
-			LinearLayout item3=(LinearLayout)view.findViewById(R.id.list_item_type3);
-			LinearLayout item4=(LinearLayout)view.findViewById(R.id.list_item_type4);
-			LinearLayout item5=(LinearLayout)view.findViewById(R.id.list_item_type5);
-			LinearLayout item6=(LinearLayout)view.findViewById(R.id.list_item_type6);
-			pop.setContentView(view);
-			pop.setWidth(DensityUtil.dip2px(context.getActivity(),80));
-			pop.setHeight(LayoutParams.WRAP_CONTENT);
-			pop.setOutsideTouchable(true);
-			pop.setBackgroundDrawable(new BitmapDrawable(context.getResources()));
-			pop.showAsDropDown(anchor,0,0);
-			final TextView txt=(TextView)anchor;
-			item1.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("任务");
-					context.setIndex(0);
-					pop.dismiss();
-				}
-			});
-			item2.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("发现物");
-					context.setIndex(1);
-					pop.dismiss();
-				}
-			});
-			item3.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("副官");
-					context.setIndex(2);
-					pop.dismiss();
-				}
-			});
-			item4.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("生产书");
-					context.setIndex(3);
-					pop.dismiss();
-				}
-			});
-			item5.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("城市");
-					context.setIndex(4);
-					pop.dismiss();
-				}
-			});
-			item6.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("道具");
-					context.setIndex(5);
-					pop.dismiss();
-				}
-			});
-		}
-		else{
-			pop.dismiss();
-		}
-	}
-
-	public void popMenuForSearch(View anchor){
-		if(pop==null){
-			pop=new PopupWindow(context_2);
-		}
-		if(!pop.isShowing()){
-			LayoutInflater layoutinflater =context_2.getLayoutInflater();
-			View view = layoutinflater.inflate(R.layout.panel_search, null);
-			LinearLayout item1=(LinearLayout)view.findViewById(R.id.list_item_type1);
-			LinearLayout item2=(LinearLayout)view.findViewById(R.id.list_item_type2);
-			LinearLayout item3=(LinearLayout)view.findViewById(R.id.list_item_type3);
-			LinearLayout item4=(LinearLayout)view.findViewById(R.id.list_item_type4);
-			LinearLayout item5=(LinearLayout)view.findViewById(R.id.list_item_type5);
-			LinearLayout item6=(LinearLayout)view.findViewById(R.id.list_item_type6);
-			pop.setContentView(view);
-			pop.setWidth(DensityUtil.dip2px(context_2, 80));
-			pop.setHeight(LayoutParams.WRAP_CONTENT);
-			pop.setOutsideTouchable(true);
-			pop.setBackgroundDrawable(new BitmapDrawable(context_2.getResources()));
-			pop.showAsDropDown(anchor,0,0);
-			final TextView txt=(TextView)anchor;
-			item1.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("任务");
-					context_2.setIndex(0);
-					pop.dismiss();
-				}
-			});
-			item2.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("发现物");
-					context_2.setIndex(1);
-					pop.dismiss();
-				}
-			});
-			item3.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("副官");
-					context_2.setIndex(2);
-					pop.dismiss();
-				}
-			});
-			item4.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("生产书");
-					context_2.setIndex(3);
-					pop.dismiss();
-				}
-			});
-			item5.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("城市");
-					context_2.setIndex(4);
-					pop.dismiss();
-				}
-			});
-			item6.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					txt.setText("道具");
-					context_2.setIndex(5);
-					pop.dismiss();
-				}
-			});
-		}
-		else{
-			pop.dismiss();
-		}
-	}
-
 
 	/**
 	 * 选择对话框
@@ -228,7 +75,7 @@ public class DialogEvent {
 	}
 	
 	/**
-	 * 选择对话框
+	 * loading对话框
 	 * @param txt 要显示的TextView
 	 * @param context 所在界面的上下文
 	 * **/

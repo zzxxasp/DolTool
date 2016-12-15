@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.webkit.WebView;
@@ -72,7 +73,7 @@ public class BitMapUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Bitmap drawableToBitmap(Drawable drawable){ 
 		int width = drawable.getIntrinsicWidth(); 
 		int height = drawable.getIntrinsicHeight();
@@ -81,7 +82,8 @@ public class BitMapUtil {
 		drawable.setBounds(0,0,width,height);  
 		drawable.draw(canvas); 
 		return bitmap; 
-	}  
+	}
+
 	/** file to Bitmap**/
 	public static Bitmap getBitmapByFile(String pathName){
 		return BitmapFactory.decodeFile(pathName);

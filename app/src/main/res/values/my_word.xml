@@ -158,6 +158,15 @@
 		<item >200</item>
 	</string-array>
 
+	<string-array name="search_list">
+		<item >任务</item>
+		<item >发现物</item>
+		<item >副官</item>
+		<item >生产书</item>
+		<item >城市</item>
+		<item >道具</item>
+	</string-array>
+
     <integer-array name="pocket_background_colors">
         <item>@color/Blue_SP</item>
         <item>@color/Blue_SP</item>

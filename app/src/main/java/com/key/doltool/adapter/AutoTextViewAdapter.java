@@ -10,6 +10,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.key.doltool.R;
+import com.key.doltool.app.util.AutoAdapterHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,19 @@ public class AutoTextViewAdapter extends BaseAdapter implements Filterable {
     public List<String> mList;
     private Context mContext;
     private MyFilter mFilter;
+    private AutoAdapterHelper autoAdapterHelper;
     private static class ViewHolder{
         public TextView name;
     }
     public AutoTextViewAdapter(Context context) {
         mContext = context;
         mList = new ArrayList<>();
+        autoAdapterHelper=new AutoAdapterHelper();
     }
 
+    public AutoAdapterHelper getAutoAdapterHelper(){
+        return autoAdapterHelper;
+    }
     @Override
     public int getCount() {
         return mList == null ? 0 : mList.size();

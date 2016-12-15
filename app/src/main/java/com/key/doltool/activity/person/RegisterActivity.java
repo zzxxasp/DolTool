@@ -32,7 +32,6 @@ import butterknife.BindView;
 
 public class RegisterActivity extends BaseActivity{
 	//注册
-	private static final String[] AUTO_EMAILS = {"@163.com", "@sina.com", "@qq.com", "@126.com", "@gmail.com", "@apple.com"};
 	@BindView(R.id.password) EditText password_register;
 	@BindView(R.id.password_repeat) EditText password_repeat;
 	@BindView(R.id.emailWrapper) TextInputLayout usernameWrapper;
@@ -46,19 +45,11 @@ public class RegisterActivity extends BaseActivity{
 	@BindView(R.id.login) FlatButton login;
 
 	private AutoTextViewAdapter adapter_email;
-	private String server_name="0-0";
 	private Dialog dialog;
 
 	@Override
 	public int getContentViewId() {
 		return R.layout.login_register;
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.login_register);
-
 	}
 
 	@Override
@@ -125,8 +116,8 @@ public class RegisterActivity extends BaseActivity{
 	}
 	//注册
 	public void signUp(){
-		server_name=area.getSelectedItemPosition()+"-"+server.getSelectedItemPosition();
-		Log.i("tag",""+server_name);
+		String server_name = area.getSelectedItemPosition() + "-" + server.getSelectedItemPosition();
+		Log.i("tag",""+ server_name);
 		AVUser user = new AVUser();
 		user.setUsername(email.getText().toString());
 		user.setPassword(password_register.getText().toString());
@@ -134,7 +125,7 @@ public class RegisterActivity extends BaseActivity{
 		if(!nickName.getText().toString().trim().equals("")){
 			user.put("nickName", nickName.getText().toString().trim());
 		}
-		user.put("server",server_name);
+		user.put("server", server_name);
 		user.signUpInBackground(new SignUpCallback() {
 			public void done(AVException e) {
 				if (e == null) {
@@ -174,29 +165,10 @@ public class RegisterActivity extends BaseActivity{
 		public void afterTextChanged(Editable s) {
 			String input = s.toString();
 			adapter_email.mList.clear();
-			autoAddEmails(input);
+			adapter_email.getAutoAdapterHelper().autoAddEmails(adapter_email,input);
 			adapter_email.notifyDataSetChanged();
 			email.showDropDown();
 		}
 	};
 
-
-	private void autoAddEmails(String input) {
-		String autoEmail;
-		if (input.length() > 0) {
-			for (String AUTO_EMAIL : AUTO_EMAILS) {
-				if (input.contains("@")) {//包含“@”则开始过滤
-					String filter = input.substring(input.indexOf("@") + 1, input.length());//获取过滤器，即根据输入“@”之后的内容过滤出符合条件的邮箱
-					System.out.println("filter-->" + filter);
-					if (AUTO_EMAIL.contains(filter)) {//符合过滤条件
-						autoEmail = input.substring(0, input.indexOf("@")) + AUTO_EMAIL;//用户输入“@”之前的内容加上自动填充的内容即为最后的结果
-						adapter_email.mList.add(autoEmail);
-					}
-				} else {
-					autoEmail = input + AUTO_EMAIL;
-					adapter_email.mList.add(autoEmail);
-				}
-			}
-		}
-	}
 }

@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.adapter.util.ApdaterUtil;
+import com.key.doltool.adapter.util.AdapterUtil;
 import com.key.doltool.data.sqlite.NPCInfo;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
@@ -34,14 +34,14 @@ public class NPCAdapter extends BaseAdapter{
 	} 
 	public static int SIZE=30;
 	private DefaultDAO dao;
-	private ApdaterUtil util;
+	private AdapterUtil util;
 	private List<NPCInfo> list=new ArrayList<>();
 	private Activity context;
 	public NPCAdapter(List<NPCInfo> list,Activity context){
 		this.list=list;
 		this.context=context;
 		dao=SRPUtil.getDAO(context);
-		util=new ApdaterUtil(context, dao);
+		util=new AdapterUtil(context, dao);
 	}
 	public int getCount() {
 		return list.size();

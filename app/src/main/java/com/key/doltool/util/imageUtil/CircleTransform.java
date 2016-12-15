@@ -1,9 +1,15 @@
 package com.key.doltool.util.imageUtil;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.res.ResourcesCompat;
 
 import com.squareup.picasso.Transformation;
 /**
@@ -43,5 +49,10 @@ public class CircleTransform implements Transformation {
     @Override
     public String key() {
         return "circle";
+    }
+
+    public static Drawable getDrawable(@DrawableRes int id, Resources resources){
+        Bitmap bmp= BitmapFactory.decodeResource(resources,id);
+        return new BitmapDrawable(resources,new CircleTransform().transform(bmp));
     }
 }

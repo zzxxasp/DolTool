@@ -2,18 +2,15 @@ package com.key.doltool.activity.search;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.adc.ADCDetailsActivity;
@@ -24,16 +21,18 @@ import com.key.doltool.activity.recipe.RecipeForBookDetailsActivity;
 import com.key.doltool.activity.trade.TradeCityDetailActivity;
 import com.key.doltool.activity.useitem.UseItemActivity;
 import com.key.doltool.adapter.SimpleSearchAdapter;
+import com.key.doltool.adapter.SpinnerArrayAdapter;
+import com.key.doltool.app.util.ViewHandler;
+import com.key.doltool.data.SearchItem;
 import com.key.doltool.data.item.UseItem;
 import com.key.doltool.data.sqlite.ADCInfo;
 import com.key.doltool.data.sqlite.Book;
 import com.key.doltool.data.sqlite.City;
 import com.key.doltool.data.sqlite.Mission;
-import com.key.doltool.data.SearchItem;
 import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.data.sqlite.WordItem;
-import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.TradeEvent;
+import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
 
@@ -50,12 +49,10 @@ public class SearchFragment extends BaseFragment{
 	private List<SearchItem> list;
 	@BindView(R.id.search) EditText search_txt;
 	@BindView(R.id.content_list) ListView content_list;
-	@BindView(R.id.type) TextView type;
+	@BindView(R.id.type) AppCompatSpinner type;
 	private int index=0;
-	private PopupWindow pop;
-	private DialogEvent dialogEvent;
 	private boolean end=true;
-
+	private ViewHandler updateUi;
 	@Override
 	public int getContentViewId() {
 		return R.layout.search_main;
@@ -65,8 +62,14 @@ public class SearchFragment extends BaseFragment{
 	@Override
 	protected void initAllMembersView(Bundle savedInstanceState) {
 		dao=SRPUtil.getDAO(getActivity());
-		dialogEvent=new DialogEvent(pop,SearchFragment.this);
 		setListener();
+		updateUi=new ViewHandler(new ViewHandler.ViewCallBack() {
+			@Override
+			public void onHandleMessage(Message msg) {
+				content_list.setAdapter(new SimpleSearchAdapter(context,list));
+				end=true;
+			}
+		});
 	}
 
 	
@@ -78,9 +81,18 @@ public class SearchFragment extends BaseFragment{
 				jump(index,list.get(position).id);
 			}
 		});
-		type.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				dialogEvent.popMenuForShare(type);
+		ArrayAdapter<String> adapter=new SpinnerArrayAdapter
+				(context, ResourcesUtil.getArray(getActivity(),R.array.search_list),2);
+		type.setAdapter(adapter);
+		type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				setIndex(i);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> adapterView) {
+
 			}
 		});
 	}
@@ -203,14 +215,6 @@ public class SearchFragment extends BaseFragment{
 		public void run() {
 			list=getListBySelect();
 			updateUi.sendMessage(updateUi.obtainMessage());
-		}
-	};
-
-	private Handler updateUi=new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			content_list.setAdapter(new SimpleSearchAdapter(getActivity(),list));
-			end=true;
 		}
 	};
 
