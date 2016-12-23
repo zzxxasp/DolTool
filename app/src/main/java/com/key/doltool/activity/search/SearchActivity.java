@@ -32,7 +32,6 @@ import com.key.doltool.data.sqlite.Mission;
 import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.data.sqlite.WordItem;
 import com.key.doltool.event.TradeEvent;
-import com.key.doltool.event.UserEvent;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.the9tcat.hadi.DefaultDAO;
@@ -55,6 +54,7 @@ public class SearchActivity extends BaseActivity{
 	private int index=0;
 	private boolean end=true;
 	private ViewHandler updateUi;
+	private SimpleSearchAdapter simpleSearchAdapter;
 	@Override
 	public int getContentViewId() {
 		return R.layout.activity_search;
@@ -72,7 +72,8 @@ public class SearchActivity extends BaseActivity{
 		updateUi=new ViewHandler(new ViewHandler.ViewCallBack() {
 			@Override
 			public void onHandleMessage(Message msg) {
-				content_list.setAdapter(new SimpleSearchAdapter(context,list));
+				simpleSearchAdapter=new SimpleSearchAdapter(context,list);
+				content_list.setAdapter(simpleSearchAdapter);
 				end=true;
 			}
 		});
@@ -93,6 +94,10 @@ public class SearchActivity extends BaseActivity{
 		type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				if(list!=null){
+					list.clear();
+					simpleSearchAdapter.notifyDataSetChanged();
+				}
 				setIndex(i);
 			}
 

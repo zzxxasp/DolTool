@@ -226,7 +226,7 @@ public class SRPUtil {
 		return db.insert(Util.getTableName(model.getClass()),null, values);
 	}
 
-	public <T>List<T>  select(Class<T> model, boolean distinct, String selection, String[] selectionArgs, String groupBy, String having, String order, String limit) {
+	public <T>List<T> select(Class<T> model, boolean distinct, String selection, String[] selectionArgs, String groupBy, String having, String order, String limit) {
 		SQLiteDatabase db = this.mDatabaseManager.open();
 		Cursor cursor = db.query(distinct, Util.getTableName(model), null, selection, selectionArgs, groupBy, having, order, limit);
 		List<T> list = processCursor(model,cursor);

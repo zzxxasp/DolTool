@@ -29,8 +29,7 @@ public class WikiAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public Object getItem(int arg0) {
-		
+	public WikiInfo getItem(int arg0) {
 		return list.get(arg0);
 	}
 

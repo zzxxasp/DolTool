@@ -52,6 +52,7 @@ public class SearchFragment extends BaseFragment{
 	@BindView(R.id.type) AppCompatSpinner type;
 	private int index=0;
 	private boolean end=true;
+	private SimpleSearchAdapter simpleSearchAdapter;
 	private ViewHandler updateUi;
 	@Override
 	public int getContentViewId() {
@@ -66,7 +67,8 @@ public class SearchFragment extends BaseFragment{
 		updateUi=new ViewHandler(new ViewHandler.ViewCallBack() {
 			@Override
 			public void onHandleMessage(Message msg) {
-				content_list.setAdapter(new SimpleSearchAdapter(context,list));
+				simpleSearchAdapter=new SimpleSearchAdapter(context,list);
+				content_list.setAdapter(simpleSearchAdapter);
 				end=true;
 			}
 		});
@@ -88,6 +90,10 @@ public class SearchFragment extends BaseFragment{
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 				setIndex(i);
+				if(list!=null){
+					list.clear();
+					simpleSearchAdapter.notifyDataSetChanged();
+				}
 			}
 
 			@Override

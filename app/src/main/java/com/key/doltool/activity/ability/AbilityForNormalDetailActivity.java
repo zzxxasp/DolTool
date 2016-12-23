@@ -33,8 +33,8 @@ import butterknife.BindView;
  * **/
 public class AbilityForNormalDetailActivity extends BaseActivity{
 	@BindView(R.id.name) TextView name;
-	@BindView(R.id.type) TextView	type;
-	@BindView(R.id.details) TextView	details;
+	@BindView(R.id.type) TextView type;
+	@BindView(R.id.details) TextView details;
 	@BindView(R.id.level) TextView level;
 	@BindView(R.id.money) TextView money;
 	@BindView(R.id.skill_need) TextView skill_need;

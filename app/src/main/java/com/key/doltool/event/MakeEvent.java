@@ -15,14 +15,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.key.doltool.R;
+import com.key.doltool.activity.dockyard.BuildBoatFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.adapter.PartSpinnerdapter;
 import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.util.CommonUtil;
 /**造船控件处理事件**/
 public class MakeEvent {
-	private DockYardFragment context;
-	public MakeEvent(DockYardFragment context){
+	private BuildBoatFragment context;
+	public MakeEvent(BuildBoatFragment context){
 		this.context=context;
 	}
 	public void showPartDialog(final List<Part> list,final TextView txt,final int number){

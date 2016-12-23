@@ -46,8 +46,6 @@ import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.HoloCircularProgressBar;
 import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.Toast;
-import com.robinhood.ticker.TickerUtils;
-import com.robinhood.ticker.TickerView;
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.io.UnsupportedEncodingException;

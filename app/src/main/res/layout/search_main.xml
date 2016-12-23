@@ -21,28 +21,36 @@
 		android:entries="@array/search_list"
 		android:background="@drawable/theme_blue_btn_rate"
 		/>
-<EditText
-    android:id="@+id/search" 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
-    android:padding="10dp"
-    android:singleLine="true"
-    android:layout_margin="10dp"
-    android:textColor="@color/Black_SP"
-    android:background="@drawable/edittext_background_rounded"
-    android:textCursorDrawable="@null"
-    android:textColorHint="@color/Gary_SP"
-    android:hint="请输入要查询的内容名称"   
-    />
+	<android.support.design.widget.TextInputLayout
+		android:id="@+id/usernameWrapper"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		>
+		<EditText
+			android:id="@+id/search"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="10dp"
+			android:singleLine="true"
+			android:layout_margin="10dp"
+			android:textColor="@color/Black_SP"
+			android:textCursorDrawable="@null"
+			android:textColorHint="@color/Gary_SP"
+			android:hint="请输入要查询的内容名称"
+			/>
+	</android.support.design.widget.TextInputLayout>
 </LinearLayout>
 <View 
 	android:layout_width="match_parent"
     android:layout_height="0.5dp"
-    android:background="@color/Blue_SP"    
+    android:background="@color/Gainsboro"
     />
 <ListView
     android:id="@+id/content_list" 
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"     
+    android:layout_height="wrap_content"
+	android:divider="@null"
+	android:cacheColorHint="#00000000"
     />
 </LinearLayout>

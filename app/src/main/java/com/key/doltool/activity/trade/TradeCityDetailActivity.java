@@ -111,7 +111,6 @@ public class TradeCityDetailActivity extends BaseActivity{
 		}
 		list=gson.fromJson(item.getTrade_list(), new TypeToken<List<TradeCityItem>>(){}.getType());
 		listview.setAdapter(new TradeSimpleListAdapter(list, this));
-		
 	}
 	private void init(){
 		if(StringUtil.isNull(id)){
