@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.WikiAdapter;
+import com.key.doltool.app.util.DialogUtil;
 import com.key.doltool.app.util.ListFlowHelper;
 import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.app.util.ViewHandler;
@@ -70,7 +71,7 @@ public class WikiListActivity extends BaseActivity{
 			@Override
 			public void onHandleMessage(Message msg) {
 				listFlowHelper.change();
-				alert.dismiss();
+				DialogUtil.dismiss(context,alert);
 			}
 		});
 		initPage();
@@ -92,7 +93,7 @@ public class WikiListActivity extends BaseActivity{
 	private void initPageItem(){
 		adapter=new WikiAdapter(listFlowHelper.list,context);
 		listview.setAdapter(adapter);
-		ListScrollListener listScrollListener=new ListScrollListener(true,alert,viewHandler);
+		ListScrollListener listScrollListener=new ListScrollListener(alert,viewHandler,this);
 		listview.setOnScrollListener(listScrollListener);
 		listFlowHelper.setListScrollListener(listScrollListener);
 		listFlowHelper.selectshow("0,"+WikiAdapter.SIZE);

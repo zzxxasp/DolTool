@@ -2,9 +2,7 @@ package com.key.doltool.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -20,8 +18,8 @@ import com.key.doltool.activity.wiki.WikiListActivity;
 import com.key.doltool.activity.wiki.WikiMainActivity;
 import com.key.doltool.adapter.WikiAdapter;
 import com.key.doltool.data.sqlite.WikiInfo;
+import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
-import com.the9tcat.hadi.DefaultDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class InfoMainFragment extends BaseFragment{
 	@BindView(R.id.job) Button job;
 	@BindView(R.id.wiki_btn) Button wiki;
 	@BindView(R.id.wiki_list) ListView listview;
-	private DefaultDAO dao;
+	private SRPUtil dao;
 	private List<WikiInfo> list=new ArrayList<>();
 
 	@Override
@@ -47,13 +45,13 @@ public class InfoMainFragment extends BaseFragment{
 
 	@Override
 	protected void initAllMembersView(Bundle savedInstanceState) {
-		dao=new DefaultDAO(getActivity());
+		dao=SRPUtil.getInstance(context);
 		init();
 		setListener();
 	}
 
 	private void setListener(){
-		listview.setAdapter(new WikiAdapter(list, getActivity()));
+		listview.setAdapter(new WikiAdapter(list,context));
 		mission.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				jump(1);
@@ -82,15 +80,14 @@ public class InfoMainFragment extends BaseFragment{
 		listview.setOnItemClickListener(new OnItemClickListener(){
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				Intent it=new Intent(getActivity(),WikiMainActivity.class);
+				Intent it=new Intent(context,WikiMainActivity.class);
 				it.putExtra("id",list.get(arg2).getId()+"");
 				startActivity(it);
 			}
 		});
 	}
-	@SuppressWarnings("unchecked")
 	private void init(){
-		list=(List<WikiInfo>)dao.select(WikiInfo.class,false,"id>?",new String[]{"0"},null, null,order,"0,5");
+		list= dao.select(WikiInfo.class,false,"id>?",new String[]{"0"},null, null,order,"0,5");
 	}
 	private void jump(int index){
 		Class<?> c;
@@ -100,9 +97,9 @@ public class InfoMainFragment extends BaseFragment{
 			case 3:c=JobListActivity.class;break;
 			case 4:c=ADCListActivity.class;break;
 			case 5:c=WikiListActivity.class;break;
-			default:Toast.makeText(getActivity().getApplicationContext(),"还在建设中",Toast.LENGTH_SHORT).show();return;
+			default:Toast.makeText(context.getApplicationContext(),"还在建设中",Toast.LENGTH_SHORT).show();return;
 		}
-		Intent intent=new Intent(getActivity(),c);
+		Intent intent=new Intent(context,c);
 		startActivity(intent);
 	}
 }

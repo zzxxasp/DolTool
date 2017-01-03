@@ -41,10 +41,10 @@ public class FishingTroveFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        dao=SRPUtil.getDAO(getActivity());
+        dao=SRPUtil.getDAO(context);
         findView();
         setListener();
-        count=new UpdataCount(getActivity());
+        count=new UpdataCount(context);
         new Thread(mTask).start();
     }
 
@@ -54,7 +54,7 @@ public class FishingTroveFragment extends BaseFragment {
             //更新页面
             alert.dismiss();
             Parcelable state=gridview.onSaveInstanceState();
-            adapter=new TroveAdapter(list,getActivity());
+            adapter=new TroveAdapter(list,context);
             gridview.setAdapter(adapter);
             gridview.onRestoreInstanceState(state);
         }
@@ -64,7 +64,7 @@ public class FishingTroveFragment extends BaseFragment {
         @Override
         public void run() {
             //查询所有钓鱼发现物
-            list= SRPUtil.getInstance(getActivity().getApplicationContext()).select(
+            list= SRPUtil.getInstance(context.getApplicationContext()).select(
                     Trove.class,false,"getWay=?",new String[]{"3"},null, null,"rate desc,feats desc", null);
             try {
                 Thread.sleep(500);
@@ -76,7 +76,7 @@ public class FishingTroveFragment extends BaseFragment {
     };
 
     private void findView(){
-        alert=new DialogEvent().showLoading(getActivity());
+        alert=new DialogEvent().showLoading(context);
         alert.show();
     }
 
@@ -103,7 +103,7 @@ public class FishingTroveFragment extends BaseFragment {
                     dao.update(trove, new String[]{"flag"}, "id=?", new String[]{"" + adapter.getItem(position).getId()});
                     count.update_addMode("海洋生物", -1);
                 }
-                if (!getActivity().isFinishing()) {
+                if (!context.isFinishing()) {
                     alert.show();
                 }
                 new Thread(mTask).start();

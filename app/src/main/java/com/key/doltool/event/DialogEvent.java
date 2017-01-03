@@ -17,6 +17,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.core.MainActivity;
 import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.person.PersonActivity;
+import com.key.doltool.app.util.ListFlowHelper;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.ExitApplication;
 import com.key.doltool.util.StringUtil;
@@ -40,7 +41,7 @@ public class DialogEvent {
 	 * 选择对话框
 	 * @param context 所在界面的上下文
 	 * **/
-	public void itemDialog(final MissonListActivity context){
+	public void itemDialog(final ListFlowHelper listFlowHelper, Activity context){
 		LayoutInflater layoutinflater = context.getLayoutInflater();
 		View view = layoutinflater.inflate(R.layout.panel_mission_tag, null);
 		final Dialog updateDialog = new Dialog(context, R.style.updateDialog);
@@ -58,8 +59,7 @@ public class DialogEvent {
 			public void onClick(View v) {
 				select_if+=" and tag=?";
 				select_args.add("1");
-				context.change_if(select_if,select_args);
-				context.begin();
+				listFlowHelper.change_if(select_if,select_args);
 				updateDialog.dismiss();
 			}
 		});
@@ -67,8 +67,7 @@ public class DialogEvent {
 			public void onClick(View v) {
 				select_if+=" and tag=?";
 				select_args.add("0");
-				context.change_if(select_if,select_args);
-				context.begin();
+				listFlowHelper.change_if(select_if,select_args);
 				updateDialog.dismiss();
 			}
 		});

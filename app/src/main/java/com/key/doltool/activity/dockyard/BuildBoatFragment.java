@@ -1,11 +1,12 @@
 package com.key.doltool.activity.dockyard;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.anime.MyAnimations;
@@ -37,7 +38,7 @@ public class BuildBoatFragment extends BaseFragment {
     //造船模拟界面
     @BindView(R.id.info_txt) TextView info_txt;
     @BindView(R.id.show_broad) LinearLayout show_layout;
-    @BindView(R.id.ability) RelativeLayout ability;
+    @BindView(R.id.ability) LinearLayout ability;
     @BindView(R.id.choose_part) LinearLayout choose_part;
 
     @BindView(R.id.sp_s) TextView sp_s;
@@ -69,8 +70,8 @@ public class BuildBoatFragment extends BaseFragment {
     @BindView(R.id.shipping_space_add) TextView bt_s_a;
 
     @BindView(R.id.build_btn) FlatButton plus_btn;
-    @BindView(R.id.btn) FlatButton btn;
-
+    @BindView(R.id.action) FloatingActionButton action;
+    @BindView(R.id.bottomsheet) BottomSheetLayout bottomSheet;
     private SRPUtil dao;
     private SailBoat baseboat;
     private int twice=0;
@@ -169,7 +170,7 @@ public class BuildBoatFragment extends BaseFragment {
     }
 
     private void setData(){
-        btn.setVisibility(View.VISIBLE);
+        action.setVisibility(View.VISIBLE);
         show_layout.setVisibility(View.VISIBLE);
         //初始性能面板
         vo_s.setText(String.valueOf(baseboat.getSquare_sail()));
@@ -306,6 +307,7 @@ public class BuildBoatFragment extends BaseFragment {
     //重置造船数据
     private void resetBuild(){
         //第一步：数据重置
+        twice=0;
         //①.强化数值重置
         vo_s_add=0;vo_f_add=0;vo_de_add=0;vo_tu_add=0;vo_p_add=0;
         bt_h_add=0;bt_a_add=0;bt_s_add=0;bt_c_add=0;
@@ -322,12 +324,14 @@ public class BuildBoatFragment extends BaseFragment {
     }
 
     private void setListener(){
-        btn.setOnClickListener(new View.OnClickListener() {
+        action.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+//                bottomSheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.dev_main,
+//                        bottomSheet, false));
                 if(ability.getVisibility()==View.VISIBLE){
-                    MyAnimations.rotate3D(show_layout, ability, choose_part,1000);
+                    MyAnimations.rotate3D(show_layout, ability, choose_part,320);
                 }else {
-                    MyAnimations.rotate3D(show_layout, choose_part, ability, 1000);
+                    MyAnimations.rotate3D(show_layout, choose_part, ability,320);
                 }
             }
         });

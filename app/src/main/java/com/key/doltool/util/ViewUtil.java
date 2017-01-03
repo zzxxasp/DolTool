@@ -24,17 +24,11 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
-import com.key.doltool.activity.ability.AbilityListActivity;
-import com.key.doltool.activity.adc.ADCListActivity;
-import com.key.doltool.activity.adventure.NPCFragment;
-import com.key.doltool.activity.adventure.card.CardComboFragment;
 import com.key.doltool.activity.dockyard.PartListFragment;
-import com.key.doltool.activity.job.JobListActivity;
-import com.key.doltool.activity.trade.TradeItemFragment;
-import com.key.doltool.activity.voyage.TradeItemActivity;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
 import com.key.doltool.app.util.ListFlowHelper;
 import com.key.doltool.data.MenuItem;
+import com.key.doltool.data.sqlite.Skill;
 import com.key.doltool.view.range.RangeBar;
 
 import java.io.IOException;
@@ -149,7 +143,6 @@ public class ViewUtil {
                     if_list.add(if_args);
                 }
                 listFlowHelper.change_if(if_str,if_list);
-                listFlowHelper.begin();
                 updateDialog.dismiss();
             }
         });
@@ -297,11 +290,11 @@ public class ViewUtil {
     /**
      * For PopDialog Common
      **/
-    public static void popCardDialog(final CardComboFragment activity, View layout) {
-        final Dialog updateDialog = new Dialog(activity.getActivity(), R.style.updateDialog);
+    public static void popCardDialog(final ListFlowHelper listFlowHelper,final Activity activity, View layout) {
+        final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity.getActivity()) - 30,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity) - 30,
                 LayoutParams.MATCH_PARENT);
         params.setMargins(10, 10, 10, 10);
         updateDialog.setContentView(layout, params);
@@ -309,8 +302,8 @@ public class ViewUtil {
 
         final EditText name = (EditText) layout.findViewById(R.id.boat_name);
         final Spinner type = (Spinner) layout.findViewById(R.id.type);
-        ArrayAdapter<String> adapter = new SpinnerArrayAdapter(activity.getActivity()
-                , ResourcesUtil.getArray(activity.getActivity(), R.array.card_type));
+        ArrayAdapter<String> adapter = new SpinnerArrayAdapter(activity
+                , ResourcesUtil.getArray(activity, R.array.card_type));
         type.setAdapter(adapter);
         final Button positive = (Button) layout.findViewById(R.id.btn_confirm);
         final Button negative = (Button) layout.findViewById(R.id.btn_cancel);
@@ -353,66 +346,13 @@ public class ViewUtil {
                         select_args.add(if_s);
                     }
                 }
-                activity.change_if(select_if, select_args);
-                activity.begin();
+                listFlowHelper.change_if(select_if, select_args);
                 updateDialog.dismiss();
             }
         });
     }
 
-    public static void popTradeDialog(final TradeItemFragment activity, View layout) {
-        final Dialog updateDialog = new Dialog(activity.getActivity(), R.style.updateDialog);
-        updateDialog.setCancelable(true);
-        updateDialog.setCanceledOnTouchOutside(true);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity.getActivity()) - 30,
-                LayoutParams.MATCH_PARENT);
-        params.setMargins(10, 10, 10, 10);
-        updateDialog.setContentView(layout, params);
-        updateDialog.show();
-
-        final EditText name = (EditText) layout.findViewById(R.id.boat_name);
-        final Spinner type = (Spinner) layout.findViewById(R.id.type);
-        ArrayAdapter<String> adapter = new SpinnerArrayAdapter(activity.getActivity()
-                , ResourcesUtil.getArray(activity.getActivity(), R.array.trade_type));
-        type.setAdapter(adapter);
-        final Button positive = (Button) layout.findViewById(R.id.btn_confirm);
-        final Button negative = (Button) layout.findViewById(R.id.btn_cancel);
-        negative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateDialog.dismiss();
-            }
-        });
-        positive.setText("搜索");
-        positive.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String select_if;
-                List<String> select_args = new ArrayList<>();
-                if (!name.getText().toString().trim().equals("")) {
-                    select_if = "name like ? ";
-                    select_args.add("%" + name.getText().toString().trim() + "%");
-                } else {
-                    select_if = "id>?";
-                    select_args.add("0");
-                }
-                if (type.getSelectedItemPosition() != 1000) {
-                    if (select_if.equals("")) {
-                        select_if += "type like ?";
-                    } else {
-                        select_if += "and type like ?";
-                    }
-                    String if_s = "%" + type.getSelectedItem().toString() + "%";
-                    Log.i("s", if_s + "");
-                    select_args.add(if_s);
-                }
-                activity.change_if(select_if, select_args);
-                activity.begin();
-                updateDialog.dismiss();
-            }
-        });
-    }
-
-    public static void popTradeDialog(final TradeItemActivity activity, View layout) {
+    public static void popTradeDialog(final ListFlowHelper listFlowHelper, final Activity activity, View layout) {
         final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
@@ -457,13 +397,11 @@ public class ViewUtil {
                     Log.i("s", if_s + "");
                     select_args.add(if_s);
                 }
-                activity.change_if(select_if, select_args);
-                activity.begin();
+                listFlowHelper.change_if(select_if, select_args);
                 updateDialog.dismiss();
             }
         });
     }
-
 
     public static void popWikiDialog(final ListFlowHelper listFlowHelper,Activity activity, View layout) {
         final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
@@ -511,13 +449,12 @@ public class ViewUtil {
                     select_args.add(if_s);
                 }
                 listFlowHelper.change_if(select_if, select_args);
-                listFlowHelper.begin();
                 updateDialog.dismiss();
             }
         });
     }
 
-    public static void popJobDialog(final JobListActivity activity, View layout) {
+    public static void popJobDialog(final ListFlowHelper listFlowHelper,Activity activity, View layout) {
         final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
@@ -561,14 +498,13 @@ public class ViewUtil {
                     Log.i("s", if_s + "");
                     select_args.add(if_s);
                 }
-                activity.change_if(select_if, select_args);
-                activity.begin();
+                listFlowHelper.change_if(select_if, select_args);
                 updateDialog.dismiss();
             }
         });
     }
 
-    public static void popADCDialog(final ADCListActivity activity, View layout) {
+    public static void popADCDialog(final ListFlowHelper listFlowHelper,Activity activity, View layout) {
         final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
@@ -605,8 +541,7 @@ public class ViewUtil {
                     Log.i("s", if_s + "");
                     select_args.add(if_s);
                 }
-                activity.change_if(select_if, select_args);
-                activity.begin();
+                listFlowHelper.change_if(select_if, select_args);
                 updateDialog.dismiss();
             }
         });
@@ -618,7 +553,7 @@ public class ViewUtil {
         });
     }
 
-    public static void popSkillDialog(final AbilityListActivity activity, View layout) {
+    public static void popSkillDialog(final ListFlowHelper<Skill> listFlowHelper,Activity activity, View layout) {
         final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
@@ -657,8 +592,7 @@ public class ViewUtil {
                     Log.i("s", if_s + "");
                     select_args.add(if_s);
                 }
-                activity.change_if(select_if, select_args);
-                activity.begin();
+                listFlowHelper.change_if(select_if, select_args);
                 updateDialog.dismiss();
             }
         });
@@ -670,11 +604,11 @@ public class ViewUtil {
         });
     }
 
-    public static void popNPCDialog(final NPCFragment activity, View layout) {
-        final Dialog updateDialog = new Dialog(activity.getActivity(), R.style.updateDialog);
+    public static void popNPCDialog(final ListFlowHelper listFlowHelper,Activity activity,View layout) {
+        final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity.getActivity()) - 30,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity) - 30,
                 LayoutParams.MATCH_PARENT);
         params.setMargins(10, 10, 10, 10);
         updateDialog.setContentView(layout, params);
@@ -682,8 +616,8 @@ public class ViewUtil {
 
         final EditText name = (EditText) layout.findViewById(R.id.boat_name);
         final Spinner type = (Spinner) layout.findViewById(R.id.type);
-        ArrayAdapter<String> adapter = new SpinnerArrayAdapter(activity.getActivity()
-                , ResourcesUtil.getArray(activity.getActivity(), R.array.back_type));
+        ArrayAdapter<String> adapter = new SpinnerArrayAdapter(activity
+                , ResourcesUtil.getArray(activity, R.array.back_type));
         type.setAdapter(adapter);
         final Button positive = (Button) layout.findViewById(R.id.btn_confirm);
         final Button negative = (Button) layout.findViewById(R.id.btn_cancel);
@@ -709,8 +643,7 @@ public class ViewUtil {
                     Log.i("s", if_s + "");
                     select_args.add(if_s);
                 }
-                activity.change_if(select_if, select_args);
-                activity.begin();
+                listFlowHelper.change_if(select_if, select_args);
                 updateDialog.dismiss();
             }
         });
@@ -759,7 +692,7 @@ public class ViewUtil {
      **/
     public static void fill_boat_detail(final Activity context, List<MenuItem> ab, TableLayout father) {
         int y = 0;
-        int x = 0;
+        int x;
         int dip_10 = DensityUtil.dip2px(context, 10);
         int dip_5 = DensityUtil.dip2px(context, 5);
         if (ab.size() <= 3)

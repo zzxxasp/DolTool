@@ -3,7 +3,6 @@ package com.key.doltool.activity.adventure;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.v7.view.ActionMode;
@@ -22,6 +21,8 @@ import android.widget.TextView;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
 import com.key.doltool.adapter.TroveAdapter;
+import com.key.doltool.app.util.DialogUtil;
+import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataCount;
@@ -45,7 +46,6 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	private SRPUtil srp;
 	private String type;
 	private UpdataCount count;
-	private Parcelable state;
 	private String select_txt="";
 	
 	private TroveAdapter mGridAdapter;
@@ -53,20 +53,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
     private boolean MODE_FLAG=false;
     private int keyCode=0;
     private int[] temp_staus;
-	private Handler mHandler=new Handler(){
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			//更新页面
-			if(!isFinishing()){
-				alert.dismiss();
-			}
-			state=gridview.onSaveInstanceState();
-			mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this);
-			gridview.setAdapter(mGridAdapter);
-			gridview.onRestoreInstanceState(state);
-		}
-	 };
-
+	private ViewHandler mHandler;
 	@Override
 	public int getContentViewId() {
 		return R.layout.adventure_table;
@@ -75,6 +62,16 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 
 	@Override
 	protected void initAllMembersView(Bundle savedInstanceState) {
+		mHandler=new ViewHandler(new ViewHandler.ViewCallBack() {
+			@Override
+			public void onHandleMessage(Message msg) {
+				DialogUtil.dismiss(context,alert);
+				Parcelable state = gridview.onSaveInstanceState();
+				mGridAdapter=new TroveAdapter(list, AdventureListNewApiActivity.this);
+				gridview.setAdapter(mGridAdapter);
+				gridview.onRestoreInstanceState(state);
+			}
+		});
 		type=getIntent().getStringExtra("type");
 		dao=SRPUtil.getDAO(getApplicationContext());
 		srp=SRPUtil.getInstance(getApplicationContext());
@@ -90,20 +87,17 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		flag=false;
 		initToolBar(onMenuItemClick);
 		toolbar.setTitle(type);
-		if(!isFinishing()){
-			alert.show();
-		}
+		DialogUtil.show(context,alert);
 	}
 	/**批量标记**/
 	private void mutilMode() {
 		startSupportActionMode(mCallback);
 		MODE_FLAG=true;
 	}
-	@SuppressWarnings("unchecked")
 	//查询
 	public void select(String select){
 		select_txt=select;
-		List<Trove>list=(List<Trove>)dao.select(Trove.class, false, "type=? and name like ?",new String[]{type,"%"+select_txt+"%"}, null, null,"rate desc,feats desc", null);
+		List<Trove>list=srp.select(Trove.class, false, "type=? and name like ?",new String[]{type,"%"+select_txt+"%"}, null, null,"rate desc,feats desc", null);
 		if(list.size()==0){
 			txt.setVisibility(View.VISIBLE);
 
@@ -149,9 +143,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 						dao.update(trove, new String[]{"flag"}, "id=? and type=?", new String[]{"" + mGridAdapter.getItem(position).getId(), type});
 						count.update_addMode(type, -1);
 					}
-					if(!isFinishing()){
-						alert.show();
-					}
+					DialogUtil.show(context,alert);
 					new Thread(mTasks).start();
 					return true;
 				}
@@ -167,18 +159,11 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	@Override
 	protected void onResume() {
 		if(UpdataList.FLAG_CHANGE==1){
-			if(!isFinishing()){
-				alert.show();
-			}
+			DialogUtil.show(context,alert);
 			new Thread(mTasks).start();
 			UpdataList.FLAG_CHANGE=0;
 		}
 		super.onResume();
-	}
-
-	private void jump(Intent intent){
-		UpdataList.FLAG_CHANGE=0;
-		AdventureListNewApiActivity.this.startActivity(intent);
 	}
 
 	//系统按键监听覆写
@@ -192,10 +177,9 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		}
 		return super.onKeyDown(keyCode,event);
 	}
-	@SuppressWarnings("unchecked")
 	private Runnable mTasks =new Runnable(){
 		public void run() {
-			list=(List<Trove>)dao.select(Trove.class, false, "type=?",new String[]{type}, null, null,"rate desc,feats desc", null);
+			list=srp.select(Trove.class, false, "type=?",new String[]{type}, null, null,"rate desc,feats desc", null);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -271,7 +255,7 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
                     		gridview.setSelection(i);
                     }
                     mGridAdapter.notifyDataSetChanged();
-                    mSelectedConvCount.setText(mGridAdapter.getCheckedItemCount()+"");
+                    mSelectedConvCount.setText(String.valueOf(mGridAdapter.getCheckedItemCount()));
                     break;
 
                 default:
@@ -290,14 +274,12 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
         }
         
         public void setSeletedCountShow(){
-        	mSelectedConvCount.setText(mGridAdapter.getCheckedItemCount()+"");
+        	mSelectedConvCount.setText(String.valueOf(mGridAdapter.getCheckedItemCount()));
         }
 
     }
 	private void updataForMutil() {
-		if(!isFinishing()){
-			alert.show();
-		}
+		DialogUtil.show(context,alert);
 		new Thread(mTask_Muti).start();
 	}
 	

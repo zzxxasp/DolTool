@@ -1,8 +1,5 @@
 package com.key.doltool.event;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -18,15 +15,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.key.doltool.R;
-import com.key.doltool.activity.adc.ADCListActivity;
-import com.key.doltool.activity.adventure.NPCFragment;
 import com.key.doltool.activity.trade.TradeCityDetailActivity;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
+import com.key.doltool.app.util.ListFlowHelper;
 import com.key.doltool.data.sqlite.City;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.view.flat.FlatButton;
 import com.the9tcat.hadi.DefaultDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 /**地域处理事件**/
 public class AreaEvent {
 	/**冒险区域**/
@@ -147,13 +146,13 @@ public class AreaEvent {
 			}
 		});
 	}
-	public void showCityDialog(final NPCFragment context,final DefaultDAO dao){
-        LayoutInflater layoutinflater = context.getActivity().getLayoutInflater();
+	public void showNPCCityDialog(final ListFlowHelper listFlowHelper,final Activity activity){
+        LayoutInflater layoutinflater = activity.getLayoutInflater();
         View view = layoutinflater.inflate(R.layout.enter_city, null);
-        final Dialog updateDialog = new Dialog(context.getActivity(), R.style.updateDialog);
+        final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(context.getActivity())-30,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity)-30,
                 LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.setMargins(10,10,10,10);
@@ -168,7 +167,7 @@ public class AreaEvent {
         enter.setText("搜索");
             
         ArrayAdapter<String> adapter=new SpinnerArrayAdapter
-		(context.getActivity(),ADVENTURE_AREA);
+		(activity,ADVENTURE_AREA);
         sp_area.setAdapter(adapter);
 		//地区-城市联动事件
         sp_area.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -176,7 +175,7 @@ public class AreaEvent {
 					int arg2, long arg3) {
 				
 		        ArrayAdapter<String> adapter=new SpinnerArrayAdapter
-				(context.getActivity(),BACK_CITY[arg2]);
+				(activity,BACK_CITY[arg2]);
 					sp_city.setAdapter(adapter);
 				}
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -187,11 +186,10 @@ public class AreaEvent {
 			public void onClick(View v) {
 				String temp = (String) sp_city.getSelectedItem();
 				if (!temp.equals("全部")) {
-					context.change_if("city=?", (String) sp_city.getSelectedItem());
+					listFlowHelper.change_if("city=?", (String) sp_city.getSelectedItem());
 				} else {
-					context.change_if("id>?", "0");
+					listFlowHelper.change_if("id>?", "0");
 				}
-				context.begin();
 				updateDialog.dismiss();
 			}
 		});
@@ -202,13 +200,13 @@ public class AreaEvent {
 		});
 	}
 	
-	public void showCityDialog(final ADCListActivity context,final DefaultDAO dao){
-        LayoutInflater layoutinflater = context.getLayoutInflater();
+	public void showADCCityDialog(final ListFlowHelper listFlowHelper,final Activity activity){
+        LayoutInflater layoutinflater = activity.getLayoutInflater();
         View view = layoutinflater.inflate(R.layout.enter_city, null);
-        final Dialog updateDialog = new Dialog(context, R.style.updateDialog);
+        final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(context)-30,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity)-30,
                 LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         params.setMargins(10,10,10,10);
@@ -223,7 +221,7 @@ public class AreaEvent {
         enter.setText("搜索");
             
         ArrayAdapter<String> adapter=new SpinnerArrayAdapter
-        		(context,ADVENTURE_AREA);
+        		(activity,ADVENTURE_AREA);
         sp_area.setAdapter(adapter);
 		//地区-城市联动事件
         sp_area.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -231,7 +229,7 @@ public class AreaEvent {
 					int arg2, long arg3) {
 				
 		        ArrayAdapter<String> adapter=new SpinnerArrayAdapter
-				(context,ADC_CITY[arg2]);
+				(activity,ADC_CITY[arg2]);
 					sp_city.setAdapter(adapter);
 				}
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -242,11 +240,10 @@ public class AreaEvent {
 			public void onClick(View v) {
 				String temp = (String) sp_city.getSelectedItem();
 				if (!temp.equals("全部")) {
-					context.change_if("city like ?", "%" + sp_city.getSelectedItem() + "%");
+					listFlowHelper.change_if("city like ?", "%" + sp_city.getSelectedItem() + "%");
 				} else {
-					context.change_if("id>?", "0");
+					listFlowHelper.change_if("id>?", "0");
 				}
-				context.begin();
 				updateDialog.dismiss();
 			}
 		});

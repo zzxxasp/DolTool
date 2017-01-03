@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.adapter.SailBoatListAdapter;
+import com.key.doltool.app.util.DialogUtil;
 import com.key.doltool.app.util.ListFlowHelper;
 import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.app.util.ViewHandler;
@@ -75,13 +76,12 @@ public class SailBoatListFragment extends BaseFragment{
         }, SailBoatListAdapter.SIZE, order);
 
         //基本设置
-        alert=new DialogEvent().showLoading(getActivity());
-        alert.show();
-
+        alert=new DialogEvent().showLoading(context);
+        DialogUtil.show(context,alert);
         if(listFlowHelper.list.size()==0){
             new Thread(mTasks).start();
         }else{
-            alert.dismiss();
+            DialogUtil.dismiss(context,alert);
         }
     }
 
@@ -97,11 +97,11 @@ public class SailBoatListFragment extends BaseFragment{
                         listFlowHelper.change();
                         break;
                 }
-                alert.dismiss();
+                DialogUtil.dismiss(context,alert);
             }
         });
 
-        ListScrollListener listScrollListener = new ListScrollListener(true, alert, viewHandler);
+        ListScrollListener listScrollListener = new ListScrollListener(alert,viewHandler,context);
         adapter=new SailBoatListAdapter(listFlowHelper.list,getActivity());
         listview.setAdapter(adapter);
 

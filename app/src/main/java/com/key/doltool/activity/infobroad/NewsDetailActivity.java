@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.webkit.WebSettings;
@@ -12,6 +11,8 @@ import android.webkit.WebView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
+import com.key.doltool.app.util.DialogUtil;
+import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.HttpUtil;
@@ -32,7 +33,7 @@ public class NewsDetailActivity extends BaseActivity{
 	private Dialog layout_alert;
 	private String url="";
 	private String content="";
-
+	private ViewHandler viewHandler;
 	@Override
 	public int getContentViewId() {
 		return R.layout.news_detail;
@@ -86,44 +87,34 @@ public class NewsDetailActivity extends BaseActivity{
 	private void findView(){
 		web_content=(WebView)findViewById(R.id.content);
 		layout_alert=new DialogEvent().showLoading(this);
-		layout_alert.show();
-		// 实例化广告条
-//		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-//		// 获取要嵌入广告条的布局
-//		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
-//		// 将广告条加入到布局中
-//		adLayout.addView(adView);
+		DialogUtil.show(context,layout_alert);
 	}
 	//事件监听
 	private void setListener(){
-	}
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-	private Handler mHandler=new Handler(){
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			//更新页面
-			if(HttpUtil.STATE==0||HttpUtil.STATE==3){
-				init();
-				if(!content.equals(""))
-					layout_alert.dismiss();
+		viewHandler=new ViewHandler(new ViewHandler.ViewCallBack() {
+			@Override
+			public void onHandleMessage(Message msg) {
+				if(HttpUtil.STATE==0||HttpUtil.STATE==3){
+					init();
+					if(!content.equals(""))
+						DialogUtil.dismiss(context,layout_alert);
+				}
+				else{
+					DialogUtil.dismiss(context,layout_alert);
+				}
 			}
-			else{
-				layout_alert.dismiss();
-			}
-		}
-	 };
+		});
+	}
+
 	 //获得数据
 	private Runnable mTask=new Runnable(){
 		public void run() {
 			while(content.equals("")&&HttpUtil.STATE==0){
 				content=JsoupForTX.getNews(url);
-				mHandler.sendMessage(mHandler.obtainMessage());
+				viewHandler.sendMessage(viewHandler.obtainMessage());
 			}
 			if(HttpUtil.STATE==1&&layout_alert.isShowing()){
-				mHandler.sendMessage(mHandler.obtainMessage());
+				viewHandler.sendMessage(viewHandler.obtainMessage());
 			}
 		}
 	};

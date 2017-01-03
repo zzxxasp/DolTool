@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--状态栏-->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"  
-    xmlns:flatui="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<com.flipboard.bottomsheet.BottomSheetLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/bottomsheet"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@null"
     >
 <!--标题-->
 <RelativeLayout
     android:id="@+id/show_title" 
-	android:layout_width="fill_parent"
+	android:layout_width="match_parent"
     android:layout_height="wrap_content"
+	android:layout_marginLeft="10dp"
+	android:layout_marginRight="10dp"
 	android:background="@color/Black_SP"
 	android:padding="5dp"
-	android:layout_margin="5dp"
+	android:layout_marginTop="5dp"
+	android:layout_marginBottom="5dp"
     android:orientation="vertical"
     >
 <TextView
@@ -28,56 +36,24 @@
     android:textColor="@color/White"
     android:text="@string/hint_bulid"
     />
-<com.key.doltool.view.flat.FlatButton
-	flatui:fl_theme="@array/flat"
-	flatui:fl_cornerRadius="3dp"
-	flatui:fl_borderWidth="0.5dp"
-	flatui:fl_touchEffect="fl_ripple"
-    flatui:fl_blockButtonEffectHeight="2dp"
-    android:id="@+id/btn" 
-	android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:textColor="@color/Black_SP"
-    android:text="@string/main_menu"
-	android:visibility="gone"
-    />
 </RelativeLayout>
 <!--造船详细-->
 <LinearLayout 
 	android:id="@+id/show_broad" 
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+	android:layout_below="@+id/show_title"
     android:orientation="horizontal"
 	android:visibility="gone"
     >
 	<!--基本资料-->
-	<RelativeLayout
-        android:id="@+id/ability"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-		>
-	<TextView
-    	android:id="@+id/title_txt" 
-    	android:layout_width="fill_parent"
+	<LinearLayout
+		android:id="@+id/ability"
+		android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-		android:layout_centerHorizontal="true"
-    	android:textColor="@color/White"
-    	android:gravity="center"
-    	android:layout_marginLeft="5dp"
-    	android:layout_marginRight="5dp"
-    	android:layout_marginBottom="5dp"
-    	android:padding="5dp"
-    	android:background="@color/Blue_SP"
-    	android:text="@string/boat_bulid"
-    	/>
-	<LinearLayout 
-		android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:layout_below="@+id/title_txt"
     	android:baselineAligned="false"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
     	android:weightSum="2"
 	    >
         <TableLayout
@@ -430,7 +406,6 @@
                	</LinearLayout>
         </TableLayout>
     </LinearLayout>
-</RelativeLayout>
 <!--选择素材-->
 <include 
     layout="@layout/dockyard_main_item_layout2_choose"
@@ -439,4 +414,17 @@
 	android:layout_height="wrap_content"
     /> 
 </LinearLayout>
-</LinearLayout>
+	<android.support.design.widget.FloatingActionButton
+		android:contentDescription="@null"
+		android:id="@+id/action"
+		android:layout_width="70dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="10dp"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true"
+		android:src="@drawable/ic_add_white_24dp"
+		app:backgroundTint="@color/Blue_SP"
+		app:rippleColor="@color/blue_dark"
+		/>
+</RelativeLayout>
+</com.flipboard.bottomsheet.BottomSheetLayout>

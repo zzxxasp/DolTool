@@ -115,7 +115,7 @@
     android:layout_height="wrap_content"
     android:layout_below="@+id/inverst_item"
     android:layout_toLeftOf="@+id/inverst_money"
-	android:src="@drawable/ic_coins_s"
+	android:src="@drawable/coin_euro_64"
     />
 </RelativeLayout>
 <TextView

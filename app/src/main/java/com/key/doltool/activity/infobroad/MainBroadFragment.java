@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.adapter.NewsAdapter;
+import com.key.doltool.app.util.DialogUtil;
 import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.HttpUtil;
@@ -72,17 +73,17 @@ public class MainBroadFragment extends BaseFragment {
                 if (HttpUtil.STATE == 0) {
                     initPageItem();
                     if (JsoupForTX.list3.size() != 0)
-                        alert.dismiss();
+                        DialogUtil.dismiss(context,alert);
                 } else {
-                    alert.dismiss();
+                    DialogUtil.dismiss(context,alert);
                 }
                 ViewUtil.disableSubControls(main, true);
             }
         });
         alert = new DialogEvent().showLoading(getActivity());
-        alert.show();
+        DialogUtil.show(context,alert);
         if (JsoupForTX.list3.size() != 0) {
-            alert.dismiss();
+            DialogUtil.dismiss(context,alert);
         }
     }
 

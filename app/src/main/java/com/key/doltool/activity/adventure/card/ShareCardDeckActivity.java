@@ -3,6 +3,7 @@ package com.key.doltool.activity.adventure.card;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.CardShareAdapter;
+import com.key.doltool.app.util.DialogUtil;
 import com.key.doltool.data.parse.Deck;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataCount;
@@ -58,7 +60,7 @@ public class ShareCardDeckActivity extends BaseActivity {
         initToolBar(onMenuItemClick);
         toolbar.setTitle("卡组分享");
         alert=new DialogEvent().showLoading(this);
-        alert.show();
+        DialogUtil.show(context,alert);
     }
     private void setListener(){
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,12 +69,12 @@ public class ShareCardDeckActivity extends BaseActivity {
                 //点击后获取以下列表数据进行数据更新读取
                 List<Integer> temp=
                         new Gson().fromJson(list.get(position).getCard_list(),new TypeToken<List<Integer>>(){}.getType());
-                show2(temp);
+                show2(temp,list.get(position).getLimit());
             }
         });
     }
 
-    private void show2(final List<Integer> temp){
+    private void show2(final List<Integer> temp,final String limit){
         AlertDialog.Builder b=new AlertDialog.Builder(context);
         b.setTitle("替换卡组");
         b.setMessage("替换现有的卡组，会覆盖现有的卡组");
@@ -80,7 +82,9 @@ public class ShareCardDeckActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 new UpdataCount(getApplicationContext()).backSaveCard(temp);
-                setResult(RESULT_OK);
+                Intent intent=new Intent(context,CardListActivity.class);
+                intent.putExtra("limit",limit);
+                setResult(RESULT_OK,intent);
                 dialog.dismiss();
                 finish();
             }
@@ -129,7 +133,7 @@ public class ShareCardDeckActivity extends BaseActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "连接失败", Toast.LENGTH_LONG).show();
                 }
-                alert.dismiss();
+                DialogUtil.dismiss(context,alert);
             }
         });
         query.cancel();

@@ -9,6 +9,11 @@
     <include
         layout="@layout/system_actionbar_black"
         />
+    <com.flipboard.bottomsheet.BottomSheetLayout
+        android:id="@+id/bottomsheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_above="@+id/card_bar"
             >
             <TextView
                 android:id="@+id/null_txt"
@@ -44,51 +48,6 @@
                 android:layoutAnimation="@anim/new_in2"
                 />
         </LinearLayout>
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/card_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/Black_SP"
-            >
-            <TextView
-                android:id="@+id/card_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="卡组：0/30"
-                android:padding="15dp"
-                android:textColor="@color/White"
-                />
-            <TextView
-                android:id="@+id/card_point"
-                android:layout_toRightOf="@+id/card_number"
-                android:layout_toEndOf="@+id/card_number"
-                android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="无限制"
-                android:textColor="@color/White"
-                />
-            <com.key.doltool.view.flat.FlatButton
-                flatui:fl_theme="@array/flat"
-                flatui:fl_cornerRadius="3dp"
-                flatui:fl_borderWidth="0.5dp"
-                flatui:fl_touchEffect="fl_ripple"
-                android:layout_centerVertical="true"
-                flatui:fl_blockButtonEffectHeight="2dp"
-                android:id="@+id/cal_btn"
-                android:layout_margin="5dp"
-                android:padding="5dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:textColor="@color/Black_SP"
-                android:text="战力统计"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-        </RelativeLayout>
     </RelativeLayout>
+    </com.flipboard.bottomsheet.BottomSheetLayout>
 </LinearLayout>

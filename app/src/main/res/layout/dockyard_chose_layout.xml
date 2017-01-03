@@ -7,9 +7,9 @@
 	android:background="@drawable/theme_menu_white"
     >
 <RelativeLayout 
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/Blue_SP"
+	android:background="@color/white"
     >
 <TextView 
 	android:layout_width="wrap_content"
@@ -17,15 +17,15 @@
     android:text="选择船只配件"
     android:textSize="18sp"
     android:layout_centerVertical="true"
+	android:layout_marginLeft="10dp"
+	android:layout_marginStart="10dp"
     android:padding="5dp"
-    android:textColor="@color/white"
+    android:textColor="@color/Black_SP"
     />
 <com.key.doltool.view.flat.FlatButton
-	flatui:fl_theme="@array/flat"
-	flatui:fl_cornerRadius="3dp"
-	flatui:fl_borderWidth="0.5dp"
+	flatui:fl_theme="@array/trans"
 	flatui:fl_touchEffect="fl_ripple"
-	flatui:fl_blockButtonEffectHeight="2dp"
+	flatui:fl_blockButtonEffectHeight="1dp"
     android:id="@+id/clear_btn"
 	android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -33,16 +33,21 @@
     android:text="取消"
     android:layout_margin="5dp"
     android:layout_alignParentRight="true"
-    android:layout_gravity="right"
-    android:textColor="@color/Black_SP"
+	android:layout_alignParentEnd="true"
+    android:layout_gravity="end"
+    android:textColor="@color/Blue_SP"
     />   
 </RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1px"
+		android:background="@color/Gainsboro"
+		/>
 <ListView
     android:id="@+id/listview" 
 	android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:divider="@color/Blue_SP"
-    android:dividerHeight="1dp"
+	android:divider="@null"
+	android:cacheColorHint="#00000000"
     />
-
 </LinearLayout>

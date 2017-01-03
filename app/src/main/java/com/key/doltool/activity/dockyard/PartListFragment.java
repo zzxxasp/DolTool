@@ -17,6 +17,7 @@ import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.activity.core.BaseFragmentActivity;
 import com.key.doltool.adapter.PartListAdapter;
+import com.key.doltool.app.util.DialogUtil;
 import com.key.doltool.app.util.ListScrollListener;
 import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.data.MenuItem;
@@ -80,12 +81,12 @@ public class PartListFragment extends BaseFragment {
 
     private void initData(){
         dao=SRPUtil.getInstance(context);
-        alert=new DialogEvent().showLoading(getActivity());
-        alert.show();
+        alert=new DialogEvent().showLoading(context);
+        DialogUtil.show(context,alert);
         if(list.size()==0){
             new Thread(mTasks).start();
         }else{
-            alert.dismiss();
+            DialogUtil.dismiss(context,alert);
         }
     }
 
@@ -94,11 +95,11 @@ public class PartListFragment extends BaseFragment {
             @Override
             public void onHandleMessage(Message msg) {
                 change();
-                alert.dismiss();
+                DialogUtil.dismiss(context,alert);
             }
         });
 
-        listScrollListener=new ListScrollListener(end_flag,alert,viewHandler);
+        listScrollListener=new ListScrollListener(alert,viewHandler,context);
         adapter=new PartListAdapter(list,getActivity());
         listview.setOnScrollListener(listScrollListener);
         listview.setAdapter(adapter);

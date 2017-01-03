@@ -30,14 +30,12 @@ public class TradeListAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public Object getItem(int arg0) {
-		
+	public TradeItem getItem(int arg0) {
 		return list.get(arg0);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		
 		return position;
 	}
 

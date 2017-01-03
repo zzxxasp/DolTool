@@ -29,14 +29,12 @@ public class JobAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public Object getItem(int arg0) {
-		
+	public Job getItem(int arg0) {
 		return list.get(arg0);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		
 		return position;
 	}
 

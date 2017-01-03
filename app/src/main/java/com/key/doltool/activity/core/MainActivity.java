@@ -3,7 +3,7 @@ package com.key.doltool.activity.core;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -37,6 +37,7 @@ import com.key.doltool.activity.setting.SettingMainFragment;
 import com.key.doltool.activity.squre.SqureMainFragment;
 import com.key.doltool.activity.trade.TradeItemFragment;
 import com.key.doltool.activity.voyage.VoyageMainFragment;
+import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.data.MenuItem;
 import com.key.doltool.data.SystemInfo;
 import com.key.doltool.event.DialogEvent;
@@ -67,6 +68,7 @@ public class MainActivity extends BaseFragmentActivity{
 	private Fragment mContent;
 	private List<FragmentItem> fragment_list=new ArrayList<>();
 	private int index=0;
+	private ViewHandler UIHandler;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_area);
@@ -80,6 +82,17 @@ public class MainActivity extends BaseFragmentActivity{
 		AVAnalytics.trackAppOpened(getIntent());
 	}
 	private void initUser(){
+		UIHandler=new ViewHandler(new ViewHandler.ViewCallBack() {
+			@Override
+			public void onHandleMessage(Message msg) {
+				switchContent(msg.what);
+				index=msg.what;
+				adapter.setIndex(msg.what);
+				adapter.notifyDataSetChanged();
+				toolbar.setTitle(list.get(msg.what).text);
+			}
+		});
+
 		person_info=(LinearLayout)findViewById(R.id.person_info);
 		headPic=(ImageView)findViewById(R.id.head_img);
 		username=(TextView)findViewById(R.id.name);
@@ -171,7 +184,7 @@ public class MainActivity extends BaseFragmentActivity{
 			}
 		};
 		mDrawerToggle.syncState();
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		mDrawerLayout.addDrawerListener(mDrawerToggle);
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		init();
 	}
@@ -301,16 +314,6 @@ public class MainActivity extends BaseFragmentActivity{
     	}
     }
     
-    private Handler UIHandler=new Handler(){
-    	public void handleMessage(android.os.Message msg) {
-    		switchContent(msg.what);
-    		index=msg.what;
-    		adapter.setIndex(msg.what);
-    		adapter.notifyDataSetChanged();
-			toolbar.setTitle(list.get(msg.what).text);
-    	}
-    };
-    
     //系统按键监听覆写
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(mContent instanceof BaseFragment){
@@ -355,24 +358,4 @@ public class MainActivity extends BaseFragmentActivity{
 		}
 		super.onRestart();
 	}
-//	private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
-//		@Override
-//		public boolean onMenuItemClick(android.view.MenuItem menuItem) {
-//			switch (menuItem.getItemId()) {
-//				case R.id.search:
-//					startActivity(new Intent(MainActivity.this, SearchActivity.class));
-//					break;
-//				case R.id.exit:
-//					ExitApplication.getInstance().exit();
-//					break;
-//			}
-//			return true;
-//		}
-//	};
-//
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		getMenuInflater().inflate(R.menu.main_core, menu);
-//		return true;
-//	}
 }

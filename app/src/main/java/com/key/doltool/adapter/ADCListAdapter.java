@@ -38,7 +38,7 @@ public class ADCListAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public Object getItem(int arg0) {		
+	public ADCInfo getItem(int arg0) {
 		return list.get(arg0);
 	}
 

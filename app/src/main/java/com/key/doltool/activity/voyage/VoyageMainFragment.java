@@ -38,20 +38,20 @@ public class VoyageMainFragment extends BaseFragment{
 	}
 
 	private void findView(){
-		VoyageInfo info=new VoyageInfo(getActivity());
+		VoyageInfo info=new VoyageInfo(context);
 		list=VoyageEvent.getItemByString(info.getData());
-		gridView.setAdapter(new VoyageAdapter(list, getActivity()));
+		gridView.setAdapter(new VoyageAdapter(list,context));
 	}
 	private void setListener(){
 		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 									long arg3) {
-				VoyageEvent.jumpForVoyage(getActivity(),list.get(arg2));
+				VoyageEvent.jumpForVoyage(context,list.get(arg2));
 			}
 		});
 		search_view.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				startActivity(new Intent(getActivity(),SearchActivity.class));
+				startActivity(new Intent(context,SearchActivity.class));
 			}
 		});
 	}

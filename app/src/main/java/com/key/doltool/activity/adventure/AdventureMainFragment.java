@@ -42,13 +42,13 @@ public class AdventureMainFragment extends BaseFragment{
 
 
 	private void findView(){
-		main_list.setAdapter(new AdventureAdapter(list_count, getActivity()));
+		main_list.setAdapter(new AdventureAdapter(list_count,context));
 	}
 	@Override
 	public void onResume() {
 		if(UpdataList.FLAG_CHANGE_LIST==1){
 			init();
-			main_list.setAdapter(new AdventureAdapter(list_count,getActivity()));
+			main_list.setAdapter(new AdventureAdapter(list_count,context));
 			UpdataList.FLAG_CHANGE_LIST=0;
 		}
 		super.onResume();
@@ -62,11 +62,11 @@ public class AdventureMainFragment extends BaseFragment{
 		});
 	}
 	private void jump(int index){
-		Intent it=new Intent(getActivity(),AdventureListNewApiActivity.class);
+		Intent it=new Intent(context,AdventureListNewApiActivity.class);
 		it.putExtra("type", UpdataCount.name_type[index-1]);
 		startActivity(it);
 	}
 	private void init(){
-		list_count=SRPUtil.getInstance(getActivity()).select(Trove_Count.class, false, "type > ?",new String[]{"0"}, null, null, null, null);
+		list_count=SRPUtil.getInstance(context).select(Trove_Count.class, false, "type > ?",new String[]{"0"}, null, null, null, null);
 	}
 }

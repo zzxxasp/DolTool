@@ -1,5 +1,6 @@
 package com.key.doltool.activity.core;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +16,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment{
 	public abstract int getContentViewId();
-	protected Context context;
+	protected Activity context;
 	protected View mRootView;
 	private Unbinder unbinder;
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
