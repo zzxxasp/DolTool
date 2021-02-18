@@ -2,9 +2,10 @@ package com.key.doltool.activity.core;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.key.doltool.R;
 import com.key.doltool.event.CrashHandler;
@@ -14,7 +15,8 @@ import com.key.doltool.view.SystemBarTintManager;
 import com.key.doltool.view.Toast;
 public abstract class BaseFragmentActivity extends AppCompatActivity {
 	public Toolbar toolbar;
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		tintManager.setStatusBarTintEnabled(true);
@@ -58,9 +60,9 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 	}
 
 	public void initToolBar(Toolbar.OnMenuItemClickListener onMenuItemClick){
-		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar = findViewById(R.id.toolbar);
 		if(toolbar!=null){
-			toolbar.setTitle("大航海时代助手");
+			toolbar.setTitle("冒险宝贝");
 			toolbar.setTitleTextColor(getResources().getColor(R.color.White));
 			setSupportActionBar(toolbar);
 			if(onMenuItemClick!=null){
@@ -70,6 +72,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 		}
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home:
@@ -79,11 +82,13 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void onBackPressed() {    
+	@Override
+	public void onBackPressed() {
 		Toast.cancelToast();
-		super.onBackPressed();    
+		super.onBackPressed();
 	}
 
+	@Override
 	protected void onDestroy(){
 		super.onDestroy();
 		ExitApplication.getInstance().removeActivity(this);

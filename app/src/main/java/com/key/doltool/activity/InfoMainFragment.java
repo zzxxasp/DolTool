@@ -27,7 +27,6 @@ import java.util.List;
 import butterknife.BindView;
 
 public class InfoMainFragment extends BaseFragment{
-	private String order="id desc";
 	@BindView(R.id.mission) Button mission;
 	@BindView(R.id.skill) Button skill;
 	@BindView(R.id.adc) Button adc;
@@ -87,7 +86,8 @@ public class InfoMainFragment extends BaseFragment{
 		});
 	}
 	private void init(){
-		list= dao.select(WikiInfo.class,false,"id>?",new String[]{"0"},null, null,order,"0,5");
+		String order = "id desc";
+		list= dao.select(WikiInfo.class,false,"id>?",new String[]{"0"},null, null, order,"0,5");
 	}
 	private void jump(int index){
 		Class<?> c;

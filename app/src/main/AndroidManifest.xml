@@ -3,191 +3,205 @@
     package="com.key.doltool"
     android:versionCode="10"
     android:versionName="1.9.0">
+
     <supports-screens
         android:anyDensity="true"
-        android:largeScreens="true"
-        />
+        android:largeScreens="true" />
     <!--sdk兼容-->
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="23"
-        tools:overrideLibrary="com.squareup.leakcanary,com.squareup.leakcanary.android.noop"
-        />
+        android:targetSdkVersion="24"
+        tools:overrideLibrary="com.squareup.leakcanary,com.squareup.leakcanary.android.noop" />
     <!--权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
-        android:allowBackup="true"
-        android:fullBackupContent="true"
-        android:allowClearUserData="false"
         android:name="com.key.doltool.activity.MyApplication"
+        android:allowBackup="true"
+        android:allowClearUserData="false"
+        android:configChanges="keyboardHidden|orientation"
+        android:fullBackupContent="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
         android:screenOrientation="portrait"
-        android:configChanges="keyboardHidden|orientation"
-        >
-        <meta-data android:name="DB_VERSION" android:value="10" />
-        <meta-data android:name="Hadi_DB_NAME" android:value="demo.db" />
-        <meta-data android:name="Hadi_DB_VERSION" android:value="1" />
-        <!--申明-->
-		<!--<activity-->
-		    <!--android:name="net.youmi.android.AdBrowser"-->
-		    <!--android:configChanges="keyboard|keyboardHidden|orientation|screenSize"-->
-		    <!--android:theme="@android:style/Theme.Light.NoTitleBar" >-->
-		<!--</activity>-->
-		<!--<service-->
-		    <!--android:name="net.youmi.android.AdService"-->
-		    <!--android:exported="false">-->
-		<!--</service>-->
-		<!--<receiver-->
-		    <!--android:name="net.youmi.android.AdReceiver" >-->
-		    <!--<intent-filter>-->
-		        <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
-		        <!--<data android:scheme="package" />-->
-		    <!--</intent-filter>-->
-		<!--</receiver>-->
-		<activity
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="DB_VERSION"
+            android:value="10" />
+        <meta-data
+            android:name="Hadi_DB_NAME"
+            android:value="demo.db" />
+        <meta-data
+            android:name="Hadi_DB_VERSION"
+            android:value="1" />
+        <activity
             android:name="com.key.doltool.activity.LoadingActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.Base.FullScreen"
-            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
-            >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>		
-		<activity
-            android:name="com.key.doltool.activity.core.MainActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation"
-            >
         </activity>
-        <activity android:name="com.key.doltool.activity.dockyard.SailBoatActivity"
-                    android:screenOrientation="portrait"
-					/>
-		<activity android:name="com.key.doltool.activity.dockyard.PartActivity"
-                    android:screenOrientation="portrait"
-        android:configChanges="keyboardHidden|orientation"/>
-        <activity android:name="com.key.doltool.activity.adventure.AdventureListNewApiActivity"
-                    android:screenOrientation="portrait"
-        android:configChanges="keyboardHidden|orientation"/>
-		<activity android:name="com.key.doltool.activity.adventure.AdventureDetailActivity"
-                    android:screenOrientation="portrait"
-        android:configChanges="keyboardHidden|orientation"/>
-        <activity android:name="com.key.doltool.activity.infobroad.NewsDetailActivity"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name=".activity.adventure.card.CardListActivity"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.wiki.WikiMainActivity"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.mission.MissionDetailsActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.mission.MissonListActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-        <activity android:name="com.key.doltool.activity.squre.MapActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.trade.TradeDetailActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.trade.TradeCityDetailActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-        <activity android:name="com.key.doltool.activity.recipe.RecipeForBookDetailsActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
- 		<activity android:name="com.key.doltool.activity.wiki.WikiListActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
- 		<activity android:name="com.key.doltool.activity.adc.ADCListActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
- 		<activity android:name="com.key.doltool.activity.adc.ADCDetailsActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.squre.FortuneActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
- 		<activity android:name="com.key.doltool.activity.job.JobListActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.job.JobDetailsActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.ability.AbilityForNormalDetailActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.ability.AbilityListActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.recipe.RecipeBookListActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.battle.BattleMainActivity"
-                    android:screenOrientation="portrait"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.setting.MessagePostActivity"
-                    android:screenOrientation="portrait"
-                    android:windowSoftInputMode="adjustPan"
-                    android:configChanges="orientation|screenSize"/>
-		<activity android:name="com.key.doltool.activity.ability.AbilityForBoatDetailActivity"
-                    android:screenOrientation="portrait"
-					/>
-        <activity android:name=".activity.voyage.TradeItemActivity"
-                    android:screenOrientation="portrait"
-                    />
-		<activity android:name="com.key.doltool.activity.setting.MessageShowActivity"
-                    android:screenOrientation="portrait"
-					/>
-		<activity android:name="com.key.doltool.activity.person.PersonActivity"
-                    android:screenOrientation="portrait"
-					/>
-		<activity android:name="com.key.doltool.activity.person.LoginActivity"
-                    android:screenOrientation="portrait"
-					/>
-		<activity android:name="com.key.doltool.activity.person.RegisterActivity"
-                    android:screenOrientation="portrait"
-					/>
-		<activity android:name="com.key.doltool.activity.person.EditUserInfoActivity"
-		    		android:configChanges="orientation|screenSize"
-                    android:screenOrientation="portrait"
-					/>
-		<activity android:name="com.key.doltool.activity.help.HintListActivity"
-                    android:screenOrientation="portrait"
-					/>
-		<activity android:name=".activity.help.WordListActivity"
-                    android:screenOrientation="portrait"
-					/>
-        <activity android:name="com.key.doltool.activity.search.SearchActivity"
-                    android:configChanges="orientation|screenSize"
-                    android:screenOrientation="portrait"
-                    />
-        <activity android:name=".activity.voyage.fishing.FishingActivity"
-                    android:screenOrientation="portrait"
-                    />
-        <activity android:name="com.key.doltool.activity.adventure.card.ShareCardDeckActivity"
-                    android:screenOrientation="portrait"
-                    />
-        <activity android:name="com.key.doltool.activity.recipe.RecipeForTradeDetailsActivity"
+        <activity
+            android:name="com.key.doltool.activity.core.MainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.key.doltool.activity.dockyard.SailBoatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.dockyard.PartActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.adventure.AdventureListNewApiActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.adventure.AdventureDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.infobroad.NewsDetailActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.adventure.card.CardListActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name="com.key.doltool.activity.wiki.WikiMainActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name="com.key.doltool.activity.wiki.WebMainActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name="com.key.doltool.activity.mission.MissionDetailsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.mission.MissonListActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.squre.MapActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.trade.TradeDetailActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.trade.TradeCityDetailActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.recipe.RecipeForBookDetailsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.wiki.WikiListActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.adc.ADCListActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.adc.ADCDetailsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.squre.FortuneActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.job.JobListActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.job.JobDetailsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.ability.AbilityForNormalDetailActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.ability.AbilityListActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.recipe.RecipeBookListActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.battle.BattleMainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.setting.MessagePostActivity"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            />
-        <activity android:name="com.key.doltool.activity.squre.PortActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.key.doltool.activity.useitem.UseItemActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.key.doltool.activity.useitem.UseItemShowListActivity"
-            android:screenOrientation="portrait"
-            />
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.key.doltool.activity.ability.AbilityForBoatDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.voyage.TradeItemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.setting.MessageShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.person.PersonActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.person.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.person.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.person.EditUserInfoActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.help.HintListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.help.WordListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.search.SearchActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.voyage.fishing.FishingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.adventure.card.ShareCardDeckActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.recipe.RecipeForTradeDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.squre.PortActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.useitem.UseItemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.useitem.UseItemShowListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.squre.business.BusinessDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.key.doltool.activity.TestActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

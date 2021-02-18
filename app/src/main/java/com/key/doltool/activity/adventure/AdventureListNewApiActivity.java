@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
-import android.support.v7.view.ActionMode;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,6 +16,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import androidx.appcompat.view.ActionMode;
+import androidx.appcompat.widget.Toolbar;
+
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
 import com.key.doltool.adapter.TroveAdapter;
@@ -26,7 +27,7 @@ import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataCount;
-import com.key.doltool.event.UpdataList;
+import com.key.doltool.event.rx.RxBusEvent;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
@@ -100,7 +101,6 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 		List<Trove>list=srp.select(Trove.class, false, "type=? and name like ?",new String[]{type,"%"+select_txt+"%"}, null, null,"rate desc,feats desc", null);
 		if(list.size()==0){
 			txt.setVisibility(View.VISIBLE);
-
 		}else{
 			txt.setVisibility(View.GONE);
 		}
@@ -153,17 +153,9 @@ public class AdventureListNewApiActivity extends BaseAdventureActivity{
 	@Override
 	protected void onDestroy() {
 		list.clear();
-		UpdataList.FLAG_CHANGE_LIST=1;
+		//通知更新
+		RxBusEvent.get().post(RxBusEvent.UPDATE,true);
 		super.onDestroy();
-	}
-	@Override
-	protected void onResume() {
-		if(UpdataList.FLAG_CHANGE==1){
-			DialogUtil.show(context,alert);
-			new Thread(mTasks).start();
-			UpdataList.FLAG_CHANGE=0;
-		}
-		super.onResume();
 	}
 
 	//系统按键监听覆写

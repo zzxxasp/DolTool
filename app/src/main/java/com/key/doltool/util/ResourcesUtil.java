@@ -6,7 +6,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.ArrayRes;
+import androidx.annotation.ArrayRes;
 
 import com.key.doltool.R;
 

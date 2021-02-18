@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -12,9 +11,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
-import com.key.doltool.adapter.ADCListAdapter;
 import com.key.doltool.adapter.JobAdapter;
 import com.key.doltool.app.util.DialogUtil;
 import com.key.doltool.app.util.ListFlowHelper;

@@ -4,12 +4,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
@@ -133,7 +134,8 @@ public class CardComboFragment extends BaseFragment{
 	}
 
 	//系统按键监听覆写
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 		 //条件:当菜单未关闭且搜索条件为初始态，允许退出
 		if(listFlowHelper.isChange()){
 			return false;

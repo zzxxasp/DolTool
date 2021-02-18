@@ -3,10 +3,7 @@ package com.key.doltool.activity.adventure;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.DragEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -15,18 +12,21 @@ import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.adapter.AdventureAdapter;
 import com.key.doltool.data.sqlite.Trove_Count;
 import com.key.doltool.event.UpdataCount;
-import com.key.doltool.event.UpdataList;
+import com.key.doltool.event.rx.RxBusEvent;
 import com.key.doltool.util.db.SRPUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class AdventureMainFragment extends BaseFragment{
 	@BindView(R.id.main_list)  ListView main_list;
-	private List<Trove_Count> list_count=new ArrayList<>();;
-
+	private List<Trove_Count> list_count=new ArrayList<>();
+	private Disposable updateSubscription;
 	@Override
 	public int getContentViewId() {
 		return R.layout.adventure_main_area;
@@ -38,21 +38,32 @@ public class AdventureMainFragment extends BaseFragment{
 		init();
 		findView();
 		setListener();
+		Observable<Boolean> sailBoatObservable = RxBusEvent.get().register(RxBusEvent.UPDATE);
+		updateSubscription=sailBoatObservable.subscribe(new Consumer<Boolean>() {
+			@Override
+			public void accept(Boolean flag) {
+				if(flag) {
+					init();
+					main_list.setAdapter(new AdventureAdapter(list_count,context));
+				}
+			}
+		});
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		Log.e("onDestroyView","onDestroyView");
+		if(updateSubscription!=null){
+			updateSubscription.dispose();
+		}
+		RxBusEvent.get().unregister(RxBusEvent.SAILMENU);
+	}
 
 	private void findView(){
 		main_list.setAdapter(new AdventureAdapter(list_count,context));
 	}
-	@Override
-	public void onResume() {
-		if(UpdataList.FLAG_CHANGE_LIST==1){
-			init();
-			main_list.setAdapter(new AdventureAdapter(list_count,context));
-			UpdataList.FLAG_CHANGE_LIST=0;
-		}
-		super.onResume();
-	}
+
 	private void setListener(){
 		main_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,

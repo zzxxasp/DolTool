@@ -1,6 +1,6 @@
 package com.key.doltool.view;
 import android.content.Context;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;

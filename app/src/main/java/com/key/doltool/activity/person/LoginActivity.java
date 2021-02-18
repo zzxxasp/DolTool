@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,10 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.LogInCallback;
-import com.avos.avoscloud.RequestPasswordResetCallback;
+import com.google.android.material.textfield.TextInputLayout;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.core.MainActivity;
@@ -29,11 +25,16 @@ import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 
 import butterknife.BindView;
+import cn.leancloud.AVUser;
+import cn.leancloud.types.AVNull;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 
 public class LoginActivity extends BaseActivity{
 	//登录
-	@BindView(R.id.usernameWrapper) TextInputLayout usernameWrapper;
+	@BindView(R.id.usernameWrapper)
+	TextInputLayout usernameWrapper;
 	@BindView(R.id.passwordWrapper) TextInputLayout passwordWrapper;
 	@BindView(R.id.password) EditText password;
 	@BindView(R.id.account) AutoCompleteTextView account;
@@ -144,18 +145,29 @@ public class LoginActivity extends BaseActivity{
 	//重置密码（未登录版本）
 	private void resetPassword(String emali){
 		dialog.show();
-		AVUser.requestPasswordResetInBackground(emali,
-				new RequestPasswordResetCallback() {
-					public void done(AVException e) {
-						if (e == null) {
-							Toast.makeText(getApplicationContext(), "请查收注册的邮箱进行重置密码", Toast.LENGTH_SHORT).show();
-						} else {
-							e.printStackTrace();
-							Toast.makeText(getApplicationContext(), "错误4", Toast.LENGTH_SHORT).show();
-						}
-						dialog.dismiss();
-					}
-				});
+		AVUser.requestPasswordResetInBackground(emali).subscribe(new Observer<AVNull>() {
+			@Override
+			public void onSubscribe(Disposable d) {
+
+			}
+
+			@Override
+			public void onNext(AVNull avNull) {
+				Toast.makeText(getApplicationContext(), "请查收注册的邮箱进行重置密码", Toast.LENGTH_SHORT).show();
+				dialog.dismiss();
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				Toast.makeText(getApplicationContext(), "错误4", Toast.LENGTH_SHORT).show();
+				dialog.dismiss();
+			}
+
+			@Override
+			public void onComplete() {
+
+			}
+		});
 	}
 	private boolean judge(){
 		if(account.getText().toString().equals("")){
@@ -171,42 +183,48 @@ public class LoginActivity extends BaseActivity{
 	}
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        switch (requestCode) {
-        	case 101:
-        		Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-        		setResult(RESULT_OK, intent);
-        		finish();
-        		break;
-        }
-    }
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode != Activity.RESULT_OK) {
+			return;
+		}
+		switch (requestCode) {
+			case 101:
+				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+				setResult(RESULT_OK, intent);
+				finish();
+				break;
+		}
+	}
 	
 	
 	private void login(){
 		dialog.show();
-		AVUser.logInInBackground(account.getText().toString(),password.getText().toString(),new LogInCallback<AVUser>() {
-			public void done(AVUser user, AVException e) {
-				if (user != null) {
-					//登录
-					dialog.dismiss();
-					Toast.makeText(getApplicationContext(),"登录成功",Toast.LENGTH_LONG).show();
-					Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-					setResult(RESULT_OK, intent);
-					finish();
-				} else {
-					//登录失败
-					switch(e.getCode()){
-						case 101:
-							Toast.makeText(getApplicationContext(),"账号不存在或密码错误",Toast.LENGTH_SHORT).show();
-							break;
-						default:
-							Toast.makeText(getApplicationContext(),"服务器异常:"+e.getCode(),Toast.LENGTH_SHORT).show();
-							break;
-					}
-					dialog.dismiss();
-				}
+		AVUser.logIn(account.getText().toString(),password.getText().toString()).subscribe(new Observer<AVUser>() {
+			@Override
+			public void onSubscribe(Disposable d) {
+
+			}
+
+			@Override
+			public void onNext(AVUser avUser) {
+				//登录
+				dialog.dismiss();
+				Toast.makeText(getApplicationContext(),"登录成功",Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+				setResult(RESULT_OK, intent);
+				finish();
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				//登录失败
+				Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+				dialog.dismiss();
+			}
+
+			@Override
+			public void onComplete() {
+
 			}
 		});
 	}

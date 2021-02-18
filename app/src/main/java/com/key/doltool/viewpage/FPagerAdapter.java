@@ -1,13 +1,9 @@
 package com.key.doltool.viewpage;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.util.Log;
-import android.view.ViewGroup;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
@@ -19,8 +15,8 @@ import java.util.List;
 public class FPagerAdapter extends FragmentPagerAdapter {
 	private List<Fragment> list;
 	private String[] title;
-	public FPagerAdapter(List<Fragment> list,String[] title,FragmentManager fm){
-		super(fm);
+	public FPagerAdapter(List<Fragment> list, String[] title, FragmentManager fm){
+		super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 		this.title=title;
 		this.list=list;
 	}

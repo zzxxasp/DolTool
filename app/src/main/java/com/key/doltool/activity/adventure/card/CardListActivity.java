@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,10 +20,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.SaveCallback;
-import com.flipboard.bottomsheet.BottomSheetLayout;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.gson.Gson;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
@@ -43,6 +40,7 @@ import com.key.doltool.util.NumberUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.util.db.SRPUtil;
+import com.key.doltool.view.SlideUp;
 import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
@@ -50,14 +48,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.leancloud.AVException;
+import cn.leancloud.AVObject;
+import cn.leancloud.AVUser;
+import io.reactivex.functions.Consumer;
 
 public class CardListActivity extends BaseAdventureActivity {
     @BindView(R.id.null_txt)
     TextView txt;
     @BindView(R.id.gridview)
     GridView gridview;
-    @BindView(R.id.bottomsheet)
-    BottomSheetLayout bottomSheetLayout;
+    @BindView(R.id.pop_card)
+    View slideView;
+    @BindView(R.id.base)
+    TextView base;
+    @BindView(R.id.card_number)
+    TextView card_number;
+    @BindView(R.id.card_point)
+    TextView card_point;
+    @BindView(R.id.add_list)
+    ListView add_list;
+    @BindView(R.id.confrim)
+    Button positive;
+    @BindView(R.id.cancel)
+    Button negative;
+
+    private SlideUp slideUp;
     private Dialog alert, dialog;
     //总卡组列表
     private List<Card> list;
@@ -89,6 +105,7 @@ public class CardListActivity extends BaseAdventureActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
@@ -113,7 +130,8 @@ public class CardListActivity extends BaseAdventureActivity {
         dao = SRPUtil.getDAO(getApplicationContext());
         dialog = new DialogEvent().itemDialog(this, getResources().getString(R.string.common_wait));
         list = new ArrayList<>();
-
+        slideUp=new SlideUp(slideView);
+        slideUp.hideImmediately();
         mHandler = new ViewHandler(new ViewHandler.ViewCallBack() {
             @Override
             public void onHandleMessage(Message msg) {
@@ -135,7 +153,7 @@ public class CardListActivity extends BaseAdventureActivity {
                         break;
                     case 1:
                         //战斗力计算成功显示明细窗体
-                        if(!bottomSheetLayout.isSheetShowing()){
+                        if(!slideUp.isVisible()){
                             showBattle(msg.obj);
                         }
                         break;
@@ -288,6 +306,7 @@ public class CardListActivity extends BaseAdventureActivity {
     private Runnable mTasks = new Runnable() {
         public void run() {
             list = srp.select(Card.class, false, "id>?", new String[]{"0"}, null, null, "flag desc,point desc,type desc", null);
+            temp=list;
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -411,14 +430,6 @@ public class CardListActivity extends BaseAdventureActivity {
 
     //显示牌组战斗力统计，提供保存功能
     private void showBattle(Object total) {
-        View layout = getLayoutInflater().inflate(R.layout.pop_card_cal, null);
-        final TextView base = (TextView) layout.findViewById(R.id.base);
-        final TextView card_number = (TextView) layout.findViewById(R.id.card_number);
-        final TextView card_point = (TextView) layout.findViewById(R.id.card_point);
-        final ListView add_list = (ListView) layout.findViewById(R.id.add_list);
-        final Button positive = (Button) layout.findViewById(R.id.confrim);
-        final Button negative = (Button) layout.findViewById(R.id.cancel);
-
         value = Integer.parseInt(total.toString());
         String tempBase="总点数:" + poiont_total + "(" + total + ")";
         base.setText(tempBase);
@@ -435,7 +446,7 @@ public class CardListActivity extends BaseAdventureActivity {
         negative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetLayout.dismissSheet();
+                slideUp.animateOut();
             }
         });
 
@@ -455,7 +466,7 @@ public class CardListActivity extends BaseAdventureActivity {
                 showPointLimit(card_point);
             }
         });
-        bottomSheetLayout.showWithSheetView(layout);
+        slideUp.animateIn();
     }
 
     public void showEditDialog() {
@@ -509,15 +520,7 @@ public class CardListActivity extends BaseAdventureActivity {
             item.setUserName("游客");
         }
         item.setValue(poiont_total);
-        item.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(AVException e) {
-                if (e != null) {
-                    Toast.makeText(getApplicationContext(), "连接失败", Toast.LENGTH_LONG).show();
-                }
-                DialogUtil.dismiss(context, dialog);
-            }
-        });
+        item.saveInBackground().subscribe((Consumer<AVObject>) avObject -> DialogUtil.dismiss(context, dialog));
     }
 
     private void setLimit(String limitString){
@@ -547,14 +550,14 @@ public class CardListActivity extends BaseAdventureActivity {
                 case R.id.city_search:
                     popWindow();
                     break;
-                //模式更改
-                case R.id.type_search:
-                    startmode();
-                    break;
-                //分享
-                case R.id.share:
-                    jump();
-                    break;
+//                //模式更改
+//                case R.id.type_search:
+//                    startmode();
+//                    break;
+//                //分享
+//                case R.id.share:
+//                    jump();
+//                    break;
             }
             return true;
         }

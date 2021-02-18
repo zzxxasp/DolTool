@@ -1,12 +1,13 @@
 package com.key.doltool.activity.setting;
 
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;

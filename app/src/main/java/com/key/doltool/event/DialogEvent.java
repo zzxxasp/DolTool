@@ -12,10 +12,9 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVUser;
+
 import com.key.doltool.R;
 import com.key.doltool.activity.core.MainActivity;
-import com.key.doltool.activity.mission.MissonListActivity;
 import com.key.doltool.activity.person.PersonActivity;
 import com.key.doltool.app.util.ListFlowHelper;
 import com.key.doltool.util.CommonUtil;
@@ -26,6 +25,9 @@ import com.key.doltool.view.flat.FlatButton;
 
 import java.io.File;
 import java.util.List;
+
+import cn.leancloud.AVUser;
+
 public class DialogEvent {
 	private String select_if;
 	private List<String> select_args;
@@ -176,7 +178,7 @@ public class DialogEvent {
         file_btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent galleryIntent = new Intent(
-						Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+						Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 				context.startActivityForResult(galleryIntent, 3);
 				updateDialog.dismiss();
 

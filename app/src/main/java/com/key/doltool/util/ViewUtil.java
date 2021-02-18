@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,7 +27,6 @@ import android.widget.TextView;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseAdventureActivity;
-import com.key.doltool.activity.dockyard.PartListFragment;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
 import com.key.doltool.app.util.ListFlowHelper;
 import com.key.doltool.data.MenuItem;
@@ -43,6 +45,114 @@ import java.util.List;
  * @version 0.1
  */
 public class ViewUtil {
+
+    public static void setTextViewForPackage(String txt){
+        Spannable WordtoSpan = new SpannableString(txt);
+        if(txt.contains("-")){
+            int point1=txt.indexOf(".");
+            int point2=txt.lastIndexOf(".");
+            int pointmid=txt.indexOf("-");
+            if(point1==-1&&point2==-1){
+                return;
+            }else if(point1==point2&&point1<=pointmid){
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(36),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(30),point1,pointmid, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(36),pointmid,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }else if(point1==point2&&point1>=pointmid){
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(36),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(30),point1,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }else{
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(36),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(30),point1,pointmid, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(36),pointmid,point2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(30),point2,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }else{
+            int point1=txt.indexOf(".");
+            if(point1==-1){
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(36),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(30),point1,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                return;
+            }else{
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(36),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(30),point1,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        Log.e("txt",txt);
+    }
+    /**
+     * 设置套餐（小）文字样式
+     * @param textView 需要显示文字的TextView
+     * **/
+    public static void setTextViewForPackageItem(TextView textView){
+        String txt=textView.getText().toString();
+        Spannable WordtoSpan = new SpannableString(txt);
+        if(txt.contains("-")){
+            int point1=txt.indexOf(".");
+            int point2=txt.lastIndexOf(".");
+            int pointmid=txt.indexOf("-");
+            if(point1==-1&&point2==-1){
+                return;
+            }else if(point1==point2&&point1<=pointmid){
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(26),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(20),point1,pointmid, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(26),pointmid,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }else if(point1==point2&&point1>=pointmid){
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(26),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(20),point1,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }else{
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(26),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(20),point1,pointmid, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(26),pointmid,point2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(20),point2,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }else{
+            int point1=txt.indexOf(".");
+            if(point1==-1){
+                return;
+            }else{
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(26),0,point1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                WordtoSpan.setSpan(new AbsoluteSizeSpan(20),point1,txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        textView.setText(WordtoSpan);
+    }
+
+    /**
+     * 修改文字样式（对 10.0-20.0此种文字进行处理）
+     * @param txt 原始文字样式
+     * @return 修改后的文字样式
+     * **/
+    public static String changeTxtFormat(String txt){
+        String[] temp=txt.split("-");
+        String result="";
+        for (String aTemp : temp) {
+            String temp2[] = aTemp.split("\\.");
+            if(temp2.length==2){
+                if (temp.length == 1) {
+                    result = temp2[0]  + numberFormat("."+temp2[1]);
+                } else if (temp.length == 2) {
+                    result += temp2[0] + numberFormat("."+temp2[1]) + "-";
+                }
+            }
+        }
+        if(result.endsWith("-")){
+            result=result.substring(0,result.length()-1);
+        }
+        return result;
+    }
+    /**
+     * 修改文字样式（对 10.0-20.0此种文字进行处理）
+     * @param txt 原始文字样式
+     * @return 修改后的文字样式
+     * **/
+    private static String numberFormat(String txt){
+        if (txt.endsWith(".0") || txt.endsWith(".00")) {
+            txt = txt.replace(".0","").replace(".00","");
+        }
+        return txt;
+    }
+
     /**
      * 船只类型处理
      **/
@@ -67,7 +177,7 @@ public class ViewUtil {
         return temp;
     }
 
-    public static void popDialog(final ListFlowHelper listFlowHelper,Activity activity, View layout) {
+    public static void popSailBoatDialog(final ListFlowHelper listFlowHelper,Activity activity, View layout) {
         final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         final Button positive = (Button) layout.findViewById(R.id.btn_confirm);
         final Button negative = (Button) layout.findViewById(R.id.btn_cancel);
@@ -148,8 +258,8 @@ public class ViewUtil {
         });
     }
 
-    public static void popDialog(final PartListFragment activity, View layout) {
-        final Dialog updateDialog = new Dialog(activity.getActivity(), R.style.updateDialog);
+    public static void popPartDialog(final ListFlowHelper listFlowHelper,Activity activity, View layout) {
+        final Dialog updateDialog = new Dialog(activity, R.style.updateDialog);
         final Button positive = (Button) layout.findViewById(R.id.btn_confirm);
         final Button negative = (Button) layout.findViewById(R.id.btn_cancel);
         negative.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +270,7 @@ public class ViewUtil {
         });
         updateDialog.setCancelable(true);
         updateDialog.setCanceledOnTouchOutside(true);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity.getActivity()) - 30,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CommonUtil.getScreenWidth(activity) - 30,
                 LayoutParams.MATCH_PARENT);
         params.setMargins(10, 10, 10, 10);
         updateDialog.setContentView(layout, params);
@@ -206,8 +316,7 @@ public class ViewUtil {
                         if_str += ")";
                     }
                 }
-                activity.change_if(if_str, if_list);
-                activity.begin();
+                listFlowHelper.change_if(if_str, if_list);
                 updateDialog.dismiss();
             }
         });

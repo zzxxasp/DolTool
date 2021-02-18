@@ -11,6 +11,9 @@ public class SystemInfo {
     public static final String OVER_FLAG="init_over";
     /**记录自动更新的状态，默认为开启[1]**/
     public static final String UPDATE_FLAG="update_start";
+
+	public static final String FIRST_FLAG="FIRST_FLAG";
+
     @SuppressLint("CommitPrefEdits")
 	public SystemInfo(Context context){
     	sp=context.getSharedPreferences("system", Context.MODE_PRIVATE);
@@ -33,7 +36,15 @@ public class SystemInfo {
 		editor.putInt(UPDATE_FLAG, flag);
 		editor.commit();
 	}
-	
+
+	public void setFirst(boolean flag) {
+		editor.putBoolean(FIRST_FLAG, flag);
+		editor.commit();
+	}
+
+	public boolean getFirst() {
+		return sp.getBoolean(FIRST_FLAG,false);
+	}
 	
 	
 	public void clear(){

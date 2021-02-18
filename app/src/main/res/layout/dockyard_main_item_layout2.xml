@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--状态栏-->
-<com.flipboard.bottomsheet.BottomSheetLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/bottomsheet"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	>
-<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -414,7 +409,38 @@
 	android:layout_height="wrap_content"
     /> 
 </LinearLayout>
-	<android.support.design.widget.FloatingActionButton
+	<LinearLayout
+		android:id="@+id/skill_show"
+		android:layout_width="wrap_content"
+		android:orientation="horizontal"
+		android:layout_height="wrap_content"
+		android:layout_margin="10dp"
+		android:gravity="center_vertical"
+		android:background="@color/Black_SP"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentBottom="true"
+		>
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="5dp"
+			android:src="@drawable/other_j0s"
+			/>
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="5dp"
+			android:src="@drawable/other_j0s"
+			/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="10dp"
+			android:text="0/5"
+			android:textColor="@color/white"
+			/>
+		</LinearLayout>
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:contentDescription="@null"
 		android:id="@+id/action"
 		android:layout_width="70dp"
@@ -427,4 +453,3 @@
 		app:rippleColor="@color/blue_dark"
 		/>
 </RelativeLayout>
-</com.flipboard.bottomsheet.BottomSheetLayout>

@@ -19,6 +19,7 @@ import com.key.doltool.util.FileManager;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
+import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.FlowLayout;
 import com.key.doltool.view.LinearLayoutForListView;
 
@@ -74,11 +75,7 @@ public class AbilityForNormalDetailActivity extends BaseActivity{
 		int types= item.getType();
 		//根据类型获得技能类型文字
 		type.setText(ResourcesUtil.getArray(this,R.array.skill_type)[types+1]);
-		try {
-			pic.setImageBitmap(BitMapUtil.getBitmapByInputStream(getAssets().open(FileManager.SKILL+ item.getPic_id()+".png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ImageLoader.setBitmapByAssets(pic,FileManager.SKILL+ item.getPic_id()+".png",this);
 		//处理need数据
 		if(types<5){
 			String[] temp= item.getNeed().split("\\|");
@@ -105,7 +102,6 @@ public class AbilityForNormalDetailActivity extends BaseActivity{
 			job_array.setVisibility(View.GONE);
 		}
 		List<ADCInfo> list_adc=dao.select(ADCInfo.class,false,"skill_list like ?",new String[]{"%"+"\""+ item.getName()+"\""+"%"},null,null,null,null);
-		Log.i("q", ""+list_adc.size());
 		adc_array.setAdapter(new ADCSkillSelectAdapter(item.getName(), list_adc, this));
 		if(list_adc.size()==0){
 			tag6.setVisibility(View.GONE);

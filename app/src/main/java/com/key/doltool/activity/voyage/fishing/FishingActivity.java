@@ -2,8 +2,9 @@ package com.key.doltool.activity.voyage.fishing;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;

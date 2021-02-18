@@ -2,16 +2,16 @@ package com.key.doltool.activity.search;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
-import android.support.v7.widget.AppCompatSpinner;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.appcompat.widget.AppCompatSpinner;
+
+import com.jakewharton.rxbinding4.widget.RxTextView;
+import com.jakewharton.rxbinding4.widget.TextViewTextChangeEvent;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.adc.ADCDetailsActivity;
@@ -22,7 +22,6 @@ import com.key.doltool.activity.trade.TradeCityDetailActivity;
 import com.key.doltool.activity.useitem.UseItemActivity;
 import com.key.doltool.adapter.SimpleSearchAdapter;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
-import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.data.SearchItem;
 import com.key.doltool.data.item.UseItem;
 import com.key.doltool.data.sqlite.ADCInfo;
@@ -38,8 +37,18 @@ import com.the9tcat.hadi.DefaultDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.functions.Predicate;
+
 
 /**
  * 快速查询界面
@@ -48,12 +57,11 @@ public class SearchActivity extends BaseActivity{
 
 	@BindView(R.id.search) EditText search_txt;
 	@BindView(R.id.content_list) ListView content_list;
-	@BindView(R.id.type) AppCompatSpinner type;
+	@BindView(R.id.type)
+	AppCompatSpinner type;
 	private DefaultDAO dao;
 	private List<SearchItem> list;
 	private int index=0;
-	private boolean end=true;
-	private ViewHandler updateUi;
 	private SimpleSearchAdapter simpleSearchAdapter;
 	@Override
 	public int getContentViewId() {
@@ -69,23 +77,51 @@ public class SearchActivity extends BaseActivity{
 
 	private void init(){
 		dao=SRPUtil.getDAO(getApplicationContext());
-		updateUi=new ViewHandler(new ViewHandler.ViewCallBack() {
-			@Override
-			public void onHandleMessage(Message msg) {
-				simpleSearchAdapter=new SimpleSearchAdapter(context,list);
-				content_list.setAdapter(simpleSearchAdapter);
-				end=true;
-			}
-		});
 	}
 
 	
 	private void setListener(){
-		search_txt.addTextChangedListener(watcher);
+		RxTextView.textChangeEvents(search_txt)
+				.debounce(600, TimeUnit.MILLISECONDS)
+				.filter(new Predicate<TextViewTextChangeEvent>() {
+					@Override
+					public boolean test(TextViewTextChangeEvent textViewTextChangeEvent) {
+						return search_txt.getText().toString().trim().length()>=2;
+					}
+				}).switchMap(new Function<TextViewTextChangeEvent, ObservableSource<List<SearchItem>>>() {
+			@Override
+			public ObservableSource<List<SearchItem>> apply(TextViewTextChangeEvent textViewTextChangeEvent) {
+				return getListBySelect();
+			}
+		}).observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Observer<List<SearchItem>>() {
+					@Override
+					public void onSubscribe(@NonNull Disposable d) {
+
+					}
+
+					@Override
+					public void onNext(@NonNull List<SearchItem> searchItems) {
+						list=searchItems;
+						simpleSearchAdapter = new SimpleSearchAdapter(context, list);
+						content_list.setAdapter(simpleSearchAdapter);
+					}
+
+					@Override
+					public void onError(@NonNull Throwable e) {
+
+					}
+
+					@Override
+					public void onComplete() {
+
+					}
+				});
+
 		content_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				jump(index,list.get(position).id);
+									int position, long id) {
+				jump(index, list.get(position).id);
 			}
 		});
 		ArrayAdapter<String> adapter=new SpinnerArrayAdapter
@@ -94,11 +130,11 @@ public class SearchActivity extends BaseActivity{
 		type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				if(list!=null){
+				setIndex(i);
+				if (list != null) {
 					list.clear();
 					simpleSearchAdapter.notifyDataSetChanged();
 				}
-				setIndex(i);
 			}
 
 			@Override
@@ -147,7 +183,7 @@ public class SearchActivity extends BaseActivity{
 		startActivity(it);
 	}
 
-	private List<SearchItem> getListBySelect(){
+	private Observable<List<SearchItem>> getListBySelect(){
 		List<SearchItem> result=new ArrayList<>();
 		Class<?> souces;
 		switch(index){
@@ -171,7 +207,7 @@ public class SearchActivity extends BaseActivity{
 		for(int i=0;i<temp.size();i++){
 			result.add(getNameByType(temp.get(i),index));
 		}
-		return result;
+		return Observable.just(result);
 	}
 	private SearchItem getNameByType(Object obj,int type){
 		SearchItem result=new SearchItem();
@@ -220,30 +256,4 @@ public class SearchActivity extends BaseActivity{
 		index=number;
 	}
 
-	private Runnable mTask=new Runnable() {
-		@Override
-		public void run() {
-			list=getListBySelect();
-			updateUi.sendMessage(updateUi.obtainMessage());
-		}
-	};
-
-
-	private TextWatcher watcher = new TextWatcher() {
-	    public void onTextChanged(CharSequence s, int start, int before, int count) {
-			if(search_txt.getText().toString().trim().length()>=2){
-				if(end){
-					end=false;
-					new Thread(mTask).start();
-				}
-			}
-	    }
-	    public void beforeTextChanged(CharSequence s, int start, int count,
-	            int after) {
-	    	
-	    }
-	    public void afterTextChanged(Editable s) {
-
-	    }
-	};
 }

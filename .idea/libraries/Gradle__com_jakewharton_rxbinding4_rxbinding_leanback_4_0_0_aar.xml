@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.jakewharton.rxbinding4:rxbinding-leanback:4.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/db589d86eed85ef3e902738108c26b64/rxbinding-leanback-4.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/db589d86eed85ef3e902738108c26b64/rxbinding-leanback-4.0.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.rxbinding4/rxbinding-leanback/4.0.0/e1a2ab6e5ce20beaae8ebd13315c727f1fbfc3f8/rxbinding-leanback-4.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.rxbinding4/rxbinding-leanback/4.0.0/a0e4ecbf982ddeabc992aba7e39809ad143a532a/rxbinding-leanback-4.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

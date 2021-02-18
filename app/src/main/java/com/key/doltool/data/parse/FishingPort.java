@@ -2,21 +2,17 @@ package com.key.doltool.data.parse;
 
 import android.os.Parcel;
 
-import com.avos.avoscloud.AVClassName;
-import com.avos.avoscloud.AVObject;
+import cn.leancloud.AVObject;
+import cn.leancloud.annotation.AVClassName;
 
 
 /**钓场分享**/
 @AVClassName("FishingPort")
 public class FishingPort extends AVObject {
-    public static final Creator CREATOR = AVObjectCreator.instance;
     public FishingPort(){
         super();
     }
 
-    public FishingPort(Parcel in){
-        super(in);
-    }
     // 钓场的名称
     public String getName() {
         return getString("name");

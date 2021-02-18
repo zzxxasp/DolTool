@@ -1,4 +1,7 @@
 package com.key.doltool.util;
+
+import android.content.Context;
+
 /**
  * 返回APP目录下的file
  * 管理所有文件的目录
@@ -21,5 +24,9 @@ public class FileManager {
 		} else {
 			return CommonUtil.getRootFilePath() + "com.key.doltool/files/";
 		}
+	}
+
+	public static String getSaveFilePath(Context context) {
+		return context.getFilesDir().getPath();
 	}
 }

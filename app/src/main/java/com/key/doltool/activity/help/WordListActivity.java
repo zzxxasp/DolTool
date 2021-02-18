@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,9 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.SaveCallback;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.adventure.AdventureDetailActivity;
@@ -34,11 +31,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.leancloud.AVException;
+import cn.leancloud.AVObject;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class WordListActivity extends BaseActivity{
 	private List<WordItem> list=new ArrayList<>();
 	@BindView(R.id.listView) ListView listView;
-	@BindView(R.id.action) FloatingActionButton action;
+	@BindView(R.id.action)
+	FloatingActionButton action;
 
 	@Override
 	public int getContentViewId() {
@@ -102,7 +104,7 @@ public class WordListActivity extends BaseActivity{
 	private void setListener(){
 		action.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				MyAnimations.wordAnime(action,500,listener);
+				MyAnimations.wordAnime(context,action,330,listener);
 			}
 		});
 	}
@@ -159,7 +161,7 @@ public class WordListActivity extends BaseActivity{
 		});
 		updateDialog.setOnDismissListener(new DialogInterface.OnDismissListener(){
 			public void onDismiss(DialogInterface dialog) {
-				MyAnimations.wordAnime2(action, 500);
+				MyAnimations.wordAnime2(context,action,330);
 			}
 		});
         updateDialog.show();
@@ -168,13 +170,25 @@ public class WordListActivity extends BaseActivity{
 		AVObject word=new AVObject("WordBack");
 		word.put("zh_name",zh_name);
 		word.put("tw_name",tw_name);
-		word.saveInBackground(new SaveCallback(){
-			public void done(AVException e) {
-				if(e==null){
-					Toast.makeText(getApplicationContext(),"感谢您对单词表的维护，下次更新即可看到您录入的单词",Toast.LENGTH_SHORT).show();
-				}else{
-					Toast.makeText(getApplicationContext(),"网络异常",Toast.LENGTH_SHORT).show();
-				}
+		word.saveInBackground().subscribe(new Observer<AVObject>() {
+			@Override
+			public void onSubscribe(Disposable d) {
+
+			}
+
+			@Override
+			public void onNext(AVObject avObject) {
+				Toast.makeText(getApplicationContext(),"感谢您对单词表的维护，下次更新即可看到您录入的单词",Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				Toast.makeText(getApplicationContext(),"网络异常",Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onComplete() {
+
 			}
 		});
 	}

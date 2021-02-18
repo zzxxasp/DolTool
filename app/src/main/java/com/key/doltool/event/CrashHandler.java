@@ -9,8 +9,6 @@ import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
 
-import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.AVObject;
 import com.key.doltool.util.ExitApplication;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.StringUtil;
@@ -29,6 +27,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import cn.leancloud.AVFile;
+import cn.leancloud.AVObject;
 
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
@@ -158,7 +159,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			String time = formatter.format(new Date());
 			String fileName = "crash-" + time + "-" + timestamp + ".txt";
 			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-				String path = FileManager.getSaveFilePath()+"crash";
+				String path = FileManager.getSaveFilePath(mContext)+"crash";
 				File dir = new File(path);
 				if (!dir.exists()) {
 					dir.mkdirs();

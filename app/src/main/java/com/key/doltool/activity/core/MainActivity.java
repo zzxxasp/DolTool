@@ -1,15 +1,11 @@
 package com.key.doltool.activity.core;
 
 import android.app.Activity;
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,15 +14,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVAnalytics;
-import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.AVUser;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.key.doltool.R;
 import com.key.doltool.activity.InfoMainFragment;
 import com.key.doltool.activity.adventure.AdventureMainFragment;
 import com.key.doltool.activity.adventure.NPCFragment;
 import com.key.doltool.activity.adventure.card.CardComboFragment;
-import com.key.doltool.activity.dockyard.DataBaseInsertFragment;
 import com.key.doltool.activity.dockyard.DockYardFragment;
 import com.key.doltool.activity.infobroad.MainBroadFragment;
 import com.key.doltool.activity.person.LoginActivity;
@@ -37,19 +36,28 @@ import com.key.doltool.activity.setting.SettingMainFragment;
 import com.key.doltool.activity.squre.SqureMainFragment;
 import com.key.doltool.activity.trade.TradeItemFragment;
 import com.key.doltool.activity.voyage.VoyageMainFragment;
+import com.key.doltool.activity.wiki.WebMainFragment;
 import com.key.doltool.app.util.ViewHandler;
+import com.key.doltool.app.util.behavior.LoginBehavior;
 import com.key.doltool.data.MenuItem;
 import com.key.doltool.data.SystemInfo;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.MenuEvent;
-import com.key.doltool.event.UpdataList;
 import com.key.doltool.event.app.VersionManager;
+import com.key.doltool.event.rx.RxBusEvent;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.stick.StickyListHeadersListView;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.leancloud.AVFile;
+import cn.leancloud.AVUser;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 
 public class MainActivity extends BaseFragmentActivity{
@@ -69,6 +77,9 @@ public class MainActivity extends BaseFragmentActivity{
 	private List<FragmentItem> fragment_list=new ArrayList<>();
 	private int index=0;
 	private ViewHandler UIHandler;
+	private Disposable updateSubscription;
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_area);
@@ -79,7 +90,15 @@ public class MainActivity extends BaseFragmentActivity{
 		findView();
 		initUser();
 		initFragment(savedInstanceState);
-		AVAnalytics.trackAppOpened(getIntent());
+		Observable<Boolean> sailBoatObservable = RxBusEvent.get().register(RxBusEvent.UPDATE);
+		updateSubscription=sailBoatObservable.subscribe(new Consumer<Boolean>() {
+			@Override
+			public void accept(Boolean aBoolean) {
+				if(aBoolean) {
+					initParseUser();
+				}
+			}
+		});
 	}
 	private void initUser(){
 		UIHandler=new ViewHandler(new ViewHandler.ViewCallBack() {
@@ -93,26 +112,21 @@ public class MainActivity extends BaseFragmentActivity{
 			}
 		});
 
-		person_info=(LinearLayout)findViewById(R.id.person_info);
-		headPic=(ImageView)findViewById(R.id.head_img);
-		username=(TextView)findViewById(R.id.name);
+		person_info= findViewById(R.id.person_info);
+		headPic= findViewById(R.id.head_img);
+		username= findViewById(R.id.name);
 		//获取默认用户
-		AVUser currentUser = AVUser.getCurrentUser();
+		LoginBehavior loginBehavior=new LoginBehavior();
+		String currentUser = loginBehavior.getUserName();
+		String headURL = loginBehavior.getUserHeadImageURL();
 		//如果有用户则
 		if (currentUser != null) {
-			currentUser.fetchInBackground(null);
-			AVFile headImg=currentUser.getAVFile("headPic");
-			if(headImg!=null){
-				ImageLoader.picassoLoadCircle(this, headImg.getUrl(), headPic);
+			if(loginBehavior.getUserHeadImageURL()!=null){
+				ImageLoader.picassoLoadCircle(this, headURL, headPic);
 			}else{
 				ImageLoader.picassoLoadCircle(this, headPic);
 			}
-
-			if(!StringUtil.isNull(currentUser.getString("nickName"))){
-				username.setText(currentUser.getString("nickName"));
-			}else{
-				username.setText(currentUser.getUsername());
-			}
+			username.setText(currentUser);
 			person_info.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					Intent it=new Intent(MainActivity.this,PersonActivity.class);
@@ -172,7 +186,7 @@ public class MainActivity extends BaseFragmentActivity{
 	
 	private void findView(){
 		list=new MenuEvent().initMenuList();
-		mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+		mDrawerLayout= findViewById(R.id.drawer_layout);
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,toolbar,R.string.app_name,R.string.app_name) {
 			@Override
 			public void onDrawerOpened(View drawerView) {
@@ -189,7 +203,7 @@ public class MainActivity extends BaseFragmentActivity{
 		init();
 	}
 	private void init(){
-		menu_list = (StickyListHeadersListView) findViewById(R.id.listview);
+		menu_list = findViewById(R.id.listview);
 		menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -222,12 +236,26 @@ public class MainActivity extends BaseFragmentActivity{
     		case 6:mContent=new DockYardFragment();break;
     		case 7:mContent=new InfoMainFragment();break;
     		case 8:mContent=new SearchFragment();break;
-    		case 9:mContent=new MainBroadFragment();break;
-    		case 10:mContent=new SqureMainFragment();break;
-    		case 11:mContent=new SettingMainFragment();break;
-    		case 12:mContent=new HelpCenterFragment();break;
-//    		case 13:mContent=new DevFragment();break;
-			case 13:mContent=new DataBaseInsertFragment();break;
+//    		case 9:mContent=new MainBroadFragment();break;
+    		case 9:mContent=new SqureMainFragment();break;
+    		case 10:mContent=new SettingMainFragment();break;
+//    		case 11:mContent=new HelpCenterFragment();break;
+//    		case 12:mContent=new DevFragment();break;
+			case 11:
+				WebMainFragment temp=new WebMainFragment();
+				Bundle bundle=new Bundle();
+				bundle.putString("url","ser.html");
+				temp.setArguments(bundle);
+				mContent= temp;
+				break;
+			case 12:
+				WebMainFragment temp2=new WebMainFragment();
+				Bundle bundle2=new Bundle();
+				bundle2.putString("url","user.html");
+				temp2.setArguments(bundle2);
+				mContent=temp2;
+				break;
+//			case 13:mContent=new DataBaseInsertFragment();break;
     		default:
     			mContent=new AdventureMainFragment();
     			break;
@@ -263,18 +291,19 @@ public class MainActivity extends BaseFragmentActivity{
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        switch (requestCode) {
-        	case 100:		
-        		initParseUser();
-        		break;
-        	case 101:
-        		initParseUser();
-        		break;
-        }
-    }
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode != Activity.RESULT_OK) {
+			return;
+		}
+		switch (requestCode) {
+			case 100:
+				initParseUser();
+				break;
+			case 101:
+				initParseUser();
+				break;
+		}
+	}
     
     private void initParseUser(){
     	//获取默认用户
@@ -349,13 +378,13 @@ public class MainActivity extends BaseFragmentActivity{
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
 
 	@Override
-	protected void onRestart() {
-		if(UpdataList.PIC_CHANGE==1){
-			init();
+	protected void onDestroy() {
+		super.onDestroy();
+		if(updateSubscription!=null){
+			updateSubscription.dispose();
 		}
-		super.onRestart();
+		RxBusEvent.get().unregister(RxBusEvent.UPDATE);
 	}
 }

@@ -3,14 +3,17 @@ package com.key.doltool.anime;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 
+import com.key.doltool.util.CommonUtil;
 
 
 /**
@@ -79,17 +82,20 @@ public class MyAnimations {
 		view.startAnimation(animation1);
 	}
 
-	public static void wordAnime(View view,int durationMillis,Animator.AnimatorListener listener){
-		ObjectAnimator anime1=ObjectAnimator.ofFloat(view, "translationX", 0, -240);
-		ObjectAnimator anime2=ObjectAnimator.ofFloat(view, "translationY", 0, -400);
+	/**view从右下角移动至中心渐变消失**/
+	public static void wordAnime(Activity activity,View view, int durationMillis, Animator.AnimatorListener listener){
+		int height=(view.getHeight()-CommonUtil.getScreenHeight(activity))/2;
+		int width=(view.getWidth()-CommonUtil.getScreenWidth(activity))/2;
+		ObjectAnimator anime1=ObjectAnimator.ofFloat(view, "translationX", 0,width);
+		ObjectAnimator anime2=ObjectAnimator.ofFloat(view, "translationY", 0,height);
 		ObjectAnimator anime3=ObjectAnimator.ofFloat(view, "ScaleX", 1,2);
 		ObjectAnimator anime4=ObjectAnimator.ofFloat(view, "ScaleY", 1,2);
 		ObjectAnimator anime5=ObjectAnimator.ofFloat(view, "alpha",1,0);
 		anime1.setDuration(durationMillis);
 		anime2.setDuration(durationMillis);
-		anime3.setDuration(durationMillis/2+100);
-		anime4.setDuration(durationMillis/2+100);
-		anime5.setDuration(durationMillis/2+100);
+		anime3.setDuration(durationMillis/2+50);
+		anime4.setDuration(durationMillis/2+50);
+		anime5.setDuration(durationMillis/2+50);
 		AnimatorSet set=new AnimatorSet();
 		set.play(anime1).with(anime2).before(anime3);
 		set.play(anime3).with(anime4).with(anime5);
@@ -97,21 +103,24 @@ public class MyAnimations {
 		set.addListener(listener);
 		set.start();
 	}
-	public static void wordAnime2(View view,int durationMillis){
-		ObjectAnimator anime1=ObjectAnimator.ofFloat(view, "translationX", -360,0);
-		ObjectAnimator anime2=ObjectAnimator.ofFloat(view, "translationY", -600,0);
+	/**view从中心渐变显示至右下角**/
+	public static void wordAnime2(Activity activity,View view,int durationMillis){
+		int height=(view.getHeight()-CommonUtil.getScreenHeight(activity))/2;
+		int width=(view.getWidth()-CommonUtil.getScreenWidth(activity))/2;
+		ObjectAnimator anime1=ObjectAnimator.ofFloat(view, "translationX",width,0);
+		ObjectAnimator anime2=ObjectAnimator.ofFloat(view, "translationY",height,0);
 		ObjectAnimator anime3=ObjectAnimator.ofFloat(view, "ScaleX", 2,1);
 		ObjectAnimator anime4=ObjectAnimator.ofFloat(view, "ScaleY", 2,1);
 		ObjectAnimator anime5=ObjectAnimator.ofFloat(view, "alpha",0,1);
 		anime1.setDuration(durationMillis);
 		anime2.setDuration(durationMillis);
-		anime3.setDuration(durationMillis/2+100);
-		anime4.setDuration(durationMillis/2+100);
-		anime5.setDuration(durationMillis/2+100);
+		anime3.setDuration(durationMillis/2+50);
+		anime4.setDuration(durationMillis/2+50);
+		anime5.setDuration(durationMillis/2+50);
 		AnimatorSet set=new AnimatorSet();
 		set.play(anime3).with(anime4).with(anime5).before(anime2);
 		set.play(anime2).with(anime1);
-		set.setInterpolator(new AccelerateInterpolator());
+		set.setInterpolator(new DecelerateInterpolator());
 		set.start();
 	}
 }

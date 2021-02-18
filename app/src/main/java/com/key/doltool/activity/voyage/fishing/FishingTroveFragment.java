@@ -14,6 +14,8 @@ import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.activity.mission.MissionDetailsActivity;
 import com.key.doltool.adapter.TroveAdapter;
+import com.key.doltool.app.util.DialogUtil;
+import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataCount;
@@ -23,7 +25,9 @@ import com.the9tcat.hadi.DefaultDAO;
 import java.util.List;
 
 import butterknife.BindView;
-
+/**
+ * 钓鱼发现物界面
+ * **/
 public class FishingTroveFragment extends BaseFragment {
     private List<Trove> list;
     //定义部分
@@ -33,6 +37,7 @@ public class FishingTroveFragment extends BaseFragment {
     private TroveAdapter adapter;
     private DefaultDAO dao;
     private UpdataCount count;
+    private ViewHandler viewHandler;
 
     @Override
     public int getContentViewId() {
@@ -42,23 +47,22 @@ public class FishingTroveFragment extends BaseFragment {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         dao=SRPUtil.getDAO(context);
+        viewHandler=new ViewHandler(new ViewHandler.ViewCallBack() {
+            @Override
+            public void onHandleMessage(Message msg) {
+                DialogUtil.dismiss(context,alert);
+                Parcelable state=gridview.onSaveInstanceState();
+                adapter=new TroveAdapter(list,context);
+                gridview.setAdapter(adapter);
+                gridview.onRestoreInstanceState(state);
+            }
+        });
         findView();
         setListener();
         count=new UpdataCount(context);
         new Thread(mTask).start();
     }
 
-    private Handler mHandler=new Handler(){
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            //更新页面
-            alert.dismiss();
-            Parcelable state=gridview.onSaveInstanceState();
-            adapter=new TroveAdapter(list,context);
-            gridview.setAdapter(adapter);
-            gridview.onRestoreInstanceState(state);
-        }
-    };
 
     private Runnable mTask=new Runnable() {
         @Override
@@ -71,13 +75,13 @@ public class FishingTroveFragment extends BaseFragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            mHandler.sendMessage(mHandler.obtainMessage());
+            viewHandler.sendMessage(viewHandler.obtainMessage());
         }
     };
 
     private void findView(){
         alert=new DialogEvent().showLoading(context);
-        alert.show();
+        DialogUtil.show(context,alert);
     }
 
     private void setListener() {

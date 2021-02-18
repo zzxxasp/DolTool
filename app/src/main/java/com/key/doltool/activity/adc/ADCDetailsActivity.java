@@ -17,6 +17,7 @@ import com.key.doltool.util.FileManager;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
 import com.key.doltool.util.db.SRPUtil;
+import com.key.doltool.util.imageUtil.ImageLoader;
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.io.IOException;
@@ -75,11 +76,7 @@ public class ADCDetailsActivity extends BaseActivity{
 		name.setText(item.getName());
 		country.setText(item.getCountry());
 		city.setText(item.getCity());
-		try {
-			head.setImageBitmap(BitMapUtil.getBitmapByInputStream(getAssets().open(FileManager.ADC+ item.getHead_img()+".png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ImageLoader.setBitmapByAssets(head,FileManager.ADC+ item.getHead_img()+".png",this);
 		List<ADCSkill> list = new Gson().fromJson(item.getSkill_list(), new TypeToken<List<ADCSkill>>() {
 		}.getType());
 		listview.setAdapter(new ADCSkillListAdapter(list, this));

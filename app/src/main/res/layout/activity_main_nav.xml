@@ -11,18 +11,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
     android:scrollbars="none"
-    android:layout_above="@+id/line"
     android:divider="#00000000"
     android:cacheColorHint="#00000000"
     />
 <View
     android:id="@+id/line"
     android:layout_width="match_parent"
-    android:layout_height="1dp" 
-    android:layout_above="@+id/person_info"
+    android:layout_height="1dp"
+	android:visibility="gone"
+	android:layout_alignParentBottom="true"
     android:background="@color/Gainsboro"    
     />
 <LinearLayout
+	android:visibility="gone"
     android:id="@+id/person_info" 
     android:layout_width="match_parent"
     android:layout_height="50dp" 

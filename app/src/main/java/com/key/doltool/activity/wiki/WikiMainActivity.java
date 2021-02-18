@@ -4,17 +4,20 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
+import com.key.doltool.app.util.DialogUtil;
 import com.key.doltool.data.sqlite.WikiInfo;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.WebEvent;
@@ -53,7 +56,7 @@ public class WikiMainActivity extends BaseActivity{
 	}
 
 	//获取数据，填充显示
-	@SuppressLint("SetJavaScriptEnabled")
+	@SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
 	private void init(){
 		initData();
 		web_content.getSettings().setJavaScriptEnabled(true);
@@ -65,8 +68,14 @@ public class WikiMainActivity extends BaseActivity{
 		web_content.getSettings().setSupportZoom(true);
 		web_content.getSettings().setAppCacheEnabled(false);
 		web_content.setWebViewClient(new WebViewClient() {
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			public boolean shouldOverrideUrlLoading(WebView view,WebResourceRequest request) {
 				return false;// false 显示frameset, true 不显示Frameset
+			}
+
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				super.onPageFinished(view, url);
+				DialogUtil.dismiss(context,layout_alert);
 			}
 		});
 		web_content.setWebChromeClient(new WebChromeClient() {
@@ -78,7 +87,7 @@ public class WikiMainActivity extends BaseActivity{
 	//初始化控件
 	private void findView(){
 		layout_alert=new DialogEvent().showLoading(this);
-		layout_alert.dismiss();
+		DialogUtil.show(context,layout_alert);
 	}
 	private void initData(){
 		String id=getIntent().getStringExtra("id");
@@ -98,7 +107,8 @@ public class WikiMainActivity extends BaseActivity{
 		super.onResume();
 	}
 	//缓存清空
-	protected void onDestroy() {
+	@Override
+    protected void onDestroy() {
 		super.onDestroy();
 		web_content.clearCache(false);
 	}

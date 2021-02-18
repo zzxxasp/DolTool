@@ -12,6 +12,7 @@ import com.key.doltool.data.sqlite.Skill;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.db.SRPUtil;
+import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.LinearLayoutForListView;
 import com.the9tcat.hadi.DefaultDAO;
 
@@ -44,11 +45,7 @@ public class AbilityForBoatDetailActivity extends BaseActivity{
 		name.setText(item.getName());
 		details.setText(item.getDetail());
 		skill_need.setText(item.getNeed());
-		try {
-			img.setImageBitmap(BitMapUtil.getBitmapByInputStream(getAssets().open(FileManager.SKILL+ item.getPic_id()+".png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ImageLoader.setBitmapByAssets(img,FileManager.SKILL+ item.getPic_id()+".png",this);
 		List<SailBoat> sail= SRPUtil.getInstance(this).select(SailBoat.class,false,"ability like ?"
 				,new String[]{"%"+ item.getName()+"%"},null,null,null,null);
 		boat_array.setAdapter(new SailBoatListAdapter(sail, this));

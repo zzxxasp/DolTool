@@ -3,11 +3,12 @@ package com.key.doltool.activity.infobroad;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
@@ -29,7 +30,6 @@ import butterknife.BindView;
 
 /**
  * 新闻看板界面
- *
  * @author key
  * @version 0.3
  *          0.1-加入基本Activity的相关方法和操作<br>

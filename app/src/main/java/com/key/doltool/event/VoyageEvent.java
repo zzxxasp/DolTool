@@ -130,8 +130,8 @@ public class VoyageEvent {
             case "纺织品":
                 c=TradeItemActivity.class;
                 it=new Intent(context,c);
-                it.putExtra("if_txt","type=?");
-                it.putExtra("if_arg","纺织品");
+                it.putExtra("type","type=?");
+                it.putExtra("args","纺织品");
                 break;
             case "钓鱼":
                 c=FishingActivity.class;

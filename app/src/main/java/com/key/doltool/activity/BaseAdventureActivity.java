@@ -13,9 +13,6 @@ import com.key.doltool.util.ViewUtil;
  */
 public abstract class BaseAdventureActivity extends BaseActivity{
 	public String select_txt="";
-	public void getSelectText(String txt){
-		select_txt=txt;
-	}
 	public void popWindow(){
 		//对话框显示，输入返回搜索条件
 		View xc=getLayoutInflater().inflate(R.layout.select_trove, null);

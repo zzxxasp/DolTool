@@ -10,57 +10,34 @@
 	layout="@layout/system_actionbar_black" 
     />
 <!--内容-->
-<EditText
- 	android:id="@+id/content" 
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:padding="10dp" 
-    android:maxLength="200"
-    android:gravity="top"
-    android:inputType="textImeMultiLine"
-    android:imeOptions="normal"
-    android:textCursorDrawable="@null"
-    android:layout_margin="10dp"
-    android:background="@drawable/edittext_background_rounded"
-    android:textColor="@color/Black"
-    android:hint="请输入内容(最多200字)"   
-    />
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/contentWrapper"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="10dp"
+		>
+		<EditText
+			android:id="@+id/content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="10dp"
+			android:maxLength="200"
+			android:gravity="top"
+			android:maxLines="4"
+			android:inputType="textMultiLine"
+			android:imeOptions="normal"
+			android:textCursorDrawable="@null"
+			android:layout_margin="10dp"
+			android:textColor="@color/Black"
+			android:hint="请输入内容"
+			/>
+	</com.google.android.material.textfield.TextInputLayout>
 <!--署名-->
-<View
-    android:id="@+id/line2" 
-    android:layout_width="match_parent"
-    android:layout_height="3dp"
-    android:layout_margin="10dp"
-    android:background="@color/Gainsboro"
-/>
-<TextView
-    android:contentDescription="@null"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:text="如果可以，请留下您的游戏ID或是贴吧ID。"
-    android:textColor="@color/Black_SP"
-    />
 <RelativeLayout 
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"     
+    android:layout_height="wrap_content"
+	android:layout_margin="10dp"
     >
-<EditText
-    android:id="@+id/name" 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
-    android:layout_toLeftOf="@+id/btn"
-    android:padding="10dp" 
-    android:layout_margin="10dp"
-    android:singleLine="true"
-    android:imeOptions="flagNoExtractUi"
-    android:layout_centerVertical="true"
-    android:textCursorDrawable="@null"
-    android:textColor="@color/Black" 
-    android:background="@drawable/edittext_background_rounded"
-    android:hint="请输入你的ID"    
-    />
 <com.key.doltool.view.flat.FlatButton
 	flatui:fl_theme="@array/sea"
 	flatui:fl_cornerRadius="3dp"

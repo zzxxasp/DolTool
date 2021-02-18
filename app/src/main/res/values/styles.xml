@@ -22,7 +22,6 @@
         <item name="actionModeBackground">@color/Blue_SP</item>
         <item name="toolbarNavigationButtonStyle">@style/AppTheme.Toolbar.Navigation</item>
         <item name="android:fitsSystemWindows">true</item>
-        <item name="android:typeface">monospace</item>
     </style>
 
     <style name="commonDialog" parent="Theme.AppCompat.Light.Dialog.Alert">

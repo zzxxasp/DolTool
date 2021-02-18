@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -16,16 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.AVRelation;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.FindCallback;
-import com.avos.avoscloud.GetDataCallback;
-import com.avos.avoscloud.RequestPasswordResetCallback;
-import com.avos.avoscloud.SaveCallback;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
@@ -35,8 +26,8 @@ import com.key.doltool.data.sqlite.Trove;
 import com.key.doltool.data.sqlite.Verion;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.event.UpdataCount;
-import com.key.doltool.event.UpdataList;
 import com.key.doltool.event.UserEvent;
+import com.key.doltool.event.rx.RxBusEvent;
 import com.key.doltool.util.NumberUtil;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.StringUtil;
@@ -56,6 +47,16 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import cn.leancloud.AVFile;
+import cn.leancloud.AVObject;
+import cn.leancloud.AVQuery;
+import cn.leancloud.AVRelation;
+import cn.leancloud.AVUser;
+import cn.leancloud.types.AVNull;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * 个人信息界面
@@ -85,7 +86,7 @@ public class PersonActivity extends BaseActivity{
 	private Drawable bg;
 	private Bitmap bitmap;
 	private String back_temp="";
-
+	private Disposable updateSubscription;
 	@Override
 	public int getContentViewId() {
 		return R.layout.activity_user;
@@ -131,20 +132,15 @@ public class PersonActivity extends BaseActivity{
 		tintManager.setStatusBarTintResource(R.color.black);
 		new Thread(mTask).start();
 		init();
-	}
-	@Override
-	protected void onResume() {
-		Log.i("re","onResume");
-		super.onResume();
-	}
-	
-	@Override
-	protected void onRestart() {
-		if(UpdataList.PIC_CHANGE==1){
-			init();
-			Log.i("re","onRestart");
-		}
-		super.onRestart();
+		Observable<Boolean> sailBoatObservable = RxBusEvent.get().register(RxBusEvent.UPDATE);
+		updateSubscription=sailBoatObservable.subscribe(new Consumer<Boolean>() {
+			@Override
+			public void accept(Boolean flag) {
+				if(flag) {
+					init();
+				}
+			}
+		});
 	}
 		
 	@Override
@@ -162,6 +158,10 @@ public class PersonActivity extends BaseActivity{
             bg=null;
         }
         dao=null;
+
+		updateSubscription.dispose();
+		RxBusEvent.get().unregister(RxBusEvent.UPDATE);
+
 		System.gc();
 		super.onDestroy();
 	}
@@ -233,102 +233,156 @@ public class PersonActivity extends BaseActivity{
 		AVQuery<AVObject> query = AVQuery.getQuery("BackUp");
 		query.whereEqualTo("userId", AVUser.getCurrentUser());
 		//更新
-		query.findInBackground(new FindCallback<AVObject>() {
-			  public void done(List<AVObject> commentList, AVException e) {
-				  if(e==null){
-					  if(commentList.size()!=0){
-						  //有数据的情况（判断时间进行更新）
-						  SimpleDateFormat s=new SimpleDateFormat("yyyy.MM.dd hh:mm:ss",Locale.CHINA);
-						  int temp=NumberUtil.compare_date(v.update_time,s.format(commentList.get(0).getDate("syncTime")));
-						  Log.i("temp",temp+"");
-						  if(temp<0){
-							  //需要本地更新（弹出提示）
-							  AVFile syncFile =commentList.get(0).getAVFile("backFile");
-							  //展示对话框-时间不同步
-							  v.update_time=StringUtil.dateFormat(commentList.get(0).getDate("syncTime"));
-							  syncFile.getDataInBackground(new GetDataCallback() {
-									public void done(byte[] data, AVException e) {
-										if (e == null) {
-											try {
-												back_temp=new String(data,"UTF-8");
-												dao.update(v,new String[]{"update_time"},"verion>?",new String[]{"0"});
-												new Thread(mTask).start();
-												UpdataList.FLAG_CHANGE_LIST=1;
-											} catch (UnsupportedEncodingException e1) {
-												e1.printStackTrace();
-											}
-										} else {
-											e.printStackTrace();
-											dialog.dismiss();
-											Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
-										}
+		query.findInBackground().subscribe(new Observer<List<AVObject>>() {
+			@Override
+			public void onSubscribe(Disposable d) {
+
+			}
+
+			@Override
+			public void onNext(List<AVObject> commentList) {
+					if(commentList.size()!=0){
+						//有数据的情况（判断时间进行更新）
+						SimpleDateFormat s=new SimpleDateFormat("yyyy.MM.dd hh:mm:ss",Locale.CHINA);
+						int temp=NumberUtil.compare_date(v.update_time,s.format(commentList.get(0).getDate("syncTime")));
+						Log.i("temp",temp+"");
+						if(temp<0){
+							//需要本地更新（弹出提示）
+							AVFile syncFile =commentList.get(0).getAVFile("backFile");
+							//展示对话框-时间不同步
+							v.update_time=StringUtil.dateFormat(commentList.get(0).getDate("syncTime"));
+							syncFile.getDataInBackground().subscribe(new Observer<byte[]>() {
+								@Override
+								public void onSubscribe(Disposable d) {
+
+								}
+
+								@Override
+								public void onNext(byte[] bytes) {
+									try {
+										back_temp=new String(bytes,"UTF-8");
+										dao.update(v,new String[]{"update_time"},"verion>?",new String[]{"0"});
+										new Thread(mTask).start();
+									} catch (UnsupportedEncodingException e1) {
+										e1.printStackTrace();
 									}
-								});
-						  }else{
-							  //云服务更新
-							  Date date=new Date();
-							  v.update_time=StringUtil.dateFormat(date);
-							  dao.update(v,new String[]{"update_time"},"verion>?",new String[]{"0"});
-							  AVObject syncData=commentList.get(0);
-							  AVRelation<AVObject> relation=syncData.getRelation("userId");
-							  relation.add(AVUser.getCurrentUser());
-							  syncData.put("backFile",file);
-							  syncData.put("syncTime", date);
-							  syncData.saveInBackground(new SaveCallback(){
-									public void done(AVException e) {
-										if (e == null) {
-											Toast.makeText(getApplicationContext(),"数据已同步",Toast.LENGTH_SHORT).show();
-										} else {
-											e.printStackTrace();
-											Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
-										}
-										dialog.dismiss();
-									}
-								});  
-						  }
-					  }else{
-						  //没有数据的情况（直接更新）
-						  Date date=new Date();
-						  v.update_time=StringUtil.dateFormat(date);
-						  dao.update(v,new String[]{"update_time"},"verion>?",new String[]{"0"});
-						  AVObject syncData=new AVObject("BackUp");
-						  AVRelation<AVObject> relation=syncData.getRelation("userId");
-						  relation.add(AVUser.getCurrentUser());
-						  syncData.put("backFile",file);
-						  syncData.put("syncTime", date);
-						  syncData.saveInBackground(new SaveCallback(){
-							  public void done(AVException e) {
-								  if (e == null) {
-									  Toast.makeText(getApplicationContext(),"数据已同步",Toast.LENGTH_SHORT).show();
-									} else {
-										e.printStackTrace();
-										Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
-									}
+								}
+
+								@Override
+								public void onError(Throwable e) {
+									dialog.dismiss();
+									Toast.makeText(getApplicationContext(),"错误",Toast.LENGTH_SHORT).show();
+								}
+
+								@Override
+								public void onComplete() {
+
+								}
+							});
+						}else{
+							//云服务更新
+							Date date=new Date();
+							v.update_time=StringUtil.dateFormat(date);
+							dao.update(v,new String[]{"update_time"},"verion>?",new String[]{"0"});
+							AVObject syncData=commentList.get(0);
+							AVRelation<AVObject> relation=syncData.getRelation("userId");
+							relation.add(AVUser.getCurrentUser());
+							syncData.put("backFile",file);
+							syncData.put("syncTime", date);
+							syncData.saveInBackground().subscribe(new Observer<AVObject>() {
+								@Override
+								public void onSubscribe(Disposable d) {
+
+								}
+
+								@Override
+								public void onNext(AVObject avObject) {
+									Toast.makeText(getApplicationContext(),"数据已同步",Toast.LENGTH_SHORT).show();
+								}
+
+								@Override
+								public void onError(Throwable e) {
+									Toast.makeText(getApplicationContext(),"错误",Toast.LENGTH_SHORT).show();
 									dialog.dismiss();
 								}
-						  });
-					  }
-				  }else{
-					  e.printStackTrace();
-					  Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
-					  dialog.dismiss();
-				  }
-			  }
+
+								@Override
+								public void onComplete() {
+
+								}
+							});
+						}
+					}else{
+						//没有数据的情况（直接更新）
+						Date date=new Date();
+						v.update_time=StringUtil.dateFormat(date);
+						dao.update(v,new String[]{"update_time"},"verion>?",new String[]{"0"});
+						AVObject syncData=new AVObject("BackUp");
+						AVRelation<AVObject> relation=syncData.getRelation("userId");
+						relation.add(AVUser.getCurrentUser());
+						syncData.put("backFile",file);
+						syncData.put("syncTime", date);
+						syncData.saveInBackground().subscribe(new Observer<AVObject>() {
+							@Override
+							public void onSubscribe(Disposable d) {
+
+							}
+
+							@Override
+							public void onNext(AVObject avObject) {
+								Toast.makeText(getApplicationContext(),"数据已同步",Toast.LENGTH_SHORT).show();
+							}
+
+							@Override
+							public void onError(Throwable e) {
+								Toast.makeText(getApplicationContext(),"错误",Toast.LENGTH_SHORT).show();
+								dialog.dismiss();
+							}
+
+							@Override
+							public void onComplete() {
+
+							}
+						});
+					}
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				Toast.makeText(getApplicationContext(),"错误",Toast.LENGTH_SHORT).show();
+				dialog.dismiss();
+			}
+
+			@Override
+			public void onComplete() {
+
+			}
 		});
 	}
 	//重新密码
 	public void resetPassword(){
 		dialog.show();
-		AVUser.requestPasswordResetInBackground(AVUser.getCurrentUser().getEmail(),
-                new RequestPasswordResetCallback() {
-			public void done(AVException e) {
-				if (e == null) {
-					Toast.makeText(getApplicationContext(),"请查收注册的邮箱进行重置密码",Toast.LENGTH_SHORT).show();
-				} else {
-					e.printStackTrace();
-					Toast.makeText(getApplicationContext(),"错误"+e.getCode(),Toast.LENGTH_SHORT).show();
-				}
+		AVUser.requestPasswordResetInBackground(AVUser.getCurrentUser().getEmail()).subscribe(new Observer<AVNull>() {
+			@Override
+			public void onSubscribe(Disposable d) {
+
+			}
+
+			@Override
+			public void onNext(AVNull avNull) {
+				Toast.makeText(getApplicationContext(),"请查收注册的邮箱进行重置密码",Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				Toast.makeText(getApplicationContext(),"错误",Toast.LENGTH_SHORT).show();
+				dialog.dismiss();
+			}
+
+			@Override
+			public void onComplete() {
+
 			}
 		});
 	}

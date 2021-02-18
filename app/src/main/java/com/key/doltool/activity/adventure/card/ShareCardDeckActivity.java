@@ -5,16 +5,14 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.FindCallback;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.key.doltool.R;
@@ -30,6 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.leancloud.AVException;
+import cn.leancloud.AVQuery;
+import cn.leancloud.callback.FindCallback;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 展示云平台分享的论战组合
@@ -126,22 +129,33 @@ public class ShareCardDeckActivity extends BaseActivity {
     private void postMessage(){
         query=AVQuery.getQuery("CardShare");
         query.whereExists("name").orderByDescending("value");
-        query.findInBackground(new FindCallback<Deck>() {
-            public void done(List<Deck> objects, AVException e) {
-                if (e == null) {
-                    show(objects);
-                } else {
-                    Toast.makeText(getApplicationContext(), "连接失败", Toast.LENGTH_LONG).show();
-                }
+        query.findInBackground().subscribe(new Observer<List<Deck>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(List<Deck> decks) {
+                show(decks);
                 DialogUtil.dismiss(context,alert);
             }
+
+            @Override
+            public void onError(Throwable e) {
+                Toast.makeText(getApplicationContext(), "连接失败", Toast.LENGTH_LONG).show();
+                DialogUtil.dismiss(context,alert);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
         });
-        query.cancel();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        query.cancel();
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:flatui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,11 +8,9 @@
     <include
         layout="@layout/system_actionbar_black"
         />
-    <com.flipboard.bottomsheet.BottomSheetLayout
-        android:id="@+id/bottomsheet"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,5 +46,8 @@
                 />
         </LinearLayout>
     </RelativeLayout>
-    </com.flipboard.bottomsheet.BottomSheetLayout>
+    <include
+        layout="@layout/pop_card_cal"
+        />
+    </FrameLayout>
 </LinearLayout>

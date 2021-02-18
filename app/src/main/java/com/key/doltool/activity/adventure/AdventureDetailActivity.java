@@ -2,7 +2,6 @@ package com.key.doltool.activity.adventure;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -12,7 +11,6 @@ import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.mission.MissionDetailsActivity;
 import com.key.doltool.data.sqlite.Trove;
-import com.key.doltool.event.UpdataList;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.StringUtil;
@@ -40,8 +38,6 @@ public class AdventureDetailActivity extends BaseActivity{
 	//数据
 	private Trove item;
 	private DefaultDAO dao;
-	//附加
-	private int flag=5;
 	@Override
 	public int getContentViewId() {
 		return R.layout.adventure_details;
@@ -67,15 +63,6 @@ public class AdventureDetailActivity extends BaseActivity{
 		});
 	}
 
-	@Override
-	public void finish() {
-		if(flag!=item.getFind_flag()){
-			UpdataList.FLAG_CHANGE=1;
-		}else{
-			UpdataList.FLAG_CHANGE=0;
-		}
-		super.finish();
-	}
 	private void init(){
 		String names=getIntent().getStringExtra("name");
 		String names_tw=getIntent().getStringExtra("tw_name");
@@ -85,7 +72,6 @@ public class AdventureDetailActivity extends BaseActivity{
 		}else{
 			item=(Trove)(dao.select(Trove.class, false, "name = ? or name = ?",new String[]{names,names_tw}, null, null, null, null).get(0));
 		}
-		flag=item.getFind_flag();
 		if(item.getType().equals("港口")){
 			need_txt.setText("港口区域");
 			misson_txt.setText("许可证");

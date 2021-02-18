@@ -3,7 +3,6 @@ package com.key.doltool.activity.person;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,9 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.SignUpCallback;
+import com.google.android.material.textfield.TextInputLayout;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.activity.core.MainActivity;
@@ -29,12 +26,18 @@ import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 
 import butterknife.BindView;
+import cn.leancloud.AVException;
+import cn.leancloud.AVUser;
+import cn.leancloud.callback.SignUpCallback;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class RegisterActivity extends BaseActivity{
 	//注册
 	@BindView(R.id.password) EditText password_register;
 	@BindView(R.id.password_repeat) EditText password_repeat;
-	@BindView(R.id.emailWrapper) TextInputLayout usernameWrapper;
+	@BindView(R.id.emailWrapper)
+	TextInputLayout usernameWrapper;
 	@BindView(R.id.passwordWrapper) TextInputLayout passwordWrapper;
 	@BindView(R.id.password_repeatWrapper) TextInputLayout password_repeatWrapper;
 	@BindView(R.id.nickWrapper) TextInputLayout nickWrapper;
@@ -126,26 +129,30 @@ public class RegisterActivity extends BaseActivity{
 			user.put("nickName", nickName.getText().toString().trim());
 		}
 		user.put("server", server_name);
-		user.signUpInBackground(new SignUpCallback() {
-			public void done(AVException e) {
-				if (e == null) {
-					dialog.dismiss();
-					Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_LONG).show();
-					Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
-					setResult(RESULT_OK, intent);
-					finish();
-				} else {
-					//登录失败
-					switch(e.getCode()){
-						case 101:
-							Toast.makeText(getApplicationContext(),"账号不存在或密码错误",Toast.LENGTH_SHORT).show();
-							break;
-						default:
-							Toast.makeText(getApplicationContext(),"服务器异常:"+e.getCode(),Toast.LENGTH_SHORT).show();
-							break;
-					}
-					dialog.dismiss();
-				}
+		user.signUpInBackground().subscribe(new Observer<AVUser>() {
+			@Override
+			public void onSubscribe(Disposable d) {
+
+			}
+
+			@Override
+			public void onNext(AVUser avUser) {
+				dialog.dismiss();
+				Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+				setResult(RESULT_OK, intent);
+				finish();
+			}
+
+			@Override
+			public void onError(Throwable e) {
+				Toast.makeText(getApplicationContext(),"注册失败",Toast.LENGTH_SHORT).show();
+				dialog.dismiss();
+			}
+
+			@Override
+			public void onComplete() {
+
 			}
 		});
 	}

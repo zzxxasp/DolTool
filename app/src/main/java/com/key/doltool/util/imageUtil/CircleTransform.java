@@ -8,8 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.v4.content.res.ResourcesCompat;
+import androidx.annotation.DrawableRes;
 
 import com.squareup.picasso.Transformation;
 /**

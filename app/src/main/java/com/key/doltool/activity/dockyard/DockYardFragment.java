@@ -1,21 +1,20 @@
 package com.key.doltool.activity.dockyard;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.activity.core.BaseFragmentActivity;
-import com.key.doltool.activity.voyage.fishing.FishingTradeFragment;
 import com.key.doltool.data.MenuItem;
+import com.key.doltool.event.rx.RxBusEvent;
 import com.key.doltool.view.SlidingTabLayout;
 import com.key.doltool.viewpage.FPagerAdapter;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,8 @@ import butterknife.BindView;
  */
 public class DockYardFragment extends BaseFragment{
 	//ViewPager定义部分
-	@BindView(R.id.main_viewpagers) ViewPager main_ViewPage;
+	@BindView(R.id.main_viewpagers)
+	ViewPager main_ViewPage;
 	@BindView(R.id.sliding_tabs) SlidingTabLayout mSlidingTabLayout;
 
 	@Override
@@ -68,7 +68,7 @@ public class DockYardFragment extends BaseFragment{
 	private void intentMenu(int index){
 		MenuItem item=new MenuItem();
 		item.index=index;
-		EventBus.getDefault().post(item);
+		RxBusEvent.get().post(RxBusEvent.SAILMENU,item);
 	}
 
 	@Override

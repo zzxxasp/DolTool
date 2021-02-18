@@ -22,7 +22,7 @@
 	android:layout_height="match_parent"
 	/>
 <!--添加按钮-->
-<android.support.design.widget.FloatingActionButton
+<com.google.android.material.floatingactionbutton.FloatingActionButton
     android:contentDescription="@null"
     android:id="@+id/action"
 	android:layout_width="70dp"

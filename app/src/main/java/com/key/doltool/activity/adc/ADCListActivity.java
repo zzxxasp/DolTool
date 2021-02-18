@@ -4,13 +4,14 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
@@ -23,7 +24,6 @@ import com.key.doltool.data.sqlite.ADCInfo;
 import com.key.doltool.event.AreaEvent;
 import com.key.doltool.event.DialogEvent;
 import com.key.doltool.util.ViewUtil;
-import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 
 import butterknife.BindView;

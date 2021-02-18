@@ -65,7 +65,7 @@ public class WikiListActivity extends BaseActivity{
 	private void findView() {
 		flag=false;
 		initToolBar(null);
-		toolbar.setTitle("大航海百科");
+		toolbar.setTitle("百科");
 		alert=new DialogEvent().showLoading(this);
 		viewHandler=new ViewHandler(new ViewHandler.ViewCallBack() {
 			@Override

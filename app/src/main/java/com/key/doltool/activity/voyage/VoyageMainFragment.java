@@ -2,9 +2,7 @@ package com.key.doltool.activity.voyage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -50,6 +48,7 @@ public class VoyageMainFragment extends BaseFragment{
 			}
 		});
 		search_view.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(context,SearchActivity.class));
 			}

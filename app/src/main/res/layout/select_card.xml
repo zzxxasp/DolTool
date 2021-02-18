@@ -18,7 +18,7 @@
         android:layout_marginTop="20dp"
         android:text="筛选卡牌"
         />
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/card_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:background="@drawable/edittext_login"
             android:inputType="text"
             />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 <LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

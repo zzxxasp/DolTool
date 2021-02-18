@@ -1,6 +1,7 @@
 package com.key.doltool.activity.core;
 
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 
 public class FragmentItem {
 	public Fragment fragment;

@@ -14,7 +14,6 @@ import com.key.doltool.view.Toast;
 import com.the9tcat.hadi.DefaultDAO;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -32,13 +31,13 @@ public class DBUtil {
 		Gson s=new Gson();
 		String str;
 		String str2;
-		String fileName=FileManager.getSaveFilePath()+"backup.json";
-		String fileName2=FileManager.getSaveFilePath()+"backup2.json";
+		String fileName=FileManager.getSaveFilePath(context)+"backup.json";
+		String fileName2=FileManager.getSaveFilePath(context)+"backup2.json";
 		SystemInfo system=new SystemInfo(context);
 		UpdataCount event=new UpdataCount(context);
 		
-		File install=new File(FileManager.getSaveFilePath()+FileManager.DOWNLOAD + "/"+"dol_new.apk");
-		File dir=new File(FileManager.getSaveFilePath());
+		File install=new File(FileManager.getSaveFilePath(context)+FileManager.DOWNLOAD + "/"+"dol_new.apk");
+		File dir=new File(FileManager.getSaveFilePath(context));
 		//初始文件夹生成
 		if(!dir.exists()){
 			dir.mkdir();
@@ -148,69 +147,4 @@ public class DBUtil {
 			Toast.makeText(context,"初始化数据库失败",Toast.LENGTH_SHORT).show(); 
 		}
 	}
-   /**
-    * 备份数据库文件到SD卡中
-    * @param context
-    */
-   public static void copyDB_SD(Context context){
-	   File fs=context.getDatabasePath("demo.db");
-	   String str=FileManager.getSaveFilePath()+"demo.db";
-	   File f=new File(str);
-	   try{
-		   if(!f.exists()){
-			   f.getParentFile().mkdir();
-			   f.createNewFile();
-		   }
-		   if(!fs.exists()){
-			   Toast.makeText(context,"没有数据库文件", Toast.LENGTH_LONG).show();
-			   return ;
-		   }
-		   FileInputStream is = new FileInputStream(fs.getParent()+"/demo.db");
-		   FileOutputStream fos = new FileOutputStream(str);
-		   byte[] buffer = new byte[8192];
-		   int count = 0;
-		   while ((count = is.read(buffer)) > 0) {
-			   fos.write(buffer, 0, count);
-		   }
-		   Toast.makeText(context,"备份成功",Toast.LENGTH_LONG).show();
-		   fos.close();
-		   is.close();
-	   }catch(Exception e){
-		   e.printStackTrace();
-	   }
-   }
-   /**
-    * 导入SD卡数据库文件到DB中去
-    * @param context
-    */
-   public static void copySD_DB(Context context){
-		 File fs=context.getDatabasePath("demo.db");
-		 String str=FileManager.getSaveFilePath()+"demo.db";
-	  	 File f=new File(str);
-	  	 try{
-	   	 	if(!fs.exists()){
-	   	 		fs.getParentFile().mkdir();
-	   	  		fs.createNewFile();
-	   	 	}
-	   	 	if(!f.exists())
-	   	 	{
-	   	 		Toast.makeText(context,"SD卡缺少数据库文件", Toast.LENGTH_LONG).show();
-	   	 		return ;
-	   	 	}
-	        FileInputStream is = new FileInputStream(str);
-	   		FileOutputStream fos = new FileOutputStream(fs.getParent()+"/demo.db");
-	        byte[] buffer = new byte[8192];
-	        int count;
-	        // 开始复制testDatabase.db文件
-	        while ((count = is.read(buffer)) > 0)
-	        {
-	            fos.write(buffer, 0, count);
-	        }
-	        Toast.makeText(context,"导入成功",Toast.LENGTH_LONG).show();
-	        fos.close();
-	        is.close();
-	   	 }catch(Exception e){
-	   		 e.printStackTrace();
-	   	 }
-	   }
 }

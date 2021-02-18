@@ -1,9 +1,12 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd-HH.mm", TimeZone.getTimeZone("GMT+8"))
+}
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
 
     packagingOptions{
         exclude 'META-INF/LICENSE.txt'
@@ -15,9 +18,33 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.key.doltool"
-        minSdkVersion 14
-        targetSdkVersion 24
+        applicationId "com.hgt.mxbb"
+        minSdkVersion 19
+        targetSdkVersion 29
+        android.compileOptions.sourceCompatibility JavaVersion.VERSION_1_8
+        android.compileOptions.targetCompatibility JavaVersion.VERSION_1_8
+        android.compileOptions.encoding "UTF-8"
+        multiDexEnabled true
+    }
+
+    flavorDimensions "default"
+
+    applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                outputFileName = "${variant.productFlavors[0].name}-${variant.buildType.name}-v${variant.productFlavors[0].versionName}(${variant.productFlavors[0].versionCode})-${releaseTime()}.apk"
+            }
+    }
+
+    productFlavors {
+
+        qq_market {
+            applicationId "com.hgt.mxbb"
+        }
+
+        huawei {
+            applicationId "com.key.doltool"
+        }
     }
 
     buildTypes {
@@ -29,19 +56,39 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.android.support:percent:24.0.0'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okio:okio:1.7.0'
-    compile 'com.jakewharton:butterknife:8.1.0'
-    apt 'com.jakewharton:butterknife-compiler:8.1.0'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
-    compile 'com.github.ybq:Android-SpinKit:1.0.3'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'cn.leancloud:storage-android:6.5.12'
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.19"
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation 'com.google.android:flexbox:2.0.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.squareup.okio:okio:2.9.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-core:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-appcompat:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-drawerlayout:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-leanback:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-recyclerview:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-slidingpanelayout:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-swiperefreshlayout:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-viewpager:4.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding-viewpager2:4.0.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.0.3'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

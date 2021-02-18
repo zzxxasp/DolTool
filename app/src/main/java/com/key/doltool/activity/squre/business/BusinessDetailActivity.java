@@ -10,7 +10,6 @@ import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
@@ -33,28 +32,22 @@ import com.key.doltool.util.jsoup.JsoupForTB;
 public class BusinessDetailActivity extends BaseActivity{
 	private WebView web_content;
 	private Dialog layout_alert;
-	private String id="4157094114";
+	private String id="4879286029";
 	private String content="";
 
 	@Override
 	public int getContentViewId() {
-		return 0;
-	}
-
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		initToolBar(null);
-		setContentView(R.layout.news_detail);
-		findView();
-		setListener();
-		id="4157094114";
-//		id=getIntent().getStringExtra("id");
-		new Thread(mTask).start();
+		return R.layout.news_detail;
 	}
 
 	@Override
 	protected void initAllMembersView(Bundle savedInstanceState) {
-
+		initToolBar(null);
+		findView();
+		setListener();
+		id="4879286029";
+//		id=getIntent().getStringExtra("id");
+		new Thread(mTask).start();
 	}
 
 	//获取数据，填充显示
@@ -77,6 +70,7 @@ public class BusinessDetailActivity extends BaseActivity{
 		web_content.getSettings().setDefaultZoom(zoomDensity);
 		web_content.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 		web_content.setWebChromeClient(new WebChromeClient());
+		web_content.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36");
 		int width = (int) (CommonUtil.getScreenWidth(this) / screenDensity) - 10;
 		Log.i("x", "" + width);
 		String head = "<style type='text/css'>*{max-width:" + width + "px!important;height:auto!important;}" +
@@ -89,12 +83,6 @@ public class BusinessDetailActivity extends BaseActivity{
 		web_content=(WebView)findViewById(R.id.content);
 		layout_alert=new DialogEvent().showLoading(this);
 		layout_alert.show();
-//		// 实例化广告条
-//		AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-//		// 获取要嵌入广告条的布局
-//		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
-//		// 将广告条加入到布局中
-//		adLayout.addView(adView);
 	}
 	//事件监听
 	private void setListener(){
@@ -131,7 +119,8 @@ public class BusinessDetailActivity extends BaseActivity{
 		}
 	};
 	//缓存清空
-	protected void onDestroy() {
+	@Override
+    protected void onDestroy() {
 		super.onDestroy();
 		web_content.clearCache(false);
 	}

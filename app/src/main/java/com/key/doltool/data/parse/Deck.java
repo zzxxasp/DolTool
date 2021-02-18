@@ -1,21 +1,13 @@
 package com.key.doltool.data.parse;
 
-import android.os.Parcel;
-
-import com.avos.avoscloud.AVClassName;
-import com.avos.avoscloud.AVObject;
+import cn.leancloud.AVObject;
+import cn.leancloud.annotation.AVClassName;
 
 @AVClassName("CardShare")
 public class Deck extends AVObject {
-    public static final Creator CREATOR = AVObjectCreator.instance;
     public Deck(){
         super();
     }
-
-    public Deck(Parcel in){
-        super(in);
-    }
-
     // 名称
     public String getName() {
         return getString("name");

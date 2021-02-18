@@ -20,14 +20,14 @@ import com.key.doltool.app.util.ViewHandler;
 import com.key.doltool.data.MenuItem;
 import com.key.doltool.data.SailBoat;
 import com.key.doltool.event.DialogEvent;
+import com.key.doltool.event.rx.RxBusEvent;
 import com.key.doltool.util.ViewUtil;
 import com.key.doltool.view.Toast;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * 船只列表界面
@@ -40,21 +40,27 @@ public class SailBoatListFragment extends BaseFragment{
     private ViewHandler viewHandler;
     private Dialog alert;
     private ListFlowHelper<SailBoat> listFlowHelper;
-
+    private Disposable subscription;
     public int getContentViewId() {
         return R.layout.dockyard_main_item_layout1;
     }
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        if(!EventBus.getDefault().isRegistered(this)){
-            EventBus.getDefault().register(this);
-        }
         initData();
         setListener();
     }
 
     private void initData(){
+        Observable<MenuItem> menuItemObservable = RxBusEvent.get().register(RxBusEvent.SAILMENU);
+        subscription=menuItemObservable.subscribe(new Consumer<MenuItem>() {
+            @Override
+            public void accept(MenuItem item) {
+                if(item.index==0){
+                    findObject();
+                }
+            }
+        });
         //初始化流程
         String order = "name desc";
         listFlowHelper=new ListFlowHelper<>(SailBoat.class, context, new ListFlowHelper.ListFlowCallBack() {
@@ -120,7 +126,7 @@ public class SailBoatListFragment extends BaseFragment{
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int position, long arg3) {
                 Toast.makeText(context.getApplicationContext(),"挑选为造船白板", Toast.LENGTH_SHORT).show();
-                EventBus.getDefault().post(adapter.getItem(position));
+                RxBusEvent.get().post(RxBusEvent.SAILBOAT,adapter.getItem(position));
                 return true;
             }
         });
@@ -129,22 +135,17 @@ public class SailBoatListFragment extends BaseFragment{
     private void findObject(){
         //弹出对话框
         LayoutInflater mInflater=getActivity().getLayoutInflater();
-        ViewUtil.popDialog(listFlowHelper,getActivity(),mInflater.inflate(R.layout.select_boat, null));
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void menuEvent(MenuItem item){
-        if(item.index==0){
-            findObject();
-        }
+        ViewUtil.popSailBoatDialog(listFlowHelper,getActivity(),mInflater.inflate(R.layout.select_boat, null));
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        EventBus.getDefault().unregister(this);
+        subscription.dispose();
+        RxBusEvent.get().unregister(RxBusEvent.SAILMENU);
     }
 
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //菜单键覆写，调用边缘栏菜单
         if(keyCode==KeyEvent.KEYCODE_MENU){

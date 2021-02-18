@@ -119,7 +119,8 @@ public class NewsDetailActivity extends BaseActivity{
 		}
 	};
 	//缓存清空
-	protected void onDestroy() {
+	@Override
+    protected void onDestroy() {
 		super.onDestroy();
 		web_content.clearCache(false);
 	}

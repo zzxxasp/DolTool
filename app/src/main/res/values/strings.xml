@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <!--系统用-->
-    <string name="app_name">大航海时代助手</string>
+    <string name="app_name">冒险宝贝</string>
     <string name="loading_txt">正在加载数据，请稍等</string>
 	<string name="common_wait">请等待</string>
 	<string name="behavior_boat" translatable="false">com.key.doltool.app.util.behavior.BuildBoatBehavior</string>

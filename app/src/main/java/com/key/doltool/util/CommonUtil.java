@@ -71,7 +71,7 @@ public class CommonUtil {
 
 	/**
 	 * 
-	 * @Description 将app由data/app目录拷贝到sd卡下的指定目录中
+	 * @description 将app由data/app目录拷贝到sd卡下的指定目录中
 	 * 
 	 * @param packageName
 	 *            应用程序的ID号，如com.wondertek.jttxl
@@ -173,7 +173,7 @@ public class CommonUtil {
 		PackageManager pm = context.getPackageManager();
 
 		try {
-			ApplicationInfo e = pm.getApplicationInfo(context.getPackageName(), 128);
+			ApplicationInfo e = pm.getApplicationInfo(context.getPackageName(),PackageManager.GET_META_DATA);
 			return e.metaData.getInt(name);
 		} catch (Exception var4) {
 			Log.e("DataInt", "Exception", var4);

@@ -95,7 +95,7 @@ public class MapActivity extends BaseActivity {
 
 			}
 		});
-
+		btn.setVisibility(View.GONE);
 		btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				String [] seal=item.co_map.split(",");

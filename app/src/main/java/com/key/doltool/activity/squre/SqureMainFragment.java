@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
+import com.key.doltool.activity.squre.business.BusinessDetailActivity;
 import com.key.doltool.view.Toast;
 
 import butterknife.BindView;
@@ -53,7 +54,7 @@ public class SqureMainFragment extends BaseFragment{
 		switch(index){
 			case 1:c=MapActivity.class;break;
 			case 2:c=FortuneActivity.class;break;
-			case 3:c=PortActivity.class;break;
+			case 3:c=BusinessDetailActivity.class;break;
 			default:Toast.makeText(getActivity().getApplicationContext(),"还在建设中",Toast.LENGTH_SHORT).show();return;
 		}
 		Intent intent=new Intent(getActivity(),c);

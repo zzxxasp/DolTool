@@ -34,7 +34,8 @@ public class BuildBoatActivity extends BaseActivity{
 		return 0;
 	}
 
-	public void onCreate(Bundle savedInstanceState) {
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		findView();
 	}

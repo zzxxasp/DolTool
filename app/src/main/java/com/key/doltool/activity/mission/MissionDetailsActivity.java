@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +11,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;

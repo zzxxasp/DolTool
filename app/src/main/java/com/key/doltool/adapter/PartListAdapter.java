@@ -1,8 +1,4 @@
 package com.key.doltool.adapter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +11,10 @@ import com.key.doltool.R;
 import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.util.BitMapUtil;
 import com.key.doltool.util.FileManager;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 public class PartListAdapter extends BaseAdapter{
 	private static class ViewHolder{
 		public TextView name,type;
@@ -31,7 +31,7 @@ public class PartListAdapter extends BaseAdapter{
 			return list.size();
 	}
 	@Override
-	public Object getItem(int arg0) {
+	public Part getItem(int arg0) {
 		return list.get(arg0);
 	}
 	@Override

@@ -94,7 +94,8 @@ public class RecipeBookListActivity extends BaseActivity implements OnScrollList
 		listview.setOnScrollListener(this);
 		listview.setAdapter(adapter);
 	}
-	protected void onDestroy() {
+	@Override
+    protected void onDestroy() {
 		dao=null;
 		super.onDestroy();
 	}

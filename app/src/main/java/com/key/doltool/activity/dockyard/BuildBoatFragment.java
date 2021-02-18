@@ -1,12 +1,11 @@
 package com.key.doltool.activity.dockyard;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.key.doltool.R;
 import com.key.doltool.activity.core.BaseFragment;
 import com.key.doltool.anime.MyAnimations;
@@ -14,21 +13,21 @@ import com.key.doltool.data.MenuItem;
 import com.key.doltool.data.SailBoat;
 import com.key.doltool.data.sqlite.Part;
 import com.key.doltool.event.MakeEvent;
+import com.key.doltool.event.rx.RxBusEvent;
 import com.key.doltool.util.NumberUtil;
 import com.key.doltool.util.ResourcesUtil;
 import com.key.doltool.util.db.SRPUtil;
 import com.key.doltool.view.Toast;
 import com.key.doltool.view.flat.FlatButton;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * 造船模拟-0.1 基础功能模拟造船
@@ -70,8 +69,8 @@ public class BuildBoatFragment extends BaseFragment {
     @BindView(R.id.shipping_space_add) TextView bt_s_a;
 
     @BindView(R.id.build_btn) FlatButton plus_btn;
-    @BindView(R.id.action) FloatingActionButton action;
-    @BindView(R.id.bottomsheet) BottomSheetLayout bottomSheet;
+    @BindView(R.id.action)
+    FloatingActionButton action;
     private SRPUtil dao;
     private SailBoat baseboat;
     private int twice=0;
@@ -86,6 +85,7 @@ public class BuildBoatFragment extends BaseFragment {
     private Part part_s,part_c,part_eq,part_eq2;
     private int vo_s_add=0,vo_f_add=0,vo_de_add=0,vo_tu_add=0,vo_p_add=0;
     private int bt_h_add=0,bt_a_add=0,bt_s_add=0,bt_c_add=0;
+    private Disposable menuItemSubscription,sailSubscription;
 
     public int getContentViewId() {
         return R.layout.dockyard_main_item_layout2;
@@ -93,34 +93,39 @@ public class BuildBoatFragment extends BaseFragment {
 
 
     protected void initAllMembersView(Bundle savedInstanceState) {
-        if(!EventBus.getDefault().isRegistered(this)){
-            EventBus.getDefault().register(this);
-        }
         initData();
         setListener();
     }
     private void initData(){
         dao=SRPUtil.getInstance(context);
+        Observable<MenuItem> menuItemObservable = RxBusEvent.get().register(RxBusEvent.SAILMENU);
+        menuItemSubscription=menuItemObservable.subscribe(new Consumer<MenuItem>() {
+            @Override
+            public void accept(MenuItem item) {
+
+            }
+        });
+        Observable<SailBoat> sailBoatObservable = RxBusEvent.get().register(RxBusEvent.SAILBOAT);
+        sailSubscription=sailBoatObservable.subscribe(new Consumer<SailBoat>() {
+            @Override
+            public void accept(SailBoat item) {
+                if(item!=null) {
+                    baseboat = item;
+                    resetBuild();
+                    refreshPage();
+                }
+            }
+        });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(SailBoat baseboat){
-        if(baseboat!=null) {
-            this.baseboat = baseboat;
-            resetBuild();
-            refreshPage();
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void menuEvent(MenuItem item){
-
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        EventBus.getDefault().unregister(this);
+        RxBusEvent.get().unregister(RxBusEvent.SAILMENU);
+        RxBusEvent.get().unregister(RxBusEvent.SAILBOAT);
+        menuItemSubscription.dispose();
+        sailSubscription.dispose();
     }
 
     //选择船只后更新界面
@@ -326,12 +331,14 @@ public class BuildBoatFragment extends BaseFragment {
     private void setListener(){
         action.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                bottomSheet.showWithSheetView(LayoutInflater.from(context).inflate(R.layout.dev_main,
-//                        bottomSheet, false));
-                if(ability.getVisibility()==View.VISIBLE){
-                    MyAnimations.rotate3D(show_layout, ability, choose_part,320);
-                }else {
-                    MyAnimations.rotate3D(show_layout, choose_part, ability,320);
+                if(baseboat!=null){
+                    if(ability.getVisibility()==View.VISIBLE){
+                        MyAnimations.rotate3D(show_layout, ability, choose_part,320);
+                    }else {
+                        MyAnimations.rotate3D(show_layout, choose_part, ability,320);
+                    }
+                }else{
+                    Toast.makeText(context.getApplicationContext(),"请先挑选船只",Toast.LENGTH_SHORT).show();
                 }
             }
         });

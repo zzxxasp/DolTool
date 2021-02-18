@@ -22,16 +22,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.SaveCallback;
 import com.key.doltool.R;
 import com.key.doltool.activity.BaseActivity;
 import com.key.doltool.adapter.SpinnerArrayAdapter;
 import com.key.doltool.event.DialogEvent;
-import com.key.doltool.event.UpdataList;
 import com.key.doltool.event.UserEvent;
+import com.key.doltool.event.rx.RxBusEvent;
 import com.key.doltool.util.CommonUtil;
 import com.key.doltool.util.FileManager;
 import com.key.doltool.util.ResourcesUtil;
@@ -40,6 +36,11 @@ import com.key.doltool.util.imageUtil.ImageLoader;
 import com.key.doltool.view.Toast;
 
 import butterknife.BindView;
+import cn.leancloud.AVException;
+import cn.leancloud.AVFile;
+import cn.leancloud.AVObject;
+import cn.leancloud.AVUser;
+import io.reactivex.functions.Consumer;
 
 
 public class EditUserInfoActivity extends BaseActivity{
@@ -54,7 +55,7 @@ public class EditUserInfoActivity extends BaseActivity{
     private static final int TAKE_PICTURE = 1;
     private static final int LOCAL_PICTURE = 3;
     private Uri imageUri = Uri.parse(FileManager.IMAGE_FILE_LOCATION);
-
+	private boolean isChanged=false;
 	@Override
 	public int getContentViewId() {
 		return R.layout.activity_edit;
@@ -151,13 +152,7 @@ public class EditUserInfoActivity extends BaseActivity{
 			AVUser currentUser = AVUser.getCurrentUser();
         	nickName.setText(name);
         	currentUser.put("nickName",name);
-        	currentUser.saveInBackground(new SaveCallback(){
-				public void done(AVException e) {
-					if(e==null){
-			        	UpdataList.PIC_CHANGE=1;
-					}
-				}
-        	});
+			currentUser.saveInBackground().subscribe((Consumer<AVObject>) avObject -> isChanged=true);
         }else{
         	Toast.makeText(getApplicationContext(),"昵称不能为空",Toast.LENGTH_SHORT).show();
         }
@@ -167,13 +162,7 @@ public class EditUserInfoActivity extends BaseActivity{
 		AVUser currentUser = AVUser.getCurrentUser();
 		area_server.setText(area.getSelectedItem()+" "+server.getSelectedItem());
     	currentUser.put("server",server_name);
-    	currentUser.saveInBackground(new SaveCallback(){
-			public void done(AVException e) {
-				if(e==null){
-		        	UpdataList.PIC_CHANGE=1;
-				}
-			}
-    	});
+    	currentUser.saveInBackground().subscribe((Consumer<AVObject>) avObject -> isChanged=true);
 	}
 	
 	private void init(){
@@ -209,21 +198,22 @@ public class EditUserInfoActivity extends BaseActivity{
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.i("a",""+resultCode);
-        if (resultCode != Activity.RESULT_OK) {
-            imageUri = Uri.parse(FileManager.IMAGE_FILE_LOCATION);
-            return;
-        }
-        switch (requestCode) {
-        case LOCAL_PICTURE:
-            imageUri = data.getData();
-            test(imageUri);
-            break;
-        case TAKE_PICTURE:
-            cropImageUri(FileManager.IMAGE_FILE_LOCATION);
-            break;
-        }
-    }
+		super.onActivityResult(requestCode, resultCode, data);
+		Log.i("a", "" + resultCode);
+		if (resultCode != Activity.RESULT_OK) {
+			imageUri = Uri.parse(FileManager.IMAGE_FILE_LOCATION);
+			return;
+		}
+		switch (requestCode) {
+			case LOCAL_PICTURE:
+				imageUri = data.getData();
+				test(imageUri);
+				break;
+			case TAKE_PICTURE:
+				cropImageUri(FileManager.IMAGE_FILE_LOCATION);
+				break;
+		}
+	}
     private void test(Uri uri){
         try {
         	String[] pojo = { MediaStore.Images.Media.DATA };
@@ -257,17 +247,12 @@ public class EditUserInfoActivity extends BaseActivity{
 			AVFile headImg=new AVFile("head.png",ResourcesUtil.getBytes(path_file));
         	headImg.saveInBackground();
         	currentUser.put("headPic",headImg);
-        	currentUser.saveInBackground(new SaveCallback(){
-				public void done(AVException e) {
-					if(e!=null){
-			        	UpdataList.PIC_CHANGE=1;
-					}
-				}
-        	});
+			currentUser.saveInBackground().subscribe((Consumer<AVObject>) avObject -> isChanged=true);
         }
     }
     @Override
     protected void onDestroy() {
     	super.onDestroy();
+		RxBusEvent.get().post(RxBusEvent.UPDATE,isChanged);
     }
 }
